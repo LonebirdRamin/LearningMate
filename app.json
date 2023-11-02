@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "reactNativeFirebaseCRUD",
+    "slug": "reactNativeFirebaseCRUD",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "reactNativeFirebaseCRUD"
+}
