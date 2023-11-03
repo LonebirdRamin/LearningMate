@@ -5,7 +5,7 @@ import ConfirmModal from './components/Register/ConfirmModal';
 
 
 export default function App() {
-  return (<ConfirmModal/>)
+  return (<LandingStack/>)
   
 }
 
