@@ -1,12 +1,12 @@
 import { View, Text, TextInput } from "react-native";
 import React from "react";
 
-const FormText = ({ type="none",text = "None", boxSize = 55, protect = false, borderRadius=15 }) => {
+const FormText = ({ type="text",text = "None", boxSize = 55, protect = false, borderRadius=15 }) => {
   return (
     <View>
       <Text style={{ color: "#666680", paddingBottom: 8 }}>{text}</Text>
       <TextInput
-      inputMode={type}
+        inputMode={type}
         secureTextEntry={protect}
         style={{
           borderRadius: borderRadius,
