@@ -35,7 +35,7 @@ const Calendar = () => {
     <View style={customStyles.calendarContainer}>
       {getDaysFromWeek(week)}
     </View>
-  )
-}
+  );
+};
 
-export default Calendar
+export default Calendar;

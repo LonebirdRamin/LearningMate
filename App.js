@@ -1,12 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-import Homepage from './screens/Homepage';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import customStyles from './styles/customStyles';
+import { StyleSheet, Text, View } from "react-native";
+import Homepage from "./screens/Homepage";
+import { SafeAreaView } from "react-native-safe-area-context";
+import customStyles from "./styles/customStyles";
+import NavigationBar from "./components/NavigationBar";
+import { AddAssignmentButton } from "./components/AddAssignmentButton";
 
 export default function App() {
   return (
     <SafeAreaView style={customStyles.pageBackground}>
-      <Homepage></Homepage>
+      <NavigationBar />
     </SafeAreaView>
   );
 }
