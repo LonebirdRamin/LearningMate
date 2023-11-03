@@ -1,37 +1,35 @@
 import { View, Text, Image, Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import globleStyle from "../styles/globleStyles";
-import landingStyle from "../styles/landingStyle";
+import globleStyles from "../styles/globleStyles";
+import landingStyles from "../styles/landingStyles";
 import AppButton from "../components/AppButton";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 
 const Landing = ({navigation}) => {
   return (
     
     <SafeAreaView
-      style={[globleStyle.pageContainer]}
+      style={[globleStyles.pageContainer]}
     >
-
-      <View style={[landingStyle.pageLogo]}>
+      <View style={[landingStyles.pageLogo]}>
         <Image
           source={require("../assets/icons/learningmate.png")}
           resizeMode="contain"
           style={{ width: "100%", height: "45%" }}
         />
       </View>
-      <View style={landingStyle.buttonContainer}>
+      <View style={landingStyles.buttonContainer}>
         <AppButton
           text="Register"
-          bgColor="#F04E22"
+          
           textColor="white"
           height={55}
-          
+          handlePress={()=>navigation.navigate('Register')}
         />
         <AppButton
           text="I have an account"
-          bgColor="#393A3F"
+          bgColor={false}
           textColor="white"
           height={55}
           handlePress={()=>navigation.navigate('Login')}

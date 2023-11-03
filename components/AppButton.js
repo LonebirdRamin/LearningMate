@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 
 const AppButton = ({
-  bgColor = "white",
+  bgColor = true,
   text = "None",
   textColor = "black",
   height = 50,
@@ -13,7 +13,7 @@ const AppButton = ({
       borderRadius: height/2,
       justifyContent: 'center',
       alignItems: 'center',
-      height: height, backgroundColor: bgColor }}
+      height: height, backgroundColor: bgColor? "#F04E22":"#393A3F" }}
       onPress={handlePress}
       >
       <Text style={{ color: textColor }}>{text}</Text>

@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-const landingStyle = StyleSheet.create({
+const landingStyles = StyleSheet.create({
   pageLogo: {
     flex: 3,
     justifyContent: 'center'
@@ -14,4 +14,4 @@ const landingStyle = StyleSheet.create({
   }
 });
 
-export default landingStyle;
+export default landingStyles;

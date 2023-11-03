@@ -1,12 +1,12 @@
 import { View, Text, Image, Dimensions } from "react-native";
 import React from "react";
-import loginStyles from "../../styles/loginStyle";
+import loginStyles from "../../styles/loginStyles";
 
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
 
-const LoginHeader = ({ text = "None" }) => {
+const LogoHeader = ({ text = "None" }) => {
   return (
     <View
       style={[
@@ -36,4 +36,4 @@ const LoginHeader = ({ text = "None" }) => {
   );
 };
 
-export default LoginHeader;
+export default LogoHeader;
