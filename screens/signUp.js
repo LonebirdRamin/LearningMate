@@ -1,4 +1,5 @@
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const signUp = async () => {
     setLoading(true);
@@ -11,7 +12,6 @@ const signUp = async () => {
       };
   
       await addUserToFirestore(response.user.uid, response.user.email);
-      await addUserToMySQL();
   
       alert('Check your email!');
     } catch (error) {

@@ -10,6 +10,7 @@ import User from './screens/user';
 import UserDetail from './screens/userDetail';
 import loginScreen from './screens/login';
 import departmentList from './screens/departmentList';
+import ScheduleScreen from './screens/scheduleScreens';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,11 @@ function MyStack() {
           name="UserDetail"
           component={UserDetail}
           options={{title: 'User Details'}}
+        />
+        <Stack.Screen
+          name="ScheduleScreen"
+          component={ScheduleScreen}
+          options={{title: 'Schedule'}}
         />
     </Stack.Navigator>
   )

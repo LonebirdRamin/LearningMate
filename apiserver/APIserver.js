@@ -30,24 +30,96 @@ app.get('/api/queryTest', function (req, res, next) {       //hello => path
 );
 })
 
-app.get('/api/insertRegisUser', function (req, res, next) {       //hello => path
-  // Assuming you receive data to insert in the request body
-  const dataToInsert = {
-    attribute1: req.body.attribute1,
-    attribute2: req.body.attribute2,
-    attribute3: req.body.attribute3
-  };
-
-  // simple query
+app.get('/api/scheduleQuery', function (req, res, next) {
+  console.log("schedule query log test");
   connection.query(
-      'INSERT * FROM `department`',
-      function(err, results, fields) {
-          //console.log(results); // results contains rows returned by server
-          //console.log(fields); // fields contains extra meta data about results, if available
-          res.json(results);
-  }
-);
+    'SELECT cs.class_id, c.class_name, d.date_name, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_student` AS `cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id ORDER BY d.date_id, csd.start_time;'
+    ,
+    function(err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Schedule query error occurred' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
 })
+
+app.get('/api/queryIdCard', function (req, res, next) {
+  console.log("query id card");
+  //const email = req.query.email;
+  const email = "ramin.such@kmutt.ac.th"
+  console.log(email);
+
+  connection.query(
+    'SELECT `id_card` FROM `student` WHERE academic_email = ?;',
+    [email], 
+    function(err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Query id card error occurred' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+  console.log("query id card");
+});
+
+app.get('/api/checkRole', function (req, res, next) {
+  console.log("check role");
+  //const email = "ramin.such@kmutt.ac.th";
+  const email = req.query.email;
+  console.log(email);
+
+  connection.query(
+    'SELECT * FROM (SELECT role, academic_email FROM student UNION ALL SELECT role, academic_email FROM teacher) AS combined_data WHERE academic_email = ?;',
+    [email], 
+    function(err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Check role error occurred' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+  console.log("check role");
+});
+
+// function getStudentSchedule(email, res) {
+//   connection.query(
+//     'SELECT s.student_name, cs.class_id, c.class_name, d.date_name, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_student` AS `cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;',
+//     [email],
+//     function(err, studentResults, fields) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Student schedule query error occurred' });
+//       } else {
+//         console.log("success student query");
+//         res.json(studentResults);
+//         console.log("Student In");
+//       }
+//     }
+//   );
+// }
+
+// function getTeacherSchedule(email, res) {
+//   connection.query(
+//     'SELECT s.teacher_name, cs.class_id, c.class_name, d.date_name, csd.start_time, csd.end_time FROM `teacher` AS `s` JOIN `class_lecturer` AS `cs` ON cs.teacher_id = s.teacher_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;',
+//     [email],
+//     function(err, teacherResults, fields) {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).json({ error: 'Teacher schedule query error occurred' });
+//       } else {
+//         res.json(teacherResults);
+//         console.log("teacher IN");
+//       }
+//     }
+//   );
+// }
 
 app.listen(5000, function () {
   console.log('CORS-enabled web server listening on port 5000')

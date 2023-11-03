@@ -2,11 +2,11 @@ import { View, Text, FlatList, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
 
-const departmentList = () => {
+const ScheduleScreen = () => {
     const [items, setItems] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-      fetch('http://192.168.1.75:5000/api/scheduleQuery')
+      fetch('http://192.168.1.75:5000/api/checkRole')
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -48,4 +48,4 @@ const departmentList = () => {
   )
 }
 
-export default departmentList
+export default ScheduleScreen
