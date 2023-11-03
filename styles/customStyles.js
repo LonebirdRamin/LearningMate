@@ -26,7 +26,9 @@ const customStyles = new StyleSheet.create({
         borderRadius: 16,
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.2)',
-        backgroundColor: '#4E4E61',        
+        backgroundColor: '#4E4E61',
+        alignItems:'center',
+        justifyContent: 'space-evenly'  
     },
 
     calendarContainer:{ //Wrapper for calendars widget
@@ -39,7 +41,6 @@ const customStyles = new StyleSheet.create({
         fontSize: 16,
         fontStyle: 'normal',
         fontWeight: '600',
-        lineHeight: 24,
         letterSpacing: 0, 
         color: '#FFF', 
     },
@@ -48,20 +49,16 @@ const customStyles = new StyleSheet.create({
         fontSize: 20,
         fontStyle: 'normal',
         fontWeight: '700',
-        lineHeight: 32,
         letterSpacing: 0,
         color: '#FFF',
-        textAlign: 'center',
     },
 
     bodySmall: { //bodySmall fonts according to Figma (Use dev mode to see)
         fontSize: 12,
         fontStyle: 'normal',
         fontWeight: '500',
-        lineHeight: 16,
         letterSpacing: 0.2,
         color: '#A2A2B5',
-        textAlign: 'center',
     },
 
     customBox1:{ //A variant for dialog box ie. on top of home page wrapping the schedule.
