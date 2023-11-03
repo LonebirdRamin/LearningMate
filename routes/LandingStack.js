@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Landing from "../screens/Landing";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import IndexRoot from "./IndexRoot";
 const Stack = createNativeStackNavigator();
 
 const LandingStack = () => {
@@ -36,6 +37,17 @@ const LandingStack = () => {
             animation: "slide_from_bottom",
           }}
         />
+
+        <Stack.Screen
+          name="Homepage"
+          component={IndexStack}
+          options={{
+            headerShown: false,
+            // animationTypeForReplace: 'push',
+            animation: "slide_from_bottom",
+          }}
+        />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

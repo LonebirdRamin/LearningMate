@@ -8,20 +8,21 @@ import FormText from "../components/FormText";
 import { TouchableOpacity } from "react-native";
 import AppButton from "../components/AppButton";
 import { StackActions } from "@react-navigation/routers";
-
+import signIn from "../backend/hooks/signIn";
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmail=(value)=>{
-    setEmail(value)
-    console.log(email)
-  }
-  const handlePass=(value)=>{
-    setPassword(value)
-    console.log(password)
+  const handleEmail = (value) => {
+    setEmail(value);
+  };
+  const handlePass = (value) => {
+    setPassword(value);
+  };
 
-  }
+  const changePage = () => {
+    navigation.dispatch(StackActions.replace("IndexStack"));
+  };
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -29,8 +30,18 @@ const Login = ({ navigation }) => {
 
       <View style={loginStyles.formContainer}>
         <View style={loginStyles.upperForm}>
-          <FormText text="Email address" type="email" display={email} formChange={handleEmail}/>
-          <FormText text="Password" protect={true} display={password} formChange={handlePass}/>
+          <FormText
+            text="Email address"
+            type="email"
+            display={email}
+            formChange={handleEmail}
+          />
+          <FormText
+            text="Password"
+            protect={true}
+            display={password}
+            formChange={handlePass}
+          />
         </View>
 
         <View style={loginStyles.lowerForm}>
@@ -40,7 +51,14 @@ const Login = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
 
-          <AppButton text="Login" textColor="white" height={55} />
+          <AppButton
+            text="Login"
+            textColor="white"
+            height={55}
+            handlePress={() => {
+              changePage();
+            }}
+          />
 
           <TouchableOpacity
             style={{ alignSelf: "flex-end" }}
