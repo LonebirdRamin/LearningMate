@@ -1,5 +1,5 @@
 import { View, Text, Image, Button } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import globleStyles from "../styles/globleStyles";
 import loginStyles from "../styles/loginStyles";
@@ -10,14 +10,27 @@ import AppButton from "../components/AppButton";
 import { StackActions } from "@react-navigation/routers";
 
 const Login = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmail=(value)=>{
+    setEmail(value)
+    console.log(email)
+  }
+  const handlePass=(value)=>{
+    setPassword(value)
+    console.log(password)
+
+  }
+
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
       <LogoHeader text="Login" />
 
       <View style={loginStyles.formContainer}>
         <View style={loginStyles.upperForm}>
-          <FormText text="Email address" type="email" />
-          <FormText text="Password" protect={true} />
+          <FormText text="Email address" type="email" display={email} formChange={handleEmail}/>
+          <FormText text="Password" protect={true} display={password} formChange={handlePass}/>
         </View>
 
         <View style={loginStyles.lowerForm}>

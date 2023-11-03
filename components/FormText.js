@@ -1,13 +1,15 @@
 import { View, Text, TextInput } from "react-native";
 import React from "react";
 
-const FormText = ({ type="text",text = "None", boxSize = 55, protect = false, borderRadius=15 }) => {
+const FormText = ({ type="text",text = "None", boxSize = 55, protect = false, borderRadius=15, display, formChange }) => {
   return (
     <View>
       <Text style={{ color: "#666680", paddingBottom: 8 }}>{text}</Text>
       <TextInput
+        value={display}
         inputMode={type}
         secureTextEntry={protect}
+        onChangeText={(text)=>formChange(text)}
         style={{
           borderRadius: borderRadius,
           paddingLeft: 15,
