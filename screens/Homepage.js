@@ -27,7 +27,7 @@ const Homepage = () => {
           { textAlign: "left", marginLeft: 24, marginBottom: 17 },
         ]}
       >
-        Schedule
+      Schedule
       </Text>
       <Calendar></Calendar>
     </View>
