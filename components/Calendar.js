@@ -18,7 +18,8 @@ const Calendar = () => {
           return (
             <Pressable key={current[0]} style={[customStyles.calendarWidget,
             current[0] === select? {backgroundColor:'rgba(207, 207, 252, 0.3)'}:{}]}
-            onPress={()=>setSelect(current[0])}>
+            onPress={()=>{
+              setSelect(current[0])}}>
               <Text style={customStyles.h4}>{current[0]}</Text>
               <Text style={customStyles.bodySmall}>{current[1]}</Text>
               <View style={[{width:6,height:6,borderRadius:3,
@@ -32,8 +33,10 @@ const Calendar = () => {
   getDaysFromWeek(week)
 
   return (
-    <View style={customStyles.calendarContainer}>
-      {getDaysFromWeek(week)}
+    <View>
+      <View style={customStyles.calendarContainer}>
+        {getDaysFromWeek(week)}
+      </View>
     </View>
   );
 };
