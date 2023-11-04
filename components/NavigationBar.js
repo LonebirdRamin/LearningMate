@@ -42,7 +42,6 @@ const NavigationBar = () => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  top: 15,
                 }}
               >
                 <Image
@@ -67,7 +66,6 @@ const NavigationBar = () => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  top: 15,
                 }}
               >
                 <Image
@@ -92,7 +90,6 @@ const NavigationBar = () => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  top: 15,
                 }}
               >
                 <Image
@@ -117,7 +114,6 @@ const NavigationBar = () => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  top: 15,
                 }}
               >
                 <Image
@@ -142,7 +138,6 @@ const NavigationBar = () => {
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  top: 15,
                 }}
               >
                 <Image
