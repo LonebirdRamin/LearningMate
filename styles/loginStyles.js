@@ -16,6 +16,10 @@ const loginStyles = StyleSheet.create({
   },
   lowerForm:{
     rowGap: 15
+  },
+  loading:{
+    justifyContent: 'center',
+    height: '60%'
   }
 });
 

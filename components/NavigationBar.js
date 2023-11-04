@@ -31,7 +31,7 @@ const screenOptions = {
 const NavigationBar = () => {
   const handleImage = () => {};
   return (
-    <NavigationContainer>
+    
       <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home">
         <Tab.Screen
           name="Planner"
@@ -159,7 +159,7 @@ const NavigationBar = () => {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
+    
   );
 };
 

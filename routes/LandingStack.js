@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Landing from "../screens/Landing";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import IndexRoot from "./IndexRoot";
+import NavigationBar from "../components/NavigationBar";
 const Stack = createNativeStackNavigator();
 
 const LandingStack = () => {
@@ -40,13 +40,11 @@ const LandingStack = () => {
 
         <Stack.Screen
           name="Homepage"
-          component={IndexStack}
-          options={{
-            headerShown: false,
-            // animationTypeForReplace: 'push',
-            animation: "slide_from_bottom",
-          }}
+          component={NavigationBar}
+          options={{headerShown: false, gestureEnabled: false}}
         />
+
+        
         
       </Stack.Navigator>
     </NavigationContainer>
