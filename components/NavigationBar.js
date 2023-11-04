@@ -32,7 +32,7 @@ const NavigationBar = () => {
   const handleImage = () => {};
   return (
     
-      <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home">
+      <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
         <Tab.Screen
           name="Planner"
           component={PlannerScreen}

@@ -33,7 +33,10 @@ const Login = ({ navigation }) => {
   };
 
   const changePage = () => {
-    navigation.navigate("Homepage");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Homepage' }],
+    });
   };
 
   return (
