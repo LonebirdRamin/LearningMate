@@ -1,19 +1,26 @@
-import { View, Image, Text, Pressable , TouchableOpacity, BackHandler} from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  BackHandler,
+} from "react-native";
 import React from "react";
 import customStyles from "../styles/customStyles";
 import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
-
+import Modal from "react-native-modal";
 
 const Homepage = () => {
-  
   return (
     <View style={customStyles.pageBackground}>
       <View
         style={[
           customStyles.customBox1,
           { borderTopLeftRadius: 0, borderTopRightRadius: 0, height: 382 },
-        ]}>
+        ]}
+      >
         <View
           style={{
             display: "flex",
@@ -23,7 +30,10 @@ const Homepage = () => {
         >
           <View style={customStyles.pageTitleContainer}>
             <Text style={customStyles.pageTitle}>Calendar</Text>
-            <TouchableOpacity style={customStyles.notficationIcon}  onPress={() => console.log('Notfication Pressed')}>
+            <TouchableOpacity
+              style={customStyles.notficationIcon}
+              onPress={() => console.log("Notfication Pressed")}
+            >
               <Image source={require("../assets/icons/bell.png")}></Image>
             </TouchableOpacity>
           </View>
@@ -34,7 +44,7 @@ const Homepage = () => {
             { textAlign: "left", marginLeft: 24, marginBottom: 17 },
           ]}
         >
-        Schedule
+          Schedule
         </Text>
         <Calendar></Calendar>
         <EventList></EventList>

@@ -4,7 +4,7 @@ import Modal from "react-native-modal";
 import modalStyles from "../../styles/modalStyles";
 import AppButton from "../AppButton";
 
-function ConfirmModal({isModalVisible, toggleModal, setModalVisible}) {
+function ConfirmModal({isModalVisible, toggleModal, setModalVisible, handleDecline, handleConfirm}) {
   
 
   return (
@@ -27,8 +27,8 @@ function ConfirmModal({isModalVisible, toggleModal, setModalVisible}) {
             <View style={modalStyles.barIcon} />
             <View style={modalStyles.wrapper}>
               <Text style={modalStyles.text}>Comfirm registration</Text>
-              <AppButton text="Confirm" textColor="white" height={60}/>
-              <AppButton text="Decline" textColor="white" height={60} bgColor={false} style={{borderWidth: 0.4, borderColor: 'rgba(255,255,255, 0.3)'}}/>
+              <AppButton handlePress={handleConfirm} text="Confirm" textColor="white" height={60}/>
+              <AppButton handlePress={handleDecline} text="Decline" textColor="white" height={60} bgColor={false} style={{borderWidth: 0.4, borderColor: 'rgba(255,255,255, 0.3)'} }/>
 
             </View>
           </View>

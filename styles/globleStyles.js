@@ -5,6 +5,10 @@ const globleStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1C1C23" 
   },
+  loading:{
+    justifyContent: 'center',
+    height: '60%'
+  }
 });
 
 export default globleStyles;

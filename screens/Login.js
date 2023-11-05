@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
 
       <View style={loginStyles.formContainer}>
         {isLoading ? (
-          <View style={loginStyles.loading}>
+          <View style={globleStyles.loading}>
             <ActivityIndicator 
             size={100}
             color="#F04E22"
