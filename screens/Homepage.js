@@ -15,6 +15,7 @@ import Modal from "react-native-modal";
 import assignmentStyles from "../styles/assignmentStyles";
 import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const mockUpData = [
   {
@@ -49,62 +50,63 @@ const mockUpData = [
 
 const Homepage = () => {
   return (
-    <View style={customStyles.pageBackground}>
-      <View
-        style={[
-          customStyles.customBox1,
-          { borderTopLeftRadius: 0, borderTopRightRadius: 0, height: 382 },
-        ]}
-      >
+    <SafeAreaView>
+      <View style={customStyles.pageBackground}>
         <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <View style={customStyles.pageTitleContainer}>
-            <Text style={customStyles.pageTitle}>Calendar</Text>
-            <TouchableOpacity
-              style={customStyles.notficationIcon}
-              onPress={() => console.log("Notfication Pressed")}
-            >
-              <Image source={require("../assets/icons/bell.png")}></Image>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Text
           style={[
-            customStyles.h4,
-            { textAlign: "left", marginLeft: 24, marginBottom: 17 },
+            customStyles.customBox1,
+            { borderTopLeftRadius: 0, borderTopRightRadius: 0, height: 382 },
           ]}
         >
-          Schedule
-        </Text>
-        <Calendar></Calendar>
-        <EventList></EventList>
-      </View>
-
-      <View style={assignmentStyles.container}>
-        <AssignmentHeader number={5} />
-        <View style={assignmentStyles.list}>
-          <FlatList
-            data={mockUpData}
-            renderItem={({ item }) => (
-              <AssignmentBox
-                iconColor={item.color}
-                code={item.code}
-                subject={item.subject}
-                task={item.task}
-                dueDate={item.dueDate}
-              />
-            )}
-          />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            <View style={customStyles.pageTitleContainer}>
+              <Text style={customStyles.pageTitle}>Calendar</Text>
+              <TouchableOpacity
+                style={customStyles.notficationIcon}
+                onPress={() => console.log("Notfication Pressed")}
+              >
+                <Image source={require("../assets/icons/bell.png")}></Image>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <Text
+            style={[
+              customStyles.h4,
+              { textAlign: "left", marginLeft: 24, marginBottom: 17 },
+            ]}
+          >
+            Schedule
+          </Text>
+          <Calendar></Calendar>
+          <EventList></EventList>
         </View>
-        
+
+        <View style={assignmentStyles.container}>
+          <AssignmentHeader number={5} />
+          <View style={assignmentStyles.list}>
+            <FlatList
+              data={mockUpData}
+              renderItem={({ item }) => (
+                <AssignmentBox
+                  iconColor={item.color}
+                  code={item.code}
+                  subject={item.subject}
+                  task={item.task}
+                  dueDate={item.dueDate}
+                />
+              )}
+            />
+          </View>
+        </View>
       </View>
       
-    </View>
+    </SafeAreaView>
   );
 };
 
