@@ -98,7 +98,7 @@ const customStyles = new StyleSheet.create({
     eventWidget:{ //Each box for the event details
         display: 'flex',
         flexDirection: 'row',
-        width: 327,
+        width: '90%',
         paddingVertical: 12,
         paddingHorizontal: 13,
         marginBottom: 8,
