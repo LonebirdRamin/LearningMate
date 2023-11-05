@@ -11,6 +11,9 @@ import customStyles from "../styles/customStyles";
 import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
 import Modal from "react-native-modal";
+import assignmentStyles from "../styles/assignmentStyles";
+import AssignmentHeader from "../components/Homepage/AssignmentHeader";
+import AssignmentBox from "../components/Homepage/AssignmentBox";
 
 const Homepage = () => {
   return (
@@ -48,6 +51,13 @@ const Homepage = () => {
         </Text>
         <Calendar></Calendar>
         <EventList></EventList>
+      </View >
+
+      <View style={assignmentStyles.container}>
+          <AssignmentHeader number={5}/>
+          <View style={assignmentStyles.list}>
+            <AssignmentBox />
+          </View>
       </View>
     </View>
   );
