@@ -3,8 +3,8 @@ import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
 
 const AssignmentDetail = ({
-  subject = "Sofrware Engineering",
-  task = "Lab7: Refactoring",
+  subject,
+  task
 }) => {
   return (
     <View style={assignmentStyles.detailContainer}>

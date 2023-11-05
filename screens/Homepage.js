@@ -5,6 +5,7 @@ import {
   Pressable,
   TouchableOpacity,
   BackHandler,
+  FlatList,
 } from "react-native";
 import React from "react";
 import customStyles from "../styles/customStyles";
@@ -14,6 +15,37 @@ import Modal from "react-native-modal";
 import assignmentStyles from "../styles/assignmentStyles";
 import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
+
+const mockUpData = [
+  {
+    color: "red",
+    code: "CPE111",
+    subject: "HHAHAH",
+    task: "BLALBALA",
+    dueDate: "11 Fuc xxxx",
+  },
+  {
+    color: "green",
+    code: "CPE110",
+    subject: "Hoooo",
+    task: "EIEIEIE",
+    dueDate: "11 Fuck x0x0",
+  },
+  {
+    color: "blue",
+    code: "CPE123",
+    subject: "Huhhhh",
+    task: "Lab kuiay",
+    dueDate: "69 Lucifer xxx",
+  },
+  {
+    color: "pink",
+    code: "CPE191",
+    subject: "Police",
+    task: "Fuck off",
+    dueDate: "19 Jane 2003",
+  },
+];
 
 const Homepage = () => {
   return (
@@ -51,14 +83,27 @@ const Homepage = () => {
         </Text>
         <Calendar></Calendar>
         <EventList></EventList>
-      </View >
+      </View>
 
       <View style={assignmentStyles.container}>
-          <AssignmentHeader number={5}/>
-          <View style={assignmentStyles.list}>
-            <AssignmentBox />
-          </View>
+        <AssignmentHeader number={5} />
+        <View style={assignmentStyles.list}>
+          <FlatList
+            data={mockUpData}
+            renderItem={({ item }) => (
+              <AssignmentBox
+                iconColor={item.color}
+                code={item.code}
+                subject={item.subject}
+                task={item.task}
+                dueDate={item.dueDate}
+              />
+            )}
+          />
+        </View>
+        
       </View>
+      
     </View>
   );
 };

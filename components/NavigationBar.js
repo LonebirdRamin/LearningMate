@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions, } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,27 +11,28 @@ import ProfileScreen from "../screens/ProfileScreen";
 import LearningZoneScreen from "../screens/LearningZoneScreen";
 import PlannerScreen from "../screens/PlannerScreen";
 
+const height = Dimensions.get("screen").height
+
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: {
     position: "absolute",
-    bottom: 16,
+    bottom: height*0.0001,
     left: 23,
     right: 23,
     backgroundColor: "#4E4E61",
     marginBottom: 16,
     borderRadius: 25,
     elevation: 0,
-    height: 70,
+    height: "8%",
   },
 };
 
 const NavigationBar = () => {
   const handleImage = () => {};
   return (
-    
       <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
         <Tab.Screen
           name="Planner"

@@ -5,12 +5,12 @@ import IconBox from './IconBox'
 import AssignmentDetail from './AssignmentDetail'
 import DueDate from './DueDate'
 
-const AssignmentBox = () => {
+const AssignmentBox = ({iconColor="red", code="CPE000", subject="Software Engineering", task="Lab7: Refactoring"}) => {
   return (
     <View style={assignmentStyles.box}>
         <View style={assignmentStyles.upperPart}>
-            <IconBox/>
-            <AssignmentDetail/>
+            <IconBox color={iconColor} name={code}/>
+            <AssignmentDetail subject={subject} task={task}/>
         </View>
         <DueDate/>
     </View>
