@@ -12,7 +12,6 @@ const LandingStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      
         <Stack.Screen
           name="Landing"
           component={Landing}
@@ -27,7 +26,7 @@ const LandingStack = () => {
             animation: "slide_from_bottom",
           }}
         />
-        
+
         <Stack.Screen
           name="Login"
           component={Login}
@@ -41,11 +40,8 @@ const LandingStack = () => {
         <Stack.Screen
           name="Homepage"
           component={NavigationBar}
-          options={{headerShown: false, gestureEnabled: false}}
+          options={{ headerShown: false, gestureEnabled: false }}
         />
-
-        
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
