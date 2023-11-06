@@ -7,7 +7,7 @@ import {
   BackHandler,
   FlatList,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import customStyles from "../styles/customStyles";
 import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
@@ -16,6 +16,7 @@ import assignmentStyles from "../styles/assignmentStyles";
 import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SeeAllModal from "../components/Eventlist/SeeAllModal";
 
 const mockUpData = [
   {
@@ -48,7 +49,33 @@ const mockUpData = [
   },
 ];
 
+const events = [
+  {
+    'code':'CPE123',
+    'name':'Aerospace engineering',
+    'time':'00:00 - 05:00',
+  },
+  {
+    'code':'CPE456',
+    'name':'Chicken engineering',
+    'time':'06:00 - 07:00',
+  },
+  {
+    'code':'CPE888',
+    'name':'noidea',
+    'time':'12:00 - 13:00',
+  },
+  {
+    'code':'CPE015',
+    'name':'Kitchen simulation',
+    'time':'20:00 - 21:00',
+  },
+]
+
+
 const Homepage = () => {
+  const [seeAll,setSeeAll] = useState(false)
+
   return (
     <SafeAreaView>
       <View style={customStyles.pageBackground}>
@@ -84,7 +111,19 @@ const Homepage = () => {
             Schedule
           </Text>
           <Calendar></Calendar>
-          <EventList></EventList>
+          <EventList events={events}></EventList>
+          
+          <View style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
+            <TouchableOpacity onPress={()=>setSeeAll(!seeAll)}>
+              <Text style={customStyles.bodySmall}>See all...</Text>
+            </TouchableOpacity>
+          </View>
+
+          <SeeAllModal
+          data={events}
+          isVisible={seeAll}
+          toggleModal={setSeeAll}
+          ></SeeAllModal>
         </View>
 
         <View style={assignmentStyles.container}>
