@@ -7,16 +7,20 @@ const AppButton = ({
   textColor = "black",
   height = 50,
   handlePress,
-  style={}
+  style = {},
 }) => {
   return (
-    <TouchableOpacity style={{ 
-      borderRadius: height/2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: height, backgroundColor: bgColor? "#F04E22":"#393A3F", ...style }}
+    <TouchableOpacity
+      style={{
+        borderRadius: height / 2,
+        justifyContent: "center",
+        alignItems: "center",
+        height: height,
+        backgroundColor: bgColor ? "#F04E22" : "#393A3F",
+        ...style,
+      }}
       onPress={handlePress}
-      >
+    >
       <Text style={{ color: textColor }}>{text}</Text>
     </TouchableOpacity>
     // <Text style={{color: 'white'}}>test</Text>
