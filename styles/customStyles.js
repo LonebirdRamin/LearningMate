@@ -89,16 +89,17 @@ const customStyles = new StyleSheet.create({
     },
 
     eventsContainer:{ //Wrapper for the 2 upcoming events under the calendar
-        marginTop: 28,
+        marginTop: 30,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 0.96,
     },
 
     eventWidget:{ //Each box for the event details
         display: 'flex',
         flexDirection: 'row',
-        width: '90%',
+        width: '100%',
         paddingVertical: 12,
         paddingHorizontal: 13,
         marginBottom: 8,
