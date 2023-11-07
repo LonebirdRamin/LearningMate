@@ -1,4 +1,4 @@
-import { firebaseAuth } from '../database/firebaseDB'
+import { firebaseAuth } from '../../database/firebaseDB'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native';
 

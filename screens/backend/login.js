@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+import querySchedule from './querySchedule'; // Make sure it's a default import
+import ScheduleScreen from './scheduleScreens';
+import axios from 'axios';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -16,19 +19,35 @@ const loginScreen = () => {
     const auth = firebaseAuth;
     const navigation = useNavigation(); // Add this line to get the navigation object
 
+// const signIn = async () => {
+//   setLoading(true);
+//   try {
+//     const response = await signInWithEmailAndPassword(auth, email, password)
+//     console.log('---------------LOGIN RESPONSE:   '+ response.json);
+//     navigation.navigate('AddUserScreen');
+//   } catch (error) {
+//     console.log(error);
+//     alert('Sign in fail!' + error.message);
+//   } finally {
+//     setLoading(false);
+//   }
+// }
+
 const signIn = async () => {
   setLoading(true);
   try {
-    const response = await signInWithEmailAndPassword(auth, email, password)
-    console.log(response);
-    navigation.navigate('AddUserScreen');
+    //await querySchedule(email, setLoading); // Call querySchedule with the email parameter
+    navigation.navigate('ScheduleScreen', { email: email });
   } catch (error) {
-    console.log(error);
-    alert('Sign in fail!' + error.message);
+    console.error(error);
+    alert('Query schedule failed!' + error.message);
   } finally {
     setLoading(false);
   }
-}
+};
+
+
+
 
 const signUp = async () => {
   setLoading(true);
@@ -41,7 +60,6 @@ const signUp = async () => {
     };
 
     await addUserToFirestore(response.user.uid, response.user.email);
-    await addUserToMySQL();
 
     alert('Check your email!');
   } catch (error) {

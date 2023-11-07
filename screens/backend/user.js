@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, ActivityIndicator, View, Text } from 'react-native'
 import { ListItem, Badge } from 'react-native-elements'
-import { db } from '../database/firebaseDB'
+import { db } from '../../database/firebaseDB'
 import { getFirestore, collection, query, onSnapshot } from 'firebase/firestore'
 
 class User extends Component {
