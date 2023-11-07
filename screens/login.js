@@ -11,6 +11,8 @@ import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
 import querySchedule from './querySchedule'; // Make sure it's a default import
 import ScheduleScreen from './scheduleScreens';
 import axios from 'axios';
+import departmentList from './departmentList';
+import AssignmentPage from './assignmentGuide';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -36,8 +38,37 @@ const loginScreen = () => {
 const signIn = async () => {
   setLoading(true);
   try {
-    //await querySchedule(email, setLoading); // Call querySchedule with the email parameter
-    navigation.navigate('ScheduleScreen', { email: email });
+    console.log(email);
+    const response = await fetch(`http://10.4.13.59:5001/api/checkRole?email=${email}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const result = await response.json();
+    console.log("ROLE RESULT : " + result[0].role);
+    const userRole = result[0].role;
+
+    if( userRole === 'student' ) {
+      const response = await fetch(`http://10.4.13.59:5001/api/getStudentSchedule?email=${email}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const resultFinal = await response.json();
+      //console.log("RESULT FINAL ::::: " + resultFinal[0].class_id);
+      console.log("Schedule Result : " + resultFinal);
+      // Pass the result as a parameter when navigating
+      navigation.navigate('departmentList', { result: resultFinal });
+    } else {
+      const response = await fetch(`http://10.4.13.59:5001/api/getTeacherAssignment?email=${email}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const resultFinal = await response.json();
+      console.log("Schedule Result : " + resultFinal);
+      // Pass the result as a parameter when navigating
+      navigation.navigate('AssignmentPage', { result: resultFinal });
+    }
+
+
   } catch (error) {
     console.error(error);
     alert('Query schedule failed!' + error.message);
@@ -45,7 +76,6 @@ const signIn = async () => {
     setLoading(false);
   }
 };
-
 
 
 

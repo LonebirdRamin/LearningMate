@@ -164,6 +164,23 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
   );
 });
 
+app.post("/api/createAssignment", (req, res) => {
+  
+  const { classId, assignmentName, information, endDate } = req.body;
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+
+  const sql = "INSERT INTO assignment ( '', 'classId', 'assignmentName', 'information', 'formattedDate', 'endDate' ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+  connection.query(sql, ['', classId, assignmentName, information, formattedDate, endDate], (err, results) => {
+    if (err) {
+      console.log("Error while inserting a user into the database", err);
+      return res.status(400).json({ message: "Failed to create a new user." });
+    }
+    return res.status(201).json({ message: "New user successfully created!" });
+  });
+})
+
 
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')

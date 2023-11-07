@@ -11,6 +11,7 @@ import UserDetail from './screens/userDetail';
 import loginScreen from './screens/login';
 import departmentList from './screens/departmentList';
 import ScheduleScreen from './screens/scheduleScreens';
+import AssignmentPage from './screens/assignmentGuide';
 
 const Stack = createStackNavigator();
 
@@ -32,15 +33,20 @@ function MyStack() {
         },
       }}
       >
-        {/* <Stack.Screen
-          name="departmentList"
-          component={departmentList}
-          options={{title: 'Department List'}}
-        /> */}
         <Stack.Screen
           name="loginScreen"
           component={loginScreen}
           options={{title: 'Register/Login'}}
+        />
+        <Stack.Screen
+          name="departmentList"
+          component={departmentList}
+          options={{title: 'Department List'}}
+        />
+        <Stack.Screen
+          name="AssignmentPage"
+          component={AssignmentPage}
+          options={{title: 'Assignment Page'}}
         />
         <Stack.Screen
           name="AddUserScreen"
