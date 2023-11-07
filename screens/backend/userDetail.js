@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, ActivityIndicator, View, Text, Alert } from 'react-native'
 import { ListItem, Badge } from 'react-native-elements'
-import { db } from '../database/firebaseDB'
+import { db } from '../../database/firebaseDB'
 import { getFirestore, collection, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { ThemeProvider, Button, Input, Image } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';

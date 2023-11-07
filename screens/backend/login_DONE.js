@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, ActivityIndicator, SafeAreaViewBase } from 'react-native'
 import React, { useState } from 'react'
-import { firebaseAuth } from '../database/firebaseDB'
+import { firebaseAuth } from '../../database/firebaseDB'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 import { ThemeProvider, Button, Input, Image } from 'react-native-elements'
 import { AddUserScreen } from './addUser'
@@ -105,7 +105,7 @@ const addUserToFirestore = async (uid, email) => {
   )
 }
 
-export default loginScreenCopy;
+export default loginScreen;
 
 const styles = StyleSheet.create({
     container: {
