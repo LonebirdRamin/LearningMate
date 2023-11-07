@@ -1,24 +1,17 @@
 import { Dimensions, StyleSheet } from "react-native";
 
 const modalStyles = StyleSheet.create({
-    
-    modal:
-    {
-        
+  modal: {
     justifyContent: "flex-end",
     margin: 0,
-    
-    },
+  },
   modalView: {
-    
     backgroundColor: "#353542",
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     bottom: 1,
     padding: 35,
     alignItems: "center",
-    
-    
   },
   headText: {
     fontSize: 25,
@@ -39,24 +32,23 @@ const modalStyles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    height: '40%',
+    height: "40%",
     backgroundColor: "#353542",
     paddingTop: 12,
     paddingHorizontal: 12,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     paddingBottom: 50,
-
   },
   center: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  wrapper:{
-    width: '100%',
-    height: '100%',
-    justifyContent: 'space-around',
+  wrapper: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "space-around",
   },
   barIcon: {
     width: 60,
@@ -65,11 +57,10 @@ const modalStyles = StyleSheet.create({
     borderRadius: 3,
   },
   text: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: "white",
     fontSize: 24,
-    textAlign: 'center'
-    
+    textAlign: "center",
   },
   btnContainer: {
     display: "flex",

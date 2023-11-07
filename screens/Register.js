@@ -25,9 +25,9 @@ const Register = ({ navigation }) => {
   const [conPass, setConPass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [validPass, setValidPass] = useState(false);
-  const handleLoad=(state)=>{
-    setIsLoading(state)
-  }
+  const handleLoad = (state) => {
+    setIsLoading(state);
+  };
   const handleEmail = (value) => {
     setEmail(value);
   };
@@ -45,11 +45,10 @@ const Register = ({ navigation }) => {
   };
 
   const changePage = () => {
-    navigation.reset({ 
+    navigation.reset({
       index: 0,
       routes: [{ name: "Homepage" }],
     });
-
   };
 
   return (
@@ -57,15 +56,11 @@ const Register = ({ navigation }) => {
       <LogoHeader text="Register" />
       <View style={registerStyles.formContainer}>
         {isLoading ? (
-          <View style={[globleStyles.loading, {height: '80%'}]}>
-            <ActivityIndicator 
-            size={100}
-              color="#F04E22"
-              />
-
+          <View style={[globleStyles.loading, { height: "80%" }]}>
+            <ActivityIndicator size={100} color="#F04E22" />
           </View>
         ) : (
-          <View style={{height: "100%"}}>
+          <View style={{ height: "100%" }}>
             <View style={registerStyles.upperForm}>
               <FormText
                 text="Email address"
@@ -73,12 +68,11 @@ const Register = ({ navigation }) => {
                 type="email"
               />
               <View>
-              <FormText
-                text="Password (At least 6 letters)"
-                protect={true}
-                formChange={handlePassword}
-              />
-              
+                <FormText
+                  text="Password (At least 6 letters)"
+                  protect={true}
+                  formChange={handlePassword}
+                />
               </View>
               <FormText
                 text="Confirm password"
@@ -106,13 +100,13 @@ const Register = ({ navigation }) => {
                     Alert.alert("Register", "Please fill in password", [
                       { text: "Ok" },
                     ]);
-                  } else if(password.length < 6)
-                  {
-                    Alert.alert("Register", "Password should contain at least 6 letters", [
-                      { text: "Ok" },
-                    ]);
-                  }
-                  else if (password !== conPass) {
+                  } else if (password.length < 6) {
+                    Alert.alert(
+                      "Register",
+                      "Password should contain at least 6 letters",
+                      [{ text: "Ok" }]
+                    );
+                  } else if (password !== conPass) {
                     Alert.alert("Register", "Password is not the same", [
                       { text: "Ok" },
                     ]);

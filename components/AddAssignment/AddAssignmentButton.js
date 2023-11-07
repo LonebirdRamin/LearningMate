@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Pressable,
   Text,
@@ -7,24 +7,38 @@ import {
   Image,
   SafeAreaView,
 } from "react-native";
-import customStyles from "../styles/customStyles";
+import FillAssignmentModal from "./FillAssignmentModal";
+import FormAssignment from "./FormAssignment";
 
-export const AddAssignmentButton = () => {
+export const AddAssignmentButton = ({ handlePress }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleModalVisble = (value) => {
+    setModalVisible(value);
+  };
+  const handleModalInvisible = () => {
+    setModalVisible(!modalVisible);
+  };
+
   return (
     <SafeAreaView style={styles.mainView}>
       <View style={styles.greyLine}>
         <Pressable
           style={styles.addAssignmentBut}
-          onPress={() => console.log("Clicked!")}
+          onPress={() => setModalVisible(true)}
         >
           <Image
-            source={require("../assets/icons/plusIcon.png")}
+            source={require("../../assets/icons/plusIcon.png")}
             style={{
               zIndex: 2,
             }}
           />
         </Pressable>
       </View>
+
+      <FillAssignmentModal
+        isVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      ></FillAssignmentModal>
     </SafeAreaView>
   );
 };

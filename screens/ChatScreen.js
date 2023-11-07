@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { AddAssignmentButton } from "../components/AddAssignmentButton";
+import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChatScreen = () => {
@@ -13,7 +13,7 @@ const ChatScreen = () => {
       >
         Test add AddAssignmentButton
       </Text>
-      <AddAssignmentButton></AddAssignmentButton>
+      <AddAssignmentButton />
     </SafeAreaView>
   );
 };
