@@ -2,7 +2,6 @@ var express = require('express')
 var cors = require('cors')
 var app = express()
 
-// Kong IP: http://192.168.1.100:5001/api/
 
 // get the client
 const mysql = require('mysql2');
