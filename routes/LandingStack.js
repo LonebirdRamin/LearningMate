@@ -6,13 +6,14 @@ import Landing from "../screens/Landing";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import NavigationBar from "../components/NavigationBar";
+import NavigationBarTeacher from "../components/NavigationBarTeacher";
 const Stack = createNativeStackNavigator();
 
 const LandingStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Landing"
           component={Landing}
           options={{ headerShown: false }}
@@ -35,13 +36,20 @@ const LandingStack = () => {
             // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
-        /> */}
+        />
 
         <Stack.Screen
           name="Homepage"
           component={NavigationBar}
           options={{ headerShown: false, gestureEnabled: false }}
         />
+
+        <Stack.Screen
+          name="HomepageTeacher"
+          component={NavigationBarTeacher}
+          options={{ headerShown: false, gestureEnabled: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

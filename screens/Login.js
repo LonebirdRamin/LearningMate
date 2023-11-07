@@ -32,10 +32,10 @@ const Login = ({ navigation }) => {
     setPassword(value);
   };
 
-  const changePage = () => {
+  const changePage = (value) => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Homepage" }],
+      routes: [{ name: value }],
     });
   };
 

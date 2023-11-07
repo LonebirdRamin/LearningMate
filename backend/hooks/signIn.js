@@ -16,7 +16,23 @@ const signIn = async (email, password, navigation, loadState) => {
       email,
       password
     );
-    navigation();
+    const info = await fetch(
+      `http://192.168.1.100:5001/api/checkRole?email=${email}`
+    );
+    if (!info.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const convertedInfo = await info.json();
+    const userRole = convertedInfo[0].role;
+    if (userRole === "student") {
+      navigation("Homepage");
+    }
+    else{
+      navigation("HomepageTeacher");
+
+
+    }
+    // navigation();
   } catch (error) {
     Alert.alert("Sign in fail", "Please check your email and password", [
       { text: "Ok" },
