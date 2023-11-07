@@ -15,7 +15,8 @@ const signIn = async (email, password, navigation, loadState) => {
       firebaseAuth,
       email,
       password
-    );
+      );
+      
     const info = await fetch(
       `http://192.168.1.100:5001/api/checkRole?email=${email}`
     );
@@ -25,12 +26,10 @@ const signIn = async (email, password, navigation, loadState) => {
     const convertedInfo = await info.json();
     const userRole = convertedInfo[0].role;
     if (userRole === "student") {
-      navigation("HomepageStudent");
+      navigation("HomepageStudent", email);
     }
     else{
-      navigation("HomepageTeacher");
-
-
+      navigation("HomepageTeacher", email);
     }
     // navigation();
   } catch (error) {

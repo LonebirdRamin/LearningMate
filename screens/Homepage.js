@@ -17,6 +17,7 @@ import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
+import { useRoute } from "@react-navigation/native";
 
 const mockUpData = [
   {
@@ -73,9 +74,11 @@ const events = [
 ]
 
 
-const Homepage = () => {
+const Homepage = ({navigation}) => {
   const [seeAll,setSeeAll] = useState(false)
-
+  const route = useRoute();
+  const email = route.params;
+  console.log(email.email)
   return (
     <SafeAreaView>
       <View style={customStyles.pageBackground}>

@@ -73,7 +73,7 @@ const events = [
 ]
 
 
-const Homepage = () => {
+const HomepageTeacher = () => {
   const [seeAll,setSeeAll] = useState(false)
 
   return (
@@ -149,4 +149,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default HomepageTeacher;
