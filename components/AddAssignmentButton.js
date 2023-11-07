@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 import customStyles from "../styles/customStyles";
 
