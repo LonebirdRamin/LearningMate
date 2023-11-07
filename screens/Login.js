@@ -35,7 +35,7 @@ const Login = ({ navigation }) => {
   const changePage = () => {
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Homepage' }],
+      routes: [{ name: "Homepage" }],
     });
   };
 
@@ -46,10 +46,7 @@ const Login = ({ navigation }) => {
       <View style={loginStyles.formContainer}>
         {isLoading ? (
           <View style={globleStyles.loading}>
-            <ActivityIndicator 
-            size={100}
-            color="#F04E22"
-            />
+            <ActivityIndicator size={100} color="#F04E22" />
           </View>
         ) : (
           <View>
@@ -86,11 +83,11 @@ const Login = ({ navigation }) => {
                       "Please fill in your email and password",
                       [{ text: "Ok" }]
                     );
-                  } else if (email === "") {
+                  } else if (password === "") {
                     Alert.alert("Login", "Please fill in your password", [
                       { text: "Ok" },
                     ]);
-                  } else if (password === "") {
+                  } else if (email === "") {
                     Alert.alert("Login", "Please fill in your email", [
                       { text: "Ok" },
                     ]);
