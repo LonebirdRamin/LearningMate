@@ -25,7 +25,7 @@ const signIn = async (email, password, navigation, loadState) => {
     const convertedInfo = await info.json();
     const userRole = convertedInfo[0].role;
     if (userRole === "student") {
-      navigation("Homepage");
+      navigation("HomepageStudent");
     }
     else{
       navigation("HomepageTeacher");

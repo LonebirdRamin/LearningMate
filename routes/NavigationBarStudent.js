@@ -30,7 +30,7 @@ const screenOptions = {
   },
 };
 
-const NavigationBar = () => {
+const NavigationBarStudent = () => {
   const handleImage = () => {};
   return (
       <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
@@ -159,4 +159,4 @@ const NavigationBar = () => {
   );
 };
 
-export default NavigationBar;
+export default NavigationBarStudent;

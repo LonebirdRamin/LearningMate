@@ -5,8 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Landing from "../screens/Landing";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import NavigationBar from "../components/NavigationBar";
-import NavigationBarTeacher from "../components/NavigationBarTeacher";
+import NavigationBarStudent from "./NavigationBarStudent";
+import NavigationBarTeacher from "./NavigationBarTeacher";
 const Stack = createNativeStackNavigator();
 
 const LandingStack = () => {
@@ -39,8 +39,8 @@ const LandingStack = () => {
         />
 
         <Stack.Screen
-          name="Homepage"
-          component={NavigationBar}
+          name="HomepageStudent"
+          component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
         />
 
