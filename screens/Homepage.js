@@ -51,30 +51,29 @@ const mockUpData = [
 
 const events = [
   {
-    'code':'CPE123',
-    'name':'Aerospace engineering',
-    'time':'00:00 - 05:00',
+    code: "CPE123",
+    name: "Aerospace engineering",
+    time: "00:00 - 05:00",
   },
   {
-    'code':'CPE456',
-    'name':'Chicken engineering',
-    'time':'06:00 - 07:00',
+    code: "CPE456",
+    name: "Chicken engineering",
+    time: "06:00 - 07:00",
   },
   {
-    'code':'CPE888',
-    'name':'noidea',
-    'time':'12:00 - 13:00',
+    code: "CPE888",
+    name: "noidea",
+    time: "12:00 - 13:00",
   },
   {
-    'code':'CPE015',
-    'name':'Kitchen simulation',
-    'time':'20:00 - 21:00',
+    code: "CPE015",
+    name: "Kitchen simulation",
+    time: "20:00 - 21:00",
   },
-]
-
+];
 
 const Homepage = () => {
-  const [seeAll,setSeeAll] = useState(false)
+  const [seeAll, setSeeAll] = useState(false);
 
   return (
     <SafeAreaView>
@@ -112,17 +111,23 @@ const Homepage = () => {
           </Text>
           <Calendar></Calendar>
           <EventList events={events}></EventList>
-          
-          <View style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
-            <TouchableOpacity onPress={()=>setSeeAll(!seeAll)}>
+
+          <View
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "row",
+            }}
+          >
+            <TouchableOpacity onPress={() => setSeeAll(!seeAll)}>
               <Text style={customStyles.bodySmall}>See all...</Text>
             </TouchableOpacity>
           </View>
 
           <SeeAllModal
-          data={events}
-          isVisible={seeAll}
-          toggleModal={setSeeAll}
+            data={events}
+            isVisible={seeAll}
+            toggleModal={setSeeAll}
           ></SeeAllModal>
         </View>
 
@@ -144,7 +149,6 @@ const Homepage = () => {
           </View>
         </View>
       </View>
-      
     </SafeAreaView>
   );
 };
