@@ -95,7 +95,6 @@ const Homepage = ({ navigation }) => {
   const [assignNum, setAssignNum] = useState("-");
   useEffect(()=>{
     queryAssignment(email, setIsAssignmentLoading, setAssignmentData, setAssignNum);
-
   },[]);
   // End - manage about assignment
 
@@ -108,9 +107,6 @@ const Homepage = ({ navigation }) => {
 
     fetchData();
   }, [day]);
-
- 
-
 
   return (
     <SafeAreaView>
@@ -144,7 +140,7 @@ const Homepage = ({ navigation }) => {
                 <Text style={customStyles.pageTitle}>Calendar</Text>
                 <TouchableOpacity
                   style={customStyles.notficationIcon}
-                  onPress={() => console.log("Notfication Pressed")}
+                  onPress={() => navigation.navigate('Notification')}
                 >
                   <Image source={require("../assets/icons/bell.png")}></Image>
                 </TouchableOpacity>
