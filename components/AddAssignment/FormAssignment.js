@@ -67,6 +67,10 @@ const FormAssignment = () => {
         <Text style={styles.textFile}> Attach file(s) </Text>
       </TouchableOpacity>
 
+      <View style={styles.inputFile}>
+        <Text></Text>
+      </View>
+
       <Text>{console.log("Name: " + textName)}</Text>
       <Text>{console.log("Information: " + textInformation)}</Text>
     </View>
