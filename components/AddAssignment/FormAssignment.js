@@ -57,7 +57,9 @@ const FormAssignment = () => {
       />
       <TouchableOpacity
         style={styles.inputFile}
-        onPress={handleDocumentSelection}
+        onPress={() => {
+          console.log("Clicked!");
+        }}
         activeOpacity={0.5}
       >
         <Image
