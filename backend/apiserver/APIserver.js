@@ -151,7 +151,7 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
   console.log("Query Student Assignment");
   const email = req.query.email;
   connection.query(
-    'SELECT a.class_id, a.assignment_name, a.assignment_publish_date, a.assignment_due_date FROM assignment AS a JOIN class_student AS cl ON cl.class_id = a.class_id JOIN student AS t ON t.student_id = cl.student_id WHERE t.academic_email = ?;',
+    'SELECT a.class_id, c.class_name, a.assignment_name, a.assignment_publish_date, a.assignment_due_date FROM assignment AS a JOIN class_student AS cl ON cl.class_id = a.class_id JOIN student AS t ON t.student_id = cl.student_id JOIN class AS c ON c.class_id = cl.class_id WHERE t.academic_email = ?;',
     [email],
     function(err, teacherResults, fields) {
       if (err) {

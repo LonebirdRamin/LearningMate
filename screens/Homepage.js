@@ -7,6 +7,7 @@ import {
   BackHandler,
   FlatList,
   ActivityIndicator,
+  Dimensions,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import customStyles from "../styles/customStyles";
@@ -21,7 +22,9 @@ import SeeAllModal from "../components/Eventlist/SeeAllModal";
 import { useRoute } from "@react-navigation/native";
 import DataContext from "../routes/DataContext";
 import querySchedule from "../backend/hooks/querySchedule";
-import moment  from 'moment';
+import moment from "moment";
+import queryAssignment from "../backend/hooks/queryAssignmentStudent";
+const height = Dimensions.get("screen").height;
 
 const mockUpData = [
   {
@@ -77,103 +80,130 @@ const mockUpData = [
 //   },
 // ]
 
+const Homepage = ({ navigation }) => {
+  const [seeAll, setSeeAll] = useState(false);
+  const email = useContext(DataContext); // email from login
 
-const Homepage = ({navigation}) => {
-  const [seeAll,setSeeAll] = useState(false)
-  const email = useContext(DataContext) // email from login
-  
-  const [isloading,setIsLoading] = useState(true)
-  const [schedule,setSchedule] = useState(null)
+  const [isloading, setIsLoading] = useState(true);
+  const [schedule, setSchedule] = useState(null);
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
-  const [day,setDay] = useState(moment().format('dddd')) //Day such as Wednesday
+  const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
 
-  
-
+  // Start - manage about assignment
+  const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
+  const [assignmentData, setAssignmentData] = useState([]);
+  const [assignNum, setAssignNum] = useState("-");
   useEffect(()=>{
-    const fetchData = async ()=>{
-    const data = await querySchedule(email,setIsLoading,day)
-    setSchedule(data)
-    }
+    queryAssignment(email, setIsAssignmentLoading, setAssignmentData, setAssignNum);
 
-    fetchData()
-  },[day])
+  },[]);
+  // End - manage about assignment
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await querySchedule(email, setIsLoading, day);
+      setSchedule(data);
+    };
+
+    fetchData();
+  }, [day]);
+
+ 
+
 
   return (
     <SafeAreaView>
-      { isloading ? 
-      (<View style={[customStyles.pageBackground,{display:'flex',justifyContent:'center'}]}>
-        <View style={globleStyles.loading}>
-          <ActivityIndicator size={100} color="#F04E22"></ActivityIndicator>
-        </View>
-      </View>):
-      (<View style={customStyles.pageBackground}>
+      {isloading ? (
         <View
           style={[
-            customStyles.customBox1,
-            { borderTopLeftRadius: 0, borderTopRightRadius: 0, height: 382 },
+            customStyles.pageBackground,
+            { display: "flex", justifyContent: "center" },
           ]}
         >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <View style={customStyles.pageTitleContainer}>
-              <Text style={customStyles.pageTitle}>Calendar</Text>
-              <TouchableOpacity
-                style={customStyles.notficationIcon}
-                onPress={() => console.log("Notfication Pressed")}
-              >
-                <Image source={require("../assets/icons/bell.png")}></Image>
-              </TouchableOpacity>
-            </View>
+          <View style={globleStyles.loading}>
+            <ActivityIndicator size={100} color="#F04E22"></ActivityIndicator>
           </View>
-          <Text
+        </View>
+      ) : (
+        <View style={customStyles.pageBackground}>
+          <View
             style={[
-              customStyles.h4,
-              { textAlign: "left", marginLeft: 24, marginBottom: 17 },
+              customStyles.customBox1,
+              { borderTopLeftRadius: 0, borderTopRightRadius: 0, height: 382 },
             ]}
           >
-            Schedule
-          </Text>
-          <Calendar day={day} setDay={setDay}></Calendar>
-          <EventList data={schedule}></EventList>
-          
-          <View style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
-            <TouchableOpacity onPress={()=>setSeeAll(!seeAll)}>
-              <Text style={customStyles.bodySmall}>See all...</Text>
-            </TouchableOpacity>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <View style={customStyles.pageTitleContainer}>
+                <Text style={customStyles.pageTitle}>Calendar</Text>
+                <TouchableOpacity
+                  style={customStyles.notficationIcon}
+                  onPress={() => console.log("Notfication Pressed")}
+                >
+                  <Image source={require("../assets/icons/bell.png")}></Image>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <Text
+              style={[
+                customStyles.h4,
+                { textAlign: "left", marginLeft: 24, marginBottom: 17 },
+              ]}
+            >
+              Schedule
+            </Text>
+            <Calendar day={day} setDay={setDay}></Calendar>
+            <EventList data={schedule}></EventList>
+
+            <View
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <TouchableOpacity onPress={() => setSeeAll(!seeAll)}>
+                <Text style={customStyles.bodySmall}>See all...</Text>
+              </TouchableOpacity>
+            </View>
+
+            <SeeAllModal
+              data={schedule}
+              isVisible={seeAll}
+              toggleModal={setSeeAll}
+            ></SeeAllModal>
           </View>
-
-          <SeeAllModal
-          data={schedule}
-          isVisible={seeAll}
-          toggleModal={setSeeAll}
-          ></SeeAllModal>
-        </View>
-
-        <View style={assignmentStyles.container}>
-          <AssignmentHeader number={5} />
-          <View style={assignmentStyles.list}>
-            <FlatList
-              data={mockUpData}
-              renderItem={({ item }) => (
-                <AssignmentBox
-                  iconColor={item.color}
-                  code={item.code}
-                  subject={item.subject}
-                  task={item.task}
-                  dueDate={item.dueDate}
+          <View style={assignmentStyles.container}>
+              <AssignmentHeader number={assignNum} />
+              <View style={assignmentStyles.list}>
+          {isAssignmentLoading ? (
+            <View style={[assignmentStyles.list, {height: height>850? height*0.25: height*0.2, justifyContent: 'center'}]}>
+              <ActivityIndicator size={50} color="#F04E22"/>
+            </View>
+          ) : (
+                <FlatList
+                  data={assignmentData}
+                  renderItem={({ item }) => (
+                    <AssignmentBox
+                      code={item.class_id}
+                      subject={item.class_name}
+                      task={item.assignment_name}
+                      dueDate={item.assignment_due_date}
+                    />
+                  )}
                 />
-              )}
-            />
+              
+          )}
           </View>
+            </View>
         </View>
-      </View>)
-      }
-      
+      )}
     </SafeAreaView>
   );
 };
