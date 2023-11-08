@@ -12,6 +12,7 @@ import loginScreen from './screens/login';
 import departmentList from './screens/departmentList';
 import ScheduleScreen from './screens/scheduleScreens';
 import AssignmentPage from './screens/assignmentGuide';
+import PostAssignment from './screens/postAssignment';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +68,11 @@ function MyStack() {
           name="ScheduleScreen"
           component={ScheduleScreen}
           options={{title: 'Schedule'}}
+        />
+        <Stack.Screen
+          name="PostAssignment"
+          component={PostAssignment}
+          options={{title: 'Post assignment'}}
         />
     </Stack.Navigator>
   )

@@ -165,19 +165,28 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
 });
 
 app.post("/api/createAssignment", (req, res) => {
-  
-  const { classId, assignmentName, information, endDate } = req.body;
+  console.log("REQ QUERY = "+req.query)
+  // const { classID, assName, publishDate, dueDate, description } = req.query;
+  const { classID, assName, publishDate, dueDate, description } = {
+    classID: 'CPE334',
+    assName: 'hum dum lab',
+    publishDate: '2023-10-10',
+    dueDate: '2023-11-11',
+    description: 'hum dum'
+};
+
+  console.log(classID)
   const currentDate = new Date();
   const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
-  const sql = "INSERT INTO assignment ( '', 'classId', 'assignmentName', 'information', 'formattedDate', 'endDate' ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  const sql = "INSERT INTO assignment (`class_id`, `assignment_name`, `assignment_publish_date`, `assignment_due_date`, `assignment_desciption`) VALUES (?, ?, ?, ?, ?)";
 
-  connection.query(sql, ['', classId, assignmentName, information, formattedDate, endDate], (err, results) => {
+  connection.query(sql, [classID, assName, formattedDate, dueDate, description], (err, results) => {
     if (err) {
       console.log("Error while inserting a user into the database", err);
-      return res.status(400).json({ message: "Failed to create a new user." });
+      return res.status(400).json({ message: "Failed to create a new assignment." });
     }
-    return res.status(201).json({ message: "New user successfully created!" });
+    return res.status(201).json({ message: "New assignment successfully created!" });
   });
 })
 

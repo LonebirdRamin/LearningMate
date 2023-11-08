@@ -13,6 +13,7 @@ import ScheduleScreen from './scheduleScreens';
 import axios from 'axios';
 import departmentList from './departmentList';
 import AssignmentPage from './assignmentGuide';
+import PostAssignment from './postAssignment';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -21,44 +22,28 @@ const loginScreen = () => {
     const auth = firebaseAuth;
     const navigation = useNavigation(); // Add this line to get the navigation object
 
-// const signIn = async () => {
-//   setLoading(true);
-//   try {
-//     const response = await signInWithEmailAndPassword(auth, email, password)
-//     console.log('---------------LOGIN RESPONSE:   '+ response.json);
-//     navigation.navigate('AddUserScreen');
-//   } catch (error) {
-//     console.log(error);
-//     alert('Sign in fail!' + error.message);
-//   } finally {
-//     setLoading(false);
-//   }
-// }
-
 const signIn = async () => {
   setLoading(true);
   try {
     console.log(email);
-    const response = await fetch(`http://10.4.13.59:5001/api/checkRole?email=${email}`);
+    const response = await fetch(`http://192.168.1.157:5001/api/checkRole?email=${email}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const result = await response.json();
-    console.log("ROLE RESULT : " + result[0].role);
+    console.log("ROLE : " + result[0].role);
     const userRole = result[0].role;
 
     if( userRole === 'student' ) {
-      const response = await fetch(`http://10.4.13.59:5001/api/getStudentSchedule?email=${email}`);
+      const response = await fetch(`http://192.168.1.157:5001/api/getStudentSchedule?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const resultFinal = await response.json();
-      //console.log("RESULT FINAL ::::: " + resultFinal[0].class_id);
-      console.log("Schedule Result : " + resultFinal);
       // Pass the result as a parameter when navigating
       navigation.navigate('departmentList', { result: resultFinal });
     } else {
-      const response = await fetch(`http://10.4.13.59:5001/api/getTeacherAssignment?email=${email}`);
+      const response = await fetch(`http://192.168.1.157:5001/api/getTeacherAssignment?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -115,6 +100,10 @@ const addUserToFirestore = async (uid, email) => {
   }
 }
 
+const goInsert = async () => {
+  navigation.navigate('PostAssignment');
+}
+
   return (
     <View style={styles.container}>
       <Image
@@ -147,6 +136,7 @@ const addUserToFirestore = async (uid, email) => {
         <>
           <Button title="Login" onPress={signIn} containerStyle={{ marginTop: 10 }}  />
           <Button title="Create Account" onPress={signUp} containerStyle={{ marginTop: 10 }}/>
+          <Button title="Go to post assignment page" onPress={goInsert} containerStyle={{ marginTop: 10 }} />
         </>
       )}
     </View>
