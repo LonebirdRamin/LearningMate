@@ -38,21 +38,6 @@ const connection = mysql.createConnection({
 
 app.use(cors())
 
-app.get('/api/queryTest', function (req, res, next) {       //hello => path
-  // simple query
-  connection.query(
-      'SELECT * FROM `department`',
-      function(err, results, fields) {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ error: 'An error occurred' });
-        } else {
-          res.json(results);
-        }
-      }
-);
-})
-
 app.get('/api/scheduleQuery', function (req, res, next) {
   console.log("schedule query log test");
   connection.query(
@@ -167,14 +152,14 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
 
 app.post("/api/createAssignment", (req, res) => {
   console.log("REQ QUERY = "+req.query)
-  // const { classID, assName, publishDate, dueDate, description } = req.query;
-  const { classID, assName, publishDate, dueDate, description } = {
-    classID: 'CPE334',
-    assName: 'hum dum lab',
-    publishDate: '2023-10-10',
-    dueDate: '2023-11-11',
-    description: 'hum dum'
-};
+  const { classID, assName, dueDate, description } = req.query;
+//   const { classID, assName, publishDate, dueDate, description } = {
+//     classID: 'CPE334',
+//     assName: 'hum dum lab',
+//     publishDate: '2023-10-10',
+//     dueDate: '2023-11-11',
+//     description: 'hum dum'
+// };
 
   console.log(classID)
   const currentDate = new Date();
