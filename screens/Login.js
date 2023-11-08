@@ -35,17 +35,37 @@ const Login = ({ navigation }) => {
     navigation.reset({
       index: 0,
       routes: [
-        {name: "HomepageStudent", state:{
+       { 
+        name: value,
+        params: {email: email},
+        state:{
           index: 0,
           routes: [
             {
-              name: "Home",
-              params: {email: email}
+              name: "Home"
             }
-          ]
-        }}
+          ],
+        
+       }
+        }
       ]
-    });
+    })
+
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [
+    //     {name: value, 
+    //       state:{
+    //       index: 0,
+    //       routes: [
+    //         {
+    //           name: "Home",
+    //           params: {email: email}
+    //         }
+    //       ]
+    //     }}
+    //   ]
+    // });
 
     // navigation.reset({
     //   index: 0,

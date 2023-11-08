@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useContext, createContext } from "react";
 import { StyleSheet, Text, View, Image, Dimensions, } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-
 //Screen
 import Homepage from "../screens/Homepage";
 import ChatScreen from "../screens/ChatScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LearningZoneScreen from "../screens/LearningZoneScreen";
 import PlannerScreen from "../screens/PlannerScreen";
+import DataContext from "./DataContext";
 
 const height = Dimensions.get("screen").height
 
@@ -31,10 +31,16 @@ const screenOptions = {
 };
 
 const NavigationBarStudent = () => {
+  const user = useRoute();
+  const email = useRoute();
+  console.log("Homepage " + email.params.email)
+  // console.log("HOMESTUDENT " + user.params.test); ได้ data มาแล้ว
   const handleImage = () => {};
   return (
+    <DataContext.Provider value={email.params.email}>
       <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
         <Tab.Screen
+          
           name="Planner"
           component={PlannerScreen}
           options={{
@@ -154,7 +160,10 @@ const NavigationBarStudent = () => {
             ),
           }}
         />
+
       </Tab.Navigator>
+
+    </DataContext.Provider>
     
   );
 };

@@ -7,7 +7,7 @@ import {
   BackHandler,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import customStyles from "../styles/customStyles";
 import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
@@ -18,7 +18,7 @@ import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
 import { useRoute } from "@react-navigation/native";
-
+import DataContext from "../routes/DataContext";
 const mockUpData = [
   {
     color: "red",
@@ -76,9 +76,7 @@ const events = [
 
 const Homepage = ({navigation}) => {
   const [seeAll,setSeeAll] = useState(false)
-  const route = useRoute();
-  const email = route.params;
-  console.log(email.email)
+  const email = useContext(DataContext) // email from login
   return (
     <SafeAreaView>
       <View style={customStyles.pageBackground}>

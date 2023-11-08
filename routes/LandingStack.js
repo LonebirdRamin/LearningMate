@@ -13,6 +13,7 @@ const LandingStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+
         <Stack.Screen
           name="Landing"
           component={Landing}
@@ -49,8 +50,8 @@ const LandingStack = () => {
           component={NavigationBarTeacher}
           options={{ headerShown: false, gestureEnabled: false }}
         />
-
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 };

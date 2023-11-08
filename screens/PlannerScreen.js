@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, Image, FlatList, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import globleStyles from "../styles/globleStyles";
@@ -8,6 +8,8 @@ import plannerStyles from "../styles/plannerStyles";
 import AddPlannerButton from "../components/Planner/AddPlannerButton";
 import PlannerBox from "../components/Planner/PlannerBox";
 import AddPlannerModal from "../components/Planner/AddPlannerModal";
+import { useRoute } from "@react-navigation/native";
+import DataContext from "../routes/DataContext";
 
 const mockUpData = [
   {
@@ -50,6 +52,10 @@ const mockUpData = [
 
 const PlannerScreen = () => {
   const [isModalVisible, setModalVisible] = useState();
+  const user = useRoute();
+  // console.log("PLanner" + user.params)
+  const email = useContext(DataContext) // email from login
+  // console.log("Planner" + email);
   const handleModal=(state)=>{
     setModalVisible(state)
   }
