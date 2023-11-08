@@ -12,35 +12,27 @@ const PostAssignment = () => {
     const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
 
-    const goBack = async () => {
+    const goInsert = async () => {
         setLoading(true);
         try {
           const insertData = {
             classID,
             assName,
-            publishDate,
             dueDate,
             description
           };
       
           console.log(insertData);
       
-          const response = await fetch('http://192.168.1.157:5001/api/createAssignment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(insertData),
-          }
-          //console.log("stringify ===== "+ JSON.stringify(insertData))
-          );
-      
-          if (!response.ok) {
+          const response = await axios.post('http://192.168.1.75:5001/api/createAssignment', insertData);
+          console.log(response.data);
+          // Check the response status code to determine if it was successful
+          if (response.status === 201) {
+            const result = response.data;
+            console.log(result);
+          } else {
             throw new Error('Network response was not ok');
           }
-      
-          const result = await response.json();
-          console.log("===== INSERTION COMPLETE =====");
         } catch (error) {
           console.error(error);
           alert('Post assignment failed!' + error.message);
@@ -50,8 +42,8 @@ const PostAssignment = () => {
       }
 
 
-    const goInsert = () => {
-        
+    const goBack = () => {
+      navigation.goBack(); // This will navigate back to the previous screen.
     }
 
   return (
@@ -74,15 +66,6 @@ const PostAssignment = () => {
       onChangeText={(text) => setAssName(text)}
       >
       </TextInput>
-      <Text>Publish date:</Text>
-      <TextInput
-      value={publishDate}
-      style={styles.input}
-      placeholder = "Publish date"
-      autoCapitalize="none"
-      onChangeText={(text) => setPublishDate(text)}
-      >
-      </TextInput>
       <Text>Due date:</Text>
       <TextInput
       value={dueDate}
@@ -101,8 +84,9 @@ const PostAssignment = () => {
       onChangeText={(text) => setDescription(text)}
       >
       </TextInput>
-      <Button title="Go Back" onPress={goBack} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
+      <Button title="Select File" containerStyle={{ marginTop: 10, marginBottom: 20 }} />
       <Button title="Insert" onPress={goInsert} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
+      <Button title="Go Back" onPress={goBack} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
     </View>
   )
 }
