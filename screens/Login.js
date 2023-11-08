@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
           index: 0,
           routes: [
             {
-              name: "Home"
+              name: "HomeNoti"
             }
           ],
         

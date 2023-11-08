@@ -4,7 +4,7 @@ import { NavigationContainer, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 //Screen
-import Homepage from "../screens/Homepage";
+import HomeNotiStudent from "./HomeNotiStudent";
 import ChatScreen from "../screens/ChatScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LearningZoneScreen from "../screens/LearningZoneScreen";
@@ -37,7 +37,7 @@ const NavigationBarStudent = () => {
   const handleImage = () => {};
   return (
     <DataContext.Provider value={email.params.email}>
-      <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
+      <Tab.Navigator screenOptions={screenOptions} initialRouteName="HomeNoti" backBehavior="initialRoute">
         <Tab.Screen
           
           name="Planner"
@@ -88,8 +88,8 @@ const NavigationBarStudent = () => {
           }}
         />
         <Tab.Screen
-          name="Home"
-          component={Homepage}
+          name="HomeNoti"
+          component={HomeNotiStudent}
           options={{
             tabBarIcon: ({ focused }) => (
               <View

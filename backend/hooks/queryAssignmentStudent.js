@@ -6,7 +6,7 @@ const queryAssignment = async (email, setIsAssignmentLoading, setAssignmentData,
 
   try {
     const response = await fetch(
-      `${ipv4.kong}getStudentAssignment?email=${email}`
+      `${ipv4.golf}getStudentAssignment?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
