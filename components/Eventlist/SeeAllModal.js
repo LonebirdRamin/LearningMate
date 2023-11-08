@@ -15,7 +15,7 @@ const SeeAllModal = (props) => {
     >
         <View style={[customStyles.customBox1,{height:'80%',width:'100%',display:'flex',
         alignItems:'center'}]}>
-            <EventList events={props.data}></EventList>
+            <EventList data={props.data}></EventList>
             <AppButton
             text="Close"
             bgColor={true}

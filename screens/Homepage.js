@@ -6,17 +6,20 @@ import {
   TouchableOpacity,
   BackHandler,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import customStyles from "../styles/customStyles";
+import globleStyles from "../styles/globleStyles";
 import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
-import Modal from "react-native-modal";
 import assignmentStyles from "../styles/assignmentStyles";
 import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
+import querySchedule from "../backend/hooks/querySchedule";
+import moment  from 'moment';
 
 const mockUpData = [
   {
@@ -49,36 +52,57 @@ const mockUpData = [
   },
 ];
 
-const events = [
-  {
-    'code':'CPE123',
-    'name':'Aerospace engineering',
-    'time':'00:00 - 05:00',
-  },
-  {
-    'code':'CPE456',
-    'name':'Chicken engineering',
-    'time':'06:00 - 07:00',
-  },
-  {
-    'code':'CPE888',
-    'name':'noidea',
-    'time':'12:00 - 13:00',
-  },
-  {
-    'code':'CPE015',
-    'name':'Kitchen simulation',
-    'time':'20:00 - 21:00',
-  },
-]
+// const events = [
+//   {
+//     'code':'CPE123',
+//     'name':'Aerospace engineering',
+//     'time':'00:00 - 05:00',
+//   },
+//   {
+//     'code':'CPE456',
+//     'name':'Chicken engineering',
+//     'time':'06:00 - 07:00',
+//   },
+//   {
+//     'code':'CPE888',
+//     'name':'noidea',
+//     'time':'12:00 - 13:00',
+//   },
+//   {
+//     'code':'CPE015',
+//     'name':'Kitchen simulation',
+//     'time':'20:00 - 21:00',
+//   },
+// ]
 
 
 const Homepage = () => {
   const [seeAll,setSeeAll] = useState(false)
+  const [isloading,setIsLoading] = useState(true)
+  const [schedule,setSchedule] = useState(null)
+  // const [date,setDate] = useState(moment().format('DD')) //Numerical date
+  const [day,setDay] = useState(moment().format('dddd')) //Day such as Wednesday
+
+  const email = 'pannawat.duro@kmutt.ac.th'
+
+  useEffect(()=>{
+    const fetchData = async ()=>{
+    const data = await querySchedule(email,setIsLoading,day)
+    setSchedule(data)
+    }
+
+    fetchData()
+  },[day])
 
   return (
     <SafeAreaView>
-      <View style={customStyles.pageBackground}>
+      { isloading ? 
+      (<View style={[customStyles.pageBackground,{display:'flex',justifyContent:'center'}]}>
+        <View style={globleStyles.loading}>
+          <ActivityIndicator size={100} color="#F04E22"></ActivityIndicator>
+        </View>
+      </View>):
+      (<View style={customStyles.pageBackground}>
         <View
           style={[
             customStyles.customBox1,
@@ -110,8 +134,8 @@ const Homepage = () => {
           >
             Schedule
           </Text>
-          <Calendar></Calendar>
-          <EventList events={events}></EventList>
+          <Calendar day={day} setDay={setDay}></Calendar>
+          <EventList data={schedule}></EventList>
           
           <View style={{display:'flex',justifyContent:'center',flexDirection:'row'}}>
             <TouchableOpacity onPress={()=>setSeeAll(!seeAll)}>
@@ -120,7 +144,7 @@ const Homepage = () => {
           </View>
 
           <SeeAllModal
-          data={events}
+          data={schedule}
           isVisible={seeAll}
           toggleModal={setSeeAll}
           ></SeeAllModal>
@@ -143,7 +167,8 @@ const Homepage = () => {
             />
           </View>
         </View>
-      </View>
+      </View>)
+      }
       
     </SafeAreaView>
   );
