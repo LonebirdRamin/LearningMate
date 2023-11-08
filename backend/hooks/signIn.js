@@ -7,6 +7,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import Homepage from "../../screens/Homepage";
+import ipv4 from "../apiserver/ipv4";
+
+//Change ipv4 with the correspoing name: (kong,golf,ramin,mark,green)
+//If your location change from the recorded in ipv4 obj
+//Replace the ip accordingly in backend/apiserver/ipv4.js
 
 const signIn = async (email, password, navigation, loadState) => {
   loadState(true);
@@ -18,7 +23,7 @@ const signIn = async (email, password, navigation, loadState) => {
       );
       
     const info = await fetch(
-      `http://192.168.1.100:5001/api/checkRole?email=${email}`
+      `${ipv4.golf}checkRole?email=${email}`
     );
     if (!info.ok) {
       throw new Error("Network response was not ok");
