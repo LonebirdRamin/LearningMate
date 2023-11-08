@@ -81,6 +81,7 @@ const mockUpData = [
 const Homepage = ({navigation}) => {
   const [seeAll,setSeeAll] = useState(false)
   const email = useContext(DataContext) // email from login
+  
   const [isloading,setIsLoading] = useState(true)
   const [schedule,setSchedule] = useState(null)
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
