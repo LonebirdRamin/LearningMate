@@ -324,7 +324,6 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
 });
 
 app.post("/api/createAssignment", (req, res) => {
-  console.log("REQ BODY = "+req.body)
   const { classID, assName, dueDate, description } = req.body;
 
   console.log("CLASS ID : ========", classID)

@@ -2,6 +2,9 @@ import { View, Text, Button, StyleSheet, TextInput } from 'react-native'
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
+import * as DocumentPicker from 'expo-document-picker'
+import 'firebase/storage'; // Import Firebase Storage to upload file
+
 
 const PostAssignment = () => {
     const [classID, setClassID] = useState('');
@@ -10,6 +13,7 @@ const PostAssignment = () => {
     const [dueDate, setDueDate] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
     const navigation = useNavigation();
 
     const goInsert = async () => {
@@ -45,6 +49,45 @@ const PostAssignment = () => {
     const goBack = () => {
       navigation.goBack(); // This will navigate back to the previous screen.
     }
+
+    const pickDocument = async () => {
+      try {
+        const result = await DocumentPicker.getDocumentAsync({
+          type: 'application/*', // You can specify the file type(s) you want to allow
+        });
+    
+        if (result.type === 'success') {
+          setSelectedFile(result);
+          console.log(result.uri, result.type, result.name, result.size);
+        } else {
+          if (result.type === 'cancel') {
+            // User canceled the document picker
+          } else {
+            throw new Error('Document picker encountered an error');
+          }
+        }
+      } catch (error) {
+        console.error('Error picking document:', error);
+      }
+    };
+
+    const uploadFileToFirebaseStorage = async () => {
+      if (selectedFile) {
+        const storageRef = firebase.storage().ref();
+        const fileName = 'your-desired-filename.extension'; // Set your desired filename
+  
+        try {
+          const fileRef = storageRef.child(fileName);
+          await fileRef.putFile(selectedFile.uri);
+          console.log('File uploaded to Firebase Storage successfully!');
+        } catch (error) {
+          console.error('Error uploading file to Firebase Storage:', error);
+        }
+      } else {
+        console.error('No file selected to upload.');
+      }
+    };
+    
 
   return (
     <View style={styles.container}>
@@ -84,7 +127,7 @@ const PostAssignment = () => {
       onChangeText={(text) => setDescription(text)}
       >
       </TextInput>
-      <Button title="Select File" containerStyle={{ marginTop: 10, marginBottom: 20 }} />
+      <Button title="Select File" onPress={pickDocument} containerStyle={{ marginTop: 10, marginBottom: 20 }} />
       <Button title="Insert" onPress={goInsert} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
       <Button title="Go Back" onPress={goBack} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
     </View>
