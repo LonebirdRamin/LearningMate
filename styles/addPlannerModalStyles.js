@@ -5,13 +5,14 @@ const width = Dimensions.get("screen").width;
 
 const addPlannerModalStyles = StyleSheet.create({
   modalView: {
+    
     margin: 0,
     justifyContent: "center",
     alignItems: "center",
   },
   modalContent: {
     alignItems: "center",
-    height: "60%",
+    height: height*0.55,
     width: "80%",
     backgroundColor: "#353542",
     borderRadius: 30,
@@ -68,9 +69,39 @@ const addPlannerModalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgb(124, 124, 155)",
     paddingHorizontal: width*0.04
-  }
+  },
   // End - Planner textinput
 
+  // Start - Planner datetime
+  dateTimeContainer:{
+    paddingTop: height*0.01,
+    columnGap: width*0.02,
+    flexDirection: "row",
+
+  },
+  date: {
+    flexDirection: "row",
+    columnGap: width*0.02,
+    alignSelf: 'flex-start'
+  },
+  icon: {
+    width: width*0.05,
+    height: width*0.05,
+  },
+  dateTimeText:{
+    color: "#C1C1CD"
+  },
+  // End - Planner datetime
+
+
+  // Start - Confirm button
+  buttonContainer:{
+    width: "100%",
+    paddingVertical: height*0.02
+  },
+  button:{
+
+  }
   
 });
 
