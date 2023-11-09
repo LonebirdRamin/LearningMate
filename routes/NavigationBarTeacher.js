@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Dimensions, } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -10,7 +10,8 @@ import ChatScreen from "../screens/ChatScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import LearningZoneScreen from "../screens/LearningZoneScreen";
 import PlannerScreen from "../screens/PlannerScreen";
-import HomepageTeacher from "../screens/HomepageTeacher";
+import HomeNotiTeacher from "./HomeNotiTeacher";
+import DataContext from "./DataContext";
 
 
 const height = Dimensions.get("screen").height
@@ -33,8 +34,10 @@ const screenOptions = {
 };
 
 const NavigationBar = () => {
+  const email = useRoute();
   const handleImage = () => {};
   return (
+    <DataContext.Provider value={email.params.email}>
       <Tab.Navigator screenOptions={screenOptions} initialRouteName="Home" backBehavior="initialRoute">
         <Tab.Screen
           name="Planner"
@@ -85,8 +88,8 @@ const NavigationBar = () => {
           }}
         />
         <Tab.Screen
-          name="Home"
-          component={HomepageTeacher}
+          name="HomeNoti"
+          component={HomeNotiTeacher}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
@@ -157,7 +160,7 @@ const NavigationBar = () => {
           }}
         />
       </Tab.Navigator>
-    
+      </DataContext.Provider>
   );
 };
 
