@@ -1,10 +1,10 @@
 import axios from 'axios';
 import ipv4 from '../apiserver/ipv4';
 
-const querySchedule = async (email, setLoading, day) => {
+const queryScheduleTeacher = async (email, setLoading, day) => {
   let result;
   try {
-      const response = await axios.get(`${ipv4.golf}getStudentSchedule?email=${email}`);
+      const response = await axios.get(`${ipv4.golf}getTeacherSchedule?email=${email}`);
       
       // Check the response status code to determine if it was successful
       if (response.status === 200) {
@@ -21,4 +21,4 @@ const querySchedule = async (email, setLoading, day) => {
       } 
 };
 
-export default querySchedule;
+export default queryScheduleTeacher;
