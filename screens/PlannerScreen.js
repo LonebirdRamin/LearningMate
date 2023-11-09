@@ -106,6 +106,7 @@ const mockUpData = [
   },
 ];
 
+
 const PlannerScreen = () => {
   const [isModalVisible, setModalVisible] = useState();
   const [plannerData, setPlannerData] = useState([])
@@ -125,8 +126,11 @@ const PlannerScreen = () => {
     setPlannerData(mockUpData.filter(e=> e.date === selectedDay))
   }
     ,[selectedDay])
-  
   // End - filter planner list
+
+  // Start - data for adding new planner
+  const [plan, setPlan] = useState({}); // plan = {type: "", title: "", detail: "", date: "", startTime: "", endTime: ""}
+  // End - data for adding new planner
   
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
