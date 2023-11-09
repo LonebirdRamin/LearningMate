@@ -2,9 +2,7 @@ import { Text, View, Image } from "react-native";
 import React, { Component, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 
-const DropdownAddAssignment = () => {
-  const [selected, setSelected] = useState("");
-
+const DropdownAddAssignment = ({ setSelected }) => {
   const mockupData = [
     { key: "1", value: "CPE101" },
     { key: "2", value: "CPE223" },
@@ -60,9 +58,6 @@ const DropdownAddAssignment = () => {
         //   <Image source={require("../assets/icons/bell.png")} color="white" />
         // }
       />
-      <View>
-        <Text>{console.log("DropDown key: " + selected)}</Text>
-      </View>
     </View>
   );
 };

@@ -8,6 +8,8 @@ import DropdownAddAssignment from "./DropdownAddAssignment";
 import FormAssignment from "./FormAssignment";
 
 const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
+  const [selected, setSelected] = useState("");
+
   return (
     <Modal
       onBackdropPress={() => setModalVisible(false)}
@@ -26,8 +28,8 @@ const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
           <View style={styles.barIcon} />
           <View style={styles.wrapper}>
             <Text style={styles.text}>Assignment</Text>
-            <DropdownAddAssignment />
-            <FormAssignment />
+            <DropdownAddAssignment setSelected={setSelected} />
+            <FormAssignment selected={selected} />
           </View>
         </View>
       </View>
@@ -37,7 +39,7 @@ const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
 
 const styles = StyleSheet.create({
   modalContent: {
-    height: "60%",
+    height: "66%",
     backgroundColor: "#353542",
     paddingTop: 12,
     paddingHorizontal: 12,
