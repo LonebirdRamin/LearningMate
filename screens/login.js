@@ -14,6 +14,7 @@ import axios from 'axios';
 import departmentList from './departmentList';
 import AssignmentPage from './assignmentGuide';
 import PostAssignment from './postAssignment';
+import PlannerScreen from './plannerScreen';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -104,6 +105,10 @@ const goInsert = async () => {
   navigation.navigate('PostAssignment');
 }
 
+const goInsertPlanner = async () => {
+  navigation.navigate('PlannerScreen');
+}
+
   return (
     <View style={styles.container}>
       <Image
@@ -137,6 +142,7 @@ const goInsert = async () => {
           <Button title="Login" onPress={signIn} containerStyle={{ marginTop: 10 }}  />
           <Button title="Create Account" onPress={signUp} containerStyle={{ marginTop: 10 }}/>
           <Button title="Go to post assignment page" onPress={goInsert} containerStyle={{ marginTop: 10 }} />
+          <Button title="Go to add planner page" onPress={goInsertPlanner} containerStyle={{ marginTop: 10 }} />
         </>
       )}
     </View>

@@ -6,29 +6,29 @@ import * as DocumentPicker from 'expo-document-picker'
 import 'firebase/storage'; // Import Firebase Storage to upload file
 
 
-const PostAssignment = () => {
-    const [classID, setClassID] = useState('');
-    const [assName, setAssName] = useState('');
-    const [publishDate, setPublishDate] = useState('');
-    const [dueDate, setDueDate] = useState('');
+const PlannerScreen = () => {
+    const email = 'ramin.such@kmutt.ac.th';
+    const [eventType, setEventType] = useState('');
+    const [eventName, setEventName] = useState('');
     const [description, setDescription] = useState('');
+    const [dueDate, setDueDate] = useState('');
     const [loading, setLoading] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
     const navigation = useNavigation();
 
     const goInsert = async () => {
         setLoading(true);
         try {
           const insertData = {
-            classID,
-            assName,
-            dueDate,
-            description
+            email,
+            eventType,
+            eventName,
+            description,
+            dueDate
           };
       
           console.log(insertData);
       
-          const response = await axios.post('http://192.168.1.75:5001/api/createAssignment', insertData);
+          const response = await axios.post('http://192.168.1.75:5001/api/createPlanner', insertData);
           console.log(response.data);
           // Check the response status code to determine if it was successful
           if (response.status === 201) {
@@ -92,31 +92,21 @@ const PostAssignment = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Class ID:</Text>
+      <Text>Event type:</Text>
       <TextInput
-      value={classID}
+      value={eventType}
       style={styles.input}
-      placeholder = "Class ID"
+      placeholder = "Event type"
       autoCapitalize="none"
-      onChangeText={(text) => setClassID(text)}
-      >
-      </TextInput>
-      <Text>Assignment name:</Text>
+      onChangeText={(text) => setEventType(text)}
+      ></TextInput>
+      <Text>Event name:</Text>
       <TextInput
-      value={assName}
+      value={eventName}
       style={styles.input}
-      placeholder = "Assignment name"
+      placeholder = "Event name"
       autoCapitalize="none"
-      onChangeText={(text) => setAssName(text)}
-      >
-      </TextInput>
-      <Text>Due date:</Text>
-      <TextInput
-      value={dueDate}
-      style={styles.input}
-      placeholder = "Due date"
-      autoCapitalize="none"
-      onChangeText={(text) => setDueDate(text)}
+      onChangeText={(text) => setEventName(text)}
       >
       </TextInput>
       <Text>Description:</Text>
@@ -128,14 +118,22 @@ const PostAssignment = () => {
       onChangeText={(text) => setDescription(text)}
       >
       </TextInput>
-      <Button title="Select File" onPress={pickDocument} containerStyle={{ marginTop: 10, marginBottom: 20 }} />
+      <Text>Due date:</Text>
+      <TextInput
+      value={dueDate}
+      style={styles.input}
+      placeholder = "Due date"
+      autoCapitalize="none"
+      onChangeText={(text) => setDueDate(text)}
+      >
+      </TextInput>
       <Button title="Insert" onPress={goInsert} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
       <Button title="Go Back" onPress={goBack} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
     </View>
   )
 }
 
-export default PostAssignment
+export default PlannerScreen
 
 const styles = StyleSheet.create({
     container: {

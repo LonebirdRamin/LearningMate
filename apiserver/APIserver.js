@@ -328,11 +328,27 @@ app.post("/api/createAssignment", (req, res) => {
 
   console.log("CLASS ID : ========", classID)
   const currentDate = new Date();
+  console.log("Current date: ", currentDate.setHours(currentDate.getHours() + 7));
   const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
 
   const sql = "INSERT INTO assignment (`class_id`, `assignment_name`, `assignment_publish_date`, `assignment_due_date`, `assignment_desciption`) VALUES (?, ?, ?, ?, ?)";
 
   connection.query(sql, [classID, assName, formattedDate, dueDate, description], (err, results) => {
+    if (err) {
+      console.log("Error while inserting a user into the database", err);
+      return res.status(400).json({ message: "Failed to create a new assignment." });
+    }
+    return res.status(201).json({ message: "New assignment successfully created!" });
+  });
+})
+
+app.post("/api/createPlanner", (req, res) => {
+  const { email, eventType, eventName , description, dueDate } = req.body;
+  console.log("eventName : ========", eventName)
+
+  const sql = "INSERT INTO planner (`planner_name`, `academic_email`, `planner_category`, `planner_detail`, `start_time`) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(sql, [eventName, email, eventType, description, dueDate], (err, results) => {
     if (err) {
       console.log("Error while inserting a user into the database", err);
       return res.status(400).json({ message: "Failed to create a new assignment." });

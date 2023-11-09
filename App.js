@@ -13,6 +13,10 @@ import departmentList from './screens/departmentList';
 import ScheduleScreen from './screens/scheduleScreens';
 import AssignmentPage from './screens/assignmentGuide';
 import PostAssignment from './screens/postAssignment';
+import PlannerScreen from './screens/plannerScreen';
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Stack = createStackNavigator();
 
@@ -73,6 +77,11 @@ function MyStack() {
           name="PostAssignment"
           component={PostAssignment}
           options={{title: 'Post assignment'}}
+        />
+        <Stack.Screen
+          name="PlannerScreen"
+          component={PlannerScreen}
+          options={{title: 'Planner Screen'}}
         />
     </Stack.Navigator>
   )
