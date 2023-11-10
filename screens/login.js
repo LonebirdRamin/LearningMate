@@ -14,7 +14,6 @@ import LogoHeader from "../components/Login/LogoHeader";
 import FormText from "../components/FormText";
 import { TouchableOpacity } from "react-native";
 import AppButton from "../components/AppButton";
-import { StackActions } from "@react-navigation/routers";
 import signIn from "../backend/hooks/signIn";
 
 const Login = ({ navigation }) => {
@@ -32,11 +31,67 @@ const Login = ({ navigation }) => {
     setPassword(value);
   };
 
-  const changePage = () => {
+  const changePage = (value, email) => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Homepage" }],
-    });
+      routes: [
+       { 
+        name: value,
+        params: {email: email},
+        state:{
+          index: 0,
+          routes: [
+            {
+              name: "HomeNoti"
+            }
+          ],
+        
+       }
+        }
+      ]
+    })
+
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [
+    //     {name: value, 
+    //       state:{
+    //       index: 0,
+    //       routes: [
+    //         {
+    //           name: "Home",
+    //           params: {email: email}
+    //         }
+    //       ]
+    //     }}
+    //   ]
+    // });
+
+    // navigation.reset({
+    //   index: 0,
+    //   actions: [
+    //     navigation.navigate("HomepageStudent", {
+    //       screen: "Home",
+    //       initial: true,
+    //       params: { test: "HEllo" },
+    //     }),
+    //   ],
+    // });
+
+    // navigation.reset({
+    //   index: 0,
+    //   actions: [navigation.navigate({routeName: 'HomepageStudent'})]
+    // })
+
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: value, params: {passing: passEmail} }],
+    // });
+
+    // navigation.navigate({
+    //   routeName: "HomepageStudent",
+    //   params: "kong"
+    // })
   };
 
   return (
