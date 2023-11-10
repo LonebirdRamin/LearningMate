@@ -15,6 +15,7 @@ const connection = mysql.createConnection({
   });
 
 app.use(cors())
+app.use(express.json())
 
 app.get('/api/queryTest', function (req, res, next) {       //hello => path
   // simple query
@@ -184,6 +185,22 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
   );
 });
 
+app.post("/api/createPlanner", (req, res) => {
+  console.log(req.query)
+  const { email, eventType, eventName , description, dueDate } = req.body;
+  
+  console.log("eventName : ========", eventName)
+
+  const sql = "INSERT INTO planner (`planner_name`, `academic_email`, `planner_category`, `planner_detail`, `start_time`) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(sql, [eventName, email, eventType, description, dueDate], (err, results) => {
+    if (err) {
+      console.log("Error while inserting a user into the database", err);
+      return res.status(400).json({ message: "Failed to create a new assignment." });
+    }
+    return res.status(201).json({ message: "New assignment successfully created!" });
+  });
+})
 
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')

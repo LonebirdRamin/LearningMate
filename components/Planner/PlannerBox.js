@@ -2,7 +2,7 @@ import { View, Text, Image, Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
 import plannerBoxStyles from "../../styles/plannerBoxStyles";
 
-const plannerType = ["Working", "Reading", "Chill"];
+const plannerType = ["Work", "Read", "Chill"];
 
 const PlannerBox = ({
   title = "None",

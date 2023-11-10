@@ -22,92 +22,92 @@ import moment from "moment";
 import PlannerCalendar from "../components/Planner/PlannerCalender";
 import queryPlanner from "../backend/hooks/queryPlanner";
 
-const mockUpData = [
-  {
-    title: "Fuck mere",
-    subtitle: "Dont forgor condom",
-    time: "00:00",
-    type: "entertainment",
-    date: "23-11-08",
-  },
-  {
-    title: "Read bigdick data",
-    subtitle: "Lecture 1 2 3 4 5 6",
-    time: "01:00",
-    type: "reading",
-    date: "23-11-08",
-  },
-  {
-    title: "Test1",
-    subtitle: "Test...",
-    time: "2:00",
-    type: "working",
-    date: "23-11-09",
-  },
-  {
-    title: "Test2",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-09",
-  },
-  {
-    title: "Test3",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-10",
-  },
-  {
-    title: "Test4",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-14",
-  },
-  {
-    title: "Fuck mere5",
-    subtitle: "Dont forgor condom",
-    time: "00:00",
-    type: "entertainment",
-    date: "23-11-14",
-  },
-  {
-    title: "Read bigdick data 6",
-    subtitle: "Lecture 1 2 3 4 5 6",
-    time: "01:00",
-    type: "reading",
-    date: "23-11-14",
-  },
-  {
-    title: "Test7",
-    subtitle: "Test...",
-    time: "2:00",
-    type: "working",
-    date: "23-11-14",
-  },
-  {
-    title: "Test8",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-14",
-  },
-  {
-    title: "Test9",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-14",
-  },
-  {
-    title: "Test10",
-    subtitle: "dsadasdsa",
-    time: "2:00",
-    type: "dasdasdas",
-    date: "23-11-14",
-  },
-];
+// const mockUpData = [
+//   {
+//     title: "Fuck mere",
+//     subtitle: "Dont forgor condom",
+//     time: "00:00",
+//     type: "entertainment",
+//     date: "23-11-08",
+//   },
+//   {
+//     title: "Read bigdick data",
+//     subtitle: "Lecture 1 2 3 4 5 6",
+//     time: "01:00",
+//     type: "reading",
+//     date: "23-11-08",
+//   },
+//   {
+//     title: "Test1",
+//     subtitle: "Test...",
+//     time: "2:00",
+//     type: "working",
+//     date: "23-11-09",
+//   },
+//   {
+//     title: "Test2",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-09",
+//   },
+//   {
+//     title: "Test3",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-10",
+//   },
+//   {
+//     title: "Test4",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Fuck mere5",
+//     subtitle: "Dont forgor condom",
+//     time: "00:00",
+//     type: "entertainment",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Read bigdick data 6",
+//     subtitle: "Lecture 1 2 3 4 5 6",
+//     time: "01:00",
+//     type: "reading",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Test7",
+//     subtitle: "Test...",
+//     time: "2:00",
+//     type: "working",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Test8",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Test9",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-14",
+//   },
+//   {
+//     title: "Test10",
+//     subtitle: "dsadasdsa",
+//     time: "2:00",
+//     type: "dasdasdas",
+//     date: "23-11-14",
+//   },
+// ];
 
 
 
@@ -134,7 +134,7 @@ const PlannerScreen = () => {
   // End - manage day of planner
 
   // Start - data for adding new planner
-  const [isAdded, setIsAdded] = useState(false); // plan = {type: "", title: "", detail: "", date: "", startTime: "", endTime: ""}
+  const [isChanged, setIsChanged] = useState(false); // plan = {type: "", title: "", detail: "", date: "", startTime: "", endTime: ""}
   // End - data for adding new planner
 
   // Start - formatting the start_time for DB
@@ -149,6 +149,7 @@ const PlannerScreen = () => {
     });
   };
   // End - formatting the start_time for DB
+
   // Start - filter planner list
   useEffect(() => {
     
@@ -157,8 +158,7 @@ const PlannerScreen = () => {
       e.date === selectedDay
     ));
     
-    setIsAdded(false);
-  }, [selectedDay, isAdded, dataForUse]);
+  }, [selectedDay, dataForUse]);
   // End - filter planner list
 
   // Query - planner from database (Only first time)
@@ -172,8 +172,11 @@ const PlannerScreen = () => {
     setDataForUse(formatting(queriedPlanner))
   },[queriedPlanner])
 
- 
+ // Query planner again if any update
+  useEffect(()=>{ 
+    queryPlanner(email, setQueriedPlanner, setIsLoading);
 
+  }, [isChanged])
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
       {/*Start - Header part */}
@@ -231,7 +234,7 @@ const PlannerScreen = () => {
       <AddPlannerModal
         isModalVisible={isModalVisible}
         setModalVisible={handleModal}
-        setIsAdded={setIsAdded}
+        setIsChanged={setIsChanged}
       />
       {/*Start Modal */}
       
