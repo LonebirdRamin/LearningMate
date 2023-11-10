@@ -8,7 +8,7 @@ import moment  from 'moment'
 const PlannerCalendar = ({day, setDay}) => {  // day = selected day
   let week = []
   for(i=0;i<7;i++){
-    week.push({display: moment().add(i,'days').format('DD:dddd'), key: moment().add(i, 'days').format("YY-MM-DD")})
+    week.push({display: moment().add(i,'days').format('DD:dddd'), key: moment().add(i, 'days').format("YYYY-MM-DD")})
   }
   // Create a list of 7 days from now on
 

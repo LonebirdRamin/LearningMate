@@ -15,6 +15,7 @@ const connection = mysql.createConnection({
   });
 
 app.use(cors())
+app.use(express.json())
 
 app.get('/api/queryTest', function (req, res, next) {       //hello => path
   // simple query
@@ -147,6 +148,25 @@ app.get('/api/getTeacherAssignment', function (req, res, next) {
   );
 });
 
+app.get('/api/getPlanner', function (req, res, next) {
+  console.log("Query Planner");
+  const email = req.query.email;
+  connection.query(
+    'SELECT  `planner_id`, `planner_name`, `planner_category`, `planner_detail`, `start_time` FROM `planner` WHERE `academic_email` = ? ORDER BY start_time ASC;',
+    [email],
+    function(err, plannerResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Planner query error occurred' });
+      } else {
+        res.json(plannerResults);
+        console.log("Planner IN");
+      }
+    }
+  );
+});
+
+
 app.get('/api/getStudentAssignment', function (req, res, next) {
   console.log("Query Student Assignment");
   const email = req.query.email;
@@ -182,6 +202,22 @@ app.get("/api/getClass", (req, res) => {
   );
 })
 
+app.post("/api/createPlanner", (req, res) => {
+  console.log(req.query)
+  const { email, eventType, eventName , description, dueDate } = req.body;
+  
+  console.log("eventName : ========", eventName)
+
+  const sql = "INSERT INTO planner (`planner_name`, `academic_email`, `planner_category`, `planner_detail`, `start_time`) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(sql, [eventName, email, eventType, description, dueDate], (err, results) => {
+    if (err) {
+      console.log("Error while inserting a user into the database", err);
+      return res.status(400).json({ message: "Failed to create a new assignment." });
+    }
+    return res.status(201).json({ message: "New assignment successfully created!" });
+  });
+})
 
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
