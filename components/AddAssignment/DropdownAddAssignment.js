@@ -1,9 +1,12 @@
 import { Text, View, Image } from "react-native";
 import React, { Component, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
+import { FontAwesome } from "@expo/vector-icons";
+import dropDownStyles from "../../styles/dropDownStyle";
 
 const DropdownAddAssignment = ({ setSelected }) => {
   const mockupData = [
+    //If want to return from dropdown as key
     { key: "1", value: "CPE101" },
     { key: "2", value: "CPE223" },
     { key: "3", value: "CPE333" },
@@ -11,6 +14,16 @@ const DropdownAddAssignment = ({ setSelected }) => {
     { key: "5", value: "CPE355" },
     { key: "6", value: "CPE342" },
     { key: "7", value: "CPE366" },
+  ];
+  const data = [
+    //To return from dropdown as "string"
+    "CPE101",
+    "CPE223",
+    "CPE333",
+    "CPE371",
+    "CPE355",
+    "CPE342",
+    "CPE366",
   ];
   return (
     <View
@@ -20,43 +33,24 @@ const DropdownAddAssignment = ({ setSelected }) => {
       }}
     >
       <SelectList
-        data={mockupData}
+        data={data}
         setSelected={setSelected}
-        boxStyles={{
-          marginTop: 20,
-          borderRadius: 20,
-          backgroundColor: "#494955",
-          width: "60%",
-          marginHorizontal: "20%",
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 0,
-        }}
-        inputStyles={{
-          color: "white",
-          width: "50",
-          fontSize: 17,
-          fontWeight: "bold",
-          marginHorizontal: 40,
-        }}
+        boxStyles={dropDownStyles.boxStyles}
+        inputStyles={dropDownStyles.inputStyle}
         dropdownItemStyles={{
           marginTop: 3,
           alignItems: "center",
           justifyContent: "center",
         }}
-        dropdownTextStyles={{
-          color: "white",
-          fontWeight: "bold",
-          fontSize: 16,
-        }}
+        dropdownTextStyles={dropDownStyles.dropdownTextStyles}
         search={false}
         placeholder="Select Class"
         dropdownStyles={{
           marginHorizontal: "20%",
         }}
-        // arrowIcon={
-        //   <Image source={require("../assets/icons/bell.png")} color="white" />
-        // }
+        arrowicon={
+          <FontAwesome name="chevron-down" size={12} color={"white"} />
+        }
       />
     </View>
   );

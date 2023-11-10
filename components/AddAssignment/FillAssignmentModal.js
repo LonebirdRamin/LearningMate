@@ -6,6 +6,7 @@ import Modal from "react-native-modal";
 import modalStyles from "../../styles/modalStyles";
 import DropdownAddAssignment from "./DropdownAddAssignment";
 import FormAssignment from "./FormAssignment";
+import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 
 const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
   const [selected, setSelected] = useState("");
@@ -15,58 +16,27 @@ const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
       onBackdropPress={() => setModalVisible(false)}
       onBackButtonPress={() => setModalVisible(false)}
       isVisible={isVisible}
-      // swipeDirection="down"
-      // // onSwipeComplete={!isVisible}
       animationInTiming={250}
       animationOutTiming={250}
       backdropTransitionInTiming={1000}
       backdropTransitionOutTiming={500}
       style={modalStyles.modal}
     >
-      <View style={styles.modalContent}>
-        <View style={styles.center}>
-          <View style={styles.barIcon} />
-          <View style={styles.wrapper}>
-            <Text style={styles.text}>Assignment</Text>
+      <View style={modalFillAssignmentStyles.modalContent}>
+        <View style={modalFillAssignmentStyles.center}>
+          <View style={modalFillAssignmentStyles.barIcon} />
+          <View style={modalFillAssignmentStyles.wrapper}>
+            <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
             <DropdownAddAssignment setSelected={setSelected} />
-            <FormAssignment selected={selected} />
+            <FormAssignment
+              selected={selected}
+              setModalVisible={setModalVisible}
+            />
           </View>
         </View>
       </View>
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContent: {
-    height: "66%",
-    backgroundColor: "#353542",
-    paddingTop: 12,
-    paddingHorizontal: 12,
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-  },
-  barIcon: {
-    backgroundColor: "#ffff",
-    borderRadius: 25,
-    width: 143,
-    height: 3,
-  },
-  wrapper: {
-    width: "100%",
-    height: "100%",
-  },
-  center: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text: {
-    paddingTop: 15,
-    fontWeight: "bold",
-    color: "white",
-    fontSize: 30,
-    textAlign: "center",
-  },
-});
 
 export default FillAssignmentModal;

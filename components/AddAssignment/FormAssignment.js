@@ -8,20 +8,22 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as DocumentPicker from "expo-document-picker";
-import DateTimePickerAndroid from "@react-native-community/datetimepicker";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import formAssignmentStyles from "../../styles/formAssignmentStyles";
 
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-
-//Change datetime picker function format
-//Find the way to change format of date
-
-const FormAssignment = ({ selected }) => {
+/* To do list
+- Change datetime picker function format (Pass!)
+- Find the way to change format of date  (PASS!)
+- Change stylesheet format  (PASS!)
+- make some condition => if no fill on Name => error!
+- make date condition => if no fill on date => no due date
+*/
+const FormAssignment = ({ selected, setModalVisible }) => {
   const [textName, onChangeName] = useState("");
   const [textInformation, onChangeInformation] = useState("");
-
+  const [fileSelected, setFileSelected] = useState(null);
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -33,6 +35,7 @@ const FormAssignment = ({ selected }) => {
       "-" +
       date.toLocaleString("default", { day: "2-digit" })
   );
+
   const printVariable = (
     selected,
     date,
@@ -42,21 +45,20 @@ const FormAssignment = ({ selected }) => {
     file
   ) => {
     // setChangeFormatDate(date);
+    const dateTime = date.concat(" ", time);
     console.log("---------------------------");
     console.log("Subject: " + selected);
     console.log("Name: " + subjectName);
     console.log("Information: " + subjectInformation);
     console.log("File: " + file);
-    console.log("Date: " + date);
-    console.log("Time: " + time);
+    console.log("DateTime: " + dateTime);
   };
 
   // DATE TIME CONFIG
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
-    setDate(currentDate);
     setShow(false);
-    // setShow(false); //To able to edit the date
+    setDate(currentDate);
   };
 
   const showMode = (currentMode) => {
@@ -64,25 +66,58 @@ const FormAssignment = ({ selected }) => {
     setMode(currentMode);
   };
 
+  const showDatepicker = () => {
+    showMode("date");
+  };
+
+  const showTimepicker = () => {
+    showMode("time");
+  };
+
+  const changeFormatDate = (date) => {
+    return (
+      date.toLocaleString("default", { year: "numeric" }) +
+      "-" +
+      date.toLocaleString("default", { month: "2-digit" }) +
+      "-" +
+      date.toLocaleString("default", { day: "2-digit" })
+    );
+  };
+  // To change the format date
+  useEffect(() => {
+    setChangeFormatDate(changeFormatDate(date));
+  }, [date]);
+
   const handleDocumentSelection = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({
+      const documentResult = await DocumentPicker.getDocumentAsync({
         type: "*/*",
         multiple: true,
       });
+
+      if (!documentResult.cancelled) {
+        // Check if assets array is present and not empty
+        if (documentResult.assets && documentResult.assets.length > 0) {
+          documentResult.assets.forEach((asset) => {
+            console.log(
+              `URI: ${asset.uri}\n` +
+                `Name: ${asset.name}\n` +
+                `Type: ${asset.mimeType}\n` +
+                `Size: ${asset.size}`
+            );
+          });
+
+          // If needed, you can perform additional actions with the selected assets.
+          // For example, you can store them in state using setFileSelected.
+          setFileSelected(documentResult.assets);
+        } else {
+          console.log("No assets selected");
+        }
+      } else {
+        console.log("Document picking canceled");
+      }
     } catch (error) {
       console.log("Error while selecting file: ", error);
-    }
-
-    if (result.type === "success") {
-      console.log(
-        `URI: ${result.uri}\n` +
-          `Name: ${result.name}\n` +
-          `Type: ${result.type}\n` +
-          `Size: ${result.size}`
-      );
-    } else {
-      console.log("Document picking canceled or failed");
     }
   };
 
@@ -93,88 +128,85 @@ const FormAssignment = ({ selected }) => {
         alignItems: "center",
       }}
     >
-      <Text style={styles.text}>Name</Text>
+      <Text style={formAssignmentStyles.text}>Name</Text>
       <TextInput
-        style={styles.input}
+        style={formAssignmentStyles.input}
         inputMode="text"
         onChangeText={onChangeName}
         value={textName}
       />
 
-      <Text style={styles.text}>Information</Text>
+      <Text style={formAssignmentStyles.text}>Information</Text>
       <TextInput
-        style={styles.input}
+        style={formAssignmentStyles.input}
         inputMode="text"
         onChangeText={onChangeInformation}
         value={textInformation}
       />
       {/* Input file zone */}
       <TouchableOpacity
-        style={styles.inputFile}
+        style={formAssignmentStyles.inputFile}
         onPress={handleDocumentSelection}
         activeOpacity={0.5}
       >
         <Image
           source={require("../../assets/icons/clipboardFile.png")}
-          style={styles.image}
+          style={formAssignmentStyles.image}
         />
-        <Text style={styles.textFile}> Attach file(s) </Text>
+        <Text style={formAssignmentStyles.textFile}> Attach file(s) </Text>
       </TouchableOpacity>
 
       {/* Input date zone */}
       <TouchableOpacity
-        style={styles.inputFile}
+        style={formAssignmentStyles.inputFile}
         activeOpacity={0.5}
-        onPress={() => {
-          showMode("date");
-        }}
+        onPress={showDatepicker}
       >
         <Image
           source={require("../../assets/icons/calendar.png")}
-          style={[styles.image, { marginRight: 5 }]}
+          style={[formAssignmentStyles.image, { marginRight: 5 }]}
         />
-        <Text style={styles.textFile}>
+        <Text style={formAssignmentStyles.textFile}>
           Due Date : {date.toLocaleDateString("en-GB")}{" "}
         </Text>
       </TouchableOpacity>
 
       {/* Input time zone */}
       <TouchableOpacity
-        style={styles.inputFile}
+        style={formAssignmentStyles.inputFile}
         activeOpacity={0.5}
-        onPress={() => {
-          showMode("time");
-        }}
+        onPress={showTimepicker}
       >
         <Image
           source={require("../../assets/icons/clock.png")}
-          style={[styles.image, { marginRight: 5 }]}
+          style={[formAssignmentStyles.image, { marginRight: 5 }]}
         />
-        <Text style={styles.textFile}>
+        <Text style={formAssignmentStyles.textFile}>
           Time : {date.toLocaleTimeString("en-GB")}{" "}
         </Text>
       </TouchableOpacity>
       {show && (
-        <DateTimePickerAndroid
-          timeZoneName="Asia/Bangkok"
-          is24Hour={true}
+        <DateTimePicker
           value={date}
           mode={mode}
-          display="default"
+          is24Hour={true}
           onChange={onChange}
         />
       )}
+      {/* Confirm Button zone */}
       <TouchableOpacity
-        style={styles.confirmButton}
-        onPress={() =>
+        style={formAssignmentStyles.confirmButton}
+        onPress={() => [
           printVariable(
             selected,
-            date, //changeFormatDate = date format
-            date.toLocaleTimeString("en-GB").slice(0, 5),
+            changedFormatDate, //changeFormatDate = date format
+            date.toLocaleTimeString("en-GB"),
             textName,
-            textInformation
-          )
-        }
+            textInformation,
+            fileSelected
+          ),
+          setModalVisible(false),
+        ]}
       >
         <Text
           style={{
@@ -189,50 +221,5 @@ const FormAssignment = ({ selected }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  confirmButton: {
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    height: windowHeight * 0.067,
-    width: "55%",
-    backgroundColor: true ? "#F04E22" : "#393A3F",
-    marginTop: windowHeight * 0.03,
-  },
-  input: {
-    borderRadius: 30,
-    color: "white",
-    width: "90%",
-    marginHorizontal: "15%",
-    borderWidth: 1,
-    borderColor: "#C1C1CD",
-    height: windowHeight * 0.063,
-    marginBottom: windowHeight * 0.015,
-    paddingLeft: windowWidth * 0.05,
-  },
-  inputFile: {
-    marginTop: windowHeight * 0.017,
-    justifyContent: "flex-start",
-    flexDirection: "row",
-    width: "90%",
-    alignItems: "center",
-  },
-  image: {
-    width: 16,
-    height: 16,
-  },
-  text: {
-    color: "#C1C1CD",
-    paddingBottom: windowHeight * 0.013,
-    alignSelf: "stretch",
-    marginHorizontal: "5%",
-    fontSize: 15,
-  },
-  textFile: {
-    color: "#C1C1CD",
-    fontSize: 15,
-  },
-});
 
 export default FormAssignment;
