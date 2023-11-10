@@ -20,11 +20,9 @@ const signIn = async (email, password, navigation, loadState) => {
       firebaseAuth,
       email,
       password
-      );
-      
-    const info = await fetch(
-      `${ipv4.golf}checkRole?email=${email}`
     );
+
+    const info = await fetch(`${ipv4.mark}checkRole?email=${email}`);
     if (!info.ok) {
       throw new Error("Network response was not ok");
     }
@@ -32,8 +30,7 @@ const signIn = async (email, password, navigation, loadState) => {
     const userRole = convertedInfo[0].role;
     if (userRole === "student") {
       navigation("HomepageStudent", email);
-    }
-    else{
+    } else {
       navigation("HomepageTeacher", email);
     }
     // navigation();

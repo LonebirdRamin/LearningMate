@@ -3,7 +3,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Landing from "../screens/Landing";
-import Login from "../screens/login";
+import Login from "../screens/Login";
 import Register from "../screens/Register";
 import NavigationBarStudent from "./NavigationBarStudent";
 import NavigationBarTeacher from "./NavigationBarTeacher";
@@ -35,8 +35,7 @@ const LandingStack = () => {
             // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
-        />{" "}
-        */}
+        />
         <Stack.Screen
           name="HomepageStudent"
           component={NavigationBarStudent}
