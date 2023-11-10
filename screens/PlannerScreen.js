@@ -210,6 +210,7 @@ const PlannerScreen = () => {
               renderItem={({ item }) => (
                 <>
                   <PlannerBox
+                    id = {item.planner_id}
                     title={item.planner_name}
                     subtitle={item.planner_detail}
                     time={item.time}

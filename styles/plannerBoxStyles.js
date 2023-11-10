@@ -25,13 +25,13 @@ const plannerBoxStyles = StyleSheet.create({
     alignItems: "center",
     columnGap: width*0.06,
   },
-  title: {
+  title: (isTime)=> ({
     color: 'white',
     fontWeight: '600',
     fontSize: height*0.018,
-    width: width*0.45
+    width: isTime? 0:width*0.45
 
-  },
+  }),
   subtitle:{
     color: "#A2A2B5",
     fontWeight: '500',
@@ -42,7 +42,7 @@ const plannerBoxStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 });
 

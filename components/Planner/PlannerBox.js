@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
 import plannerBoxStyles from "../../styles/plannerBoxStyles";
 
@@ -12,7 +12,7 @@ const PlannerBox = ({
   id = 0
 }) => {
   return (
-    <View style={plannerBoxStyles.plannerBox}>
+    <TouchableOpacity style={plannerBoxStyles.plannerBox} onPress={()=>{console.log(id)}}>
       <View style={plannerBoxStyles.contentWrapper}>
         <Image
           resizeMode="cover"
@@ -21,13 +21,16 @@ const PlannerBox = ({
         />
         <View style={plannerBoxStyles.plannerDetail}>
           <View>
-            <Text style={plannerBoxStyles.title} numberOfLines={1} >{title}</Text>
+            <Text style={plannerBoxStyles.title()} numberOfLines={1} >{title}</Text>
             <Text style={plannerBoxStyles.subtitle} numberOfLines={1} >{subtitle}</Text>
           </View>
-          <Text style={plannerBoxStyles.title}>{time}</Text>
+          
+          <Text style={[plannerBoxStyles.title(true), {width: Dimensions.get("screen").width*0.15, textAlign: 'right'}]}>{time}</Text>
+
+          
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
