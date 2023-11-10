@@ -22,6 +22,7 @@ const plannerStyles = StyleSheet.create({
   },
   listBound:{
     height: height>850? height*0.5: height*0.45,
+    justifyContent: 'center',
   }
   
 });

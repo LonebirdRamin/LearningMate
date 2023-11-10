@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Modal from "react-native-modal";
@@ -18,21 +19,33 @@ import AppButton from "../AppButton";
 
 const plannerType = ["Work", "Read", "Chill"];
 
-const AddPlannerModal = ({ isModalVisible, setModalVisible }) => {
+const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsAdded }) => {
   const [title, setTitle] = useState("");
   const [selectedType, setSelectedType] = useState("Work");
   const [detail, setDetail] = useState("");
   const [date, setDate] = useState(new Date(moment().format()));
-  const [formattedDate, setFormattedDate] = useState(date.toLocaleString("default", {year: "numeric"}) + "-" + date.toLocaleString("default", {month: '2-digit'}) + "-" + date.toLocaleString("default", {day: '2-digit'}))
-
+  const [formattedDate, setFormattedDate] = useState(
+    date.toLocaleString("default", { year: "numeric" }) +
+      "-" +
+      date.toLocaleString("default", { month: "2-digit" }) +
+      "-" +
+      date.toLocaleString("default", { day: "2-digit" })
+  );
+  const [newPlan, setNewPlan] = useState({});
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setDate(currentDate);
   };
 
-  useEffect(()=>{
-    setFormattedDate(date.toLocaleString("default", {year: "numeric"}) + "-" + date.toLocaleString("default", {month: '2-digit'}) + "-" + date.toLocaleString("default", {day: '2-digit'})) 
-  },[date])
+  useEffect(() => {
+    setFormattedDate(
+      date.toLocaleString("default", { year: "numeric" }) +
+        "-" +
+        date.toLocaleString("default", { month: "2-digit" }) +
+        "-" +
+        date.toLocaleString("default", { day: "2-digit" })
+    );
+  }, [date]);
 
   const showMode = (currentMode) => {
     DateTimePickerAndroid.open({
@@ -44,23 +57,26 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible }) => {
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode("date");
   };
 
   const showTimepicker = () => {
-    showMode('time');
+    showMode("time");
   };
-
 
   return (
     <Modal
       onBackdropPress={() => {
         setModalVisible(false);
         setDate(new Date(moment().format()));
+        setSelectedType("Work");
+        
       }}
       onBackButtonPress={() => {
         setModalVisible(false);
         setDate(new Date(moment().format()));
+        setSelectedType("Work");
+
       }}
       isVisible={isModalVisible}
       animationInTiming={250}
@@ -80,6 +96,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible }) => {
             </View>
           </View>
         </View> */}
+
       <View style={addPlannerModalStyles.modalContent}>
         <Text style={addPlannerModalStyles.headerText}>Add plan</Text>
         <View style={addPlannerModalStyles.formContainer}>
@@ -159,10 +176,9 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible }) => {
               />
               <Text style={addPlannerModalStyles.dateTimeText}>Date:</Text>
               <Text style={addPlannerModalStyles.dateTimeText}>
-              {formattedDate}
-            </Text>
+                {formattedDate}
+              </Text>
             </TouchableOpacity>
-            
           </View>
           {/* End - date zone */}
 
@@ -179,20 +195,38 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible }) => {
               />
               <Text style={addPlannerModalStyles.dateTimeText}>Time:</Text>
               <Text style={addPlannerModalStyles.dateTimeText}>
-              {date.toLocaleTimeString().slice(0,5)}
-            </Text>
+                {date.toLocaleTimeString("en-GB").slice(0, 5)}
+              </Text>
             </TouchableOpacity>
-            
           </View>
           {/* End- Time */}
-          
-          <View style={addPlannerModalStyles.buttonContainer}>
-          <AppButton text="Add" textColor="white"/>  
 
+          <View style={addPlannerModalStyles.buttonContainer}>
+            <AppButton
+              text="Add"
+              textColor="white"
+              handlePress={() => {
+                // if(title === "" || detail === "")
+                // {
+                //   Alert.alert("Planner", "Please type in title and detail of this plan", [{text: 'OK'}])
+                // }
+                console.log(
+                  selectedType +
+                    " " +
+                    title +
+                    " " +
+                    detail +
+                    " " +
+                    formattedDate +
+                    " " +
+                    date.toLocaleTimeString("en-GB").slice(0, 5)
+                );
+                
+                setIsAdded(true);
+              }}
+            />
           </View>
-          
         </View>
-        
       </View>
     </Modal>
   );

@@ -28,12 +28,15 @@ const plannerBoxStyles = StyleSheet.create({
   title: {
     color: 'white',
     fontWeight: '600',
-    fontSize: height*0.018
+    fontSize: height*0.018,
+    width: width*0.45
+
   },
   subtitle:{
     color: "#A2A2B5",
     fontWeight: '500',
-    fontSize: height*0.015
+    fontSize: height*0.015,
+    width: width*0.45
   },
   plannerDetail:{
     flex: 1,

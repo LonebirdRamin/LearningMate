@@ -68,7 +68,7 @@ const addPlannerModalStyles = StyleSheet.create({
     height: height*0.04,
     borderWidth: 1,
     borderColor: "rgb(124, 124, 155)",
-    paddingHorizontal: width*0.04
+    paddingHorizontal: width*0.03
   },
   // End - Planner textinput
 
@@ -97,7 +97,7 @@ const addPlannerModalStyles = StyleSheet.create({
   // Start - Confirm button
   buttonContainer:{
     width: "100%",
-    paddingVertical: height*0.02
+    paddingVertical: height*0.01
   },
   button:{
 
