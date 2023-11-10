@@ -7,7 +7,7 @@ const width = Dimensions.get("screen").width
 const assignmentStyles = StyleSheet.create({
     container: 
     {
-        height: "35%",
+        height: height>850? height*0.3: height*0.25,
         paddingTop: Dimensions.get("screen").height*0.04,
         paddingHorizontal: Dimensions.get("screen").width*0.05 
     },
@@ -39,7 +39,7 @@ const assignmentStyles = StyleSheet.create({
     box: {
         backgroundColor: 'rgba(78,78,97,0.2)',
         height: height*0.13,
-        paddingVertical: 15,
+        paddingVertical: height*0.014,
         paddingHorizontal: 17,
         borderRadius: 16,
         borderWidth: 0.5,

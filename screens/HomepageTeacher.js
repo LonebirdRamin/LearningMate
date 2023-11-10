@@ -21,7 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
 import { useRoute } from "@react-navigation/native";
 import DataContext from "../routes/DataContext";
-import querySchedule from "../backend/hooks/querySchedule";
+import queryScheduleTeacher from "../backend/hooks/queryScheduleTeacher";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 const height = Dimensions.get("screen").height;
@@ -57,30 +57,9 @@ const mockUpData = [
   },
 ];
 
-// const events = [
-//   {
-//     'code':'CPE123',
-//     'name':'Aerospace engineering',
-//     'time':'00:00 - 05:00',
-//   },
-//   {
-//     'code':'CPE456',
-//     'name':'Chicken engineering',
-//     'time':'06:00 - 07:00',
-//   },
-//   {
-//     'code':'CPE888',
-//     'name':'noidea',
-//     'time':'12:00 - 13:00',
-//   },
-//   {
-//     'code':'CPE015',
-//     'name':'Kitchen simulation',
-//     'time':'20:00 - 21:00',
-//   },
-// ]
 
-const Homepage = ({ navigation }) => {
+
+const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
   const email = useContext(DataContext); // email from login
 
@@ -93,24 +72,20 @@ const Homepage = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
-  useEffect(() => {
-    queryAssignment(
-      email,
-      setIsAssignmentLoading,
-      setAssignmentData,
-      setAssignNum
-    );
-  }, []);
+  useEffect(()=>{
+    queryAssignment(email, setIsAssignmentLoading, setAssignmentData, setAssignNum);
+  },[]);
   // End - manage about assignment
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await querySchedule(email, setIsLoading, day);
+      const data = await queryScheduleTeacher(email, setIsLoading, day);
       setSchedule(data);
     };
 
     fetchData();
   }, [day]);
+
 
   return (
     <SafeAreaView>
@@ -144,7 +119,7 @@ const Homepage = ({ navigation }) => {
                 <Text style={customStyles.pageTitle}>Calendar</Text>
                 <TouchableOpacity
                   style={customStyles.notficationIcon}
-                  onPress={() => navigation.navigate("Notification")}
+                  onPress={() => navigation.navigate('Notification')}
                 >
                   <Image source={require("../assets/icons/bell.png")}></Image>
                 </TouchableOpacity>
@@ -156,7 +131,7 @@ const Homepage = ({ navigation }) => {
                 { textAlign: "left", marginLeft: 24, marginBottom: 17 },
               ]}
             >
-              Schedule
+              Teacher
             </Text>
             <Calendar day={day} setDay={setDay}></Calendar>
             <EventList data={schedule}></EventList>
@@ -180,21 +155,13 @@ const Homepage = ({ navigation }) => {
             ></SeeAllModal>
           </View>
           <View style={assignmentStyles.container}>
-            <AssignmentHeader number={assignNum} />
-            <View style={assignmentStyles.list}>
-              {isAssignmentLoading ? (
-                <View
-                  style={[
-                    assignmentStyles.list,
-                    {
-                      height: height > 850 ? height * 0.25 : height * 0.2,
-                      justifyContent: "center",
-                    },
-                  ]}
-                >
-                  <ActivityIndicator size={50} color="#F04E22" />
-                </View>
-              ) : (
+              <AssignmentHeader number={assignNum} />
+              <View style={assignmentStyles.list}>
+          {isAssignmentLoading ? (
+            <View style={[assignmentStyles.list, {height: height>850? height*0.25: height*0.2, justifyContent: 'center'}]}>
+              <ActivityIndicator size={50} color="#F04E22"/>
+            </View>
+          ) : (
                 <FlatList
                   data={assignmentData}
                   renderItem={({ item }) => (
@@ -206,13 +173,14 @@ const Homepage = ({ navigation }) => {
                     />
                   )}
                 />
-              )}
-            </View>
+              
+          )}
           </View>
+            </View>
         </View>
       )}
     </SafeAreaView>
   );
 };
 
-export default Homepage;
+export default HomepageTeacher;
