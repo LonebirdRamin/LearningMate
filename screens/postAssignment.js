@@ -5,7 +5,8 @@ import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
 import firebase from 'firebase/app';
 import 'firebase/storage';
-import { app, storage } from '../database/firebaseDB';
+import { app } from '../database/firebaseDB';
+import storage from '@react-native-firebase/storage';
 
 
 
@@ -31,7 +32,7 @@ const PostAssignment = () => {
       
           console.log(insertData);
       
-          const response = await axios.post('http://192.168.1.75:5001/api/createAssignment', insertData);
+          const response = await axios.post('http://192.168.1.33:5001/api/createAssignment', insertData);
           console.log(response.data);
           // Check the response status code to determine if it was successful
           if (response.status === 201) {
@@ -85,44 +86,27 @@ const PostAssignment = () => {
         console.log("Error while selecting file: ", error);
       }
     };
-
-    // const pickDocument = async () => {
-    //   try {
-    //     const result = await DocumentPicker.getDocumentAsync({
-    //       type: '*/*', // You can specify the file type(s) you want to allow
-    //       multiple: true, // You can specify whether you want multiple files or not
-    //     });
     
-    //     if (result.type === 'success') {
-    //       setSelectedFile(result);
-    //       console.log("SELECTED FILE: ", result.uri, result.type, result.name, result.size);
-    //     } else {
-    //       if (result.type === 'cancel') {
-    //         // User canceled the document picker
-    //       } else {
-    //         throw new Error('Document picker encountered an error');
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.error('Error picking document:', error);
-    //   }
-    // };
-
-    const uploadFileToFirebaseStorage = async () => {
-      console.log("IN FUNCTION UPLOAD FILE TO FIREBASE STORAGE");
-      if (fileSelected) {
+    const uploadFilesToFirebaseStorage = async () => {
+      console.log("IN FUNCTION UPLOAD FILES TO FIREBASE STORAGE");
+      if (fileSelected && fileSelected.length > 0) {
         const storageRef = storage.ref();
-        const fileName = 'your-desired-filename.extension'; // Set your desired filename
     
         try {
-          const fileRef = storageRef.child(fileName);
-          await fileRef.putFile(fileSelected.uri);
-          console.log('File uploaded to Firebase Storage successfully!');
+          // Iterate over each selected file and upload it to Firebase Storage
+          await Promise.all(
+            fileSelected.map(async (file) => {
+              const fileName = file.name;
+              const fileRef = storageRef.child(fileName);
+              await fileRef.putFile(file.uri);
+              console.log(`File ${fileName} uploaded to Firebase Storage successfully!`);
+            })
+          );
         } catch (error) {
-          console.error('Error uploading file to Firebase Storage:', error);
+          console.error('Error uploading files to Firebase Storage:', error);
         }
       } else {
-        console.error('No file selected to upload.');
+        console.error('No files selected to upload.');
       }
     };
     
@@ -166,11 +150,12 @@ const PostAssignment = () => {
       >
       </TextInput>
       <Button title="Select File" onPress={handleDocumentSelection} containerStyle={{ marginTop: 10, marginBottom: 20 }} />
+      {/* <Button title="Insert" onPress={goInsert} containerStyle={{ marginTop: 10, marginBottom: 20 }} /> */}
       <Button
         title="Insert"
         onPress={() => {
           goInsert();
-          uploadFileToFirebaseStorage();
+          uploadFilesToFirebaseStorage();
         }}
         containerStyle={{ marginTop: 10, marginBottom: 20 }}
       />
