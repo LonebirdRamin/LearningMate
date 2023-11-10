@@ -1,5 +1,5 @@
 import React, { useContext, createContext } from "react";
-import { StyleSheet, Text, View, Image, Dimensions, } from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import { NavigationContainer, useRoute } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,7 +11,7 @@ import LearningZoneScreen from "../screens/LearningZoneScreen";
 import PlannerScreen from "../screens/PlannerScreen";
 import DataContext from "./DataContext";
 
-const height = Dimensions.get("screen").height
+const height = Dimensions.get("screen").height;
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -19,7 +19,7 @@ const screenOptions = {
   headerShown: false,
   tabBarStyle: {
     position: "absolute",
-    bottom: height*0.0001,
+    bottom: height * 0.0001,
     left: 23,
     right: 23,
     backgroundColor: "#4E4E61",
@@ -31,15 +31,19 @@ const screenOptions = {
 };
 
 const NavigationBarStudent = () => {
-  const email = useRoute();
+  // const email = useRoute();
+  const email = "pannawat.duro@kmutt.ac.th";
   // console.log("Homepage " + email.params.email)
   // console.log("HOMESTUDENT " + user.params.test); ได้ data มาแล้ว
   const handleImage = () => {};
   return (
-    <DataContext.Provider value={email.params.email}>
-      <Tab.Navigator screenOptions={screenOptions} initialRouteName="HomeNoti" backBehavior="initialRoute">
+    <DataContext.Provider value={email}>
+      <Tab.Navigator
+        screenOptions={screenOptions}
+        initialRouteName="HomeNoti"
+        backBehavior="initialRoute"
+      >
         <Tab.Screen
-          
           name="Planner"
           component={PlannerScreen}
           options={{
@@ -159,11 +163,8 @@ const NavigationBarStudent = () => {
             ),
           }}
         />
-
       </Tab.Navigator>
-
     </DataContext.Provider>
-    
   );
 };
 

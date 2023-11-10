@@ -21,13 +21,15 @@ import formAssignmentStyles from "../../styles/formAssignmentStyles";
 - make date condition => if no fill on date => no due date
 */
 const FormAssignment = ({ selected, setModalVisible }) => {
+  const [checkDueDate, setCheckDueDate] = useState(false);
   const [textName, onChangeName] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [fileSelected, setFileSelected] = useState(null);
   const [date, setDate] = useState(new Date());
+  const checkDate = new Date(); //For make no due date state
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  const [text, setText] = useState("No Due Date");
+
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
@@ -36,16 +38,34 @@ const FormAssignment = ({ selected, setModalVisible }) => {
       date.toLocaleString("default", { day: "2-digit" })
   );
 
-  const printVariable = (
+  const handleDueDate = () => {
+    if (checkDate.toLocaleDateString() === date.toLocaleDateString()) {
+      setCheckDueDate(true);
+    } else {
+      setCheckDueDate(false);
+    }
+  };
+
+  useEffect(() => {
+    handleDueDate();
+  }, [date]);
+
+  const setUpVariable = (
+    //Funtion that gather all the variable
     selected,
     date,
     time,
     subjectName,
     subjectInformation,
-    file
+    file,
+    checkDueDate
   ) => {
-    // setChangeFormatDate(date);
-    const dateTime = date.concat(" ", time);
+    let dateTime;
+    if (checkDueDate === true) {
+      dateTime = null;
+    } else if (checkDueDate === false) {
+      dateTime = date.concat(" ", time);
+    }
     console.log("---------------------------");
     console.log("Subject: " + selected);
     console.log("Name: " + subjectName);
@@ -167,7 +187,8 @@ const FormAssignment = ({ selected, setModalVisible }) => {
           style={[formAssignmentStyles.image, { marginRight: 5 }]}
         />
         <Text style={formAssignmentStyles.textFile}>
-          Due Date : {date.toLocaleDateString("en-GB")}{" "}
+          Due Date :{" "}
+          {checkDueDate ? "No Due Date" : date.toLocaleDateString("en-GB")}
         </Text>
       </TouchableOpacity>
 
@@ -197,13 +218,14 @@ const FormAssignment = ({ selected, setModalVisible }) => {
       <TouchableOpacity
         style={formAssignmentStyles.confirmButton}
         onPress={() => [
-          printVariable(
+          setUpVariable(
             selected,
             changedFormatDate, //changeFormatDate = date format
             date.toLocaleTimeString("en-GB"),
             textName,
             textInformation,
-            fileSelected
+            fileSelected,
+            checkDueDate
           ),
           setModalVisible(false),
         ]}
