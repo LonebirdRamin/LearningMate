@@ -3,7 +3,10 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios'
 import * as DocumentPicker from 'expo-document-picker'
-import 'firebase/storage'; // Import Firebase Storage to upload file
+import firebase from 'firebase/app';
+import 'firebase/storage';
+import { app, storage } from '../database/firebaseDB';
+
 
 
 const PostAssignment = () => {
@@ -13,7 +16,7 @@ const PostAssignment = () => {
     const [dueDate, setDueDate] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
-    const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
+    const [fileSelected, setFileSelected] = useState(null); // State to store the selected file
     const navigation = useNavigation();
 
     const goInsert = async () => {
@@ -50,36 +53,70 @@ const PostAssignment = () => {
       navigation.goBack(); // This will navigate back to the previous screen.
     }
 
-    const pickDocument = async () => {
+    const handleDocumentSelection = async () => {
       try {
-        const result = await DocumentPicker.getDocumentAsync({
-          type: '*/*', // You can specify the file type(s) you want to allow
-          multiple: true, // You can specify whether you want multiple files or not
+        const documentResult = await DocumentPicker.getDocumentAsync({
+          type: "*/*",
+          multiple: true,
         });
-    
-        if (result.type === 'success') {
-          setSelectedFile(result);
-          console.log("SELECTED FILE: ", result.uri, result.type, result.name, result.size);
-        } else {
-          if (result.type === 'cancel') {
-            // User canceled the document picker
+  
+        if (!documentResult.cancelled) {
+          // Check if assets array is present and not empty
+          if (documentResult.assets && documentResult.assets.length > 0) {
+            documentResult.assets.forEach((asset) => {
+              console.log(
+                `URI: ${asset.uri}\n` +
+                  `Name: ${asset.name}\n` +
+                  `Type: ${asset.mimeType}\n` +
+                  `Size: ${asset.size}`
+              );
+            });
+  
+            // If needed, you can perform additional actions with the selected assets.
+            // For example, you can store them in state using setFileSelected.
+            setFileSelected(documentResult.assets);
           } else {
-            throw new Error('Document picker encountered an error');
+            console.log("No assets selected");
           }
+        } else {
+          console.log("Document picking canceled");
         }
       } catch (error) {
-        console.error('Error picking document:', error);
+        console.log("Error while selecting file: ", error);
       }
     };
 
+    // const pickDocument = async () => {
+    //   try {
+    //     const result = await DocumentPicker.getDocumentAsync({
+    //       type: '*/*', // You can specify the file type(s) you want to allow
+    //       multiple: true, // You can specify whether you want multiple files or not
+    //     });
+    
+    //     if (result.type === 'success') {
+    //       setSelectedFile(result);
+    //       console.log("SELECTED FILE: ", result.uri, result.type, result.name, result.size);
+    //     } else {
+    //       if (result.type === 'cancel') {
+    //         // User canceled the document picker
+    //       } else {
+    //         throw new Error('Document picker encountered an error');
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error('Error picking document:', error);
+    //   }
+    // };
+
     const uploadFileToFirebaseStorage = async () => {
-      if (selectedFile) {
-        const storageRef = firebase.storage().ref();
+      console.log("IN FUNCTION UPLOAD FILE TO FIREBASE STORAGE");
+      if (fileSelected) {
+        const storageRef = storage.ref();
         const fileName = 'your-desired-filename.extension'; // Set your desired filename
-  
+    
         try {
           const fileRef = storageRef.child(fileName);
-          await fileRef.putFile(selectedFile.uri);
+          await fileRef.putFile(fileSelected.uri);
           console.log('File uploaded to Firebase Storage successfully!');
         } catch (error) {
           console.error('Error uploading file to Firebase Storage:', error);
@@ -128,8 +165,15 @@ const PostAssignment = () => {
       onChangeText={(text) => setDescription(text)}
       >
       </TextInput>
-      <Button title="Select File" onPress={pickDocument} containerStyle={{ marginTop: 10, marginBottom: 20 }} />
-      <Button title="Insert" onPress={goInsert} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
+      <Button title="Select File" onPress={handleDocumentSelection} containerStyle={{ marginTop: 10, marginBottom: 20 }} />
+      <Button
+        title="Insert"
+        onPress={() => {
+          goInsert();
+          uploadFileToFirebaseStorage();
+        }}
+        containerStyle={{ marginTop: 10, marginBottom: 20 }}
+      />
       <Button title="Go Back" onPress={goBack} containerStyle={{ marginTop: 10, marginBottom: 20 }}/>
     </View>
   )
