@@ -185,6 +185,23 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
   );
 });
 
+app.get("/api/getClass", (req, res) => {
+  const email = req.query.email;
+
+  connection.query(
+    'SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester FROM class_student AS cs JOIN student AS s ON s.student_id = cs.student_id JOIN class AS c ON cs.class_id = c.class_id WHERE academic_email = ?;',
+    [email],
+    function(err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error querying classes.' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+})
+
 app.post("/api/createPlanner", (req, res) => {
   console.log(req.query)
   const { email, eventType, eventName , description, dueDate } = req.body;

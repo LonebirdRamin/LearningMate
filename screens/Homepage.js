@@ -137,7 +137,7 @@ const Homepage = ({ navigation }) => {
               }}
             >
               <View style={customStyles.pageTitleContainer}>
-                <Text style={customStyles.pageTitle}>Calendar</Text>
+                <Text style={customStyles.pageTitle}>Learning Mate</Text>
                 <TouchableOpacity
                   style={customStyles.notficationIcon}
                   onPress={() => navigation.navigate('Notification')}
