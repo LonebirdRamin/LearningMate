@@ -202,6 +202,36 @@ app.post("/api/createPlanner", (req, res) => {
   });
 })
 
+app.post('/api/editPlanner', (req, res) => {
+  const { plannerName, plannerId, email, eventType, description, dueDate } = req.body;
+  console.log("plannerName : ========", plannerName)
+
+  const sql = "UPDATE planner SET planner_name = ?, planner_category = ?, planner_detail = ?, start_time = ? WHERE planner_id = ? AND academic_email = ?";
+
+  connection.query(sql, [plannerName, eventType, description, dueDate, plannerId, email], (err, results) => {
+    if (err) {
+      console.log("Error while updating a planner from the database", err);
+      return res.status(400).json({ message: "Failed to update a planner." });
+    }
+    return res.status(201).json({ message: "Planner successfully updated!" });
+  });
+})
+
+app.delete('/api/deletePlanner', (req, res) => {
+  
+  const { plannerId, email } = req.body;
+
+  const sql = "DELETE FROM planner WHERE planner_id = ? AND academic_email = ?";
+
+  connection.query(sql, [plannerId, email], (err, results) => {
+    if (err) {
+      console.log("Error while deleting a planner from the database", err);
+      return res.status(400).json({ message: "Failed to delete a planner." });
+    }
+    return res.status(201).json({ message: "Planner successfully deleted!" });
+  });
+})
+
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
 })

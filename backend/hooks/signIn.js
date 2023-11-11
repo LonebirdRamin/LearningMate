@@ -21,27 +21,28 @@ const signIn = async (email, password, navigation, loadState) => {
       email,
       password
       );
-      
-    const info = await fetch(
-      `${ipv4.kong}checkRole?email=${email}`
-    );
-    if (!info.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const convertedInfo = await info.json();
-    const userRole = convertedInfo[0].role;
-    if (userRole === "student") {
-      navigation("HomepageStudent", email);
-    }
-    else{
-      navigation("HomepageTeacher", email);
-    }
-    // navigation();
-  } catch (error) {
-    Alert.alert("Sign in fail", "Please check your email and password", [
-      { text: "Ok" },
-    ]);
-  } finally {
+      const info = await fetch(
+        `${ipv4.kong}checkRole?email=${email}`
+        );
+        if (!info.ok) {
+          throw new Error("Network response was not ok");
+          
+        }
+        const convertedInfo = await info.json();
+        const userRole = convertedInfo[0].role;
+        if (userRole === "student") {
+          navigation("HomepageStudent", email);
+        }
+        else{
+          navigation("HomepageTeacher", email);
+        }
+        // navigation();
+      } catch (error) {
+        Alert.alert("Sign in fail", "Please check your email and password", [
+          { text: "Ok" },
+        ]);
+      } finally {
+    
     loadState(false);
   }
 };

@@ -21,99 +21,18 @@ import DataContext from "../routes/DataContext";
 import moment from "moment";
 import PlannerCalendar from "../components/Planner/PlannerCalender";
 import queryPlanner from "../backend/hooks/queryPlanner";
-
-// const mockUpData = [
-//   {
-//     title: "Fuck mere",
-//     subtitle: "Dont forgor condom",
-//     time: "00:00",
-//     type: "entertainment",
-//     date: "23-11-08",
-//   },
-//   {
-//     title: "Read bigdick data",
-//     subtitle: "Lecture 1 2 3 4 5 6",
-//     time: "01:00",
-//     type: "reading",
-//     date: "23-11-08",
-//   },
-//   {
-//     title: "Test1",
-//     subtitle: "Test...",
-//     time: "2:00",
-//     type: "working",
-//     date: "23-11-09",
-//   },
-//   {
-//     title: "Test2",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-09",
-//   },
-//   {
-//     title: "Test3",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-10",
-//   },
-//   {
-//     title: "Test4",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Fuck mere5",
-//     subtitle: "Dont forgor condom",
-//     time: "00:00",
-//     type: "entertainment",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Read bigdick data 6",
-//     subtitle: "Lecture 1 2 3 4 5 6",
-//     time: "01:00",
-//     type: "reading",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Test7",
-//     subtitle: "Test...",
-//     time: "2:00",
-//     type: "working",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Test8",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Test9",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-14",
-//   },
-//   {
-//     title: "Test10",
-//     subtitle: "dsadasdsa",
-//     time: "2:00",
-//     type: "dasdasdas",
-//     date: "23-11-14",
-//   },
-// ];
+import EditPlannerModal from "../components/Planner/EditPlannerModal";
 
 
 
 
 const PlannerScreen = () => {
   const [isModalVisible, setModalVisible] = useState();
+
+  // Start - edit the plan
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState({});
+  // End - edit the plan
 
   const [queriedPlanner, setQueriedPlanner] = useState([]);
 
@@ -153,10 +72,14 @@ const PlannerScreen = () => {
   // Start - filter planner list
   useEffect(() => {
     
-    setPlannerData(dataForUse.filter((e) => 
+      setPlannerData(dataForUse.filter((e) => 
+        
+        e.date === selectedDay
+      ));
       
-      e.date === selectedDay
-    ));
+
+
+    
     
   }, [selectedDay, dataForUse]);
   // End - filter planner list
@@ -168,15 +91,19 @@ const PlannerScreen = () => {
   }, []);
 
   useEffect(()=>{
-   
+
     setDataForUse(formatting(queriedPlanner))
+    
+
   },[queriedPlanner])
 
  // Query planner again if any update
   useEffect(()=>{ 
+    setIsLoading(true)
     queryPlanner(email, setQueriedPlanner, setIsLoading);
+    setIsChanged(false)
+  }, [isChanged]) 
 
-  }, [isChanged])
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
       {/*Start - Header part */}
@@ -197,7 +124,7 @@ const PlannerScreen = () => {
       {/*End - Calendar */}
 
       {/*Start - Add button */}
-      <AddPlannerButton handlePress={() => setModalVisible(true)} />
+      <AddPlannerButton handlePress={() => {setModalVisible(true);console.log('test')}} />
       {/*End - Add button */}
 
       
@@ -217,7 +144,10 @@ const PlannerScreen = () => {
                     title={item.planner_name}
                     subtitle={item.planner_detail}
                     time={item.time}
+                    date={item.date}
                     type={item.planner_category}
+                    setEditModalVisible={setIsEditModalVisible}
+                    setSelectedPlan={setSelectedPlan}
                   />
                   <View
                     style={{ height: Dimensions.get("screen").height * 0.015 }}
@@ -237,6 +167,14 @@ const PlannerScreen = () => {
         setIsChanged={setIsChanged}
       />
       {/*Start Modal */}
+
+      <EditPlannerModal
+        setMainPageLoad={setIsLoading}
+        selectedPlan={selectedPlan}
+        isEditModalVisible={isEditModalVisible}
+        setModalVisible={setIsEditModalVisible}
+        setIsChanged={setIsChanged}
+      />
       
     </SafeAreaView>
   );

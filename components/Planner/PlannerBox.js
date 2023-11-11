@@ -8,11 +8,16 @@ const PlannerBox = ({
   title = "None",
   subtitle = "Details...",
   time = "00:00",
+  date = "0000-00-00",
   type = plannerType[0],
-  id = 0
+  id = 0,
+  setEditModalVisible,
+  setSelectedPlan
 }) => {
   return (
-    <TouchableOpacity style={plannerBoxStyles.plannerBox} onPress={()=>{console.log(id)}}>
+    <TouchableOpacity style={plannerBoxStyles.plannerBox} onPress={()=>{
+      setSelectedPlan({type, title, subtitle, id, time, date})
+      setEditModalVisible(true)}}>
       <View style={plannerBoxStyles.contentWrapper}>
         <Image
           resizeMode="cover"

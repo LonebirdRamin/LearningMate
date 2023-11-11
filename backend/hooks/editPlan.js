@@ -1,21 +1,16 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 import moment from "moment";
-const insertPlan = async (
-  insertData,
-  setIsLoading,
-  setNewPlan,
-  setTitle,
-  setDetail,
-  setSelectedType,
-  setDate,
-  setModalVisible,
+const editPlan = async (
+  editedData,
+  setIsLoading,  
+  setEditModalVisible,
   setIsChanged
 ) => {
   setIsLoading(true);
   try {
 
-    const response = await axios.post(`${ipv4.kong}createPlanner`, insertData);
+    const response = await axios.post(`${ipv4.kong}editPlanner`, editedData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;
@@ -25,17 +20,12 @@ const insertPlan = async (
     }
   } catch (error) {
     console.error(error);
-    alert("Add planner failed!" + error.message);
+    alert("Edit planner failed!" + error.message);
   } finally {
     setIsLoading(false);
-    setNewPlan();
-    setTitle("");
-    setDetail("");
-    setSelectedType("Work");
-    setDate(new Date(moment().format()));
-    setModalVisible(false);
+    setEditModalVisible(false);
     setIsChanged(true);
   }
 };
 
-export default insertPlan;
+export default editPlan;
