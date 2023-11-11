@@ -2,7 +2,7 @@ import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import customStyles from '../../styles/customStyles'
 
-const ClassList = ({data}) => {
+const ClassList = ({data,navigation}) => {
 
     const maxLength = 40;
     const truncate = (text,maxLength)=>{
@@ -18,7 +18,8 @@ const ClassList = ({data}) => {
         <FlatList
         data={data}
         renderItem={({item})=>(
-            <TouchableOpacity style={customStyles.classWidget}>
+            <TouchableOpacity style={customStyles.classWidget} 
+            onPress={()=>navigation.navigate('LearningZoneStudentClass',{class_:item})}>
                 <View style={customStyles.eventDetails}>
                     <View style={[customStyles.eventIcon,{backgroundColor:'#F04E22',alignItems:'center'}]}>
                         <Text style={customStyles.h2}>{item.class_id.substring(0,3)}</Text>

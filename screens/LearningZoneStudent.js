@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, ActivityIndicator, TouchableOpacity, } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import customStyles from "../styles/customStyles";
 import globleStyles from "../styles/globleStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,7 +7,7 @@ import DataContext from "../routes/DataContext";
 import queryClass from "../backend/hooks/queryClass";
 import ClassList from "../components/LearningZone/ClassList";
 
-const LearningZoneStudent = () => {
+const LearningZoneStudent = ({navigation}) => {
   
   
   const email = useContext(DataContext); // email from login
@@ -22,6 +22,7 @@ const LearningZoneStudent = () => {
       
       fetchData();
     },[]);
+
 
   return (
     <SafeAreaView>
@@ -46,7 +47,7 @@ const LearningZoneStudent = () => {
             <View style={{marginLeft:'auto',marginRight:10}}>
               <Text style={{backgroundColor:'white'}}>Semester 1/2566</Text>
             </View>
-            <ClassList data={_class}></ClassList>
+            <ClassList data={_class} navigation={navigation}></ClassList>
         </View>
       )}
     </SafeAreaView>

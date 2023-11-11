@@ -1,17 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Homepage from "../screens/Homepage";
-import Notification from "../screens/Notification";
+import LearningZoneStudent from "../screens/LearningZoneStudent";
+import LearningZoneStudentClass from "../screens/LearningZoneStudentClass";
+
 const Stack = createNativeStackNavigator();
 
-const HomeNotiStudent = () => { //For navigatiing between Homepage(Student) and notification
+const LearningZoneStudentRoute = () => {
   return (
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="LearningZoneStudent">
         <Stack.Screen
-          name="Home"
-          component={Homepage}
+          name="LearningZoneStudent"
+          component={LearningZoneStudent}
           options={{
             headerShown: false,
             animation: "slide_from_bottom",
@@ -19,8 +19,8 @@ const HomeNotiStudent = () => { //For navigatiing between Homepage(Student) and 
         />
 
         <Stack.Screen
-          name="Notification"
-          component={Notification}
+          name="LearningZoneStudentClass"
+          component={LearningZoneStudentClass}
           options={{
             headerShown: false,
             animation: "slide_from_right",
@@ -31,4 +31,4 @@ const HomeNotiStudent = () => { //For navigatiing between Homepage(Student) and 
   );
 };
 
-export default HomeNotiStudent;
+export default LearningZoneStudentRoute;
