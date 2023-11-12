@@ -36,26 +36,25 @@ const Login = ({ navigation }) => {
     navigation.reset({
       index: 0,
       routes: [
-       { 
-        name: value,
-        params: {email: email},
-        state:{
-          index: 0,
-          routes: [
-            {
-              name: "HomeNoti"
-            }
-          ],
-        
-       }
-        }
-      ]
-    })
+        {
+          name: value,
+          params: { email: email },
+          state: {
+            index: 0,
+            routes: [
+              {
+                name: "HomeNoti",
+              },
+            ],
+          },
+        },
+      ],
+    });
 
     // navigation.reset({
     //   index: 0,
     //   routes: [
-    //     {name: value, 
+    //     {name: value,
     //       state:{
     //       index: 0,
     //       routes: [
