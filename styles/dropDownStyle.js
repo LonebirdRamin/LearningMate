@@ -28,6 +28,12 @@ const dropDownStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+  dropBoxDownStyles: {
+    marginHorizontal: "20%",
+    backgroundColor: "#494955",
+    borderWidth: 0,
+    borderRadius: 20,
+  },
 });
 
 export default dropDownStyles;

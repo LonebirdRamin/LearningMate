@@ -45,9 +45,7 @@ const DropdownAddAssignment = ({ setSelected }) => {
         dropdownTextStyles={dropDownStyles.dropdownTextStyles}
         search={false}
         placeholder="Select Class"
-        dropdownStyles={{
-          marginHorizontal: "20%",
-        }}
+        dropdownStyles={dropDownStyles.dropBoxDownStyles}
         arrowicon={
           <FontAwesome name="chevron-down" size={12} color={"white"} />
         }
