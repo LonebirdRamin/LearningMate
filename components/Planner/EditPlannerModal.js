@@ -18,16 +18,25 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import moment from "moment";
 import AppButton from "../AppButton";
 import DataContext from "../../routes/DataContext";
-import insertPlan from "../../backend/hooks/insertPlan";
+import editPlan from "../../backend/hooks/editPlan";
+import deletePlan from "../../backend/hooks/deletePlan";
 const plannerType = ["Work", "Read", "Chill"];
 
-const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
+const EditPlannerModal = ({
+  setMainPageLoad,
+  isEditModalVisible,
+  setModalVisible,
+  setIsChanged,
+  selectedPlan,
+}) => {
   // Start - Information for plan
   const email = useContext(DataContext);
-  const [title, setTitle] = useState("");
-  const [selectedType, setSelectedType] = useState("Work");
-  const [detail, setDetail] = useState("");
-  const [date, setDate] = useState(new Date(moment().format()));
+  const [title, setTitle] = useState();
+  const [selectedType, setSelectedType] = useState();
+  const [detail, setDetail] = useState();
+  const [date, setDate] = useState(
+    new Date(selectedPlan.date + " " + selectedPlan.time)
+  );
   const [formattedDate, setFormattedDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
@@ -37,8 +46,16 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
   );
   // End - Information for plan
 
-  // New plan that will be added to the DB
-  const [newPlan, setNewPlan] = useState();
+  // Need to be change every time as the plan is selected since the modal information is changed
+  useEffect(() => {
+    setTitle(selectedPlan.title);
+    setSelectedType(selectedPlan.type);
+    setDetail(selectedPlan.subtitle);
+    setDate(new Date(selectedPlan.date + " " + selectedPlan.time));
+  }, [selectedPlan]);
+
+  // New plan that will be edited to the DB
+  const [editedPlan, setEditedPlan] = useState();
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -73,26 +90,16 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
     showMode("time");
   };
   // End - Datetime zone
- 
+
   // Start - Start adding plan if the newPlan is add
   useEffect(() => {
-    if (newPlan != undefined) {
-      insertPlan(
-        newPlan,
-        setIsLoading,
-        setNewPlan,
-        setTitle,
-        setDetail,
-        setSelectedType,
-        setDate,
-        setModalVisible,
-        setIsChanged 
-      );
+    if (editedPlan != undefined) {
+      setMainPageLoad(true);
+      editPlan(editedPlan, setIsLoading, setModalVisible, setIsChanged);
     }
-  }, [newPlan]);
+  }, [editedPlan]);
   // End - Start adding plan if the newPlan is add
 
-  
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Modal
@@ -106,15 +113,20 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
         setDate(new Date(moment().format()));
         setSelectedType("Work");
       }}
-      isVisible={isModalVisible}
+      isVisible={isEditModalVisible}
       animationInTiming={250}
       animationOutTiming={250}
       backdropTransitionInTiming={250}
       backdropTransitionOutTiming={250}
       style={addPlannerModalStyles.modalView}
     >
-      <View style={addPlannerModalStyles.modalContent}>
-        <Text style={addPlannerModalStyles.headerText}>Add plan</Text>
+      <View
+        style={[
+          addPlannerModalStyles.modalContent,
+          { height: Dimensions.get("screen").height * 0.58 },
+        ]}
+      >
+        <Text style={addPlannerModalStyles.headerText}>Edit plan</Text>
         {isLoading ? (
           <View style={{ flex: 1, justifyContent: "center" }}>
             <ActivityIndicator size={60} color="#F04E22" />
@@ -157,6 +169,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
               <Text style={addPlannerModalStyles.subHeaderText}>Title</Text>
               <TextInput
                 style={addPlannerModalStyles.textBox}
+                value={title}
                 onChangeText={(text) => {
                   setTitle(text);
                 }}
@@ -168,6 +181,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
             <View>
               <Text style={addPlannerModalStyles.subHeaderText}>Detail</Text>
               <TextInput
+                value={detail}
                 textAlignVertical="top"
                 multiline={true}
                 style={[
@@ -224,7 +238,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
 
             <View style={addPlannerModalStyles.buttonContainer}>
               <AppButton
-                text="Add"
+                text="Edit"
                 textColor="white"
                 handlePress={() => {
                   if (title === "" || detail === "") {
@@ -234,10 +248,11 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                       [{ text: "OK" }]
                     );
                   } else {
-                    setNewPlan({
+                    setEditedPlan({
+                      plannerId: selectedPlan.id,
                       email: email,
                       eventType: selectedType,
-                      eventName: title,
+                      plannerName: title,
                       description: detail,
                       dueDate:
                         formattedDate +
@@ -250,6 +265,27 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                   // setIsAdded(true);
                 }}
               />
+              <View
+                style={{ marginTop: Dimensions.get("screen").height * 0.02 }}
+              >
+                <TouchableOpacity
+                  style={{ alignSelf: "center" }}
+                  onPress={() => {
+                    Alert.alert(
+                      "Delete plan",
+                      "Are you sure you want to delete the plan?",
+                      [{ text: "No" }, { text: "Yes", onPress: () => {
+                        deletePlan({plannerId: selectedPlan.id, email: email, title}, setIsLoading, setModalVisible, setIsChanged)
+                        
+                      } }]
+                    );
+                  }}
+                >
+                  <Text style={{ textAlign: "center", color: "white" }}>
+                    Delete
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         )}
@@ -258,4 +294,4 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
   );
 };
 
-export default AddPlannerModal;
+export default EditPlannerModal;

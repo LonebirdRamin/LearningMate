@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Homepage from "../screens/Homepage";
 import Notification from "../screens/Notification";
-
 const Stack = createNativeStackNavigator();
 
 const HomeNotiStudent = () => {

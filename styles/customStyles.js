@@ -1,7 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import {StyleSheet, Dimensions } from 'react-native'
+
+const height = Dimensions.get("screen").height
+const width = Dimensions.get("screen").width
 
 const customStyles = new StyleSheet.create({
+
     
     pageBackground:{ //For main page background
         backgroundColor: '#1C1C23',
@@ -129,6 +132,18 @@ const customStyles = new StyleSheet.create({
         position:'absolute',
         right:23,
         top:33
+    },
+
+    classWidget: { //Class wrapper for LearningZone (Pre-select class)
+        backgroundColor: 'rgba(78,78,97,0.2)',
+        height: height*0.10,
+        width: width*0.9,
+        paddingVertical: height*0.014,
+        paddingHorizontal: 17,
+        borderRadius: 16,
+        borderWidth: 0.5,
+        borderColor: 'rgba(207,207,252, 0.2)',
+        marginBottom: height*0.02
     },
 })
 

@@ -13,7 +13,8 @@ const connection = mysql.createConnection({
   database: "learningmate",
 });
 
-app.use(cors());
+app.use(cors())
+app.use(express.json())
 
 app.get("/api/queryTest", function (req, res, next) {
   //hello => path
@@ -152,7 +153,26 @@ app.get("/api/getTeacherAssignment", function (req, res, next) {
   );
 });
 
-app.get("/api/getStudentAssignment", function (req, res, next) {
+app.get('/api/getPlanner', function (req, res, next) {
+  console.log("Query Planner");
+  const email = req.query.email;
+  connection.query(
+    'SELECT  `planner_id`, `planner_name`, `planner_category`, `planner_detail`, `start_time` FROM `planner` WHERE `academic_email` = ? ORDER BY start_time ASC;',
+    [email],
+    function(err, plannerResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Planner query error occurred' });
+      } else {
+        res.json(plannerResults);
+        console.log("Planner IN");
+      }
+    }
+  );
+});
+
+
+app.get('/api/getStudentAssignment', function (req, res, next) {
   console.log("Query Student Assignment");
   const email = req.query.email;
   connection.query(
@@ -167,6 +187,151 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
       } else {
         res.json(teacherResults);
         console.log("teacher IN");
+      }
+    }
+  );
+});
+
+app.get("/api/getClass", (req, res) => {
+  const email = req.query.email;
+
+  connection.query(
+    'SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester FROM class_student AS cs JOIN student AS s ON s.student_id = cs.student_id JOIN class AS c ON cs.class_id = c.class_id WHERE academic_email = ?;',
+    [email],
+    function(err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error querying classes.' });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+})
+
+app.post("/api/createPlanner", (req, res) => {
+  console.log(req.query)
+  const { email, eventType, eventName , description, dueDate } = req.body;
+  
+  console.log("eventName : ========", eventName)
+
+  const sql = "INSERT INTO planner (`planner_name`, `academic_email`, `planner_category`, `planner_detail`, `start_time`) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(sql, [eventName, email, eventType, description, dueDate], (err, results) => {
+    if (err) {
+      console.log("Error while inserting a user into the database", err);
+      return res.status(400).json({ message: "Failed to create a new assignment." });
+    }
+    return res.status(201).json({ message: "New assignment successfully created!" });
+  });
+})
+
+app.post('/api/editPlanner', (req, res) => {
+  const { plannerName, plannerId, email, eventType, description, dueDate } = req.body;
+  console.log("plannerName : ========", plannerName)
+
+  const sql = "UPDATE planner SET planner_name = ?, planner_category = ?, planner_detail = ?, start_time = ? WHERE planner_id = ? AND academic_email = ?";
+
+  connection.query(sql, [plannerName, eventType, description, dueDate, plannerId, email], (err, results) => {
+    if (err) {
+      console.log("Error while updating a planner from the database", err);
+      return res.status(400).json({ message: "Failed to update a planner." });
+    }
+    return res.status(201).json({ message: "Planner successfully updated!" });
+  });
+})
+
+app.delete('/api/deletePlanner', (req, res) => {
+  
+  const { plannerId, email } = req.body;
+
+  const sql = "DELETE FROM planner WHERE planner_id = ? AND academic_email = ?";
+
+  connection.query(sql, [plannerId, email], (err, results) => {
+    if (err) {
+      console.log("Error while deleting a planner from the database", err);
+      return res.status(400).json({ message: "Failed to delete a planner." });
+    }
+    return res.status(201).json({ message: "Planner successfully deleted!" });
+  });
+})
+
+app.get('/api/getTodayNotiPlanner', function (req, res, next) {
+  console.log("Query Today Noti Planner");
+  const email = req.query.email;
+
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7)
+  
+  // Format the date as a string with time set to 00:00:00
+  const initialDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+  currentDate.setHours(currentDate.getHours() + 24)
+  const endDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+
+  connection.query(
+    'SELECT p.planner_name FROM planner AS p WHERE p.academic_email = ? AND p.start_time >= ? AND p.start_time < ?;',
+    [email, initialDate, endDate],
+    function(err, notiResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Today noti query error occurred' });
+      } else {
+        res.json(notiResults);
+        console.log("noti IN");
+      }
+    }
+  );
+});
+
+app.get('/api/getTodayNotiAssignmentStudent', function (req, res, next) {
+  console.log("Query Today Noti Assignment Student");
+  const email = req.query.email;
+
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7)
+  
+  // Format the date as a string with time set to 00:00:00
+  const initialDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+  currentDate.setHours(currentDate.getHours() + 24)
+  const endDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+
+  connection.query(
+    'SELECT a.class_id, a.assignment_name FROM assignment AS a JOIN class_student AS cs ON cs.class_id = a.class_id JOIN student AS s ON cs.student_id = s.student_id WHERE s.academic_email = ? AND a.assignment_end_date >= ? AND a.assignment_end_date < ?;',
+    [email, initialDate, endDate],
+    function(err, notiResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Today noti query error occurred' });
+      } else {
+        res.json(notiResults);
+        console.log("noti IN");
+      }
+    }
+  );
+});
+
+app.get('/api/getTodayNotiAssignmentTeacher', function (req, res, next) {
+  console.log("Query Today Noti Assignment Teacher");
+  const email = req.query.email;
+
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7)
+  
+  // Format the date as a string with time set to 00:00:00
+  const initialDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+  currentDate.setHours(currentDate.getHours() + 24)
+  const endDate = currentDate.toISOString().split('T')[0] + ' 00:00:00';
+
+  connection.query(
+    'SELECT a.class_id, a.assignment_name FROM assignment AS a JOIN class_lecturer AS cs ON cs.class_id = a.class_id JOIN teacher AS s ON cs.teacher_id = s.teacher_id WHERE s.academic_email = ? AND a.assignment_publish_date >= ? AND a.assignment_publish_date < ?;',
+    [email, initialDate, endDate],
+    function(err, notiResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Today noti query error occurred' });
+      } else {
+        res.json(notiResults);
+        console.log("noti IN");
       }
     }
   );
