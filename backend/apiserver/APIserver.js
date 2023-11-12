@@ -49,8 +49,8 @@ app.get("/api/scheduleQuery", function (req, res, next) {
 
 app.get("/api/queryIdCard", function (req, res, next) {
   console.log("query id card");
-  const email = req.query.email;
-  // const email = "ramin.such@kmutt.ac.th";
+  // const email = req.query.email;
+  const email = "ramin.such@kmutt.ac.th";
   console.log(email);
 
   connection.query(

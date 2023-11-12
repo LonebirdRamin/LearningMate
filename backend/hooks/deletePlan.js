@@ -3,13 +3,15 @@ import ipv4 from "../apiserver/ipv4";
 import { Alert } from "react-native";
 const deletePlan = async (
   deleteData,
-  setIsLoading,  
+  setIsLoading,
   setEditModalVisible,
   setIsChanged
 ) => {
   setIsLoading(true);
   try {
-      const response = await axios.delete(`${ipv4.golf}deletePlanner`, {data: deleteData});
+    const response = await axios.delete(`${ipv4.mark}deletePlanner`, {
+      data: deleteData,
+    });
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;
@@ -21,11 +23,10 @@ const deletePlan = async (
     console.error(error);
     alert("Delete planner failed!" + error.message);
   } finally {
-
     setIsLoading(false);
     setEditModalVisible(false);
     setIsChanged(true);
-    Alert.alert("Complete!", `The plan is deleted.`)
+    Alert.alert("Complete!", `The plan is deleted.`);
   }
 };
 
