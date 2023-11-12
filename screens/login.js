@@ -13,6 +13,7 @@ import loginStyles from "../styles/loginStyles";
 import LogoHeader from "../components/Login/LogoHeader";
 import FormText from "../components/FormText";
 import { TouchableOpacity } from "react-native";
+import { StackActions } from "@react-navigation/routers";
 import AppButton from "../components/AppButton";
 import signIn from "../backend/hooks/signIn";
 
