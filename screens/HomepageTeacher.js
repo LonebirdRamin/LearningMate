@@ -57,8 +57,6 @@ const mockUpData = [
   },
 ];
 
-
-
 const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
   const email = useContext(DataContext); // email from login
@@ -72,9 +70,14 @@ const HomepageTeacher = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
-  useEffect(()=>{
-    queryAssignment(email, setIsAssignmentLoading, setAssignmentData, setAssignNum);
-  },[]);
+  useEffect(() => {
+    queryAssignment(
+      email,
+      setIsAssignmentLoading,
+      setAssignmentData,
+      setAssignNum
+    );
+  }, []);
   // End - manage about assignment
 
   useEffect(() => {
@@ -85,7 +88,6 @@ const HomepageTeacher = ({ navigation }) => {
 
     fetchData();
   }, [day]);
-
 
   return (
     <SafeAreaView>
@@ -119,7 +121,7 @@ const HomepageTeacher = ({ navigation }) => {
                 <Text style={customStyles.pageTitle}>Calendar</Text>
                 <TouchableOpacity
                   style={customStyles.notficationIcon}
-                  onPress={() => navigation.navigate('Notification')}
+                  onPress={() => navigation.navigate("Notification")}
                 >
                   <Image source={require("../assets/icons/bell.png")}></Image>
                 </TouchableOpacity>
@@ -155,13 +157,21 @@ const HomepageTeacher = ({ navigation }) => {
             ></SeeAllModal>
           </View>
           <View style={assignmentStyles.container}>
-              <AssignmentHeader number={assignNum} />
-              <View style={assignmentStyles.list}>
-          {isAssignmentLoading ? (
-            <View style={[assignmentStyles.list, {height: height>850? height*0.25: height*0.2, justifyContent: 'center'}]}>
-              <ActivityIndicator size={50} color="#F04E22"/>
-            </View>
-          ) : (
+            <AssignmentHeader number={assignNum} />
+            <View style={assignmentStyles.list}>
+              {isAssignmentLoading ? (
+                <View
+                  style={[
+                    assignmentStyles.list,
+                    {
+                      height: height > 850 ? height * 0.25 : height * 0.2,
+                      justifyContent: "center",
+                    },
+                  ]}
+                >
+                  <ActivityIndicator size={50} color="#F04E22" />
+                </View>
+              ) : (
                 <FlatList
                   data={assignmentData}
                   renderItem={({ item }) => (
@@ -173,10 +183,9 @@ const HomepageTeacher = ({ navigation }) => {
                     />
                   )}
                 />
-              
-          )}
-          </View>
+              )}
             </View>
+          </View>
         </View>
       )}
     </SafeAreaView>

@@ -7,28 +7,28 @@ import Notification from "../screens/Notification";
 
 const Stack = createNativeStackNavigator();
 
-const HomeNotiStudent = () => { //For navigatiing between Homepage(Student) and notification
+const HomeNotiStudent = () => {
+  //For navigatiing between Homepage(Student) and notification
   return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Homepage}
-          options={{
-            headerShown: false,
-            animation: "slide_from_bottom",
-          }}
-        />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={Homepage}
+        options={{
+          headerShown: false,
+          animation: "slide_from_bottom",
+        }}
+      />
 
-        <Stack.Screen
-          name="Notification"
-          component={Notification}
-          options={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        />
-
-      </Stack.Navigator>
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 
