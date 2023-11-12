@@ -14,20 +14,28 @@ import ScheduleScreen from './screens/scheduleScreens';
 import AssignmentPage from './screens/assignmentGuide';
 import PostAssignment from './screens/postAssignment';
 import PlannerScreen from './screens/plannerScreen';
+import chatFirebase from './screens/chatFirebase';
+import chat from './screens/chat';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
 const Stack = createStackNavigator();
 
+const CustomHeader = ({ title }) => (
+  <View style={{ backgroundColor: '#353542', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 60 }}>
+    {/* Use the title prop here */}
+    <CenteredTitle title={title} />
+  </View>
+);
+
 function MyStack() {
   return (
     <Stack.Navigator
-      screenOptions={{
-        header: (propes) => (
-          <View style={{ backgroundColor: '#353542', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 60 }}>
-            <CenteredTitle title='Learning Mate' />
-          </View>
+      screenOptions={({ route }) => ({
+      header: (props) => (
+        // Use route.name to get the active screen name
+        <CustomHeader title={route.name} />
         ),
         headerStyle: {
           backgroundColor: '#353542'
@@ -36,10 +44,20 @@ function MyStack() {
         headerTitleStyle: {
           fontWeight: 'bold'
         },
-      }}
+      })}
       >
         <Stack.Screen
-          name="loginScreen"
+          name="Chat"
+          component={chatFirebase}
+          options={{title: 'Chat Screen'}}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={chat}
+          options={{title: 'Chat Screen'}}
+        />
+        <Stack.Screen
+          name="LoginScreen"
           component={loginScreen}
           options={{title: 'Register/Login'}}
         />
@@ -83,6 +101,11 @@ function MyStack() {
           component={PlannerScreen}
           options={{title: 'Planner Screen'}}
         />
+        {/* <Stack.Screen
+          name="chat"
+          component={chat}
+          options={{title: 'Chat Screen'}}
+        /> */}
     </Stack.Navigator>
   )
 }
