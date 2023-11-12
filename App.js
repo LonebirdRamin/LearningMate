@@ -47,7 +47,7 @@ function MyStack() {
       })}
       >
         <Stack.Screen
-          name="Chat"
+          name="ChatFirebase"
           component={chatFirebase}
           options={{title: 'Chat Screen'}}
         />

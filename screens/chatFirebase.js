@@ -62,9 +62,10 @@ export default function chatFirebase() {
             messages={messages}
             onSend={messages => onSend(messages)}
             user={{
-                _id: auth?.currentUser?.email,
+                _id: firebaseAuth?.currentUser?.email,
                 avatar: 'https://i.pravatar.cc/300'
             }}
+            messagesContainerStyle={{ backgroundColor: '#fff' }}
         />
     )
 
