@@ -4,13 +4,14 @@ import ipv4 from "../apiserver/ipv4";
 const queryPlanner = async ({ route }) => {
   let result;
   setIsLoading(true);
-  const { email, setQueriedPlanner, setIsLoading } = route.params;
+
   try {
     const response = await axios.get(`${ipv4.mark}getPlanner?email=${email}`);
-    console.log(email);
+
     // Check the response status code to determine if it was successful
     if (response.status === 200) {
       result = response.data; // result as a list of planner
+
       setQueriedPlanner(result);
 
       //   console.log(result[0].start_time);
