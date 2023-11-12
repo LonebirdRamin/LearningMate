@@ -36,7 +36,7 @@ const NavigationBarStudent = () => {
   // console.log("HOMESTUDENT " + user.params.test); ได้ data มาแล้ว
   const handleImage = () => {};
   return (
-    <DataContext.Provider value={email}>
+    <DataContext.Provider value={email.params.email}>
       <Tab.Navigator
         screenOptions={screenOptions}
         initialRouteName="HomeNoti"
