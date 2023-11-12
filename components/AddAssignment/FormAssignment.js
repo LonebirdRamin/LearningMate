@@ -7,11 +7,13 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
+import Modal from "react-native-modal";
 
 /* To do list
 - Change datetime picker function format (Pass!)
@@ -22,13 +24,18 @@ import formAssignmentStyles from "../../styles/formAssignmentStyles";
 */
 const FormAssignment = ({ selected, setModalVisible }) => {
   const [checkDueDate, setCheckDueDate] = useState(false);
-  const [textName, onChangeName] = useState("");
+  const [isModalDueDateVisible, setModalDueDateVisible] = useState(false);
+  const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [fileSelected, setFileSelected] = useState(null);
   const [date, setDate] = useState(new Date());
   const checkDate = new Date(); //For make no due date state
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalDueDateVisible);
+  };
 
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
@@ -55,23 +62,30 @@ const FormAssignment = ({ selected, setModalVisible }) => {
     selected,
     date,
     time,
-    subjectName,
+    subjectTitle,
     subjectInformation,
     file,
     checkDueDate
   ) => {
     let dateTime;
     if (checkDueDate === true) {
+      //To check the due date condition
       dateTime = null;
     } else if (checkDueDate === false) {
       dateTime = date.concat(" ", time);
     }
-    console.log("---------------------------");
-    console.log("Subject: " + selected);
-    console.log("Name: " + subjectName);
-    console.log("Information: " + subjectInformation);
-    console.log("File: " + file);
-    console.log("DateTime: " + dateTime);
+
+    if (!subjectTitle) {
+      Alert.alert("Title", "Please fill in title", [{ text: "Ok" }]);
+    } else {
+      console.log("---------------------------");
+      console.log("Subject: " + selected);
+      console.log("Title: " + subjectTitle);
+      console.log("Information: " + subjectInformation);
+      console.log("File: " + file);
+      console.log("DateTime: " + dateTime);
+      setModalVisible(false);
+    }
   };
 
   // DATE TIME CONFIG
@@ -108,6 +122,33 @@ const FormAssignment = ({ selected, setModalVisible }) => {
     setChangeFormatDate(changeFormatDate(date));
   }, [date]);
 
+  const askDueDate = () => {
+    return (
+      <Modal
+        isVisible={isModalDueDateVisible}
+        style={{
+          position: "absolute",
+          width: "50%",
+          height: "50%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            width: "50%",
+            height: "50%",
+            backgroundColor: "white",
+          }}
+        >
+          <Text>Test modal </Text>
+        </View>
+      </Modal>
+    );
+  };
+
+  //File upload
   const handleDocumentSelection = async () => {
     try {
       const documentResult = await DocumentPicker.getDocumentAsync({
@@ -121,7 +162,7 @@ const FormAssignment = ({ selected, setModalVisible }) => {
           documentResult.assets.forEach((asset) => {
             console.log(
               `URI: ${asset.uri}\n` +
-                `Name: ${asset.name}\n` +
+                `Title: ${asset.Title}\n` +
                 `Type: ${asset.mimeType}\n` +
                 `Size: ${asset.size}`
             );
@@ -148,19 +189,19 @@ const FormAssignment = ({ selected, setModalVisible }) => {
         alignItems: "center",
       }}
     >
-      <Text style={formAssignmentStyles.text}>Name</Text>
+      <Text style={formAssignmentStyles.text}>Title</Text>
       <TextInput
         style={formAssignmentStyles.input}
         inputMode="text"
-        onChangeText={onChangeName}
-        value={textName}
+        onChangeText={(text) => onChangeTitle(text)}
+        value={textTitle}
       />
 
-      <Text style={formAssignmentStyles.text}>Information</Text>
+      <Text style={formAssignmentStyles.text}>Instruction (optional)</Text>
       <TextInput
         style={formAssignmentStyles.input}
         inputMode="text"
-        onChangeText={onChangeInformation}
+        onChangeText={(text) => onChangeInformation(text)}
         value={textInformation}
       />
       {/* Input file zone */}
@@ -203,7 +244,7 @@ const FormAssignment = ({ selected, setModalVisible }) => {
           style={[formAssignmentStyles.image, { marginRight: 5 }]}
         />
         <Text style={formAssignmentStyles.textFile}>
-          Time : {date.toLocaleTimeString("en-GB")}{" "}
+          Time : {date.toLocaleTimeString("en-GB").slice(0, 5)}{" "}
         </Text>
       </TouchableOpacity>
       {show && (
@@ -222,12 +263,11 @@ const FormAssignment = ({ selected, setModalVisible }) => {
             selected,
             changedFormatDate, //changeFormatDate = date format
             date.toLocaleTimeString("en-GB"),
-            textName,
+            textTitle,
             textInformation,
             fileSelected,
             checkDueDate
           ),
-          setModalVisible(false),
         ]}
       >
         <Text
