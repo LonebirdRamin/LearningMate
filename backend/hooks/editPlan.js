@@ -3,14 +3,13 @@ import ipv4 from "../apiserver/ipv4";
 import moment from "moment";
 const editPlan = async (
   editedData,
-  setIsLoading,  
+  setIsLoading,
   setEditModalVisible,
   setIsChanged
 ) => {
   setIsLoading(true);
   try {
-
-    const response = await axios.post(`${ipv4.golf}editPlanner`, editedData);
+    const response = await axios.post(`${ipv4.mark}editPlanner`, editedData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;
