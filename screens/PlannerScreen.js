@@ -23,9 +23,6 @@ import PlannerCalendar from "../components/Planner/PlannerCalender";
 import queryPlanner from "../backend/hooks/queryPlanner";
 import EditPlannerModal from "../components/Planner/EditPlannerModal";
 
-
-
-
 const PlannerScreen = () => {
   const [isModalVisible, setModalVisible] = useState();
 
@@ -61,7 +58,7 @@ const PlannerScreen = () => {
     return data.map((item) => {
       let dateTime = new Date(item.start_time);
       let date = dateTime.toISOString("YYYY-MM-DD").slice(0, 10);
-      let time = dateTime.toLocaleTimeString().slice(0, 5);
+      let time = dateTime.toLocaleTimeString("en-GB").slice(0, 5);
       item.date = date;
       item.time = time;
       return item;
@@ -71,38 +68,25 @@ const PlannerScreen = () => {
 
   // Start - filter planner list
   useEffect(() => {
-    
-      setPlannerData(dataForUse.filter((e) => 
-        
-        e.date === selectedDay
-      ));
-      
-
-
-    
-    
+    setPlannerData(dataForUse.filter((e) => e.date === selectedDay));
   }, [selectedDay, dataForUse]);
   // End - filter planner list
 
   // Query - planner from database (Only first time)
   useEffect(() => {
     queryPlanner(email, setQueriedPlanner, setIsLoading);
-    
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
+    setDataForUse(formatting(queriedPlanner));
+  }, [queriedPlanner]);
 
-    setDataForUse(formatting(queriedPlanner))
-    
-
-  },[queriedPlanner])
-
- // Query planner again if any update
-  useEffect(()=>{ 
-    setIsLoading(true)
+  // Query planner again if any update
+  useEffect(() => {
+    setIsLoading(true);
     queryPlanner(email, setQueriedPlanner, setIsLoading);
-    setIsChanged(false)
-  }, [isChanged]) 
+    setIsChanged(false);
+  }, [isChanged]);
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -124,10 +108,13 @@ const PlannerScreen = () => {
       {/*End - Calendar */}
 
       {/*Start - Add button */}
-      <AddPlannerButton handlePress={() => {setModalVisible(true);console.log('test')}} />
+      <AddPlannerButton
+        handlePress={() => {
+          setModalVisible(true);
+          console.log("test");
+        }}
+      />
       {/*End - Add button */}
-
-      
 
       {/*Start - Planner list */}
       <View style={plannerStyles.plannerList}>
@@ -140,7 +127,7 @@ const PlannerScreen = () => {
               renderItem={({ item }) => (
                 <>
                   <PlannerBox
-                    id = {item.planner_id}
+                    id={item.planner_id}
                     title={item.planner_name}
                     subtitle={item.planner_detail}
                     time={item.time}
@@ -175,7 +162,6 @@ const PlannerScreen = () => {
         setModalVisible={setIsEditModalVisible}
         setIsChanged={setIsChanged}
       />
-      
     </SafeAreaView>
   );
 };

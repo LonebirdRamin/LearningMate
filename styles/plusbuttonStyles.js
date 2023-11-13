@@ -3,14 +3,14 @@ import React from "react";
 
 const plusbuttonStyles = StyleSheet.create({
   mainView: {
-    flex: 1,
+    height: 48,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1C1C23",
+    width: "100%",
   },
   greyLine: {
     zIndex: 0,
-    width: 326,
+    width: "100%",
     height: 2,
     backgroundColor: "#4E4E61",
     justifyContent: "center",
@@ -21,8 +21,6 @@ const plusbuttonStyles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 16,
-    // borderWidth: 1,
-    // borderColor: "#CFCFFC",
     backgroundColor: "#2E2E38",
     justifyContent: "center",
     backdropFilter: "blur(5px)",

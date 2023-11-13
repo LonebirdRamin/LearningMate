@@ -5,12 +5,14 @@ import IconBox from "./IconBox";
 import AssignmentDetail from "./AssignmentDetail";
 import DueDate from "./DueDate";
 
-const AssignmentBox = ({
+const AssignmentBoxTeacher = ({
   iconColor = "#F04E22",
-  code = "CPE333",
+  code = "CPE334",
   subject = "Software Engineering",
   task = "Lab7: Refactoring",
-  dueDate = "00000-00-00",
+  dueDate = "9999-99-99",
+  submitCount = 50,
+  totalCount = 90,
 }) => {
   return (
     <TouchableOpacity
@@ -28,4 +30,4 @@ const AssignmentBox = ({
   );
 };
 
-export default AssignmentBox;
+export default AssignmentBoxTeacher;
