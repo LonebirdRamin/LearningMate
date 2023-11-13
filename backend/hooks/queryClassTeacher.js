@@ -4,7 +4,9 @@ import ipv4 from "../apiserver/ipv4";
 const queryClassTeacher = async (email, setLoading) => {
   let result;
   try {
-    const response = await axios.get(`${ipv4.golf}getClassTeacher?email=${email}`);
+    const response = await axios.get(
+      `${ipv4.mark}getClassTeacher?email=${email}`
+    );
 
     // Check the response status code to determine if it was successful
     if (response.status === 200) {

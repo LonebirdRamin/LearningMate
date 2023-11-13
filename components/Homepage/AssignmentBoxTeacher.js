@@ -4,15 +4,16 @@ import assignmentStyles from "../../styles/assignmentStyles";
 import IconBox from "./IconBox";
 import AssignmentDetail from "./AssignmentDetail";
 import DueDate from "./DueDate";
+import SubmitValue from "./SubmitValue";
 
 const AssignmentBoxTeacher = ({
   iconColor = "#F04E22",
-  code = "CPE334",
-  subject = "Software Engineering",
-  task = "Lab7: Refactoring",
-  dueDate = "9999-99-99",
-  submitCount = 50,
-  totalCount = 90,
+  code,
+  subject,
+  task,
+  dueDate,
+  submitCount,
+  totalCount,
 }) => {
   return (
     <TouchableOpacity
@@ -24,6 +25,7 @@ const AssignmentBoxTeacher = ({
       <View style={assignmentStyles.upperPart}>
         <IconBox color={iconColor} name={code} />
         <AssignmentDetail subject={subject} task={task} />
+        <SubmitValue submitCount={submitCount} totalCount={totalCount} />
       </View>
       <DueDate dueDate={dueDate} />
     </TouchableOpacity>

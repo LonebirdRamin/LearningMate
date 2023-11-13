@@ -1,24 +1,25 @@
-import { useNavigation } from "@react-navigation/native";
-import ipv4 from "../apiserver/ipv4";
-const queryAssignment = async (
+import { View, Text } from "react-native";
+import React from "react";
+
+const queryGetTeacherAssignment = async (
   email,
   setIsAssignmentLoading,
-  setAssignmentData,
-  setAssignNum
+  setAssignData,
+  setAssignmentNum
 ) => {
   setIsAssignmentLoading(true);
-  setAssignNum("-");
+  setAssignmentNum("-");
 
   try {
     const response = await fetch(
-      `${ipv4.mark}getStudentAssignment?email=${email}`
+      `${ipv4.mark}getTeacherAssignment?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     const assignmentJSON = await response.json();
-    setAssignmentData(assignmentJSON);
-    setAssignNum(assignmentJSON.length);
+    setAssignData(assignmentJSON);
+    setAssignmentNum(assignmentJSON.length);
   } catch (error) {
     console.error(error);
     alert("Query assignment failed!" + error.message);
@@ -27,4 +28,4 @@ const queryAssignment = async (
   }
 };
 
-export default queryAssignment;
+export default queryGetTeacherAssignment;

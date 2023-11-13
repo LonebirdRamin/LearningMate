@@ -22,7 +22,7 @@ const signIn = async (email, password, navigation, loadState) => {
       password
     );
 
-    const info = await fetch(`${ipv4.golf}checkRole?email=${email}`);
+    const info = await fetch(`${ipv4.mark}checkRole?email=${email}`);
     if (!info.ok) {
       throw new Error("Network response was not ok");
     }

@@ -26,6 +26,7 @@ import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
 import AssignmentBoxTeacher from "../components/Homepage/AssignmentBoxTeacher";
+import queryGetTeacherAssignment from "../backend/hooks/queryGetTeacherAssignment";
 const height = Dimensions.get("screen").height;
 
 const mockUpData = [
@@ -35,6 +36,8 @@ const mockUpData = [
     subject: "HHAHAH",
     task: "BLALBALA",
     dueDate: "11 Fuc xxxx",
+    submitCount: 50,
+    totalCount: 89,
   },
   {
     color: "green",
@@ -42,6 +45,8 @@ const mockUpData = [
     subject: "Hoooo",
     task: "EIEIEIE",
     dueDate: "11 Fuck x0x0",
+    submitCount: 20,
+    totalCount: 90,
   },
   {
     color: "blue",
@@ -49,6 +54,8 @@ const mockUpData = [
     subject: "Huhhhh",
     task: "Lab kuiay",
     dueDate: "69 Lucifer xxx",
+    submitCount: 30,
+    totalCount: 90,
   },
   {
     color: "pink",
@@ -56,6 +63,8 @@ const mockUpData = [
     subject: "Police",
     task: "Fuck off",
     dueDate: "19 Jane 2003",
+    submitCount: 50,
+    totalCount: 87,
   },
 ];
 
@@ -63,7 +72,7 @@ const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
   const email = useContext(DataContext); // email from
   const [isloading, setIsLoading] = useState(true);
-  const [queriedSchedule, setQueriedSchedule] = useState([])
+  const [queriedSchedule, setQueriedSchedule] = useState([]);
   const [schedule, setSchedule] = useState(null);
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
@@ -72,9 +81,9 @@ const HomepageTeacher = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
-  
+
   useEffect(() => {
-    queryAssignment(
+    queryGetTeacherAssignment(
       email,
       setIsAssignmentLoading,
       setAssignmentData,
@@ -84,9 +93,10 @@ const HomepageTeacher = ({ navigation }) => {
   }, []);
   // End - manage about assignment
 
-  useEffect(() => { //Filter again when day changes
-    setSchedule(queriedSchedule.filter(item => item.date_name === day));
-  }, [queriedSchedule,day]);
+  useEffect(() => {
+    //Filter again when day changes
+    setSchedule(queriedSchedule.filter((item) => item.date_name === day));
+  }, [queriedSchedule, day]);
 
   return (
     <SafeAreaView>
@@ -173,13 +183,15 @@ const HomepageTeacher = ({ navigation }) => {
                 </View>
               ) : (
                 <FlatList
-                  data={mockUpData}
+                  data={assignmentData}
                   renderItem={({ item }) => (
                     <AssignmentBoxTeacher
                       code={item.code}
                       subject={item.subject}
                       task={item.task}
                       dueDate={item.dueDate}
+                      submitCount={item.submitCount}
+                      totalCount={item.totalCount}
                     />
                   )}
                 />

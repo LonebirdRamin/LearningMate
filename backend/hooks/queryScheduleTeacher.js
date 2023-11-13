@@ -4,20 +4,21 @@ import ipv4 from "../apiserver/ipv4";
 const queryScheduleTeacher = async (email, setLoading, setQueriedSchedule) => {
   let result;
   try {
-      const response = await axios.get(`${ipv4.golf}getTeacherSchedule?email=${email}`);
-      
-      // Check the response status code to determine if it was successful
-      if (response.status === 200) {
-          setQueriedSchedule(response.data);
-          setLoading(false);
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      } 
-  catch (error) {
-        console.error(error);
-        throw error;
-      } 
+    const response = await axios.get(
+      `${ipv4.mark}getTeacherSchedule?email=${email}`
+    );
+
+    // Check the response status code to determine if it was successful
+    if (response.status === 200) {
+      setQueriedSchedule(response.data);
+      setLoading(false);
+    } else {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export default queryScheduleTeacher;
