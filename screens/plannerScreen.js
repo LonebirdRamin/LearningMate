@@ -28,7 +28,7 @@ const PlannerScreen = () => {
       
           console.log(insertData);
       
-          const response = await axios.post('http://192.168.1.33:5001/api/createPlanner', insertData);
+          const response = await axios.post('http://192.168.1.64:5001/api/createPlanner', insertData);
           console.log(response.data);
           // Check the response status code to determine if it was successful
           if (response.status === 201) {

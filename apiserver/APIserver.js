@@ -153,13 +153,6 @@ app.get('/api/getStudentAssignment', function (req, res, next) {
 app.post("/api/createAssignment", (req, res) => {
   console.log("REQ QUERY = "+req.query)
   const { classID, assName, dueDate, description } = req.query;
-//   const { classID, assName, publishDate, dueDate, description } = {
-//     classID: 'CPE334',
-//     assName: 'hum dum lab',
-//     publishDate: '2023-10-10',
-//     dueDate: '2023-11-11',
-//     description: 'hum dum'
-// };
 
   console.log(classID)
   const currentDate = new Date();
@@ -497,6 +490,62 @@ app.get('/api/getTodayNotiAssignmentTeacher', function (req, res, next) {
       } else {
         res.json(notiResults);
         console.log("noti IN");
+      }
+    }
+  );
+});
+
+app.get('/api/getAssignmentID', function (req, res, next) {
+  console.log("Query Assignment ID");
+
+  connection.query(
+    'SELECT MAX(assignment_id) as maxAssignmentId FROM assignment',
+    function(err, notiResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Assignment ID query error occurred' });
+      } else {
+        const maxAssignmentId = notiResults[0].maxAssignmentId;
+        console.log(maxAssignmentId);
+        res.json({ maxAssignmentId });
+      }
+    }
+  );
+});
+
+app.post("/api/generateStatus", (req, res) => {
+  const { dataToInsert } = req.body;
+  console.log("dataToInsert: ", dataToInsert)
+
+  if (!dataToInsert || !Array.isArray(dataToInsert) || dataToInsert.length === 0) {
+    return res.status(400).json({ message: "Invalid request: dataToInsert is missing or not an array." });
+  }
+  
+  const sql = "INSERT INTO assignment_submission (`student_id`, `assignment_id`, `status`, `submission_date`) VALUES ?";
+
+  connection.query(sql, [dataToInsert], (err, results) => {
+    if (err) {
+      console.log("Error while inserting rows into the database", err);
+      return res.status(400).json({ message: "Failed to create new assignments." });
+    }
+    return res.status(201).json({ message: "New assignments successfully created!" });
+  });
+});
+
+app.get('/api/getStudent', function (req, res, next) {
+  console.log("Query Student Schedule");
+  const classID = req.query.classID;
+  console.log("ClassID student query: ", classID);
+  connection.query(
+    'SELECT student_id FROM `class_student` WHERE class_id = ?;',
+    [classID],
+    function(err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Student query error occurred' });
+      } else {
+        console.log("success student query");
+        res.json(studentResults);
       }
     }
   );

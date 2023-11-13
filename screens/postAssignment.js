@@ -27,18 +27,46 @@ const PostAssignment = () => {
         dueDate,
         description
       };
-
+  
       console.log(insertData);
-
-      const response = await axios.post('http://192.168.1.33:5001/api/createAssignment', insertData);
-      console.log(response.data);
-
+  
+      const response = await axios.post('http://192.168.1.64:5001/api/createAssignment', insertData);
+      console.log("Response From Post Ass: ", response.data);
+  
       if (response.status === 201) {
         const result = response.data;
         console.log(result);
       } else {
         throw new Error('Network response was not ok');
       }
+  
+      const assignmentIDResponse = await fetch('http://192.168.1.64:5001/api/getAssignmentID');
+      const assignmentIDData = await assignmentIDResponse.json()
+      const maxAssID = assignmentIDData.maxAssignmentId
+
+      const queryStudentResponse = await fetch(`http://192.168.1.64:5001/api/getStudent?classID=${classID}`);
+      const queryStudentData = await queryStudentResponse.json()
+
+      const studentIds = queryStudentData.map(student => student.student_id);
+      console.log(studentIds);
+
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + 7);
+      const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
+      const initialStatus = 1
+      const studentEachClass = studentIds.map(num => [num.toString(), maxAssID, initialStatus, formattedDate])
+      console.log('STUDENT EACH CLASS:', studentEachClass)
+
+      const generateStatusResponse = await axios.post('http://192.168.1.64:5001/api/generateStatus', { dataToInsert: studentEachClass });
+      console.log("Response from generateStatus", generateStatusResponse.data);
+
+      if (generateStatusResponse.status === 201) {
+        const result = generateStatusResponse.data;
+        console.log(result);
+      } else {
+        throw new Error('Network response was not ok');
+      }
+
     } catch (error) {
       console.error(error);
       alert('Post assignment failed!' + error.message);
@@ -46,6 +74,7 @@ const PostAssignment = () => {
       setLoading(false);
     }
   };
+  
 
   const goBack = () => {
     navigation.goBack();
