@@ -61,7 +61,7 @@ const PlannerScreen = () => {
     return data.map((item) => {
       let dateTime = new Date(item.start_time);
       let date = dateTime.toISOString("YYYY-MM-DD").slice(0, 10);
-      let time = dateTime.toLocaleTimeString().slice(0, 5);
+      let time = dateTime.toLocaleTimeString("en-GB").slice(0, 5);
       item.date = date;
       item.time = time;
       return item;
