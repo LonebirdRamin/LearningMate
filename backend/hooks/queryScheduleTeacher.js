@@ -1,7 +1,7 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
-const queryScheduleTeacher = async (email, setLoading, day) => {
+const queryScheduleTeacher = async (email, setLoading, setQueriedSchedule) => {
   let result;
   try {
     const response = await axios.get(

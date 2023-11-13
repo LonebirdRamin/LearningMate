@@ -8,7 +8,7 @@ import DropdownAddAssignment from "./DropdownAddAssignment";
 import FormAssignment from "./FormAssignment";
 import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 
-const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
+const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
   const [selected, setSelected] = useState("");
 
   return (
@@ -31,6 +31,7 @@ const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
             <FormAssignment
               selected={selected}
               setModalVisible={setModalVisible}
+              email={email}
             />
           </View>
         </View>

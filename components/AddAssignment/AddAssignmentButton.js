@@ -3,11 +3,11 @@ import { Pressable, View, Image, SafeAreaView } from "react-native";
 import FillAssignmentModal from "./FillAssignmentModal";
 import plusbuttonStyles from "../../styles/plusbuttonStyles";
 
-export const AddAssignmentButton = () => {
+export const AddAssignmentButton = ({ email }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <SafeAreaView style={plusbuttonStyles.mainView}>
+    <View style={plusbuttonStyles.mainView}>
       <View style={plusbuttonStyles.greyLine}>
         <Pressable
           style={plusbuttonStyles.addAssignmentBut}
@@ -25,7 +25,8 @@ export const AddAssignmentButton = () => {
       <FillAssignmentModal
         isVisible={modalVisible}
         setModalVisible={setModalVisible}
+        email={email}
       ></FillAssignmentModal>
-    </SafeAreaView>
+    </View>
   );
 };

@@ -208,6 +208,23 @@ app.get("/api/getClass", (req, res) => {
   );
 });
 
+app.get("/api/getClassTeacher", (req, res) => {
+  const email = req.query.email;
+
+  connection.query(
+    "SELECT cl.class_id, c.class_name FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ?;",
+    [email],
+    function (err, results, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error querying classes." });
+      } else {
+        res.json(results);
+      }
+    }
+  );
+});
+
 app.post("/api/createPlanner", (req, res) => {
   console.log(req.query);
   const { email, eventType, eventName, description, dueDate } = req.body;

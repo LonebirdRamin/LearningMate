@@ -14,6 +14,7 @@ import * as DocumentPicker from "expo-document-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import Modal from "react-native-modal";
+import CheckBox from "react-native-check-box";
 
 /* To do list
 - Change datetime picker function format (Pass!)
@@ -22,20 +23,14 @@ import Modal from "react-native-modal";
 - make some condition => if no fill on Name => error!
 - make date condition => if no fill on date => no due date
 */
-const FormAssignment = ({ selected, setModalVisible }) => {
-  const [checkDueDate, setCheckDueDate] = useState(false);
-  const [isModalDueDateVisible, setModalDueDateVisible] = useState(false);
+const FormAssignment = ({ selected, setModalVisible, email }) => {
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [fileSelected, setFileSelected] = useState(null);
   const [date, setDate] = useState(new Date());
-  const checkDate = new Date(); //For make no due date state
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalDueDateVisible);
-  };
+  const [showDate, handleShowDate] = useState(true);
 
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
@@ -45,18 +40,6 @@ const FormAssignment = ({ selected, setModalVisible }) => {
       date.toLocaleString("default", { day: "2-digit" })
   );
 
-  const handleDueDate = () => {
-    if (checkDate.toLocaleDateString() === date.toLocaleDateString()) {
-      setCheckDueDate(true);
-    } else {
-      setCheckDueDate(false);
-    }
-  };
-
-  useEffect(() => {
-    handleDueDate();
-  }, [date]);
-
   const setUpVariable = (
     //Funtion that gather all the variable
     selected,
@@ -65,13 +48,13 @@ const FormAssignment = ({ selected, setModalVisible }) => {
     subjectTitle,
     subjectInformation,
     file,
-    checkDueDate
+    showDate
   ) => {
     let dateTime;
-    if (checkDueDate === true) {
+    if (showDate === true) {
       //To check the due date condition
       dateTime = null;
-    } else if (checkDueDate === false) {
+    } else if (showDate === false) {
       dateTime = date.concat(" ", time);
     }
 
@@ -79,6 +62,7 @@ const FormAssignment = ({ selected, setModalVisible }) => {
       Alert.alert("Title", "Please fill in title", [{ text: "Ok" }]);
     } else {
       console.log("---------------------------");
+      console.log("Email: " + email);
       console.log("Subject: " + selected);
       console.log("Title: " + subjectTitle);
       console.log("Information: " + subjectInformation);
@@ -122,32 +106,6 @@ const FormAssignment = ({ selected, setModalVisible }) => {
     setChangeFormatDate(changeFormatDate(date));
   }, [date]);
 
-  const askDueDate = () => {
-    return (
-      <Modal
-        isVisible={isModalDueDateVisible}
-        style={{
-          position: "absolute",
-          width: "50%",
-          height: "50%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            width: "50%",
-            height: "50%",
-            backgroundColor: "white",
-          }}
-        >
-          <Text>Test modal </Text>
-        </View>
-      </Modal>
-    );
-  };
-
   //File upload
   const handleDocumentSelection = async () => {
     try {
@@ -180,6 +138,54 @@ const FormAssignment = ({ selected, setModalVisible }) => {
     } catch (error) {
       console.log("Error while selecting file: ", error);
     }
+  };
+
+  const dateTimeComponent = () => {
+    return (
+      <View
+        style={{
+          width: "90%",
+        }}
+      >
+        {/* Input date zone */}
+        <TouchableOpacity
+          style={formAssignmentStyles.inputFile}
+          activeOpacity={0.5}
+          onPress={showDatepicker}
+        >
+          <Image
+            source={require("../../assets/icons/calendar.png")}
+            style={[formAssignmentStyles.image, { marginRight: 5 }]}
+          />
+          <Text style={formAssignmentStyles.textFile}>
+            Due Date : {date.toLocaleDateString("en-GB")}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Input time zone */}
+        <TouchableOpacity
+          style={formAssignmentStyles.inputFile}
+          activeOpacity={0.5}
+          onPress={showTimepicker}
+        >
+          <Image
+            source={require("../../assets/icons/clock.png")}
+            style={[formAssignmentStyles.image, { marginRight: 5 }]}
+          />
+          <Text style={formAssignmentStyles.textFile}>
+            Time : {date.toLocaleTimeString("en-GB").slice(0, 5)}{" "}
+          </Text>
+        </TouchableOpacity>
+        {show && (
+          <DateTimePicker
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            onChange={onChange}
+          />
+        )}
+      </View>
+    );
   };
 
   return (
@@ -217,44 +223,18 @@ const FormAssignment = ({ selected, setModalVisible }) => {
         <Text style={formAssignmentStyles.textFile}> Attach file(s) </Text>
       </TouchableOpacity>
 
-      {/* Input date zone */}
-      <TouchableOpacity
-        style={formAssignmentStyles.inputFile}
-        activeOpacity={0.5}
-        onPress={showDatepicker}
-      >
-        <Image
-          source={require("../../assets/icons/calendar.png")}
-          style={[formAssignmentStyles.image, { marginRight: 5 }]}
+      <View style={formAssignmentStyles.checkBox}>
+        <CheckBox
+          isChecked={showDate}
+          onClick={() => handleShowDate(!showDate)}
+          rightText="No Due Date"
+          rightTextStyle={formAssignmentStyles.textCheckBox}
+          checkBoxColor="#C1C1CD"
         />
-        <Text style={formAssignmentStyles.textFile}>
-          Due Date :{" "}
-          {checkDueDate ? "No Due Date" : date.toLocaleDateString("en-GB")}
-        </Text>
-      </TouchableOpacity>
+      </View>
 
-      {/* Input time zone */}
-      <TouchableOpacity
-        style={formAssignmentStyles.inputFile}
-        activeOpacity={0.5}
-        onPress={showTimepicker}
-      >
-        <Image
-          source={require("../../assets/icons/clock.png")}
-          style={[formAssignmentStyles.image, { marginRight: 5 }]}
-        />
-        <Text style={formAssignmentStyles.textFile}>
-          Time : {date.toLocaleTimeString("en-GB").slice(0, 5)}{" "}
-        </Text>
-      </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
+      {!showDate && dateTimeComponent()}
+
       {/* Confirm Button zone */}
       <TouchableOpacity
         style={formAssignmentStyles.confirmButton}
@@ -266,7 +246,7 @@ const FormAssignment = ({ selected, setModalVisible }) => {
             textTitle,
             textInformation,
             fileSelected,
-            checkDueDate
+            showDate
           ),
         ]}
       >

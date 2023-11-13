@@ -24,6 +24,8 @@ import DataContext from "../routes/DataContext";
 import queryScheduleTeacher from "../backend/hooks/queryScheduleTeacher";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
+import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
+import AssignmentBoxTeacher from "../components/Homepage/AssignmentBoxTeacher";
 const height = Dimensions.get("screen").height;
 
 const mockUpData = [
@@ -59,9 +61,9 @@ const mockUpData = [
 
 const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
-  const email = useContext(DataContext); // email from login
-
+  const email = useContext(DataContext); // email from
   const [isloading, setIsLoading] = useState(true);
+  const [queriedSchedule, setQueriedSchedule] = useState([])
   const [schedule, setSchedule] = useState(null);
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
@@ -70,6 +72,7 @@ const HomepageTeacher = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
+  
   useEffect(() => {
     queryAssignment(
       email,
@@ -77,17 +80,13 @@ const HomepageTeacher = ({ navigation }) => {
       setAssignmentData,
       setAssignNum
     );
+    queryScheduleTeacher(email, setIsLoading, setQueriedSchedule);
   }, []);
   // End - manage about assignment
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await queryScheduleTeacher(email, setIsLoading, day);
-      setSchedule(data);
-    };
-
-    fetchData();
-  }, [day]);
+  useEffect(() => { //Filter again when day changes
+    setSchedule(queriedSchedule.filter(item => item.date_name === day));
+  }, [queriedSchedule,day]);
 
   return (
     <SafeAreaView>
@@ -158,6 +157,7 @@ const HomepageTeacher = ({ navigation }) => {
           </View>
           <View style={assignmentStyles.container}>
             <AssignmentHeader number={assignNum} />
+            <AddAssignmentButton email={email} />
             <View style={assignmentStyles.list}>
               {isAssignmentLoading ? (
                 <View
@@ -173,13 +173,13 @@ const HomepageTeacher = ({ navigation }) => {
                 </View>
               ) : (
                 <FlatList
-                  data={assignmentData}
+                  data={mockUpData}
                   renderItem={({ item }) => (
-                    <AssignmentBox
-                      code={item.class_id}
-                      subject={item.class_name}
-                      task={item.assignment_name}
-                      dueDate={item.assignment_due_date}
+                    <AssignmentBoxTeacher
+                      code={item.code}
+                      subject={item.subject}
+                      task={item.task}
+                      dueDate={item.dueDate}
                     />
                   )}
                 />

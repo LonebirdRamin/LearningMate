@@ -4,6 +4,16 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const formAssignmentStyles = StyleSheet.create({
+  checkBox: {
+    marginTop: windowHeight * 0.017,
+    width: "90%",
+    marginLeft: windowWidth * -0.015,
+  },
+  textCheckBox: {
+    color: "#C1C1CD",
+    fontSize: 15,
+    marginLeft: windowWidth * 0.005,
+  },
   confirmButton: {
     borderRadius: 30,
     justifyContent: "center",
@@ -11,7 +21,7 @@ const formAssignmentStyles = StyleSheet.create({
     height: windowHeight * 0.067,
     width: "55%",
     backgroundColor: true ? "#F04E22" : "#393A3F",
-    marginTop: windowHeight * 0.03,
+    marginTop: windowHeight * 0.027,
   },
   input: {
     borderRadius: 30,
@@ -45,6 +55,11 @@ const formAssignmentStyles = StyleSheet.create({
   textFile: {
     color: "#C1C1CD",
     fontSize: 15,
+  },
+  textButton: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
   },
 });
 

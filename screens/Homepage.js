@@ -85,7 +85,8 @@ const Homepage = ({ navigation }) => {
   const email = useContext(DataContext); // email from login
 
   const [isloading, setIsLoading] = useState(true);
-  const [schedule, setSchedule] = useState(null);
+  const [queriedSchedule, setQueriedSchedule] = useState([])
+  const [schedule, setSchedule] = useState([]);
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
 
@@ -93,6 +94,7 @@ const Homepage = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
+  
   useEffect(() => {
     queryAssignment(
       email,
@@ -100,18 +102,14 @@ const Homepage = ({ navigation }) => {
       setAssignmentData,
       setAssignNum
     );
+    querySchedule(email, setIsLoading, setQueriedSchedule);
   }, []);
   // End - manage about assignment
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await querySchedule(email, setIsLoading, day);
-      setSchedule(data);
-    };
-
-    fetchData();
-  }, [day]);
-
+  useEffect(() => { //Filter again when day changes
+    setSchedule(queriedSchedule.filter(item => item.date_name === day));
+  }, [queriedSchedule,day]);
+  
   return (
     <SafeAreaView>
       {isloading ? (

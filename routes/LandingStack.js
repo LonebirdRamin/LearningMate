@@ -27,6 +27,7 @@ const LandingStack = () => {
             animation: "slide_from_bottom",
           }}
         />
+
         <Stack.Screen
           name="Login"
           component={Login}
@@ -36,11 +37,13 @@ const LandingStack = () => {
             animation: "slide_from_bottom",
           }}
         />
+
         <Stack.Screen
           name="HomepageStudent"
           component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
         />
+
         <Stack.Screen
           name="HomepageTeacher"
           component={NavigationBarTeacher}

@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
 
-const AssignmentHeader = ({number=0}) => {
+const AssignmentHeader = ({ number = 0 }) => {
   return (
     <View style={assignmentStyles.textContainer}>
       <View style={assignmentStyles.headWrapper}>
