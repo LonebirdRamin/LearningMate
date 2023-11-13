@@ -17,7 +17,7 @@ const EventList = ({data}) => {
       <FlatList
         data={data}
         renderItem={({item})=>(
-          <TouchableOpacity style={customStyles.eventWidget}>
+          <View style={customStyles.eventWidget}>
             <View style={customStyles.eventDetails}>
               <View style={[customStyles.eventIcon,{backgroundColor:'#F04E22',alignItems:'center'}]}>
                 <Text style={customStyles.h2}>{item.class_id.substring(0,3)}</Text>
@@ -29,7 +29,7 @@ const EventList = ({data}) => {
                   ' - '+
                   item.end_time.slice(0,-3)}</Text>
               </View>
-          </TouchableOpacity>
+          </View>
         )}
       />
     </View>
