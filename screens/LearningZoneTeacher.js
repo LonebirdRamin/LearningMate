@@ -4,18 +4,18 @@ import customStyles from "../styles/customStyles";
 import globleStyles from "../styles/globleStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DataContext from "../routes/DataContext";
-import queryClass from "../backend/hooks/queryClass";
+import queryClassTeacher from "../backend/hooks/queryClassTeacher";
 import ClassList from "../components/LearningZone/ClassList";
 
-const LearningZoneStudent = ({ navigation }) => {
+const LearningZoneTeacher = ({ navigation }) => {
   const email = useContext(DataContext); // email from login
   const [_class, setClass] = useState(null);
   const [isloading, setIsLoading] = useState(true);
-  const destination = 'LearningZoneStudentClass'
+  const destination = 'LearningZoneTeacherClass'
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await queryClass(email, setIsLoading);
+      const data = await queryClassTeacher(email, setIsLoading);
       setClass(data);
     };
 
@@ -50,4 +50,4 @@ const LearningZoneStudent = ({ navigation }) => {
   );
 };
 
-export default LearningZoneStudent;
+export default LearningZoneTeacher;

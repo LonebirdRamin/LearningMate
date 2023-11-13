@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Homepage from "../screens/Homepage";
 import ChatScreen from "../screens/ChatScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import LearningZoneStudent from "../screens/LearningZoneStudent";
+import LearningZoneTeacherRoute from "./LearningZoneTeacherRoute";
 import PlannerScreen from "../screens/PlannerScreen";
 import HomeNotiTeacher from "./HomeNotiTeacher";
 import DataContext from "./DataContext";
@@ -67,8 +67,8 @@ const NavigationBar = () => {
           }}
         />
         <Tab.Screen
-          name="Learningzone"
-          component={LearningZoneStudent}
+          name="LearningZoneTeacherRoute"
+          component={LearningZoneTeacherRoute}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
