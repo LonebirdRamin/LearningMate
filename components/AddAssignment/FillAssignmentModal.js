@@ -1,15 +1,30 @@
 //Use for popup the when click AddAssignment button
 
-import React, { useState } from "react";
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Button,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Modal from "react-native-modal";
 import modalStyles from "../../styles/modalStyles";
 import DropdownAddAssignment from "./DropdownAddAssignment";
 import FormAssignment from "./FormAssignment";
 import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
-
+import customStyles from "../../styles/customStyles";
+import globleStyles from "../../styles/globleStyles";
+import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
 const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
   const [selected, setSelected] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [className, setClassName] = useState([]);
+
+  useEffect(() => {
+    queryClassTeacher(email, setIsLoading, setClassName);
+  }, []);
 
   return (
     <Modal
@@ -26,13 +41,29 @@ const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
         <View style={modalFillAssignmentStyles.center}>
           <View style={modalFillAssignmentStyles.barIcon} />
           <View style={modalFillAssignmentStyles.wrapper}>
-            <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
-            <DropdownAddAssignment setSelected={setSelected} />
-            <FormAssignment
-              selected={selected}
-              setModalVisible={setModalVisible}
-              email={email}
-            />
+            {isLoading ? (
+              <View style={modalFillAssignmentStyles.loadingWidget}>
+                <View style={globleStyles.loading}>
+                  <ActivityIndicator
+                    size={100}
+                    color="#F04E22"
+                  ></ActivityIndicator>
+                </View>
+              </View>
+            ) : (
+              <View>
+                <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
+                <DropdownAddAssignment
+                  setSelected={setSelected}
+                  className={className}
+                />
+                <FormAssignment
+                  selected={selected}
+                  setModalVisible={setModalVisible}
+                  email={email}
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>
