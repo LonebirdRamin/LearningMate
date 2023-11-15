@@ -12,7 +12,7 @@ const queryGetTeacherAssignment = async (
 
   try {
     const response = await fetch(
-      `${ipv4.mark}getTeacherAssignment?email=${email}`
+      `${ipv4.kong}getTeacherAssignment?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

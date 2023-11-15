@@ -5,7 +5,7 @@ const queryClassTeacher = async (email, setLoading) => {
   let result;
   try {
     const response = await axios.get(
-      `${ipv4.mark}getClassTeacher?email=${email}`
+      `${ipv4.kong}getClassTeacher?email=${email}`
     );
 
     // Check the response status code to determine if it was successful
