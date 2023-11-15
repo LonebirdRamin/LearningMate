@@ -1,10 +1,24 @@
 import { Text, View, Image } from "react-native";
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome } from "@expo/vector-icons";
 import dropDownStyles from "../../styles/dropDownStyle";
+import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
 
-const DropdownAddAssignment = ({ setSelected }) => {
+const DropdownAddAssignment = ({ setSelected, className }) => {
+  // const [className, setClassName] = useState([]);
+  const dataClass = [];
+
+  // useEffect(() => {
+  //   queryClassTeacher(email, setIsLoading, setClassName);
+  // }, []);
+
+  //Convert object to array
+  for (let i = 0; i < className.length; i++) {
+    dataClass[i] = className[i].class_id;
+  }
+  // console.log(email, className, isLoad);
+  // console.log(dataClass);
   const mockupData = [
     //If want to return from dropdown as key
     { key: "1", value: "CPE101" },
@@ -33,7 +47,7 @@ const DropdownAddAssignment = ({ setSelected }) => {
       }}
     >
       <SelectList
-        data={data}
+        data={dataClass}
         setSelected={setSelected}
         boxStyles={dropDownStyles.boxStyles}
         inputStyles={dropDownStyles.inputStyle}

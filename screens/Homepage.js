@@ -105,6 +105,7 @@ const Homepage = ({ navigation }) => {
     querySchedule(email, setIsLoading, setQueriedSchedule);
   }, []);
   // End - manage about assignment
+  // console.log(email, isAssignmentLoading, assignmentData, assignNum);
 
   useEffect(() => {
     //Filter again when day changes

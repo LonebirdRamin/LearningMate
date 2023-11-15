@@ -12,8 +12,8 @@ const AssignmentBoxTeacher = ({
   subject,
   task,
   dueDate,
-  submitCount,
-  totalCount,
+  submitCount = 50,
+  totalCount = 90,
 }) => {
   return (
     <TouchableOpacity

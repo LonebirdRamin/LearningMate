@@ -92,7 +92,7 @@ const HomepageTeacher = ({ navigation }) => {
     queryScheduleTeacher(email, setIsLoading, setQueriedSchedule);
   }, []);
   // End - manage about assignment
-
+  // console.log(email, isAssignmentLoading, assignmentData, assignNum);
   useEffect(() => {
     //Filter again when day changes
     setSchedule(queriedSchedule.filter((item) => item.date_name === day));
@@ -186,12 +186,12 @@ const HomepageTeacher = ({ navigation }) => {
                   data={assignmentData}
                   renderItem={({ item }) => (
                     <AssignmentBoxTeacher
-                      code={item.code}
-                      subject={item.subject}
-                      task={item.task}
-                      dueDate={item.dueDate}
-                      submitCount={item.submitCount}
-                      totalCount={item.totalCount}
+                      code={item.class_id}
+                      subject={item.class_id}
+                      task={item.assignment_name}
+                      dueDate={item.assignment_due_date}
+                      // submitCount={item.submitCount}
+                      // totalCount={item.totalCount}
                     />
                   )}
                 />

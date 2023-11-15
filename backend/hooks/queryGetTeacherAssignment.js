@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
+import ipv4 from "../apiserver/ipv4";
 
 const queryGetTeacherAssignment = async (
   email,
@@ -14,6 +15,7 @@ const queryGetTeacherAssignment = async (
     const response = await fetch(
       `${ipv4.kong}getTeacherAssignment?email=${email}`
     );
+    console.log("query response: " + response);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

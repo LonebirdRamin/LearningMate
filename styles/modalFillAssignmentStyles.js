@@ -35,6 +35,13 @@ const modalFillAssignmentStyles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
   },
+  loadingWidget: {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#353542",
+    width: "100%",
+    height: "100%",
+  },
 });
 
 export default modalFillAssignmentStyles;

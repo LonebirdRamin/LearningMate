@@ -9,7 +9,10 @@ const AssignmentHeader = ({ number = 0 }) => {
         <Text style={assignmentStyles.headerText}>Assignment</Text>
         <Text style={assignmentStyles.headerText}>{number} assignments</Text>
       </View>
-      <Text style={assignmentStyles.subText}>upcoming</Text>
+      <Text style={assignmentStyles.subText}>
+        {" "}
+        {number === 0 ? "Upcoming" : "Posted"}
+      </Text>
     </View>
   );
 };
