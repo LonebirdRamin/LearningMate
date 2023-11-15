@@ -12,11 +12,16 @@ const EventList = ({data}) => {
     return text
   }
 
-  return (
-    <View style={customStyles.eventsContainer}>
-      <FlatList
-        data={data}
-        renderItem={({item})=>(
+  const isClassEvent = (event) => {
+    return 'class_id' in event;
+  };
+  const isPlannerEvent = (event) => {
+    return 'planner_category' in event;
+  };
+
+  const renderItem = ({item})=>{
+    if(isClassEvent(item)){
+      return(
           <View style={customStyles.eventWidget}>
             <View style={customStyles.eventDetails}>
               <View style={[customStyles.eventIcon,{backgroundColor:'#F04E22',alignItems:'center'}]}>
@@ -30,7 +35,28 @@ const EventList = ({data}) => {
                   item.end_time.slice(0,-3)}</Text>
               </View>
           </View>
-        )}
+          )
+    } else {
+      return(
+        <View style={customStyles.eventWidget}>
+        <View style={customStyles.eventDetails}>
+          <View style={[customStyles.eventIcon,{backgroundColor:'rgba(207, 207, 252, 0.1)',alignItems:'center'}]}>
+            <Text style={customStyles.plannerIconText}>EVENT</Text>
+          </View>
+            <Text style={customStyles.h2}>{truncate(item.planner_detail,maxLength)}</Text>
+            <Text style={[customStyles.h1,{lineHeight: 20.5}]}>
+              {item.start_time.slice(0,-3)}</Text>
+          </View>
+      </View>
+      )
+    }
+  }
+
+  return (
+    <View style={customStyles.eventsContainer}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
       />
     </View>
   )

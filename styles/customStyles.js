@@ -91,6 +91,15 @@ const customStyles = new StyleSheet.create({
         backgroundColor: '#353542',
     },
 
+    plannerIconText:{
+        color: '#A2A2B5',
+        fontSize: 10,
+        fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: 16 * 1.6,
+        letterSpacing: 0.2,
+    },
+
     eventsContainer:{ //Wrapper for the 2 upcoming events under the calendar
         marginTop: 30,
         display: 'flex',
@@ -115,6 +124,7 @@ const customStyles = new StyleSheet.create({
 
     eventDetails:{ //Wrapper for the details in each event -> icons, name, and duration
         flexGrow:1,
+        width: width*0.8,
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
@@ -125,6 +135,9 @@ const customStyles = new StyleSheet.create({
         width: 40,
         height: 40,
         flexShrink: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 12,
     },
 
