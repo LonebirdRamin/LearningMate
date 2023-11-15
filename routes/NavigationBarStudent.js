@@ -10,6 +10,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import PlannerScreen from "../screens/PlannerScreen";
 import DataContext from "./DataContext";
 import LearningZoneStudentRoute from "./LearningZoneStudentRoute";
+import ProfileStackStudent from "./ProfileStackStudent";
 
 const height = Dimensions.get("screen").height;
 
@@ -139,8 +140,8 @@ const NavigationBarStudent = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileStackStudent"
+          component={ProfileStackStudent}
           options={{
             tabBarIcon: ({ focused }) => (
               <View

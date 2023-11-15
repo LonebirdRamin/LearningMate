@@ -6,26 +6,52 @@ import customStyles from "../styles/customStyles";
 import profileStyles from "../styles/profileStyle";
 import DataContext from "../routes/DataContext"
 import AppButton from "../components/AppButton"
+import InfoBox from "../components/Profile/InfoBox";
 const width = Dimensions.get('screen').width
 const height = Dimensions.get('screen').height
+
+const data = {
+  id: 64070503433,
+  eduLevel: "Bechelor's Degree",
+  Faculty: "Engineering",
+  Department: "Computer Engineering",
+};
+
+const grade = {
+  last: 3.91,
+  GPAX: 3.87
+}
+const activity = {
+  total: 59
+}
+
+const prepData = Object.values(data);
+const dataKey = Object.keys(data);
+
+const prepGrade = Object.values(grade);
+const gradeKey = Object.keys(grade);
+
+const prepAct = Object.values(activity);
+const activityKey = Object.keys(activity);
+
 const ProfileScreen = () => {
   const email = useContext(DataContext);
   return (
-    <SafeAreaView style={globleStyles.pageContainer}>
+    <View style={[globleStyles.pageContainer]}>
       <ScrollView style={profileStyles.scrollContainer}>
         {/*Start - Profile and setting */}
-        <View
+        {/* <View
           style={[
             customStyles.pageTitleContainer,
             profileStyles.headerContainer,
           ]}
-        >
-          <Text style={[customStyles.pageTitle]}>Profile</Text>
+        > */}
+          {/* <Text style={[customStyles.pageTitle]}>Profile</Text>
 
           <TouchableOpacity style={profileStyles.setting}>
             <Image source={require("../assets/icons/Profile/setting.png")} />
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity> */}
+        {/* </View> */}
         {/*End - Profile and setting */}
 
         {/*Start - Icon, details, edit */}
@@ -39,17 +65,16 @@ const ProfileScreen = () => {
         </View>
         {/*End - Icon, details, edit */}
 
-        {/*Start - Personal Info */}
-        <View >
-          <Text style={customStyles.h2}>
-            Personal Info
-          </Text>
-        </View>
-        {/*End - Personal Info */}
+        {/*Start - Info */}
+        <InfoBox header={"Personal Info"} data={prepData} id={dataKey}/>
+        <InfoBox header={"Grade Results"} data={prepGrade}  id={gradeKey}/>
+        <InfoBox header={"Activity"} data={prepAct}  id={activityKey}/>
+
+        {/*End -  Info */}
 
 
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
