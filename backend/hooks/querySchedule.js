@@ -5,7 +5,7 @@ const querySchedule = async (email, setLoading, day) => {
   let result;
   try {
     const response = await axios.get(
-      `${ipv4.mark}getStudentSchedule?email=${email}`
+      `${ipv4.greenTU}getStudentSchedule?email=${email}`
     );
 
     // Check the response status code to determine if it was successful

@@ -22,7 +22,7 @@ const signIn = async (email, password, navigation, loadState) => {
       password
     );
 
-    const info = await fetch(`${ipv4.mark}checkRole?email=${email}`);
+    const info = await fetch(`${ipv4.greenTU}checkRole?email=${email}`);
     if (!info.ok) {
       throw new Error("Network response was not ok");
     }
@@ -35,6 +35,7 @@ const signIn = async (email, password, navigation, loadState) => {
     }
     // navigation();
   } catch (error) {
+    console.log(error)
     Alert.alert("Sign in fail", "Please check your email and password", [
       { text: "Ok" },
     ]);
