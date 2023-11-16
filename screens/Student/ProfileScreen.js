@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import globleStyles from "../styles/globleStyles";
-import customStyles from "../styles/customStyles";
-import profileStyles from "../styles/profileStyle";
-import DataContext from "../routes/DataContext"
-import AppButton from "../components/AppButton"
-import InfoBox from "../components/Profile/InfoBox";
+import globleStyles from "../../styles/globleStyles";
+import customStyles from "../../styles/customStyles";
+import profileStyles from "../../styles/profileStyle";
+import DataContext from "../../routes/DataContext"
+import AppButton from "../../components/AppButton"
+import InfoBox from "../../components/Profile/InfoBox";
+import uuid from 'react-native-uuid';
+
 const width = Dimensions.get('screen').width
 const height = Dimensions.get('screen').height
 
@@ -26,15 +28,14 @@ const activity = {
 }
 
 const prepData = Object.values(data);
-const dataKey = Object.keys(data);
 
 const prepGrade = Object.values(grade);
-const gradeKey = Object.keys(grade);
 
 const prepAct = Object.values(activity);
 const activityKey = Object.keys(activity);
 
-const ProfileScreen = () => {
+
+const ProfileScreen = ({navigation}) => {
   const email = useContext(DataContext);
   return (
     <View style={[globleStyles.pageContainer]}>
@@ -61,14 +62,14 @@ const ProfileScreen = () => {
             <Text style={profileStyles.text("white", width*0.045, "bold")}>Pannawat Durongrittichai</Text>
             <Text style={profileStyles.text("#A2A2B5", width*0.035, "400")}>{email}</Text>
           </View>  
-          <AppButton text="Edit profile" textColor="white" style={{borderWidth: 0.5, borderColor: "rgba(78,78,97, 1)",selfAlign: 'center', paddingHorizontal: width*0.03, backgroundColor: 'rgba(78,78,97, 0.5)'} } height={height*0.045}/>
+          <AppButton  text="Edit profile" textColor="white" style={{borderWidth: 0.5, borderColor: "rgba(78,78,97, 1)",selfAlign: 'center', paddingHorizontal: width*0.03, backgroundColor: 'rgba(78,78,97, 0.5)'} } height={height*0.045}/>
         </View>
         {/*End - Icon, details, edit */}
 
         {/*Start - Info */}
-        <InfoBox header={"Personal Info"} data={prepData} id={dataKey}/>
-        <InfoBox header={"Grade Results"} data={prepGrade}  id={gradeKey}/>
-        <InfoBox header={"Activity"} data={prepAct}  id={activityKey}/>
+        <InfoBox  header={"Personal Info"} data={prepData}  handlePress={()=>{navigation.push("Personal Info")}}/>
+        <InfoBox  header={"Grade Results"} data={prepGrade}   handlePress={()=>{navigation.push("GradeResult")}}/>
+        <InfoBox  header={"Activity"} data={prepAct}  id={activityKey}/>
 
         {/*End -  Info */}
 

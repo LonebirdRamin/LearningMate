@@ -59,8 +59,26 @@ const profileStyles = StyleSheet.create({
     },
     gap:{
         height: height*0.01
+    },
+    back:{
+        width: width*0.05,
+        height: width*0.05
+
+    },
+    line:{
+        backgroundColor: "#454545",
+        height: 1
+    },
+    lineGap:{
+        height: height*0.015
+    },
+    gradeActHeader:{
+        backgroundColor: 'rgba(78,78,97,0.5)',
+        borderRadius: 10,
+        borderColor: '#b6b6b65f',
+        borderLeftWidth: 0.5,
+        borderBottomWidth: 0.5,
     }
-    
 })
 
 export default profileStyles;

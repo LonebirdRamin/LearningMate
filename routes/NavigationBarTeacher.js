@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 //Screen
 import Homepage from "../screens/Homepage";
 import ChatScreen from "../screens/ChatScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/Student/ProfileScreen";
 import LearningZoneTeacherRoute from "./LearningZoneTeacherRoute";
 import PlannerScreen from "../screens/PlannerScreen";
 import HomeNotiTeacher from "./HomeNotiTeacher";

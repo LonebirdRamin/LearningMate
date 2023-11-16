@@ -2,9 +2,8 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-
+import uuid from 'react-native-uuid';
 // const profile = require("../../assets/icons/Profile/profile.png")
-
 const data = {
   id: 64070503433,
   eduLevel: "Bechelor's Degree",
@@ -27,7 +26,7 @@ const department = require("../../assets/icons/Profile/hierarchy.png")
 
 
 
-const InfoBox = ({ header, data, id}) => {
+const InfoBox = ({ header, data, handlePress}) => {
   let key = Object.keys(data);
   let i = 0;
   const icon = header==="Personal Info"? [user, education, faculty, department]:header==="Grade Results"? [user, user]:[user]
@@ -39,11 +38,12 @@ const InfoBox = ({ header, data, id}) => {
       <Text style={customStyles.h2}>{header}</Text>
       {/*Start - Header of infobox */}
 
-      <TouchableOpacity style={profileStyles.infoContainer}>
+      <TouchableOpacity style={profileStyles.infoContainer} onPress={()=>handlePress()}>
         {/* Start - Each row infomation */}
         {data.map((item) => {
+          
           return (
-            <View key={id[i]}>
+            <View key={uuid.v4()}>
               <View style={profileStyles.gap} />
 
               <View style={profileStyles.infoRow} >

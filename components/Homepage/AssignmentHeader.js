@@ -11,7 +11,7 @@ const AssignmentHeader = ({ number = 0 }) => {
       </View>
       <Text style={assignmentStyles.subText}>
         {" "}
-        {number === 0 ? "Upcoming" : "Posted"}
+        {number === 0 ? "upcoming" : "posted"}
       </Text>
     </View>
   );
