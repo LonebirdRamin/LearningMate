@@ -634,6 +634,42 @@ app.post('/api/submitAssignment', (req, res) => {
   });
 });
 
+app.get('/api/getPersonalInfo', function (req, res, next) {
+  console.log("Query Personal Info");
+  const { email, role } = req.body;
+  console.log("email: ", email);
+
+  if (role == 'student') {
+    connection.query(
+      'SELECT s.student_name, s.student_id, d.degree_name, dept.department_name FROM student AS s JOIN degree AS d ON d.degree_id = s.degree_id JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+      [email],
+      function(err, studentResults, fields) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Student query error occurred' });
+        } else {
+          console.log("success student query");
+          res.json(studentResults);
+        }
+      }
+    );
+  } else {
+    connection.query(
+      'SELECT s.teacher_name, s.teacher_id, dept.department_name FROM teacher AS s JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+      [email],
+      function(err, teacherResults, fields) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Teacher query error occurred' });
+        } else {
+          console.log("success teacher query");
+          res.json(teacherResults);
+        }
+      }
+    );
+  }
+});
+
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
 })
