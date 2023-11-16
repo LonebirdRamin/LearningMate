@@ -24,6 +24,7 @@ import DataContext from "../routes/DataContext";
 import querySchedule from "../backend/hooks/querySchedule";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
+import queryPlanner from "../backend/hooks/queryPlanner";
 const height = Dimensions.get("screen").height;
 
 const mockUpData = [
@@ -85,8 +86,13 @@ const Homepage = ({ navigation }) => {
   const email = useContext(DataContext); // email from login
 
   const [isloading, setIsLoading] = useState(true);
+
   const [queriedSchedule, setQueriedSchedule] = useState([]);
-  const [schedule, setSchedule] = useState([]);
+  const [queriedPlanner, setQueriedPlanner] = useState([]);
+  const [appendedEvents, setAppendedEvents] = useState([]);
+  const [validEvents, setValidEvents] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
 
@@ -96,22 +102,85 @@ const Homepage = ({ navigation }) => {
   const [assignNum, setAssignNum] = useState("-");
 
   useEffect(() => {
-    queryAssignment(
-      email,
-      setIsAssignmentLoading,
-      setAssignmentData,
-      setAssignNum
-    );
-    querySchedule(email, setIsLoading, setQueriedSchedule);
+    const fetchData = async ()=>{
+      queryAssignment(
+        email,
+        setIsAssignmentLoading,
+        setAssignmentData,
+        setAssignNum
+      );
+    querySchedule(email,setQueriedSchedule)
+    }
+    fetchData();
   }, []);
   // End - manage about assignment
-  // console.log(email, isAssignmentLoading, assignmentData, assignNum);
-
+  
   useEffect(() => {
-    //Filter again when day changes
-    setSchedule(queriedSchedule.filter((item) => item.date_name === day));
-  }, [queriedSchedule, day]);
+    const fetchPlanner = async () => {
+      await queryPlanner(email, setQueriedPlanner);
+    };
+  
+    fetchPlanner();
+  }, [queriedSchedule]);
+  
+  useEffect(() => {
+    const combinedEvents = [...queriedSchedule, ...queriedPlanner];
+    setAppendedEvents(combinedEvents);
+    setIsLoading(false)
+  }, [queriedPlanner]);
+  
+  const filterEvents = (appendedEvents)=>{
+    const copy = JSON.parse(JSON.stringify(appendedEvents));
+    const currentDate = new Date();
+    const dateLimit = new Date();
+    dateLimit.setDate(dateLimit.getDate()+6);
 
+    const isClassEvent = (event) => {
+      return 'class_id' in event;
+    };
+    const isPlannerEvent = (event) => {
+      return 'planner_category' in event;
+    };
+
+    //Filter out planner that is not in the 7-day period
+    const validEvents = copy.filter(item => {
+      if(isClassEvent(item)){
+        return true;
+      }
+      const eventStartDate = new Date(item.start_time)
+      return (currentDate <= eventStartDate && eventStartDate <= dateLimit)
+    })
+
+    //Format the planner object to be appropriate for filtering
+    validEvents.map((event)=>{
+      if(isPlannerEvent(event)){
+        const dateTimeString = event.start_time;
+        const dateTime = new Date(dateTimeString);
+        const eventStartDateTime = new Date(event.start_time)
+        const [date_name,day] = dateTime.toLocaleDateString("en-GB", {weekday: "long"}).split(', ');
+        event.date_name = date_name;
+        event.start_time = eventStartDateTime.toLocaleTimeString("en-GB");
+      }
+    })
+
+    validEvents.sort((a,b)=>{ //Filter by START_TIME ONLY! (date_name will be filtered on eventList.js)
+      const aStartDateTime = a.start_time.split(':');
+      const bStartDateTime = b.start_time.split(':');
+
+      const timeANumeric = parseInt(aStartDateTime[0]) * 3600 + parseInt(aStartDateTime[1]) * 60 + parseInt(aStartDateTime[2]);
+      const timeBNumeric = parseInt(bStartDateTime[0]) * 3600 + parseInt(bStartDateTime[1]) * 60 + parseInt(bStartDateTime[2]);
+
+      return timeANumeric - timeBNumeric;
+    });
+
+    return validEvents;
+  }
+
+  useEffect(() => { //Filter again when day changes
+    const res = filterEvents(appendedEvents).filter(item=>item.date_name == day);
+    setValidEvents(res);
+  }, [appendedEvents,day]);
+  
   return (
     <SafeAreaView>
       {isloading ? (
@@ -159,7 +228,7 @@ const Homepage = ({ navigation }) => {
               Schedule
             </Text>
             <Calendar day={day} setDay={setDay}></Calendar>
-            <EventList data={schedule}></EventList>
+            <EventList data={validEvents}></EventList>
 
             <View
               style={{
@@ -174,7 +243,7 @@ const Homepage = ({ navigation }) => {
             </View>
 
             <SeeAllModal
-              data={schedule}
+              data={validEvents}
               isVisible={seeAll}
               toggleModal={setSeeAll}
             ></SeeAllModal>
