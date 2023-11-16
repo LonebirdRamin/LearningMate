@@ -1,13 +1,13 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
-const queryClassTeacher = async (email, setIsLoading, setClassName) => {
+const queryClassTeacher = async (email, setIsLoading) => {
   let result;
   setIsLoading(true);
 
   try {
     const response = await axios.get(
-      `${ipv4.kong}getClassTeacher?email=${email}`
+      `${ipv4.golf}getClassTeacher?email=${email}`
     );
     // console.log("ClassName response: " + response);
 
@@ -15,8 +15,8 @@ const queryClassTeacher = async (email, setIsLoading, setClassName) => {
     if (response.status === 200) {
       result = response.data;
       // console.log("Result in class: " + result);
-      setClassName(result);
       setIsLoading(false);
+      return result;
     } else {
       throw new Error("Network response was not ok");
     }
