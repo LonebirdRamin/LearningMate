@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore"; // Import Firestore
 import { getAuth } from "firebase/auth";
@@ -15,11 +16,22 @@ const firebaseConfig = {
   storageBucket: "react-native-crud-b1954.appspot.com",
   messagingSenderId: "1057117674323",
   appId: "1:1057117674323:web:b88c6f880c510ce41fdfa6",
-  measurementId: "G-LT0PCE10K5"
+  measurementId: "G-LT0PCE10K5",
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const firebaseAuth = getAuth(app);
-export const db = getFirestore(app); // Initialize Firestore
+const firebaseAuth = getAuth(app);
+const db = getFirestore(app); // Initialize Firestore
+const storage = getStorage(app);
+export {
+  app,
+  analytics,
+  firebaseAuth,
+  db,
+  storage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+};
