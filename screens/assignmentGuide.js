@@ -20,6 +20,7 @@ const AssignmentPage = ({ route }) => {
     return (
       <View style={{ padding: 10 }}>
         <Text style={{ fontSize: 20 }}>{item.class_id}</Text>
+        <Text style={{ fontSize: 20 }}>{item.assignment_id}</Text>
         <Text style={{ fontSize: 20 }}>{item.assignment_name}</Text>
         <Text style={{ fontSize: 20 }}>{item.assignment_publish_date}</Text>
         <Text style={{ fontSize: 20 }}>{item.assignment_due_date}</Text>

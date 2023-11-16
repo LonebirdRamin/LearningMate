@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 const querySchedule = async (email, setLoading) => {
   try {
     // setLoading(true);
-    const response = await axios.get(`http://192.168.1.64:5001/api/checkRole?email=${email}`);
+    const response = await axios.get(`http://192.168.1.188:5001/api/checkRole?email=${email}`);
     console.log(response.data);
     // Check the response status code to determine if it was successful
     if (response.status === 200) {
