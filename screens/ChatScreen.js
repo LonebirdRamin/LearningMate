@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import UploadFileTeacher from "../components/uploadFileTeacher/UploadFileTeacher";
+import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
 
 const ChatScreen = () => {
   return (
@@ -11,9 +13,9 @@ const ChatScreen = () => {
           color: "white",
         }}
       >
-        Test add AddAssignmentButton
+        Test add upload file on learning zone
       </Text>
-      <AddAssignmentButton />
+      <LearningzoneAddButton />
     </SafeAreaView>
   );
 };

@@ -190,8 +190,8 @@ const HomepageTeacher = ({ navigation }) => {
                       subject={item.class_id}
                       task={item.assignment_name}
                       dueDate={item.assignment_due_date}
-                      // submitCount={item.submitCount}
-                      // totalCount={item.totalCount}
+                      submitCount={item.Submit_Count}
+                      totalCount={item.Assigned_Count}
                     />
                   )}
                 />

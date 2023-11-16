@@ -137,7 +137,7 @@ app.get("/api/getTeacherAssignment", function (req, res, next) {
   console.log("Query Teacher Assignment");
   const email = req.query.email;
   connection.query(
-    "SELECT a.class_id, a.assignment_name, a.assignment_publish_date, a.assignment_due_date FROM assignment AS a JOIN class_lecturer AS cl ON cl.class_id = a.class_id JOIN teacher AS t ON t.teacher_id = cl.teacher_id WHERE t.academic_email = ?;",
+    'SELECT ac.`class_id`, ac.class_name, ac.assignment_name, ac.assignment_id, ac.assignment_due_date, COUNT(CASE WHEN asu.status > 0 THEN 1 END) as "Submit_Count", COUNT(asu.student_id) as "Assigned_Count" FROM `assignment_submission` as asu LEFT JOIN (SELECT c.`class_id`, a.assignment_id, c.`class_name`, a.`assignment_name`, a.`assignment_due_date` FROM `assignment` as a LEFT JOIN `class` as c ON a.`class_id` = `c`.`class_id`) as ac ON asu.assignment_id = ac.assignment_id GROUP BY ac.`assignment_id` HAVING ac.`class_id` IN (SELECT `class_id` FROM `class_lecturer` WHERE `teacher_id` = (SELECT `teacher_id` FROM `teacher` as t WHERE t.academic_email = ?));;',
     [email],
     function (err, teacherResults, fields) {
       if (err) {
@@ -363,6 +363,44 @@ app.get("/api/getTodayNotiAssignmentTeacher", function (req, res, next) {
         res.json(notiResults);
         console.log("noti IN");
       }
+    }
+  );
+});
+
+app.post("/api/createAssignment", (req, res) => {
+  console.log("REQ QUERY = " + req.query);
+  const { classID, assName, dueDate, description } = req.query;
+  //   const { classID, assName, publishDate, dueDate, description } = {
+  //     classID: 'CPE334',
+  //     assName: 'hum dum lab',
+  //     publishDate: '2023-10-10',
+  //     dueDate: '2023-11-11',
+  //     description: 'hum dum'
+  // };
+
+  console.log(classID);
+  const currentDate = new Date();
+  const formattedDate = currentDate
+    .toISOString()
+    .slice(0, 19)
+    .replace("T", " ");
+
+  const sql =
+    "INSERT INTO assignment (`class_id`, `assignment_name`, `assignment_publish_date`, `assignment_due_date`, `assignment_desciption`) VALUES (?, ?, ?, ?, ?)";
+
+  connection.query(
+    sql,
+    [classID, assName, formattedDate, dueDate, description],
+    (err, results) => {
+      if (err) {
+        console.log("Error while inserting a user into the database", err);
+        return res
+          .status(400)
+          .json({ message: "Failed to create a new assignment." });
+      }
+      return res
+        .status(201)
+        .json({ message: "New assignment successfully created!" });
     }
   );
 });
