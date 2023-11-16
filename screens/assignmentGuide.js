@@ -22,8 +22,12 @@ const AssignmentPage = ({ route }) => {
         <Text style={{ fontSize: 20 }}>{item.class_id}</Text>
         <Text style={{ fontSize: 20 }}>{item.assignment_id}</Text>
         <Text style={{ fontSize: 20 }}>{item.assignment_name}</Text>
-        <Text style={{ fontSize: 20 }}>{item.assignment_publish_date}</Text>
+        {/* <Text style={{ fontSize: 20 }}>{item.assignment_publish_date}</Text> */}
         <Text style={{ fontSize: 20 }}>{item.assignment_due_date}</Text>
+        <Text style={{ fontSize: 20 }}>Submit Count</Text>
+        <Text style={{ fontSize: 20 }}>{item.Submit_Count}</Text>
+        <Text style={{ fontSize: 20 }}>Not Submit Count</Text>
+        <Text style={{ fontSize: 20 }}>{item.Assigned_Count}</Text>
       </View>
     );
   }
