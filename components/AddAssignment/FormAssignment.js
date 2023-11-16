@@ -31,6 +31,7 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [showDate, handleShowDate] = useState(true);
+  const [insertData, setInsertData] = useState(null);
 
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
@@ -39,6 +40,12 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
       "-" +
       date.toLocaleString("default", { day: "2-digit" })
   );
+
+  useEffect(() => {
+    //ใส่ Data ตรงนี้ เพื่อส่งไป DB เน้อออ
+    // This block of code will run whenever insertData changes
+    console.log("insertData has been updated:", insertData);
+  }, [insertData]);
 
   const setUpVariable = (
     //Funtion that gather all the variable
@@ -51,6 +58,7 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
     showDate
   ) => {
     let dateTime;
+
     if (showDate === true) {
       //To check the due date condition
       dateTime = null;
@@ -61,13 +69,14 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
     if (!subjectTitle) {
       Alert.alert("Title", "Please fill in title", [{ text: "Ok" }]);
     } else {
-      console.log("---------------------------");
-      console.log("Email: " + email);
-      console.log("Subject: " + selected);
-      console.log("Title: " + subjectTitle);
-      console.log("Information: " + subjectInformation);
-      console.log("File: " + file);
-      console.log("DateTime: " + dateTime);
+      setInsertData({
+        email: email,
+        class_id: selected,
+        assignment_name: subjectTitle,
+        assignment_due_date: dateTime,
+        assignment_description: subjectInformation,
+        file: file,
+      });
       setModalVisible(false);
     }
   };
@@ -234,7 +243,7 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
       </View>
 
       {!showDate && dateTimeComponent()}
-
+      {/* const [insertData, setInsertData] = useState(null); */}
       {/* Confirm Button zone */}
       <TouchableOpacity
         style={formAssignmentStyles.confirmButton}

@@ -4,6 +4,42 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const formAssignmentStyles = StyleSheet.create({
+  announceBox: {
+    borderRadius: 30,
+    width: windowWidth * 0.85,
+    color: "white",
+    borderWidth: 1,
+    borderColor: "#C1C1CD",
+    height: windowHeight * 0.17,
+    marginBottom: windowHeight * 0.025,
+    paddingLeft: windowWidth * 0.05,
+  },
+  mainViewLearningZone: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    marginTop: windowHeight * 0.02,
+  },
+  buttonMain: {
+    alignItems: "center",
+    height: "20%",
+    marginTop: windowHeight * -0.012,
+  },
+  mainboxLearning: {
+    marginTop: windowHeight * -0.014,
+    justifyContent: "flex-start",
+    width: "90%",
+  },
+  learningInput: {
+    borderRadius: 30,
+    width: windowWidth * 0.85,
+    color: "white",
+    borderWidth: 1,
+    borderColor: "#C1C1CD",
+    height: windowHeight * 0.07,
+    marginBottom: windowHeight * 0.025,
+    paddingLeft: windowWidth * 0.05,
+  },
   checkBox: {
     marginTop: windowHeight * 0.017,
     width: "90%",
@@ -57,6 +93,11 @@ const formAssignmentStyles = StyleSheet.create({
     fontSize: 15,
   },
   textButton: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  buttonStyle: {
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
