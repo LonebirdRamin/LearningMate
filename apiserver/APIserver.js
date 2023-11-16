@@ -636,8 +636,9 @@ app.post('/api/submitAssignment', (req, res) => {
 
 app.get('/api/getPersonalInfo', function (req, res, next) {
   console.log("Query Personal Info");
-  const { email, role } = req.body;
+  const { email, role } = req.query;
   console.log("email: ", email);
+  console.log("role:", role)
 
   if (role == 'student') {
     connection.query(
@@ -668,6 +669,46 @@ app.get('/api/getPersonalInfo', function (req, res, next) {
       }
     );
   }
+});
+
+app.get('/api/getActivityList', function (req, res, next) {
+  console.log("Query Activity List");
+  const email = req.query.email;
+  console.log("email: ", email);
+
+  connection.query(
+    'SELECT a.activity_name, a.activity_hour FROM `activity_attendants` as aa LEFT JOIN `activity` as a ON a.activity_id = aa.activity_id WHERE aa.student_id = (SELECT s.student_id FROM student as s WHERE s.academic_email = ?);',
+    [email],
+    function(err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Activity query error occurred' });
+      } else {
+        console.log("success activity list query");
+        res.json(studentResults);
+      }
+    }
+  );
+});
+
+app.get('/api/getActivitySummary', function (req, res, next) {
+  console.log("Query Activity Summary");
+  const email = req.query.email;
+  console.log("email: ", email);
+
+  connection.query(
+    'SELECT SUM(a.activity_hour) as "totalHours" FROM `activity_attendants` as aa LEFT JOIN `activity` as a ON a.activity_id = aa.activity_id WHERE aa.student_id = (SELECT s.student_id FROM student as s WHERE s.academic_email = ?);',
+    [email],
+    function(err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Activity summary query error occurred' });
+      } else {
+        console.log("success activity summary query");
+        res.json(studentResults);
+      }
+    }
+  );
 });
 
 app.listen(5001, function () {
