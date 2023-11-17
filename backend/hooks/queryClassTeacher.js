@@ -1,7 +1,7 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
-const queryClassTeacher = async (email, setIsLoading, setClassName) => {
+const queryClassTeacher = async (email, setIsLoading) => {
   let result;
   setIsLoading(true);
 
@@ -15,8 +15,8 @@ const queryClassTeacher = async (email, setIsLoading, setClassName) => {
     if (response.status === 200) {
       result = response.data;
       // console.log("Result in class: " + result);
-      setClassName(result);
       setIsLoading(false);
+      return result;
     } else {
       throw new Error("Network response was not ok");
     }

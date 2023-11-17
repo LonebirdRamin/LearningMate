@@ -37,7 +37,7 @@ const postAssignment = () => {
       console.log(insertData);
 
       const response = await axios.post(
-        `${ipv4.mark}createAssignment`,
+        `${ipv4.kong}createAssignment`,
         insertData
       );
       console.log(response.data);

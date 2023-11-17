@@ -5,7 +5,8 @@ const height = Dimensions.get("screen").height;
 const profileStyles = StyleSheet.create({
     scrollContainer:{
         paddingHorizontal: width*0.09,
-        marginBottom: height*0.1
+        marginBottom: height*0.1,
+        
     },
     headerContainer:{
         flexDirection: 'row',
@@ -72,13 +73,64 @@ const profileStyles = StyleSheet.create({
     lineGap:{
         height: height*0.015
     },
-    gradeActHeader:{
-        backgroundColor: 'rgba(78,78,97,0.5)',
+    
+    gradeHeader:{
+        backgroundColor: '#3a3a48',
         borderRadius: 10,
         borderColor: '#b6b6b65f',
-        borderLeftWidth: 0.5,
-        borderBottomWidth: 0.5,
+        borderLeftWidth: 0.4,
+        borderBottomWidth: 0.4,
+        flexDirection: 'row',
+        justifyContent: "space-between",
+        alignItems: 'center',
+        paddingHorizontal: width*0.05,
+        paddingRight: width*0.02,
+        paddingVertical: height*0.01,
+        
+
+        
+    },
+    list:{
+        zIndex: -1,
+        elevation: -1,
+        top: -height*0.03,
+        backgroundColor: "#262630",
+        borderRadius: 10,
+        borderColor: '#b6b6b65f',
+        borderLeftWidth: 0.4,
+        borderBottomWidth: 0.4,
+        paddingHorizontal: width*0.05,
+        paddingBottom: height*0.015,
+    },
+    
+    mapBox:{
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        paddingBottom: height*0.01,
+        alignItems: 'center'
+    },
+    gradeCred:{
+        alignItems: 'flex-end'
+    },
+    wrapper:{
+        paddingTop: height*0.01
+    },
+    semester:{
+        flexDirection: 'row',
+        columnGap: width*0.01,
+        alignItems: 'center'
+    },
+    calendar:{
+        width: width*0.035,
+        height: width*0.035
+    },
+    listHeader:{
+        paddingTop: height * 0.05,
+        flexDirection:"row",
+        justifyContent: 'space-between'
     }
+    
+
 })
 
 export default profileStyles;
