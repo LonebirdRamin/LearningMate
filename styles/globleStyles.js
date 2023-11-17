@@ -8,6 +8,10 @@ const globleStyles = StyleSheet.create({
   loading:{
     justifyContent: 'center',
     height: '60%'
+  },
+  loadingFull:{
+    height: '80%',
+    justifyContent: 'center'
   }
 });
 
