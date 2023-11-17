@@ -5,7 +5,7 @@ import InfoBox from "../../components/Profile/InfoBox";
 import profileStyles from "../../styles/profileStyle";
 import InfoBoxLineStudent from "../../components/Profile/InfoBoxLineStudent";
 import GradeList from "../../components/Profile/GradeList";
-import DropDownGrade from "../../components/Profile/DropDownGrade";
+import DropDown from "../../components/Profile/DropDown";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 

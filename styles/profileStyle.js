@@ -84,6 +84,7 @@ const profileStyles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: 'center',
         paddingHorizontal: width*0.05,
+        paddingRight: width*0.02,
         paddingVertical: height*0.01,
         
 
@@ -122,6 +123,11 @@ const profileStyles = StyleSheet.create({
     calendar:{
         width: width*0.035,
         height: width*0.035
+    },
+    listHeader:{
+        paddingTop: height * 0.05,
+        flexDirection:"row",
+        justifyContent: 'space-between'
     }
     
 

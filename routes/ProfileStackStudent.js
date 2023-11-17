@@ -13,6 +13,7 @@ import PersonalInfoStudent from "../screens/Student/PersonalInfoStudent";
 import Setting from "../screens/Setting";
 import Help from "../screens/Help";
 import GradeResult from "../screens/Student/GradeResult";
+import Activity from "../screens/Student/Activity";
 const Stack = createNativeStackNavigator();
 
 const ProfileStackStudent = () => {
@@ -140,6 +141,32 @@ const ProfileStackStudent = () => {
           ),
           headerTitle: () => (
             <Text style={[customStyles.pageTitle]}>Grade Results</Text>
+          ),
+          animation: "slide_from_right",
+        })}
+      />
+
+      <Stack.Screen
+        name="Activity"
+        component={Activity}
+        options={({navigation})=>({
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: "#1C1C23",
+            height: 50,
+          },
+          headerBackVisible: false,
+          headerLeft:()=>(
+            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
+                <Image
+                    style={profileStyles.back}
+                    resizeMode="cover"
+                    source={require("../assets/icons/Profile/back.png")}
+                />
+            </TouchableOpacity>
+          ),
+          headerTitle: () => (
+            <Text style={[customStyles.pageTitle]}>Activity</Text>
           ),
           animation: "slide_from_right",
         })}

@@ -18,12 +18,12 @@ const data = [
   { label: 'Item 8', value: '8' },
 ];
 
-const DropDownGrade = () => {
+const DropDown = () => {
   const [value, setValue] = useState(data[0].value);
   const [isFocus, setIsFocus] = useState(false);
 
   
-  useEffect(()=>{console.log(value)},[value])
+  
 
   return (
     <View style={ dropDownGradeStyles.container}>
@@ -54,5 +54,5 @@ const DropDownGrade = () => {
   );
 };
 
-export default DropDownGrade;
+export default DropDown;
 

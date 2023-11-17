@@ -1,22 +1,17 @@
-import { View, Text, Dimensions, FlatList, Image } from "react-native";
-import React from "react";
-import profileStyles from "../../styles/profileStyle";
-import uuid from "react-native-uuid";
-import DropDown from "./DropDown";
-
+import { View, Text, Image, Dimensions, FlatList } from 'react-native'
+import React from 'react'
+import profileStyles from '../../styles/profileStyle'
+import DropDown from './DropDown';
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
-const GradeList = ({ gpax, gpa, data }) => {
-  let i = 0;
+const ActivityList = ({data}) => {
+  let i = 0;  
   return (
     <View>
-      {/*Start - GPAX*/}
+      {/*Start - Semester haeder*/}
       <View style={profileStyles.gradeHeader}>
-        <Text style={profileStyles.text("white", height * 0.025, "bold")}>
-          GPAX {gpax}
-        </Text>
-        <View style={profileStyles.semester}>
+        
+        <View style={[profileStyles.semester, {flex: 1, justifyContent: 'flex-end'}]}>
           <Image
           style={profileStyles.calendar}
           resizeMode="contain"
@@ -27,44 +22,51 @@ const GradeList = ({ gpax, gpa, data }) => {
           <DropDown/>  
         </View>
       </View>
-      {/*End - GPAX */}
-
+      {/*End - Semester haeder*/}
+      
       {/*Start -  Below list*/}
       <View style={profileStyles.list}>
-        {/*Start -  GPA*/}
+        {/*Start -  List header*/}
 
-        <Text
-          style={[
-            profileStyles.text("white", height * 0.025, "bold"),
-            { paddingTop: height * 0.04 },
-          ]}
-        >
-          GPA {gpa}
-        </Text>
-        {/*End -  GPA*/}
+        <View style={profileStyles.listHeader}>
+            <Text
+            style={[
+                profileStyles.text("#C1C1CD", height * 0.015, "bold"),
+                ,
+            ]}
+            >
+            Activity
+            </Text>
+            <Text
+            style={[
+                profileStyles.text("#C1C1CD", height * 0.015, "bold"),
+                ,
+            ]}
+            >
+            Hours
+            </Text>
+        </View>
+        {/*End -  List header*/}
 
         {/*Start - subject mapping */}
         <FlatList
           showsVerticalScrollIndicator={false}
-          style={{ marginTop: height*0.01, height: height>850? height*0.55: height*0.5}}
+          style={{ marginTop: height*0.01, maxHeight: height>850? height*0.55: height*0.5}}
           data={data}
           renderItem={({item})=>{
             i++;
             return (
               (
-                <View style={profileStyles.wrapper} key={uuid.v4()}>
+                <View style={profileStyles.wrapper} >
                   <View style={profileStyles.mapBox}>
                     <View>
-                    <Text style={profileStyles.text("#C1C1CD", height * 0.015, "bold")}>
-                {item.code}
-              </Text>
                       <Text
                         style={[
                           profileStyles.text("white", height * 0.02, "600"),
                           { width: width * 0.5 },
                         ]}
                       >
-                        {item.sub}
+                        {item.act}
                       </Text>
                     </View>
                     {/*Start - GradeCred */}
@@ -74,15 +76,9 @@ const GradeList = ({ gpax, gpa, data }) => {
                           profileStyles.text("#F04E22", height * 0.025, "700"),
                         ]}
                       >
-                        {item.grade}
+                        {item.hrs}
                       </Text>
-                      <Text
-                        style={[
-                          profileStyles.text("#C1C1CD", height * 0.015, "bold"),
-                        ]}
-                      >
-                        {item.credit} Credits
-                      </Text>
+                      
                     </View>
                     {/*End - GradeCred */}
                   </View>
@@ -95,9 +91,10 @@ const GradeList = ({ gpax, gpa, data }) => {
         
         {/*End - subject mapping */}
       </View>
-      {/*End -  Below list*/}
-    </View>
-  );
-};
+      {/*End -  Below list*/}  
 
-export default GradeList;
+    </View>
+  )
+}
+
+export default ActivityList

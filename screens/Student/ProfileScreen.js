@@ -69,7 +69,7 @@ const ProfileScreen = ({navigation}) => {
         {/*Start - Info */}
         <InfoBox  header={"Personal Info"} data={prepData}  handlePress={()=>{navigation.push("Personal Info")}}/>
         <InfoBox  header={"Grade Results"} data={prepGrade}   handlePress={()=>{navigation.push("GradeResult")}}/>
-        <InfoBox  header={"Activity"} data={prepAct}  id={activityKey}/>
+        <InfoBox  header={"Activity"} data={prepAct}  id={activityKey} handlePress={()=>{navigation.push("Activity")}}/>
 
         {/*End -  Info */}
 
