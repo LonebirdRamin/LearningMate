@@ -6,7 +6,7 @@ const queryPlanner = async (email, setQueriedPlanner, setIsLoading) => {
   if(setIsLoading != undefined) setIsLoading(true);
 
   try {
-    const response = await axios.get(`${ipv4.golf}getPlanner?email=${email}`);
+    const response = await axios.get(`${ipv4.kong}getPlanner?email=${email}`);
 
     // Check the response status code to determine if it was successful
     if (response.status === 200) {

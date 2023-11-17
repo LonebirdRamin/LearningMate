@@ -3,7 +3,7 @@ import ipv4 from "../apiserver/ipv4";
 
 const querySchedule = async (email, setQueriedSchedule, setLoading) => {
   try {
-      const response = await axios.get(`${ipv4.golf}getStudentSchedule?email=${email}`);
+      const response = await axios.get(`${ipv4.kong}getStudentSchedule?email=${email}`);
       
       // Check the response status code to determine if it was successful
       if (response.status === 200) {
