@@ -4,6 +4,7 @@ import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentBu
 import { SafeAreaView } from "react-native-safe-area-context";
 import UploadFileTeacher from "../components/uploadFileTeacher/UploadFileTeacher";
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
+import ButtonSubmitStudent from "../components/StudentSubmit/ButtonSubmitStudent";
 
 const ChatScreen = () => {
   return (
@@ -16,6 +17,7 @@ const ChatScreen = () => {
         Test add upload file on learning zone
       </Text>
       <LearningzoneAddButton />
+      <ButtonSubmitStudent />
     </SafeAreaView>
   );
 };

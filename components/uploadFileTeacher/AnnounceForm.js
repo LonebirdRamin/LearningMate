@@ -21,7 +21,14 @@ const AnnounceForm = ({ selected, setModalVisible }) => {
         Information
       </Text>
       <TextInput
-        style={[formAssignmentStyles.learningInput, { height: "33%" }]}
+        style={[
+          formAssignmentStyles.learningInput,
+          {
+            height: "33%",
+            textAlignVertical: "top",
+            paddingTop: "3%",
+          },
+        ]}
         inputMode="text"
         onChangeText={(text) => setAnnounce(text)}
       />
