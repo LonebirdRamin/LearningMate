@@ -5,7 +5,7 @@ import dropDownStyles from "../../styles/dropDownStyle";
 import { FontAwesome } from "@expo/vector-icons";
 
 const DropdownList = ({ setSelected }) => {
-  const selectList = ["Assignment", "Announce", "Record"];
+  const selectList = ["File", "Assignment", "Announce", "Record"];
   return (
     <View>
       <SelectList

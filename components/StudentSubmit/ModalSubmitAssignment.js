@@ -1,30 +1,14 @@
-//Use for popup the when click AddAssignment button
-
+import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import Modal from "react-native-modal";
-import modalStyles from "../../styles/modalStyles";
-import DropdownAddAssignment from "./DropdownAddAssignment";
-import FormAssignment from "./FormAssignment";
 import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
-import customStyles from "../../styles/customStyles";
 import globleStyles from "../../styles/globleStyles";
-import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
-const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
-  const [selected, setSelected] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [className, setClassName] = useState([]);
+import modalStyles from "../../styles/modalStyles";
+import Modal from "react-native-modal";
 
-  useEffect(() => {
-    queryClassTeacher(email, setIsLoading, setClassName);
-  }, []);
+const ModalSubmitAssignment = ({ isVisible, setModalVisible }) => {
+  const isLoading = false;
+  const [selected, setSelected] = useState(null);
+
   useEffect(() => {
     setSelected(null);
   }, [isVisible]);
@@ -55,16 +39,9 @@ const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
               </View>
             ) : (
               <View>
-                <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
-                <DropdownAddAssignment
-                  setSelected={setSelected}
-                  className={className}
-                />
-                <FormAssignment
-                  selected={selected}
-                  setModalVisible={setModalVisible}
-                  email={email}
-                />
+                <Text style={modalFillAssignmentStyles.text}>
+                  Submit Assignment
+                </Text>
               </View>
             )}
           </View>
@@ -74,4 +51,4 @@ const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
   );
 };
 
-export default FillAssignmentModal;
+export default ModalSubmitAssignment;

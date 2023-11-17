@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
-import FormAssignment from "../AddAssignment/FormAssignment";
 import AssignmentForm from "./AssignmentForm";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import AnnounceForm from "./AnnounceForm";
 import RecordForm from "./RecordForm";
+import PostFileTeacher from "./PostFileTeacher";
 
 const FormLearningZone = ({ selected, setModalVisible }) => {
   return (
@@ -15,6 +15,11 @@ const FormLearningZone = ({ selected, setModalVisible }) => {
         <AnnounceForm selected={selected} setModalVisible={setModalVisible} />
       ) : selected === "Record" ? (
         <RecordForm selected={selected} setModalVisible={setModalVisible} />
+      ) : selected === "File" ? (
+        <PostFileTeacher
+          selected={selected}
+          setModalVisible={setModalVisible}
+        />
       ) : null}
     </View>
   );

@@ -3,7 +3,7 @@ import React from "react";
 import globleStyles from "../../styles/globleStyles";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 
 const height = Dimensions.get("screen").height;
 
@@ -21,13 +21,10 @@ const SettingBox = ({ menu, navigation }) => {
 
               <TouchableOpacity
                 style={[profileStyles.infoRow]}
-                
                 onPress={() => {
-                   if(selectedMenu=="Help")
-                   {
-                    navigation.push("Help")
-                   }
-
+                  if (selectedMenu == "Help") {
+                    navigation.push("Help");
+                  }
                 }}
               >
                 {/*Start - text container */}
