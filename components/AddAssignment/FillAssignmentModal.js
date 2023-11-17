@@ -17,14 +17,25 @@ import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import customStyles from "../../styles/customStyles";
 import globleStyles from "../../styles/globleStyles";
 import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
-const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
+const FillAssignmentModal = ({
+  isVisible,
+  setModalVisible,
+  email,
+  setIsPosting,
+}) => {
   const [selected, setSelected] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [className, setClassName] = useState([]);
 
   useEffect(() => {
-    queryClassTeacher(email, setIsLoading, setClassName);
+    const fetchData = async () => {
+      const data = await queryClassTeacher(email, setIsLoading);
+      setClassName(data);
+    };
+
+    fetchData();
   }, []);
+
   useEffect(() => {
     setSelected(null);
   }, [isVisible]);
@@ -64,6 +75,8 @@ const FillAssignmentModal = ({ isVisible, setModalVisible, email }) => {
                   selected={selected}
                   setModalVisible={setModalVisible}
                   email={email}
+                  setIsLoading={setIsLoading}
+                  setIsPosting={setIsPosting}
                 />
               </View>
             )}

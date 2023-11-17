@@ -15,6 +15,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import Modal from "react-native-modal";
 import CheckBox from "react-native-check-box";
+import postAssignment from "../../backend/hooks/postAssignment";
 
 /* To do list
 - Change datetime picker function format (Pass!)
@@ -23,7 +24,13 @@ import CheckBox from "react-native-check-box";
 - make some condition => if no fill on Name => error!
 - make date condition => if no fill on date => no due date
 */
-const FormAssignment = ({ selected, setModalVisible, email }) => {
+const FormAssignment = ({
+  selected,
+  setModalVisible,
+  email,
+  setIsLoading,
+  setIsPosting,
+}) => {
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [fileSelected, setFileSelected] = useState(null);
@@ -32,7 +39,7 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
   const [show, setShow] = useState(false);
   const [showDate, handleShowDate] = useState(true);
   const [insertData, setInsertData] = useState(null);
-
+  console.log("------------------------------");
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
@@ -40,12 +47,6 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
       "-" +
       date.toLocaleString("default", { day: "2-digit" })
   );
-
-  useEffect(() => {
-    //ใส่ Data ตรงนี้ เพื่อส่งไป DB เน้อออ
-    // This block of code will run whenever insertData changes
-    console.log("insertData has been updated:", insertData);
-  }, [insertData]);
 
   const setUpVariable = (
     //Funtion that gather all the variable
@@ -70,16 +71,29 @@ const FormAssignment = ({ selected, setModalVisible, email }) => {
       Alert.alert("Title", "Please fill in title", [{ text: "Ok" }]);
     } else {
       setInsertData({
-        email: email,
-        class_id: selected,
-        assignment_name: subjectTitle,
-        assignment_due_date: dateTime,
-        assignment_description: subjectInformation,
-        file: file,
+        classID: selected,
+        assName: subjectTitle,
+        dueDate: dateTime,
+        description: subjectInformation,
       });
-      setModalVisible(false);
     }
   };
+  useEffect(() => {
+    //ใส่ Data ตรงนี้ เพื่อส่งไป DB เน้อออ
+    // This block of code will run whenever insertData changes
+    if (insertData !== null) {
+      postAssignment(
+        insertData,
+        setModalVisible,
+        setDate,
+        onChangeInformation,
+        onChangeTitle,
+        setIsLoading,
+        setIsPosting
+      );
+    }
+    // console.log("insertData has been updated:", insertData);
+  }, [insertData]);
 
   // DATE TIME CONFIG
   const onChange = (event, selectedDate) => {

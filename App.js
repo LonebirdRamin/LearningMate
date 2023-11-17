@@ -14,5 +14,5 @@ LogBox.ignoreAllLogs(); //Ignore all log notifications
 export default function App() {
   LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
   LogBox.ignoreAllLogs(); //Ignore all log notifications
-  return <ChatScreen />;
+  return <LandingStack />;
 }
