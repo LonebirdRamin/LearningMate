@@ -102,85 +102,97 @@ const Homepage = ({ navigation }) => {
   const [assignNum, setAssignNum] = useState("-");
 
   useEffect(() => {
-    const fetchData = async ()=>{
+    const fetchData = async () => {
       queryAssignment(
         email,
         setIsAssignmentLoading,
         setAssignmentData,
         setAssignNum
       );
-    querySchedule(email,setQueriedSchedule)
-    }
+      querySchedule(email, setQueriedSchedule);
+    };
     fetchData();
   }, []);
   // End - manage about assignment
-  
+
   useEffect(() => {
     const fetchPlanner = async () => {
       await queryPlanner(email, setQueriedPlanner);
     };
-  
+
     fetchPlanner();
   }, [queriedSchedule]);
-  
+
   useEffect(() => {
     const combinedEvents = [...queriedSchedule, ...queriedPlanner];
     setAppendedEvents(combinedEvents);
-    setIsLoading(false)
+    setIsLoading(false);
   }, [queriedPlanner]);
-  
-  const filterEvents = (appendedEvents)=>{
+
+  const filterEvents = (appendedEvents) => {
     const copy = JSON.parse(JSON.stringify(appendedEvents));
     const currentDate = new Date();
     const dateLimit = new Date();
-    dateLimit.setDate(dateLimit.getDate()+6);
+    dateLimit.setDate(dateLimit.getDate() + 6);
 
     const isClassEvent = (event) => {
-      return 'class_id' in event;
+      return "class_id" in event;
     };
     const isPlannerEvent = (event) => {
-      return 'planner_category' in event;
+      return "planner_category" in event;
     };
 
     //Filter out planner that is not in the 7-day period
-    const validEvents = copy.filter(item => {
-      if(isClassEvent(item)){
+    const validEvents = copy.filter((item) => {
+      if (isClassEvent(item)) {
         return true;
       }
-      const eventStartDate = new Date(item.start_time)
-      return (currentDate <= eventStartDate && eventStartDate <= dateLimit)
-    })
+      const eventStartDate = new Date(item.start_time);
+      return currentDate <= eventStartDate && eventStartDate <= dateLimit;
+    });
 
     //Format the planner object to be appropriate for filtering
-    validEvents.map((event)=>{
-      if(isPlannerEvent(event)){
+    validEvents.map((event) => {
+      if (isPlannerEvent(event)) {
         const dateTimeString = event.start_time;
         const dateTime = new Date(dateTimeString);
-        const eventStartDateTime = new Date(event.start_time)
-        const [date_name,day] = dateTime.toLocaleDateString("en-GB", {weekday: "long"}).split(', ');
+        const eventStartDateTime = new Date(event.start_time);
+        const [date_name, day] = dateTime
+          .toLocaleDateString("en-GB", { weekday: "long" })
+          .split(", ");
         event.date_name = date_name;
         event.start_time = eventStartDateTime.toLocaleTimeString("en-GB");
       }
-    })
+    });
 
-    validEvents.sort((a,b)=>{ //Filter by START_TIME ONLY! (date_name will be filtered on eventList.js)
-      const aStartDateTime = a.start_time.split(':');
-      const bStartDateTime = b.start_time.split(':');
+    validEvents.sort((a, b) => {
+      //Filter by START_TIME ONLY! (date_name will be filtered on eventList.js)
+      const aStartDateTime = a.start_time.split(":");
+      const bStartDateTime = b.start_time.split(":");
 
-      const timeANumeric = parseInt(aStartDateTime[0]) * 3600 + parseInt(aStartDateTime[1]) * 60 + parseInt(aStartDateTime[2]);
-      const timeBNumeric = parseInt(bStartDateTime[0]) * 3600 + parseInt(bStartDateTime[1]) * 60 + parseInt(bStartDateTime[2]);
+      const timeANumeric =
+        parseInt(aStartDateTime[0]) * 3600 +
+        parseInt(aStartDateTime[1]) * 60 +
+        parseInt(aStartDateTime[2]);
+      const timeBNumeric =
+        parseInt(bStartDateTime[0]) * 3600 +
+        parseInt(bStartDateTime[1]) * 60 +
+        parseInt(bStartDateTime[2]);
 
       return timeANumeric - timeBNumeric;
     });
 
     return validEvents;
-  }
+  };
 
-  useEffect(() => { //Filter again when day changes
-    const res = filterEvents(appendedEvents).filter(item=>item.date_name == day);
+  useEffect(() => {
+    //Filter again when day changes
+    const res = filterEvents(appendedEvents).filter(
+      (item) => item.date_name == day
+    );
     setValidEvents(res);
-  }, [appendedEvents,day]);
-  
+  }, [appendedEvents, day]);
+
   return (
     <SafeAreaView>
       {isloading ? (

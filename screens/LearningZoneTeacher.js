@@ -11,7 +11,7 @@ const LearningZoneTeacher = ({ navigation }) => {
   const email = useContext(DataContext); // email from login
   const [_class, setClass] = useState(null);
   const [isloading, setIsLoading] = useState(true);
-  const destination = 'LearningZoneTeacherClass'
+  const destination = "LearningZoneTeacherClass";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +43,11 @@ const LearningZoneTeacher = ({ navigation }) => {
           <View style={{ marginLeft: "auto", marginRight: 10 }}>
             <Text style={{ backgroundColor: "white" }}>Semester 1/2566</Text>
           </View>
-          <ClassList data={_class} navigation={navigation} destination={destination}></ClassList>
+          <ClassList
+            data={_class}
+            navigation={navigation}
+            destination={destination}
+          ></ClassList>
         </View>
       )}
     </SafeAreaView>

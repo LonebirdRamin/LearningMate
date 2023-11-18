@@ -16,6 +16,7 @@ const queryClassTeacher = async (email, setIsLoading) => {
       result = response.data;
       // console.log("Result in class: " + result);
       setIsLoading(false);
+      console.log("Result = " + result);
       return result;
     } else {
       throw new Error("Network response was not ok");
