@@ -9,7 +9,7 @@ const editPlan = async (
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.post(`${ipv4.mark}editPlanner`, editedData);
+    const response = await axios.post(`${ipv4.kong}editPlanner`, editedData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;

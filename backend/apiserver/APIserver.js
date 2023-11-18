@@ -463,6 +463,27 @@ app.get('/api/getActivityList', function (req, res, next) {
   );
 });
 
+
+app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
+  console.log("Query Personal Info");
+  const email = req.query.email;
+
+  connection.query(
+    'SELECT D FROM teacher AS s JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+    [email],
+    function(err, teacherResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Teacher query error occurred' });
+      } else {
+        console.log("success teacher query");
+        res.json(teacherResults);
+      }
+    }
+  );
+});
+
+
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });

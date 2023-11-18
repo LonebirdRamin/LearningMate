@@ -12,7 +12,7 @@ import LearningZoneTeacherRoute from "./LearningZoneTeacherRoute";
 import PlannerScreen from "../screens/PlannerScreen";
 import HomeNotiTeacher from "./HomeNotiTeacher";
 import DataContext from "./DataContext";
-
+import ProfileStackTeacher from "./ProfileStackTeacher";
 const height = Dimensions.get("screen").height;
 
 const Tab = createBottomTabNavigator();
@@ -34,12 +34,14 @@ const screenOptions = {
 
 const NavigationBar = () => {
   const email = useRoute();
+  // email.params.email
+  // const email = "khajonpong.akk@kmutt.ac.th"
   const handleImage = () => {};
   return (
     <DataContext.Provider value={email.params.email}>
       <Tab.Navigator
         screenOptions={screenOptions}
-        initialRouteName="Home"
+        initialRouteName="HomeNoti"
         backBehavior="initialRoute"
       >
         <Tab.Screen
@@ -139,8 +141,8 @@ const NavigationBar = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileStackTeacher"
+          component={ProfileStackTeacher}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
