@@ -1,14 +1,33 @@
-import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView} from 'react-native'
+import React , { useState, useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import customStyles from '../styles/customStyles'
 import assignmentStyles from '../styles/assignmentStyles'
+import DataContext from '../routes/DataContext'
+import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 
 const LearningZoneTeacherClass = ({route, navigation}) => {
 
 const height = Dimensions.get("screen").height
 const width = Dimensions.get("screen").width
 const {class_} = route.params;
+const email = useContext(DataContext)
+const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
+const [assignmentData, setAssignmentData] = useState([]);
+const [assignNum, setAssignNum] = useState("-");
+
+useEffect(() => {
+  const fetchData = async () => {
+    queryAssignment(
+      email,
+      setIsAssignmentLoading,
+      setAssignmentData,
+      setAssignNum
+    );
+  };
+  fetchData();
+}, []);
+
   return (
     <SafeAreaView>
         <View style={customStyles.pageBackground}>
