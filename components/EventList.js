@@ -43,7 +43,7 @@ const EventList = ({data}) => {
           <View style={[customStyles.eventIcon,{backgroundColor:'rgba(207, 207, 252, 0.1)',alignItems:'center'}]}>
             <Text style={customStyles.plannerIconText}>EVENT</Text>
           </View>
-            <Text style={customStyles.h2}>{truncate(item.planner_detail,maxLength)}</Text>
+            <Text style={customStyles.h2}>{truncate(item.planner_name,maxLength)}</Text>
             <Text style={[customStyles.h1,{lineHeight: 20.5}]}>
               {item.start_time.slice(0,-3)}</Text>
           </View>

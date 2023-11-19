@@ -1,14 +1,34 @@
-import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView } from 'react-native'
-import React from 'react'
+import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native'
+import React , { useState, useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import customStyles from '../styles/customStyles'
 import assignmentStyles from '../styles/assignmentStyles'
+import DataContext from '../routes/DataContext'
+import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 
 const LearningZoneStudentClass = ({route, navigation}) => {
 
 const height = Dimensions.get("screen").height
 const width = Dimensions.get("screen").width
 const {class_} = route.params;
+const email = useContext(DataContext)
+const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
+const [assignmentData, setAssignmentData] = useState([]);
+const [assignNum, setAssignNum] = useState("-");
+
+useEffect(() => {
+  const fetchData = async () => {
+    queryAssignment(
+      email,
+      setIsAssignmentLoading,
+      setAssignmentData,
+      setAssignNum
+    );
+  };
+  fetchData();
+}, []);
+
+
   return (
     <SafeAreaView>
         <View style={customStyles.pageBackground}>
@@ -45,8 +65,17 @@ const {class_} = route.params;
                 <View style={assignmentStyles.textContainer}>
                   <View style={assignmentStyles.headWrapper}>
                     <Text style={assignmentStyles.headerText}>Assignment</Text>
-                    <Text style={assignmentStyles.headerText}>0 assignments</Text>
+                    <Text style={assignmentStyles.headerText}>{assignNum} assignments</Text>
                   </View>
+                  <FlatList //Will make this into a component!
+                  data={assignmentData}
+                  renderItem={({item})=>(
+                    <View>
+                      <Text>{item.class_name}</Text>
+                      <Text>{item.assignment_name}</Text>
+                    </View>
+                    )}
+                  />
                 </View>
               </View>
 
