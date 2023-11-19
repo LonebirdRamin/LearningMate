@@ -634,42 +634,42 @@ app.post('/api/submitAssignment', (req, res) => {
   });
 });
 
-app.get('/api/getPersonalInfo', function (req, res, next) {
-  console.log("Query Personal Info");
-  const { email, role } = req.query;
-  console.log("email: ", email);
-  console.log("role:", role)
+// app.get('/api/getPersonalInfo', function (req, res, next) {
+//   console.log("Query Personal Info");
+//   const { email, role } = req.query;
+//   console.log("email: ", email);
+//   console.log("role:", role)
 
-  if (role == 'student') {
-    connection.query(
-      'SELECT s.student_name, s.student_id, d.degree_name, dept.department_name FROM student AS s JOIN degree AS d ON d.degree_id = s.degree_id JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
-      [email],
-      function(err, studentResults, fields) {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ error: 'Student query error occurred' });
-        } else {
-          console.log("success student query");
-          res.json(studentResults);
-        }
-      }
-    );
-  } else {
-    connection.query(
-      'SELECT s.teacher_name, s.teacher_id, dept.department_name FROM teacher AS s JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
-      [email],
-      function(err, teacherResults, fields) {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ error: 'Teacher query error occurred' });
-        } else {
-          console.log("success teacher query");
-          res.json(teacherResults);
-        }
-      }
-    );
-  }
-});
+//   if (role == 'student') {
+//     connection.query(
+//       'SELECT s.student_name, s.student_id, d.degree_name, dept.department_name FROM student AS s JOIN degree AS d ON d.degree_id = s.degree_id JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+//       [email],
+//       function(err, studentResults, fields) {
+//         if (err) {
+//           console.error(err);
+//           res.status(500).json({ error: 'Student query error occurred' });
+//         } else {
+//           console.log("success student query");
+//           res.json(studentResults);
+//         }
+//       }
+//     );
+//   } else {
+//     connection.query(
+//       'SELECT s.teacher_name, s.teacher_id, dept.department_name FROM teacher AS s JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+//       [email],
+//       function(err, teacherResults, fields) {
+//         if (err) {
+//           console.error(err);
+//           res.status(500).json({ error: 'Teacher query error occurred' });
+//         } else {
+//           console.log("success teacher query");
+//           res.json(teacherResults);
+//         }
+//       }
+//     );
+//   }
+// });
 
 app.get('/api/getActivityList', function (req, res, next) {
   console.log("Query Activity List");
@@ -710,6 +710,47 @@ app.get('/api/getActivitySummary', function (req, res, next) {
     }
   );
 });
+
+app.get('/api/getPersonalInfoStudent', function (req, res) {
+  console.log("Query Student Personal Info");
+  const email = req.query;
+  consolelog("Email = ", email);
+
+  connection.query(
+    'SELECT s.student_id, s.student_name, s.gender, s.academic_year, s.room, f.faculty_name, d.department_name, de.degree_name, s.date_of_birth, t.teacher_name, s.id_card, s.personal_email FROM `student` as s JOIN `teacher` as t ON s.teacher_id = t.teacher_id JOIN `department` as d ON s.department_id = d.department_id JOIN `faculty` as f ON d.faculty_id = f.faculty_id JOIN `degree` as de ON s.degree_id = de.degree_id WHERE s.academic_email = ?;',
+    [email],
+    function(err, result) {
+      if(err) {
+        console.error(err);
+        res.status(500).json({ error: 'Student Personal Info Query error occerred'});
+      } else {
+        console.log("Success Student Personal Info query");
+        res.json(result);
+      }
+    }
+  )
+})
+
+app.get('/api/getPersonalInfoTeacher', function (req, res) {
+  console.log("Query Teacher Personal Info");
+  const email = req.query;
+  consolelog("Email = ", email);
+
+  connection.query(
+    'SELECT t.teacher_id, t.teacher_name, t.gender, f.faculty_name, d.department_name, t.date_of_birth, t.id_card, t.personal_email FROM `teacher` as t JOIN `department` as d ON t.department_id = d.department_id JOIN `faculty` as f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;',
+    [email],
+    function(err, result) {
+      if(err) {
+        console.error(err);
+        res.status(500).json({ error: 'Teacher Personal Info Query error occerred'});
+      } else {
+        console.log("Success Teacher Personal Info query");
+        res.json(result);
+      }
+    }
+  )
+})
+
 
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
