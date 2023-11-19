@@ -29,7 +29,7 @@ const signIn = async () => {
   setLoading(true);
   try {
     console.log(email);
-    const response = await fetch(`http://69.69.69.4:5001/api/checkRole?email=${email}`);
+    const response = await fetch(`http://192.168.1.179:5001/api/checkRole?email=${email}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -38,7 +38,7 @@ const signIn = async () => {
     const userRole = result[0].role;
 
     if( userRole === 'student' ) {
-      const response = await fetch(`http://69.69.69.4:5001/api/getStudentSchedule?email=${email}`);
+      const response = await fetch(`http://192.168.1.179:5001/api/getStudentSchedule?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -46,7 +46,7 @@ const signIn = async () => {
       // Pass the result as a parameter when navigating
       navigation.navigate('departmentList', { result: resultFinal });
     } else {
-      const response = await fetch(`http://69.69.69.4:5001/api/getTeacherAssignment?email=${email}`);
+      const response = await fetch(`http://192.168.1.179:5001/api/getTeacherAssignment?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

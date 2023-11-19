@@ -16,7 +16,7 @@ const GradeScreen = () => {
   const queryGrade = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://69.69.69.4:5001/api/getGrades?email=${email}`);
+      const response = await fetch(`http://192.168.1.179:5001/api/getGrades?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
