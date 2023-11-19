@@ -97,7 +97,6 @@ const HomepageTeacher = ({ navigation }) => {
       queryScheduleTeacher(email, setQueriedSchedule);
     };
     fetchData();
-    console.log(assignmentData);
     setIsPosting(false);
   }, []);
 
@@ -193,7 +192,6 @@ const HomepageTeacher = ({ navigation }) => {
       (item) => item.date_name == day
     );
     setValidEvents(res);
-    console.log(validEvents);
   }, [appendedEvents, day]);
 
   return (
