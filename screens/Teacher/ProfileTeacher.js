@@ -20,36 +20,25 @@ import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
 import getActivitySummary from "../../backend/hooks/getActivitySummary";
 import getActivityList from "../../backend/hooks/getActivityList";
 import InfoBoxTeacher from "../../components/Profile/InfoBoxTeacher";
+import getTeacherPersonalInfo from "../../backend/hooks/getTeacherPersonalInfo";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
-const data = {
-    id: 64070503433,
-    eduLevel: "Bechelor's Degree",
-    Faculty: "Engineering",
-    Department: "Computer Engineering",
-  };
-  
-  const grade = {
-    last: 3.91,
-    GPAX: 3.87,
-  };
-  const activity = {
-    total: 59,
-  };
-  
-  const prepData = Object.values(data);
   
   
 
 const ProfileTeacher = ({navigation}) => {
 const email = useContext(DataContext);
   const [isPerInfoIsLoading, setPerInfoIsLoading] = useState(false);
+  const [perInfo, setPerInfo] = useState([]);
+
+  useEffect(
+    ()=>{
+      getTeacherPersonalInfo(email, setPerInfo, setPerInfoIsLoading)
+    }
+    ,[])
   
 
-  const [perInfo, setPerInfo] = useState([]);
-  
   return (
     <View style={[globleStyles.pageContainer]}>
       {isPerInfoIsLoading ? (
@@ -70,7 +59,7 @@ const email = useContext(DataContext);
             />
             <View style={profileStyles.nameEmail}>
               <Text style={profileStyles.text("white", width * 0.045, "bold")}>
-                {email}
+                {perInfo.teacher_name}
               </Text>
               <Text style={profileStyles.text("#A2A2B5", width * 0.035, "400")}>
                 {email}
@@ -94,7 +83,7 @@ const email = useContext(DataContext);
           {/*Start - Info */}
           <InfoBoxTeacher
             header={"Personal Info"}
-            data={prepData}
+            data={perInfo}
             handlePress={() => {
               navigation.push("Personal Info");
             }}

@@ -532,7 +532,7 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
   const email = req.query.email;
 
   connection.query(
-    'SELECT D FROM teacher AS s JOIN department AS dept ON s.department_id = dept.department_id WHERE s.academic_email = ?;',
+    'SELECT t.`teacher_name`, t.`teacher_id`,  f.faculty_name, d.department_name FROM `teacher` as t LEFT JOIN `department` AS d ON d.department_id = t.department_id LEFT JOIN `faculty` AS f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;',
     [email],
     function(err, teacherResults, fields) {
       if (err) {

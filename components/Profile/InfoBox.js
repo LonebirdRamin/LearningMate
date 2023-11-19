@@ -27,8 +27,8 @@ const department = require("../../assets/icons/Profile/hierarchy.png")
 
 
 const InfoBox = ({ header, data, handlePress}) => {
+
   let prepData = header==="Personal Info"? Object.values(data).slice(1): header==="Activity"? Object.values(data):data;
-  
   let i = 0;
   const icon = header==="Personal Info"? [user, education, faculty, department]:header==="Grade Results"? [user, user]:[user]
   const subHeader = header==="Personal Info"? ["Student ID", "Education level", "Faculty", "Department"]:header==="Grade Results"? ["Last semester result", "GPAX"]:["Total activity hour"];

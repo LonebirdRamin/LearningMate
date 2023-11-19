@@ -28,12 +28,12 @@ const InfoBoxTeacher = ({ header, data, handlePress }) => {
   //       : header === "Activity"
   //       ? Object.values(data)
   //       : data;
-  let prepData = data;
+  let prepData = Object.values(data).slice(1);
   let i = 0;
-  const icon = [user, education, faculty, department];
+  const icon = [user, faculty, department];
   const subHeader =
     header === "Personal Info"
-      ? ["Teacher ID", "Education level", "Faculty", "Department"]
+      ? ["Teacher ID", "Faculty", "Department"]
       : [];
   return (
     // Start - entire infobox

@@ -8,6 +8,7 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
+  RefreshControl
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import customStyles from "../styles/customStyles";
@@ -38,6 +39,17 @@ const Homepage = ({ navigation }) => {
   const [queriedPlanner, setQueriedPlanner] = useState([]);
   const [appendedEvents, setAppendedEvents] = useState([]);
   const [validEvents, setValidEvents] = useState([]);
+
+  // Start - Manage pull to reload
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+  // End - Manange pull to reload
 
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
@@ -225,7 +237,9 @@ const Homepage = ({ navigation }) => {
                   <ActivityIndicator size={50} color="#F04E22" />
                 </View>
               ) : (
+                
                 <FlatList
+                  
                   data={assignmentData}
                   renderItem={({ item }) => (
                     <AssignmentBox
