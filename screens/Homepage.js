@@ -144,6 +144,7 @@ const Homepage = ({ navigation }) => {
     //Filter again when day changes
     const res = filterEvents(appendedEvents).filter(
       (item) => item.date_name == day
+      //HAVE TO IMPLEMENT FILTER SEMESTER TOO!!!!!!
     );
     setValidEvents(res);
   }, [appendedEvents, day]);

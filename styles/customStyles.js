@@ -106,6 +106,7 @@ const customStyles = new StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         flex: 0.96,
+        marginBottom: height*0.1,
     },
 
     eventWidget:{ //Each box for the event details
@@ -158,6 +159,23 @@ const customStyles = new StyleSheet.create({
         borderColor: 'rgba(207,207,252, 0.2)',
         marginBottom: height*0.02
     },
+
+    learningZoneAssignmentWidget:{ //widget for LearningZone(Student/Teacher)Class
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: 'rgba(207,207,252, 0.2)',
+        backgroundColor: 'rgba(78, 78, 97, 0.20)',
+        marginTop:width*0.05,
+        paddingHorizontal:'5%',
+        height:'fit-content',
+        maxHeight:height*0.35
+    },
+
+    assignmentButton:{ //For status/submit button on LearningZone(Student/Teacher)Class
+        paddingHorizontal:'3%',
+        paddingVertical:'1%',
+        borderRadius:999,
+    }
 })
 
 export default customStyles
