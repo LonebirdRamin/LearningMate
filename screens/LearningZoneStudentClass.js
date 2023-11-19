@@ -51,8 +51,9 @@ useEffect(()=>{
                 <View style={customStyles.pageTitleContainer}>
                     <TouchableOpacity
                       onPress={() => navigation.navigate("LearningZoneStudent")}
+                      style={{position:'absolute',right:width*0.32}}
                     >
-                      <Image source={require("../assets/icons/back.png")} style={{position:'absolute',right:width*0.32}}></Image>
+                      <Image source={require("../assets/icons/back.png")}></Image>
                     </TouchableOpacity>
                     <Text style={customStyles.pageTitle}>{class_.class_id}</Text>
                 </View>
