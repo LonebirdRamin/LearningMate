@@ -16,6 +16,7 @@ import AssignmentPage from './assignmentGuide';
 import PostAssignment from './postAssignment';
 import PlannerScreen from './plannerScreen';
 import submitAssignment from './submitAssignment';
+import GradeScreen from './gpax_hook';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -28,7 +29,7 @@ const signIn = async () => {
   setLoading(true);
   try {
     console.log(email);
-    const response = await fetch(`http://192.168.1.188:5001/api/checkRole?email=${email}`);
+    const response = await fetch(`http://69.69.69.4:5001/api/checkRole?email=${email}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -37,7 +38,7 @@ const signIn = async () => {
     const userRole = result[0].role;
 
     if( userRole === 'student' ) {
-      const response = await fetch(`http://192.168.1.188:5001/api/getStudentSchedule?email=${email}`);
+      const response = await fetch(`http://69.69.69.4:5001/api/getStudentSchedule?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -45,7 +46,7 @@ const signIn = async () => {
       // Pass the result as a parameter when navigating
       navigation.navigate('departmentList', { result: resultFinal });
     } else {
-      const response = await fetch(`http://192.168.1.188:5001/api/getTeacherAssignment?email=${email}`);
+      const response = await fetch(`http://69.69.69.4:5001/api/getTeacherAssignment?email=${email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -114,6 +115,10 @@ const goSubmitAssignment = async () => {
   navigation.navigate('SubmitAssignment');
 }
 
+const goSeeGrade = async () => {
+  navigation.navigate('GradeScreen');
+}
+
   return (
     <View style={styles.container}>
       <Image
@@ -149,6 +154,7 @@ const goSubmitAssignment = async () => {
           <Button title="Go to post assignment page" onPress={goInsert} containerStyle={{ marginTop: 10 }} />
           <Button title="Go to add planner page" onPress={goInsertPlanner} containerStyle={{ marginTop: 10 }} />
           <Button title="Submit assignment" onPress={goSubmitAssignment} containerStyle={{ marginTop: 10 }} />
+          <Button title="See Grade" onPress={goSeeGrade} containerStyle={{ marginTop: 10 }} />
         </>
       )}
     </View>

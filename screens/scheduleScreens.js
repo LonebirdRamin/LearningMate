@@ -6,7 +6,7 @@ const ScheduleScreen = () => {
     const [items, setItems] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     useEffect(() => {
-      fetch('http://192.168.1.188:5001/api/queryIdCard')
+      fetch('http://69.69.69.4:5001/api/queryIdCard')
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

@@ -734,7 +734,7 @@ app.get('/api/getPersonalInfoStudent', function (req, res) {
 app.get('/api/getPersonalInfoTeacher', function (req, res) {
   console.log("Query Teacher Personal Info");
   const email = req.query;
-  consolelog("Email = ", email);
+  console.log("Email = ", email);
 
   connection.query(
     'SELECT t.teacher_id, t.teacher_name, t.gender, f.faculty_name, d.department_name, t.date_of_birth, t.id_card, t.personal_email FROM `teacher` as t JOIN `department` as d ON t.department_id = d.department_id JOIN `faculty` as f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;',
@@ -742,9 +742,29 @@ app.get('/api/getPersonalInfoTeacher', function (req, res) {
     function(err, result) {
       if(err) {
         console.error(err);
-        res.status(500).json({ error: 'Teacher Personal Info Query error occerred'});
+        res.status(500).json({ error: 'Teacher Personal Info Query error occurred'});
       } else {
         console.log("Success Teacher Personal Info query");
+        res.json(result);
+      }
+    }
+  )
+})
+
+app.get('/api/getGrades', function (req, res) {
+  console.log("Query Student Grades");
+  const email = req.query.email;
+  console.log("Email = ", email);
+
+  connection.query(
+    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;',
+    [email],
+    function(err, result) {
+      if(err) {
+        console.error(err);
+        res.status(500).json({ error: 'Get student grades query error occurted'});
+      } else {
+        console.log("Success student grades query");
         res.json(result);
       }
     }

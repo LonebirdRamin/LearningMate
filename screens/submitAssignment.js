@@ -25,7 +25,7 @@ const SubmitAssignment = () => {
   
       console.log(submitData);
     
-      const studentIdResponse = await fetch(`http://192.168.1.188:5001/api/getStudentIdFromEmail?email=${email}`)
+      const studentIdResponse = await fetch(`http://69.69.69.4:5001/api/getStudentIdFromEmail?email=${email}`)
       //console.log('Response From StudentIdResponse: ',studentIdResponse.data)
 
       if (!studentIdResponse.ok) {
@@ -35,7 +35,7 @@ const SubmitAssignment = () => {
       const student_id = result[0].student_id;
       console.log("STUDENT ID = ", student_id);
       
-      const assignmentDueDateResponse = await fetch(`http://192.168.1.188:5001/api/getAssignmentDueDate?assignmentID=${assID}`)
+      const assignmentDueDateResponse = await fetch(`http://69.69.69.4:5001/api/getAssignmentDueDate?assignmentID=${assID}`)
       //console.log('Response From assignemntDueDateResponse: ', assignmentDueDateResponse.data)
       
       if (!assignmentDueDateResponse.ok) {
@@ -51,7 +51,7 @@ const SubmitAssignment = () => {
       const formattedCurrentDate = currentDate.toISOString().slice(0, 19).replace('T', ' ')
       console.log('current date: ', formattedCurrentDate);
 
-    //   const assIDresponse = await fetch(`http://192.168.1.188:5001/api/getSpecificAssignmentID?assignmentName=${assName}`)
+    //   const assIDresponse = await fetch(`http://69.69.69.4:5001/api/getSpecificAssignmentID?assignmentName=${assName}`)
     //   if (!assIDresponse.ok) {
     //     throw new Error('Network assIDresponse was not ok');
     //   }
@@ -67,7 +67,7 @@ const SubmitAssignment = () => {
         formattedDueDate
       };
   
-      const response = await axios.post('http://192.168.1.188:5001/api/submitAssignment', submitData)
+      const response = await axios.post('http://69.69.69.4:5001/api/submitAssignment', submitData)
       console.log("Response From Post Ass: ", response.data)
   
       if (response.status === 201) {
