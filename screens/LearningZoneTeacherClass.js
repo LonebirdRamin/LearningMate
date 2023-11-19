@@ -1,19 +1,22 @@
-import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView} from 'react-native'
+import { View, Text, Dimensions, TouchableOpacity, Image, ScrollView, FlatList} from 'react-native'
 import React , { useState, useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import customStyles from '../styles/customStyles'
 import assignmentStyles from '../styles/assignmentStyles'
 import DataContext from '../routes/DataContext'
-import queryAssignment from "../backend/hooks/queryAssignmentStudent";
+import queryAssignment from "../backend/hooks/queryGetTeacherAssignment";
+import { useIsFocused } from '@react-navigation/native';
 
 const LearningZoneTeacherClass = ({route, navigation}) => {
 
 const height = Dimensions.get("screen").height
 const width = Dimensions.get("screen").width
+const isFocused = useIsFocused();
 const {class_} = route.params;
 const email = useContext(DataContext)
 const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
 const [assignmentData, setAssignmentData] = useState([]);
+const [filteredData, setFilteredData] = useState([]);
 const [assignNum, setAssignNum] = useState("-");
 
 useEffect(() => {
@@ -25,8 +28,16 @@ useEffect(() => {
       setAssignNum
     );
   };
-  fetchData();
-}, []);
+  if(isFocused){
+    fetchData();
+  }
+}, [isFocused]);
+
+useEffect(()=>{
+  setFilteredData(assignmentData.filter((item)=>{
+    return item.class_id == class_.class_id;
+  }))
+},[assignmentData])
 
   return (
     <SafeAreaView>
@@ -64,8 +75,18 @@ useEffect(() => {
                 <View style={assignmentStyles.textContainer}>
                   <View style={assignmentStyles.headWrapper}>
                     <Text style={assignmentStyles.headerText}>Assignment</Text>
-                    <Text style={assignmentStyles.headerText}>0 assignments</Text>
+                    <Text style={assignmentStyles.headerText}>{filteredData.length} assignments</Text>
                   </View>
+                  <FlatList //Will make this into a component!
+                    data={filteredData}
+                    nestedScrollEnabled={true}
+                    renderItem={({item})=>(
+                      <View>
+                        <Text>{item.class_name}</Text>
+                        <Text>{item.assignment_name}</Text>
+                      </View>
+                      )}
+                  />
                 </View>
               </View>
 
