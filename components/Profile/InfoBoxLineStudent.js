@@ -2,15 +2,9 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from 'react-native-uuid';
-
-
-
-
-
+import uuid from "react-native-uuid";
 
 const InfoBoxLineStudent = ({ header, data, handlePress }) => {
-  let key = Object.keys(data);
   let i = 0;
   const subHeader =
     header === "Info"
@@ -20,16 +14,14 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
           "Gender",
           "Academic year",
           "Room",
-          "Current semester",
           "Faculty",
           "Department",
           "Degree",
           "Date of Birth",
           "Advisor",
-          "Date of Enrollment",
           "ID. card number",
           "Student email",
-          "Your email address"
+          "Your email address",
         ]
       : [];
   return (
@@ -39,10 +31,7 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
       <Text style={customStyles.h2}>{header}</Text>
       {/*Start - Header of infobox */}
 
-      <View
-        style={profileStyles.infoContainer}
-        onPress={() => handlePress()}
-      >
+      <View style={profileStyles.infoContainer} onPress={() => handlePress()}>
         {/* Start - Each row infomation */}
         {data.map((item) => {
           return (
@@ -60,7 +49,7 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
                 </View>
               </View>
               <View style={profileStyles.lineGap} />
-              {i===(key.length)? <></>:<View style={profileStyles.line}/>}
+              {i === data.length ? <></> : <View style={profileStyles.line} />}
             </View>
           );
         })}

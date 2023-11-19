@@ -38,8 +38,6 @@ const activity = {
   total: 59,
 };
 
-const prepData = Object.values(data);
-
 const prepGrade = Object.values(grade);
 
 const prepAct = Object.values(activity);
@@ -51,23 +49,65 @@ const ProfileScreen = ({ navigation }) => {
   const [isSumActLoading, setSumActLoading] = useState(false);
   const [isActListLoading, setActListLoading] = useState(false);
 
-  const [perInfo, setPerInfo] = useState([]);
+  const [perInfo, setPerInfo] = useState({});
+  const [prepPerInfo, setPrepPerInfo] = useState([]);
+  const [prepPerInfoDetail, setPerInfoDetail] = useState([]);
   const [sumAct, setSumAct] = useState({});
-  const [actList, setActList] = useState([])
+  const [actList, setActList] = useState([]);
 
   useEffect(() => {
     getStudentPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
-    getActivitySummary(email, setSumAct, setSumActLoading)
-    getActivityList(email, setActList, setActListLoading)
+    getActivitySummary(email, setSumAct, setSumActLoading);
+    getActivityList(email, setActList, setActListLoading);
   }, []);
 
-  
-  
+  useEffect(() => {
+    let {
+      student_name,
+      student_id,
+      gender,
+      academic_year,
+      room,
+      degree_name,
+      date_of_birth,
+      teacher_name,
+      id_card,
+      personal_email,
+      faculty_name,
+      department_name,
+    } = perInfo;
+    setPrepPerInfo([
+      student_name,
+      student_id,
+      degree_name,
+      faculty_name,
+      department_name,
+    ]);
+    setPerInfoDetail([
+      student_id,
+      student_name,
+      gender,
+      academic_year,
+      room,
+      faculty_name,
+      department_name,
+      degree_name,
+      (new Date(date_of_birth)).toLocaleDateString({day: "2-digit", month: 'short', year: 'numeric'}),
+      teacher_name,
+      id_card,
+      email,
+      personal_email,
+    ]);
+  }, [perInfo]);
+
+  useEffect(()=>{
+    console.log(prepPerInfoDetail)
+  },[prepPerInfoDetail])
   return (
     <View style={[globleStyles.pageContainer]}>
-      {isPerInfoIsLoading && isSumActLoading && isActListLoading? (
+      {isPerInfoIsLoading && isSumActLoading && isActListLoading ? (
         <View style={globleStyles.loadingFull}>
-          <ActivityIndicator size={100} color="#F04E22"/>
+          <ActivityIndicator size={100} color="#F04E22" />
         </View>
       ) : (
         <ScrollView style={profileStyles.scrollContainer}>
@@ -83,7 +123,7 @@ const ProfileScreen = ({ navigation }) => {
             />
             <View style={profileStyles.nameEmail}>
               <Text style={profileStyles.text("white", width * 0.045, "bold")}>
-                {perInfo.student_name}
+                {prepPerInfo[0]}
               </Text>
               <Text style={profileStyles.text("#A2A2B5", width * 0.035, "400")}>
                 {email}
@@ -107,9 +147,10 @@ const ProfileScreen = ({ navigation }) => {
           {/*Start - Info */}
           <InfoBox
             header={"Personal Info"}
-            data={perInfo}
+            data={prepPerInfo}
+            
             handlePress={() => {
-              navigation.push("Personal Info");
+              navigation.push("Personal Info", prepPerInfoDetail);
             }}
           />
           <InfoBox
