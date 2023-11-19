@@ -26,10 +26,13 @@ import querySchedule from "../backend/hooks/querySchedule";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import queryPlanner from "../backend/hooks/queryPlanner";
+import { useIsFocused } from '@react-navigation/native';
+
 const height = Dimensions.get("screen").height;
 
 
 const Homepage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [seeAll, setSeeAll] = useState(false);
   const email = useContext(DataContext); // email from login
 
@@ -69,8 +72,11 @@ const Homepage = ({ navigation }) => {
       );
       querySchedule(email, setQueriedSchedule);
     };
-    fetchData();
-  }, []);
+    setIsLoading(false);
+    if(isFocused){
+      fetchData();
+    }
+  }, [isFocused]);
   // End - manage about assignment
 
   useEffect(() => {
