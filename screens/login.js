@@ -17,6 +17,7 @@ import PostAssignment from './postAssignment';
 import PlannerScreen from './plannerScreen';
 import submitAssignment from './submitAssignment';
 import GradeScreen from './gpax_hook';
+import PostAnnouncement from './postAnnouncement';
 
 const loginScreen = () => {
     const [email, setEmail] = useState('');
@@ -119,6 +120,10 @@ const goSeeGrade = async () => {
   navigation.navigate('GradeScreen');
 }
 
+const goPostAnnouncement = async () => {
+  navigation.navigate('PostAnnouncement');
+}
+
   return (
     <View style={styles.container}>
       <Image
@@ -155,6 +160,7 @@ const goSeeGrade = async () => {
           <Button title="Go to add planner page" onPress={goInsertPlanner} containerStyle={{ marginTop: 10 }} />
           <Button title="Submit assignment" onPress={goSubmitAssignment} containerStyle={{ marginTop: 10 }} />
           <Button title="See Grade" onPress={goSeeGrade} containerStyle={{ marginTop: 10 }} />
+          <Button title="Post annnoucement" onPress={goPostAnnouncement} containerStyle={{ marginTop: 10 }} />
         </>
       )}
     </View>

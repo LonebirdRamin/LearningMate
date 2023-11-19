@@ -16,6 +16,7 @@ import PostAssignment from './screens/postAssignment';
 import PlannerScreen from './screens/plannerScreen';
 import SubmitAssignment from './screens/submitAssignment';
 import GradeScreen from './screens/gpax_hook';
+import PostAnnouncement from './screens/postAnnouncement';
 import chatFirebase from './screens/chatFirebase';
 import chat from './screens/chat';
 import { LogBox } from 'react-native';
@@ -112,6 +113,11 @@ function MyStack() {
           name="GradeScreen"
           component={GradeScreen}
           options={{title: 'Grade'}}
+        />
+        <Stack.Screen
+          name="PostAnnouncement"
+          component={PostAnnouncement}
+          options={{title: 'Post Announcement'}} 
         />
         {/* <Stack.Screen
           name="chat"

@@ -771,6 +771,21 @@ app.get('/api/getGrades', function (req, res) {
   )
 })
 
+app.post('/api/postAnnouncement', (req, res) => {
+  const { classID, announcement } = req.body;
+  // pass in the Class ID and Announcement as the string.
+  console.log(classID, announcement)
+
+  const sql = "UPDATE class SET class_announcement = ? WHERE class_id = ?;"
+
+  connection.query(sql, [announcement, classID], (err, results) => {
+    if (err) {
+      console.log("Error while updating class announcement", err);
+      return res.status(400).json({ message: "Failed to update class announcement." });
+    }
+    return res.status(201).json({ message: "New announcement has been posted!" });
+  });
+})
 
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
