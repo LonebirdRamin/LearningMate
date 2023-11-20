@@ -4,7 +4,7 @@ import 'firebase/storage'; // <- add this line
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore"; // Import Firestore
 import { getAuth } from "firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage"; // Adjusted storage import
+import { getStorage, ref, uploadBytes, collection, doc, setDoc, getDocs } from "firebase/storage"; // Adjusted storage import
 import 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries

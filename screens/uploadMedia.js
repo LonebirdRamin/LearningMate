@@ -12,6 +12,8 @@ import {
 import * as DocumentPicker from 'expo-document-picker'; // Import DocumentPicker
 import * as FileSystem from 'expo-file-system';
 import { ref, uploadBytes } from 'firebase/storage';
+import { collection, doc, setDoc, getDocs } from 'firebase/firestore';
+import { db } from '../database/firebaseDB';
 
 const UploadMedia = () => {
   const [file, setFile] = useState(null);
@@ -36,6 +38,8 @@ const UploadMedia = () => {
 
   const uploadMediaFile = async () => {
     setUploading(true);
+    const classID = 'CPE301';
+    const fileType = 'records'; // Assignment, records, or documents
   
     try {
       if (!file || !file.assets || file.assets.length === 0) {
@@ -68,19 +72,27 @@ const UploadMedia = () => {
         xhr.send(null);
       });
   
-      const filename = firstAsset.name || fileInfo.uri.substring(fileInfo.uri.lastIndexOf('/') + 1);
-      const storageRef = ref(storage, `files/${filename}`);
-  
-      await uploadBytes(storageRef, blob, { contentType: firstAsset.mimeType });
-      setUploading(false);
-      Alert.alert('Success');
-      setFile(null);
-    } catch (e) {
-      console.log(e);
-      setUploading(false);
-      Alert.alert('An error occurred', e.message);
-    }
-  };
+    const filename = firstAsset.name || fileInfo.uri.substring(fileInfo.uri.lastIndexOf('/') + 1);
+    const storageRef = ref(storage, `storage/${classID}/${fileType}/${filename}`);
+    const firestoreRef = collection(db, 'storage', classID, fileType);
+    const fileDocRef = doc(firestoreRef, filename)
+
+    await uploadBytes(storageRef, blob, { contentType: firstAsset.mimeType });
+    await setDoc(fileDocRef, {
+      // Additional metadata if needed
+      filename: filename,
+      // ... (other metadata)
+    });
+
+    setUploading(false);
+    Alert.alert('Success');
+    setFile(null);
+  } catch (e) {
+    console.log(e);
+    setUploading(false);
+    Alert.alert('An error occurred', e.message);
+  }
+};
   
 
   return (
