@@ -7,7 +7,7 @@ import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
 
 const PostFileTeacher = ({
-  selected,
+  setIsPosting,
   setModalVisible,
   classID,
   setIsLoading,

@@ -9,7 +9,7 @@ const queryScheduleTeacher = async (
   let result;
   try {
     const response = await axios.get(
-      `${ipv4.kong}getTeacherSchedule?email=${email}`
+      `${ipv4.mark}getTeacherSchedule?email=${email}`
     );
 
     // Check the response status code to determine if it was successful

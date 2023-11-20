@@ -175,7 +175,7 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
   console.log("Query Student Assignment");
   const email = req.query.email;
   connection.query(
-    'SELECT c.class_id, c.class_name, asm.assignment_name, asm.assignment_publish_date, asm.assignment_due_date, asub.status FROM `assignment_submission` AS asub JOIN `student` AS s ON asub.student_id = s.student_id JOIN `assignment` AS asm ON asm.assignment_id = asub.assignment_id JOIN `class` AS c ON asm.class_id = c.class_id WHERE s.academic_email = ?',
+    "SELECT c.class_id, c.class_name, asm.assignment_name, asm.assignment_publish_date, asm.assignment_due_date, asub.status FROM `assignment_submission` AS asub JOIN `student` AS s ON asub.student_id = s.student_id JOIN `assignment` AS asm ON asm.assignment_id = asub.assignment_id JOIN `class` AS c ON asm.class_id = c.class_id WHERE s.academic_email = ?",
     [email],
     function (err, teacherResults, fields) {
       if (err) {
@@ -547,38 +547,81 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
   );
 });
 
-app.get('/api/getGrades', function (req, res) {
+app.get("/api/getGrades", function (req, res) {
   console.log("Query Student Grades");
   const email = req.query.email;
 
   connection.query(
-    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;',
+    "SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;",
     [email],
-    function(err, result) {
-      if(err) {
+    function (err, result) {
+      if (err) {
         console.error(err);
-        res.status(500).json({ error: 'Get student grades query error occurted'});
+        res
+          .status(500)
+          .json({ error: "Get student grades query error occurted" });
       } else {
         console.log("Success student grades query");
         res.json(result);
       }
     }
-  )
-})
+  );
+});
 
-app.get('/api/getCurrentSemesterForStudent', function (req, res, next) {
+app.get("/api/getCurrentSemesterForStudent", function (req, res, next) {
   console.log("Get Current Semester For Student");
   const email = req.query.email;
   connection.query(
-    'SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON c.class_id = cs.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;',
+    "SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON c.class_id = cs.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;",
     [email],
-    function(err, semesterResults, fields) {
+    function (err, semesterResults, fields) {
       if (err) {
         console.error(err);
-        res.status(500).json({ error: 'Current semester query error occurred' });
+        res
+          .status(500)
+          .json({ error: "Current semester query error occurred" });
       } else {
         console.log("success current semester query");
         res.json(semesterResults);
+      }
+    }
+  );
+});
+
+app.post("/api/postAnnouncement", (req, res) => {
+  const { classID, announcement } = req.body;
+  // pass in the Class ID and Announcement as the string.
+  console.log(classID, announcement);
+
+  const sql = "UPDATE class SET class_announcement = ? WHERE class_id = ?;";
+
+  connection.query(sql, [announcement, classID], (err, results) => {
+    if (err) {
+      console.log("Error while updating class announcement", err);
+      return res
+        .status(400)
+        .json({ message: "Failed to update class announcement." });
+    }
+    return res
+      .status(201)
+      .json({ message: "New announcement has been posted!" });
+  });
+});
+
+app.get("/api/queryAnnouncement", function (req, res, next) {
+  console.log("Query Announcement");
+  const classID = req.query.classID;
+  console.log("ClassID: ", classID);
+  connection.query(
+    "SELECT class_announcement FROM `class` WHERE class_id = ?;",
+    [classID],
+    function (err, announcementResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Announcement query error occurred" });
+      } else {
+        console.log("success announcement query");
+        res.json(announcementResults);
       }
     }
   );

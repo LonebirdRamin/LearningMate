@@ -33,12 +33,12 @@ const screenOptions = {
 };
 
 const NavigationBar = () => {
-  const email = useRoute();
+  // const email = useRoute();
   // email.params.email
-  // const email = "khajonpong.akk@kmutt.ac.th"
+  const email = "khajonpong.akk@kmutt.ac.th";
   const handleImage = () => {};
   return (
-    <DataContext.Provider value={email.params.email}>
+    <DataContext.Provider value={email}>
       <Tab.Navigator
         screenOptions={screenOptions}
         initialRouteName="HomeNoti"

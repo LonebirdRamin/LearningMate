@@ -15,6 +15,7 @@ import queryAssignment from "../backend/hooks/queryGetTeacherAssignment";
 import { useIsFocused } from "@react-navigation/native";
 import AssignmentListTeacher from "../components/LearningZone/AssignmentListTeacher";
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
+import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -27,6 +28,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
   const [isPosting, setIsPosting] = useState(false);
+  const [announce, setAnnounce] = useState("No Announcement");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,10 +38,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         setAssignmentData,
         setAssignNum
       );
+      const result = await queryAnnouncement(class_.class_id);
+      // console.log(result);
+      setAnnounce(result[0].class_announcement);
+      setIsPosting(false);
     };
     if (isFocused) {
       fetchData();
-      setIsPosting(false);
     }
   }, [isFocused, isPosting]);
 
@@ -95,15 +100,18 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
           <Text
             style={[
               customStyles.h3,
-              { textAlign: "left", marginLeft: 24, marginTop: 10 },
+              { textAlign: "left", marginLeft: 24, marginTop: "5%" },
             ]}
           >
             Class announcement
           </Text>
           <Text
-            style={[customStyles.h3, { textAlign: "left", marginLeft: 24 }]}
+            style={[
+              customStyles.h3,
+              { textAlign: "left", marginLeft: 24, marginTop: 5, width: "90%" },
+            ]}
           >
-            Insert announcement here!
+            {announce}
           </Text>
           <View
             style={{

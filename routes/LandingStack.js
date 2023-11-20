@@ -38,11 +38,11 @@ const LandingStack = () => {
           }}
         /> */}
 
-        <Stack.Screen
+        {/* <Stack.Screen
           name="HomepageStudent"
           component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
-        />
+        /> */}
 
         <Stack.Screen
           name="HomepageTeacher"

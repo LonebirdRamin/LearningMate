@@ -1,21 +1,22 @@
+import { View, Text } from "react-native";
+import React from "react";
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
-const queryClassTeacher = async (email, setIsLoading) => {
+const queryAnnouncement = async (classID) => {
   let result;
-  setIsLoading(true);
-
+  // setIsLoading(true);
+  console.log("Test ClassID query");
+  console.log(classID);
   try {
     const response = await axios.get(
-      `${ipv4.mark}getClassTeacher?email=${email}`
+      `${ipv4.mark}queryAnnouncement?classID=${classID}`
     );
-    // console.log("ClassName response: " + response);
 
-    // Check the response status code to determine if it was successful
     if (response.status === 200) {
       result = response.data;
       // console.log("Result in class: " + result);
-      setIsLoading(false);
+      // setIsLoading(false);
       console.log("Result = " + result);
       return result;
     } else {
@@ -27,4 +28,4 @@ const queryClassTeacher = async (email, setIsLoading) => {
   }
 };
 
-export default queryClassTeacher;
+export default queryAnnouncement;
