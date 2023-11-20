@@ -17,6 +17,7 @@ import PlannerScreen from './screens/plannerScreen';
 import SubmitAssignment from './screens/submitAssignment';
 import GradeScreen from './screens/gpax_hook';
 import PostAnnouncement from './screens/postAnnouncement';
+import UploadMedia from './screens/uploadMedia';
 import chatFirebase from './screens/chatFirebase';
 import chat from './screens/chat';
 import { LogBox } from 'react-native';
@@ -59,6 +60,11 @@ function MyStack() {
           component={chat}
           options={{title: 'Chat Screen'}}
         /> */}
+        <Stack.Screen
+          name="UploadMedia"
+          component={UploadMedia}
+          options={{title: 'Upload Media'}} 
+        />
         <Stack.Screen
           name="LoginScreen"
           component={loginScreen}
