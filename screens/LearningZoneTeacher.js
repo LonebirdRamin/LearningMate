@@ -23,7 +23,7 @@ const LearningZoneTeacher = ({ navigation }) => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={globleStyles.pageContainer}>
       {isloading ? (
         <View
           style={[

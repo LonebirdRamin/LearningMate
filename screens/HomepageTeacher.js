@@ -28,46 +28,8 @@ import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
 import AssignmentBoxTeacher from "../components/Homepage/AssignmentBoxTeacher";
 import queryGetTeacherAssignment from "../backend/hooks/queryGetTeacherAssignment";
-const height = Dimensions.get("screen").height;
 
-const mockUpData = [
-  {
-    color: "red",
-    code: "CPE111",
-    subject: "HHAHAH",
-    task: "BLALBALA",
-    dueDate: "11 Fuc xxxx",
-    submitCount: 50,
-    totalCount: 89,
-  },
-  {
-    color: "green",
-    code: "CPE110",
-    subject: "Hoooo",
-    task: "EIEIEIE",
-    dueDate: "11 Fuck x0x0",
-    submitCount: 20,
-    totalCount: 90,
-  },
-  {
-    color: "blue",
-    code: "CPE123",
-    subject: "Huhhhh",
-    task: "Lab kuiay",
-    dueDate: "69 Lucifer xxx",
-    submitCount: 30,
-    totalCount: 90,
-  },
-  {
-    color: "pink",
-    code: "CPE191",
-    subject: "Police",
-    task: "Fuck off",
-    dueDate: "19 Jane 2003",
-    submitCount: 50,
-    totalCount: 87,
-  },
-];
+const height = Dimensions.get("screen").height;
 
 const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
@@ -97,8 +59,10 @@ const HomepageTeacher = ({ navigation }) => {
       );
       queryScheduleTeacher(email, setQueriedSchedule);
     };
-    fetchData();
     setIsPosting(false);
+    if(isFocused){
+      fetchData();
+    }
   }, [isFocused, isPosting]);
 
   // useEffect(() => {
@@ -136,6 +100,8 @@ const HomepageTeacher = ({ navigation }) => {
     const currentDate = new Date();
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + 6);
+    dateLimit.setHours(0,0,0,0);
+    currentDate.setHours(0,0,0,0);
 
     const isClassEvent = (event) => {
       return "class_id" in event;
@@ -196,7 +162,7 @@ const HomepageTeacher = ({ navigation }) => {
   }, [appendedEvents, day]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={globleStyles.pageContainer}>
       {isloading ? (
         <View
           style={[
@@ -224,7 +190,7 @@ const HomepageTeacher = ({ navigation }) => {
               }}
             >
               <View style={customStyles.pageTitleContainer}>
-                <Text style={customStyles.pageTitle}>Calendar</Text>
+                <Text style={customStyles.pageTitle}>Learning Mate</Text>
                 <TouchableOpacity
                   style={customStyles.notficationIcon}
                   onPress={() => navigation.navigate("Notification")}

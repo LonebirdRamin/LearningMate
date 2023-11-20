@@ -60,7 +60,14 @@ const AssignmentList = ({data}) => {
               DUE DATE
             </Text>
             <Text style={[customStyles.bodysmall,{color:'white'}]}>
-            {formatDate(item.assignment_due_date)}
+            {item.assignment_due_date === null ? (
+                  <Text style={[customStyles.h2, { width: "50%" }]}>
+                    {" "}
+                    No Due Date{" "}
+                  </Text>
+                ) : (
+                  formatDate(item.assignment_due_date)
+                )}
             </Text>
           </View>
           <View style={{marginRight:'auto'}}></View>
