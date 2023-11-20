@@ -19,7 +19,7 @@ import AssignmentHeader from "../components/Homepage/AssignmentHeader";
 import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
-import { useRoute } from "@react-navigation/native";
+import { useIsFocused, useRoute } from "@react-navigation/native";
 import DataContext from "../routes/DataContext";
 import queryScheduleTeacher from "../backend/hooks/queryScheduleTeacher";
 import queryPlanner from "../backend/hooks/queryPlanner";
@@ -79,6 +79,7 @@ const HomepageTeacher = ({ navigation }) => {
   const [validEvents, setValidEvents] = useState([]);
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
+  const isFocused = useIsFocused();
 
   // Start - manage about assignment
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
@@ -98,21 +99,21 @@ const HomepageTeacher = ({ navigation }) => {
     };
     fetchData();
     setIsPosting(false);
-  }, []);
+  }, [isFocused, isPosting]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      queryGetTeacherAssignment(
-        email,
-        setIsAssignmentLoading,
-        setAssignmentData,
-        setAssignNum
-      );
-      queryScheduleTeacher(email, setQueriedSchedule);
-    };
-    fetchData();
-    setIsPosting(false);
-  }, [isPosting]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     queryGetTeacherAssignment(
+  //       email,
+  //       setIsAssignmentLoading,
+  //       setAssignmentData,
+  //       setAssignNum
+  //     );
+  //     queryScheduleTeacher(email, setQueriedSchedule);
+  //   };
+  //   fetchData();
+  //   setIsPosting(false);
+  // }, [isPosting]);
 
   // End - manage about assignment
 
@@ -283,7 +284,7 @@ const HomepageTeacher = ({ navigation }) => {
                   renderItem={({ item }) => (
                     <AssignmentBoxTeacher
                       code={item.class_id}
-                      subject={item.class_id}
+                      subject={item.class_name}
                       task={item.assignment_name}
                       dueDate={item.assignment_due_date}
                       submitCount={item.Submit_Count}

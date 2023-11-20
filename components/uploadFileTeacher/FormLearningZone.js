@@ -6,19 +6,42 @@ import AnnounceForm from "./AnnounceForm";
 import RecordForm from "./RecordForm";
 import PostFileTeacher from "./PostFileTeacher";
 
-const FormLearningZone = ({ selected, setModalVisible }) => {
+const FormLearningZone = ({
+  selected,
+  setModalVisible,
+  classID,
+  setIsPosting,
+  setIsLoading,
+}) => {
   return (
     <View style={formAssignmentStyles.mainViewLearningZone}>
       {selected === "Assignment" ? (
-        <AssignmentForm selected={selected} setModalVisible={setModalVisible} />
+        <AssignmentForm
+          setIsPosting={setIsPosting}
+          setModalVisible={setModalVisible}
+          classID={classID}
+          setIsLoading={setIsLoading}
+        />
       ) : selected === "Announce" ? (
-        <AnnounceForm selected={selected} setModalVisible={setModalVisible} />
+        <AnnounceForm
+          setIsPosting={setIsPosting}
+          setModalVisible={setModalVisible}
+          classID={classID}
+          setIsLoading={setIsLoading}
+        />
       ) : selected === "Record" ? (
-        <RecordForm selected={selected} setModalVisible={setModalVisible} />
+        <RecordForm
+          setIsPosting={setIsPosting}
+          setModalVisible={setModalVisible}
+          classID={classID}
+          setIsLoading={setIsLoading}
+        />
       ) : selected === "File" ? (
         <PostFileTeacher
-          selected={selected}
+          setIsPosting={setIsPosting}
           setModalVisible={setModalVisible}
+          classID={classID}
+          setIsLoading={setIsLoading}
         />
       ) : null}
     </View>

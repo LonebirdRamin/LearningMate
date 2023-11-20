@@ -6,7 +6,12 @@ import InputFileLearning from "./InputFileLearning";
 import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
 
-const PostFileTeacher = ({ selected, setModalVisible }) => {
+const PostFileTeacher = ({
+  selected,
+  setModalVisible,
+  classID,
+  setIsLoading,
+}) => {
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [selectedFile, setFileSelected] = useState(null);

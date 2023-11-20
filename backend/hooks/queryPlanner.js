@@ -3,10 +3,10 @@ import ipv4 from "../apiserver/ipv4";
 
 const queryPlanner = async (email, setQueriedPlanner, setIsLoading) => {
   let result;
-  if(setIsLoading != undefined) setIsLoading(true);
+  if (setIsLoading != undefined) setIsLoading(true);
 
   try {
-    const response = await axios.get(`${ipv4.golf}getPlanner?email=${email}`);
+    const response = await axios.get(`${ipv4.mark}getPlanner?email=${email}`);
 
     // Check the response status code to determine if it was successful
     if (response.status === 200) {
@@ -28,7 +28,7 @@ const queryPlanner = async (email, setQueriedPlanner, setIsLoading) => {
     console.error(error);
     throw error;
   } finally {
-    if(setIsLoading != undefined) setIsLoading(false);
+    if (setIsLoading != undefined) setIsLoading(false);
   }
 };
 

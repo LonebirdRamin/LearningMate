@@ -4,7 +4,7 @@ const getActivitySummary = async (email, setActSum, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.golf}getActivitySummary?email=${email}`
+      `${ipv4.mark}getActivitySummary?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
