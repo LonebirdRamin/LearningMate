@@ -1,34 +1,59 @@
-// Import the 'app' object and 'storage' from the firebaseDB file
-import { app, storage } from '../database/firebaseDB'; // Adjust the path accordingly
+import { app, storage } from '../database/firebaseDB';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, Image } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+  Image,
+} from 'react-native';
+import * as DocumentPicker from 'expo-document-picker'; // Import DocumentPicker
 import * as FileSystem from 'expo-file-system';
 import { ref, uploadBytes } from 'firebase/storage';
 
 const UploadMedia = () => {
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const pickImage = async () => {
-    // no permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,   // All Images, Videos
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+  const pickFile = async () => {
+    try {
+      let result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+  
+      console.log('DocumentPicker result:', result);
+  
+      if (!result.cancelled) {
+        setFile(result);
+      }
+    } catch (error) {
+      console.error('Error picking file:', error);
     }
   };
 
-  // upload media files
   const uploadMediaFile = async () => {
     setUploading(true);
+  
     try {
-      const { uri } = await FileSystem.getInfoAsync(image);
+      if (!file || !file.assets || file.assets.length === 0) {
+        throw new Error('Invalid file selected');
+      }
+  
+      const firstAsset = file.assets[0];
+  
+      console.log('File information:', firstAsset);
+  
+      const fileInfo = await FileSystem.getInfoAsync(firstAsset.uri);
+  
+      console.log('File info:', fileInfo);
+  
+      if (!fileInfo.exists || fileInfo.isDirectory) {
+        throw new Error('Invalid file information');
+      }
+  
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
@@ -39,34 +64,43 @@ const UploadMedia = () => {
           reject(new TypeError('Network request failed'));
         };
         xhr.responseType = 'blob';
-        xhr.open('GET', uri, true);
+        xhr.open('GET', fileInfo.uri, true);
         xhr.send(null);
       });
-
-      const filename = image.substring(image.lastIndexOf('/') + 1);
-      const storageRef = ref(storage, `images/${filename}`); // Use ref function
-
-      await uploadBytes(storageRef, blob);
+  
+      const filename = firstAsset.name || fileInfo.uri.substring(fileInfo.uri.lastIndexOf('/') + 1);
+      const storageRef = ref(storage, `files/${filename}`);
+  
+      await uploadBytes(storageRef, blob, { contentType: firstAsset.mimeType });
       setUploading(false);
       Alert.alert('Success');
-      setImage(null);
+      setFile(null);
     } catch (e) {
       console.log(e);
       setUploading(false);
       Alert.alert('An error occurred', e.message);
-    }
-  };
+  }
+};
+  
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Add a button or trigger to call uploadMediaFile */}
-      <TouchableOpacity style={styles.selectButton} onPress={pickImage}>
-        <Text style={styles.buttonText}>Pick an Image</Text>
+      <TouchableOpacity style={styles.selectButton} onPress={pickFile}>
+        <Text style={styles.buttonText}>Pick a File</Text>
       </TouchableOpacity>
       <View style={styles.imageContainer}>
-        {image && <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />}
+        {file && (
+          <View>
+            <Text style={{ color: 'white', marginBottom: 10 }}>
+              Selected File: {file.name}
+            </Text>
+            {file.type && file.type.startsWith('image') ? (
+              <Image source={{ uri: file.uri }} style={{ width: 300, height: 300 }} />
+            ) : null}
+          </View>
+        )}
         <TouchableOpacity style={styles.uploadButton} onPress={uploadMediaFile}>
-          <Text style={styles.buttonText}>Upload Image</Text>
+          <Text style={styles.buttonText}>Upload File</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
