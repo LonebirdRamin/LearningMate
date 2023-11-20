@@ -17,7 +17,7 @@ const PostAnnouncement = () => {
             }
             console.log(updateData)
 
-            const response = await axios.post('http://192.168.1.179:5001/api/postAnnouncement', updateData)
+            const response = await axios.post('http://192.168.1.64:5001/api/postAnnouncement', updateData)
             console.log(response.data)
             if (response.status === 201) {
                 const result = response.data

@@ -787,6 +787,25 @@ app.post('/api/postAnnouncement', (req, res) => {
   });
 })
 
+app.get('/api/queryAnnouncement', function (req, res, next) {
+  console.log("Query Announcement");
+  const classID = req.query.classID;
+  console.log("ClassID: ", classID);
+  connection.query(
+    'SELECT class_announcement FROM `class` WHERE class_id = ?;',
+    [classID],
+    function(err, announcementResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Announcement query error occurred' });
+      } else {
+        console.log("success announcement query");
+        res.json(announcementResults);
+      }
+    }
+  );
+});
+
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
 })
