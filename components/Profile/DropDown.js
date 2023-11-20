@@ -8,6 +8,7 @@ const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
 const data = [
+  {label: "All", value: '0'},
   { label: '1/2566', value: '1' },
   { label: 'Item 2', value: '2' },
   { label: 'Item 3', value: '3' },
@@ -31,7 +32,7 @@ const DropDown = () => {
         
         style={[ dropDownGradeStyles.dropdown]}
         placeholderStyle={[profileStyles.text("#C1C1CD", height * 0.015, "500")]}
-        selectedTextStyle={profileStyles.text("#C1C1CD", height * 0.015, "500")}
+        selectedTextStyle={[profileStyles.text("#C1C1CD", height * 0.015, "500"), {textAlign: 'center'}]}
         itemTextStyle={profileStyles.text("#C1C1CD", height * 0.013, "500")}
         containerStyle={ dropDownGradeStyles.listContainer}
         activeColor='#262630'

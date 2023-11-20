@@ -66,7 +66,7 @@ const ActivityList = ({data}) => {
                           { width: width * 0.5 },
                         ]}
                       >
-                        {item.act}
+                        {item.activity_name}
                       </Text>
                     </View>
                     {/*Start - GradeCred */}
@@ -76,7 +76,7 @@ const ActivityList = ({data}) => {
                           profileStyles.text("#F04E22", height * 0.025, "700"),
                         ]}
                       >
-                        {item.hrs}
+                        {item.activity_hour? item.activity_hour:"-"}
                       </Text>
                       
                     </View>

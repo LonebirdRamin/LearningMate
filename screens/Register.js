@@ -44,10 +44,23 @@ const Register = ({ navigation }) => {
     setModalVisible(!isModalVisible);
   };
 
-  const changePage = () => {
+  const changePage = (value, email) => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Homepage" }],
+      routes: [
+        {
+          name: value,
+          params: { email: email },
+          state: {
+            index: 0,
+            routes: [
+              {
+                name: "HomeNoti",
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 

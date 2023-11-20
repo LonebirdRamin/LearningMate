@@ -2,26 +2,29 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from "react-native-uuid";
+import uuid from 'react-native-uuid';
 
-const InfoBoxLineStudent = ({ header, data, handlePress }) => {
+
+
+
+
+
+const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
+  
   let i = 0;
   const subHeader =
     header === "Info"
       ? [
-          "Student ID",
+          "Teacher ID",
           "Name",
           "Gender",
-          "Academic year",
-          "Room",
           "Faculty",
           "Department",
           "Degree",
           "Date of Birth",
-          "Advisor",
           "ID. card number",
-          "Student email",
-          "Your email address",
+          "Teacher email",
+          "Your email address"
         ]
       : [];
   return (
@@ -31,7 +34,10 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
       <Text style={customStyles.h2}>{header}</Text>
       {/*Start - Header of infobox */}
 
-      <View style={profileStyles.infoContainer} onPress={() => handlePress()}>
+      <View
+        style={profileStyles.infoContainer}
+        onPress={() => handlePress()}
+      >
         {/* Start - Each row infomation */}
         {data.map((item) => {
           return (
@@ -44,12 +50,12 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
                   <Text style={customStyles.h2}>{subHeader[i++]}</Text>
                   <Text style={profileStyles.text("#A2A2B5", 12, "500")}>
                     {item}
-                    {header === "Activity" ? " hrs" : ""}
+            
                   </Text>
                 </View>
               </View>
               <View style={profileStyles.lineGap} />
-              {i === data.length ? <></> : <View style={profileStyles.line} />}
+              {i===(data.length)? <></>:<View style={profileStyles.line}/>}
             </View>
           );
         })}
@@ -61,4 +67,4 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
   );
 };
 
-export default InfoBoxLineStudent;
+export default InfoBoxLineTeacher;

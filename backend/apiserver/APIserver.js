@@ -175,7 +175,7 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
   console.log("Query Student Assignment");
   const email = req.query.email;
   connection.query(
-    "SELECT a.class_id, c.class_name, a.assignment_name, a.assignment_publish_date, a.assignment_due_date FROM assignment AS a JOIN class_student AS cl ON cl.class_id = a.class_id JOIN student AS t ON t.student_id = cl.student_id JOIN class AS c ON c.class_id = cl.class_id WHERE t.academic_email = ?;",
+    'SELECT c.class_id, c.class_name, asm.assignment_name, asm.assignment_publish_date, asm.assignment_due_date, asub.status FROM `assignment_submission` AS asub JOIN `student` AS s ON asub.student_id = s.student_id JOIN `assignment` AS asm ON asm.assignment_id = asub.assignment_id JOIN `class` AS c ON asm.class_id = c.class_id WHERE s.academic_email = ?',
     [email],
     function (err, teacherResults, fields) {
       if (err) {
@@ -464,6 +464,85 @@ app.post("/api/createAssignment", (req, res) => {
       return res
         .status(201)
         .json({ message: "New assignment successfully created!" });
+    }
+  );
+});
+
+app.get("/api/getStudentPersonalInfo", function (req, res, next) {
+  console.log("Query Personal Info");
+  const email = req.query.email;
+
+  connection.query(
+    "SELECT s.student_id, s.student_name, s.gender, s.academic_year, s.room, f.faculty_name, d.department_name, de.degree_name, s.date_of_birth, t.teacher_name, s.id_card, s.personal_email FROM `student` as s JOIN `teacher` as t ON s.teacher_id = t.teacher_id JOIN `department` as d ON s.department_id = d.department_id JOIN `faculty` as f ON d.faculty_id = f.faculty_id JOIN `degree` as de ON s.degree_id = de.degree_id WHERE s.academic_email = ?;",
+    [email],
+    function (err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Student query error occurred" });
+      } else {
+        console.log("success student query");
+        res.json(studentResults);
+      }
+    }
+  );
+});
+
+app.get("/api/getActivitySummary", function (req, res, next) {
+  console.log("Query Activity Summary");
+  const email = req.query.email;
+
+  connection.query(
+    'SELECT SUM(a.activity_hour) as "totalHours" FROM `activity_attendants` as aa LEFT JOIN `activity` as a ON a.activity_id = aa.activity_id WHERE aa.student_id = (SELECT s.student_id FROM student as s WHERE s.academic_email = ?);',
+    [email],
+    function (err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "Activity summary query error occurred" });
+      } else {
+        console.log("success activity summary query");
+        res.json(studentResults);
+      }
+    }
+  );
+});
+
+app.get("/api/getActivityList", function (req, res, next) {
+  console.log("Query Activity List");
+  const email = req.query.email;
+  console.log("email: ", email);
+
+  connection.query(
+    "SELECT a.activity_name, a.activity_hour FROM `activity_attendants` as aa LEFT JOIN `activity` as a ON a.activity_id = aa.activity_id WHERE aa.student_id = (SELECT s.student_id FROM student as s WHERE s.academic_email = ?) ORDER BY a.activity_name;",
+    [email],
+    function (err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Activity query error occurred" });
+      } else {
+        console.log("success activity list query");
+        res.json(studentResults);
+      }
+    }
+  );
+});
+
+app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
+  console.log("Query Personal Info");
+  const email = req.query.email;
+
+  connection.query(
+    "SELECT t.`teacher_name`, t.`teacher_id`,  f.faculty_name, d.department_name FROM `teacher` as t LEFT JOIN `department` AS d ON d.department_id = t.department_id LEFT JOIN `faculty` AS f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;",
+    [email],
+    function (err, teacherResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Teacher query error occurred" });
+      } else {
+        console.log("success teacher query");
+        res.json(teacherResults);
+      }
     }
   );
 });

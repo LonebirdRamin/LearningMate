@@ -8,6 +8,7 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
+  RefreshControl
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import customStyles from "../styles/customStyles";
@@ -25,63 +26,13 @@ import querySchedule from "../backend/hooks/querySchedule";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import queryPlanner from "../backend/hooks/queryPlanner";
+import { useIsFocused } from '@react-navigation/native';
+
 const height = Dimensions.get("screen").height;
 
-const mockUpData = [
-  {
-    color: "red",
-    code: "CPE111",
-    subject: "HHAHAH",
-    task: "BLALBALA",
-    dueDate: "11 Fuc xxxx",
-  },
-  {
-    color: "green",
-    code: "CPE110",
-    subject: "Hoooo",
-    task: "EIEIEIE",
-    dueDate: "11 Fuck x0x0",
-  },
-  {
-    color: "blue",
-    code: "CPE123",
-    subject: "Huhhhh",
-    task: "Lab kuiay",
-    dueDate: "69 Lucifer xxx",
-  },
-  {
-    color: "pink",
-    code: "CPE191",
-    subject: "Police",
-    task: "Fuck off",
-    dueDate: "19 Jane 2003",
-  },
-];
-
-// const events = [
-//   {
-//     'code':'CPE123',
-//     'name':'Aerospace engineering',
-//     'time':'00:00 - 05:00',
-//   },
-//   {
-//     'code':'CPE456',
-//     'name':'Chicken engineering',
-//     'time':'06:00 - 07:00',
-//   },
-//   {
-//     'code':'CPE888',
-//     'name':'noidea',
-//     'time':'12:00 - 13:00',
-//   },
-//   {
-//     'code':'CPE015',
-//     'name':'Kitchen simulation',
-//     'time':'20:00 - 21:00',
-//   },
-// ]
 
 const Homepage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [seeAll, setSeeAll] = useState(false);
   const email = useContext(DataContext); // email from login
 
@@ -91,7 +42,17 @@ const Homepage = ({ navigation }) => {
   const [queriedPlanner, setQueriedPlanner] = useState([]);
   const [appendedEvents, setAppendedEvents] = useState([]);
   const [validEvents, setValidEvents] = useState([]);
-  const [refresh, setRefresh] = useState(false);
+
+  // Start - Manage pull to reload
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
+  // End - Manange pull to reload
 
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
@@ -111,8 +72,11 @@ const Homepage = ({ navigation }) => {
       );
       querySchedule(email, setQueriedSchedule);
     };
-    fetchData();
-  }, []);
+    setIsLoading(false);
+    if(isFocused){
+      fetchData();
+    }
+  }, [isFocused]);
   // End - manage about assignment
 
   useEffect(() => {
@@ -134,6 +98,8 @@ const Homepage = ({ navigation }) => {
     const currentDate = new Date();
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + 6);
+    dateLimit.setHours(0,0,0,0);
+    currentDate.setHours(0,0,0,0);
 
     const isClassEvent = (event) => {
       return "class_id" in event;
@@ -150,6 +116,7 @@ const Homepage = ({ navigation }) => {
       const eventStartDate = new Date(item.start_time);
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
     });
+
 
     //Format the planner object to be appropriate for filtering
     validEvents.map((event) => {
@@ -189,6 +156,7 @@ const Homepage = ({ navigation }) => {
     //Filter again when day changes
     const res = filterEvents(appendedEvents).filter(
       (item) => item.date_name == day
+      //HAVE TO IMPLEMENT FILTER SEMESTER TOO!!!!!!
     );
     setValidEvents(res);
   }, [appendedEvents, day]);
@@ -276,7 +244,9 @@ const Homepage = ({ navigation }) => {
                   <ActivityIndicator size={50} color="#F04E22" />
                 </View>
               ) : (
+                
                 <FlatList
+                  
                   data={assignmentData}
                   renderItem={({ item }) => (
                     <AssignmentBox

@@ -7,27 +7,12 @@ import ActivityList from "../../components/Profile/ActivityList";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
-const data = [
-    {
-        act: "PRE-FRESHY",
-        hrs: 30
-    },
-    {
-        act: "CPE GAMES",
-        hrs: 10
-    },
-    {
-        act: "ENGINEERING GAMES",
-        hrs: 12
-    },
-    {
-        act: "RUN FOR DAD",
-        hrs: 12
-    },
-]
 
-const Activity = () => {
+
+const Activity = ({route}) => {
   const email = useContext(DataContext);
+  const data = route.params;
+  
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>
       <View style={[profileStyles.scrollContainer]}>
