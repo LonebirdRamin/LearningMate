@@ -9,70 +9,70 @@ import DropDown from "../../components/Profile/DropDown";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
-const data = [
-  {
-    code: "CPE301",
-    sub: "Professional Issues For Engineers",
-    grade: "A",
-    credit: 1
-  },
-  {
-    code: "CPE333",
-    sub: "Operating System",
-    grade: "A",
-    credit: 3
-  },
-  {
-    code: "CPE334",
-    sub: "Software Engineering",
-    grade: "F",
-    credit: 3
-  },
-  {
-    code: "CPE371",
-    sub: "Big Data Engineering",
-    grade: "B+",
-    credit: 3
-  },
-  {
-    code: "GEN241",
-    sub: "Beauty Of Life",
-    grade: "A",
-    credit: 3
-  },
-  {
-    code: "GEN341",
-    sub: "Thai Indiginous Knowledge",
-    grade: "C",
-    credit: 3
-  },
+// const data = [
+//   {
+//     code: "CPE301",
+//     sub: "Professional Issues For Engineers",
+//     grade: "A",
+//     credit: 1
+//   },
+//   {
+//     code: "CPE333",
+//     sub: "Operating System",
+//     grade: "A",
+//     credit: 3
+//   },
+//   {
+//     code: "CPE334",
+//     sub: "Software Engineering",
+//     grade: "F",
+//     credit: 3
+//   },
+//   {
+//     code: "CPE371",
+//     sub: "Big Data Engineering",
+//     grade: "B+",
+//     credit: 3
+//   },
+//   {
+//     code: "GEN241",
+//     sub: "Beauty Of Life",
+//     grade: "A",
+//     credit: 3
+//   },
+//   {
+//     code: "GEN341",
+//     sub: "Thai Indiginous Knowledge",
+//     grade: "C",
+//     credit: 3
+//   },
   
-  {
-    code: "PRE380",
-    sub: "Engineering Economics",
-    grade: "D",
-    credit: 3
-  },
-  {
-    code: "PRE380",
-    sub: "Engineering Economics",
-    grade: "D",
-    credit: 3
-  },
-  {
-    code: "PRE380",
-    sub: "Engineering Economics",
-    grade: "D",
-    credit: 3
-  },
-]
+//   {
+//     code: "PRE380",
+//     sub: "Engineering Economics",
+//     grade: "D",
+//     credit: 3
+//   },
+//   {
+//     code: "PRE380",
+//     sub: "Engineering Economics",
+//     grade: "D",
+//     credit: 3
+//   },
+//   {
+//     code: "PRE380",
+//     sub: "Engineering Economics",
+//     grade: "D",
+//     credit: 3
+//   },
+// ]
 
 const GradeResult = ({route}) => {
-  const gradeList = route.params;
+  const params = route.params;
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>
         <View style={[profileStyles.scrollContainer]}>
-                <GradeList data={gradeList} gpa={3.92} gpax={3.81}/>
+                <GradeList data={params[0]}  gpax={params[2]} currentSem={params[1]}/>
             
         </View>
     </View>

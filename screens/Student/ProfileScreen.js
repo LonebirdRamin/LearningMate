@@ -20,6 +20,7 @@ import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
 import getActivitySummary from "../../backend/hooks/getActivitySummary";
 import getActivityList from "../../backend/hooks/getActivityList";
 import queryGrade from "../../backend/hooks/queryGrade";
+import getCurrentSemStudent from "../../backend/hooks/getCurrentSemStudent";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
@@ -44,11 +45,13 @@ const prepGrade = Object.values(grade);
 
 const ProfileScreen = ({ navigation }) => {
   const email = useContext(DataContext);
+  let prevSem;
+  let gradeListPrev = [];
   const [isPerInfoIsLoading, setPerInfoIsLoading] = useState(false);
   const [isSumActLoading, setSumActLoading] = useState(false);
   const [isActListLoading, setActListLoading] = useState(false);
   const [isGradeListLoading, setGradeListLoading] = useState(false);
-
+  const [isCurrentSemLoading, setCurrentSemLoading] = useState(false);
   const [perInfo, setPerInfo] = useState({});
   const [prepPerInfo, setPrepPerInfo] = useState([]);
   const [prepPerInfoDetail, setPerInfoDetail] = useState([]);
@@ -56,6 +59,8 @@ const ProfileScreen = ({ navigation }) => {
   const [actList, setActList] = useState([]);
   const [gradeList, setGradeList] = useState([])
   const [gpax, setGpax] = useState("-")
+  const [currentSem, setCurrentSem] = useState();
+  const [lastSemGrade, setLastSemGrade] = useState("-")
   const calculateAverage = (grades) => {
     // Implement your GPA calculation logic here
     // Assuming grades have a numeric value, you can calculate the average
@@ -63,27 +68,54 @@ const ProfileScreen = ({ navigation }) => {
     const totalGradePoints = grades.reduce((total, grade) => total + (parseFloat(grade.grade) * parseFloat(grade.class_credit)), 0);
     
     const average = totalGradePoints / totalCredits;
-    setGpax(average.toFixed(2)); // Round to two decimal places
+    return average.toFixed(2); // Round to two decimal places
   }
   useEffect(() => {
     getStudentPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
     getActivitySummary(email, setSumAct, setSumActLoading);
     getActivityList(email, setActList, setActListLoading);
     queryGrade(email, setGradeList, setGradeListLoading);
-    
+    getCurrentSemStudent(email, setCurrentSem, setCurrentSemLoading)
   }, []);
 
   useEffect(()=>{
-  
-        calculateAverage(gradeList)
+        
+        setGpax(calculateAverage(gradeList))
     }
     
   
   ,[gradeList])
 
-  useEffect(()=>{
-    
-  },[gpax])
+  useEffect(
+    ()=>{
+      if(currentSem !== undefined)
+      {
+        
+          if(currentSem.class_period_semester === "1")
+          { 
+            prevSem = {class_period_semester: "2", class_period_year: (currentSem.class_period_year - 1)}
+          }
+          else
+          {
+            prevSem = {class_period_semester: "1", class_period_year: currentSem.class_period_year}
+          }
+          gradeListPrev = gradeList.filter((item)=>{
+            return item.class_period_semester === prevSem.class_period_semester && item.class_period_year === prevSem.class_period_year
+          })
+          if(gradeListPrev.length == 0)
+          {
+            setLastSemGrade(calculateAverage(gradeList))
+          }
+          else
+          {
+            setLastSemGrade(calculateAverage(gradeListPrev))
+
+          }
+      }
+
+    }
+    ,[currentSem, gradeList])
+  
 
   useEffect(() => {
     let {
@@ -124,10 +156,12 @@ const ProfileScreen = ({ navigation }) => {
     ]);
   }, [perInfo]);
 
+
+  
   
   return (
     <View style={[globleStyles.pageContainer]}>
-      {isPerInfoIsLoading && isSumActLoading && isActListLoading && isGradeListLoading? (
+      {(isPerInfoIsLoading || isSumActLoading || isActListLoading || isGradeListLoading || isCurrentSemLoading)? (
         <View style={globleStyles.loadingFull}>
           <ActivityIndicator size={100} color="#F04E22" />
         </View>
@@ -177,9 +211,10 @@ const ProfileScreen = ({ navigation }) => {
           />
           <InfoBox
             header={"Grade Results"}
-            data={[4.54,gpax]}
+            data={[lastSemGrade,gpax]}
+            
             handlePress={() => {
-              navigation.push("GradeResult", gradeList);
+              navigation.push("GradeResult", [gradeList, currentSem, gpax]);
             }}
           />
           <InfoBox
@@ -199,3 +234,4 @@ const ProfileScreen = ({ navigation }) => {
 };
 
 export default ProfileScreen;
+

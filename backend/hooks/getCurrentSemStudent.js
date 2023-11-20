@@ -1,15 +1,15 @@
 import ipv4 from "../apiserver/ipv4";
-const getStudentPersonalInfo = async (email, setPerInfo, setIsLoading) => {
+const getCurrentSemStudent = async (email, setCurrentSem, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getStudentPersonalInfo?email=${email}`
+      `${ipv4.kong}getCurrentSemesterForStudent?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    const personalInfoJASON = await response.json();
-    setPerInfo(personalInfoJASON[0]);
+    const current = await response.json();
+    setCurrentSem(current[0]);
   } catch (error) {
     console.error(error);
     alert("Get student personal info failed!" + error.message);
@@ -18,4 +18,4 @@ const getStudentPersonalInfo = async (email, setPerInfo, setIsLoading) => {
   }
 };
 
-export default getStudentPersonalInfo;
+export default getCurrentSemStudent;

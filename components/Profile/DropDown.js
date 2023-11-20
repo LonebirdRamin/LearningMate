@@ -12,7 +12,7 @@ const data = [
   
 ];
 
-const DropDown = ({activityLabel}) => {
+const DropDown = ({activityLabel, setSelectedSem}) => {
   const [value, setValue] = useState(data[0].value);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -36,11 +36,10 @@ const DropDown = ({activityLabel}) => {
         valueField="value"
         placeholder={activityLabel[0].label}
         value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        
         onChange={(item) => {
           setValue(item.value);
-          setIsFocus(false);
+          setSelectedSem(item.value)
         }}
        
       />

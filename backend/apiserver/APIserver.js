@@ -566,6 +566,24 @@ app.get('/api/getGrades', function (req, res) {
   )
 })
 
+app.get('/api/getCurrentSemesterForStudent', function (req, res, next) {
+  console.log("Get Current Semester For Student");
+  const email = req.query.email;
+  connection.query(
+    'SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON c.class_id = cs.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;',
+    [email],
+    function(err, semesterResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Current semester query error occurred' });
+      } else {
+        console.log("success current semester query");
+        res.json(semesterResults);
+      }
+    }
+  );
+});
+
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });
