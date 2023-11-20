@@ -23,10 +23,10 @@ const UploadMedia = () => {
         type: '*/*',
         copyToCacheDirectory: true,
       });
-  
+
       console.log('DocumentPicker result:', result);
-  
-      if (!result.cancelled) {
+
+      if (!result.canceled) {
         setFile(result);
       }
     } catch (error) {
@@ -79,8 +79,8 @@ const UploadMedia = () => {
       console.log(e);
       setUploading(false);
       Alert.alert('An error occurred', e.message);
-  }
-};
+    }
+  };
   
 
   return (
@@ -94,9 +94,10 @@ const UploadMedia = () => {
             <Text style={{ color: 'white', marginBottom: 10 }}>
               Selected File: {file.name}
             </Text>
-            {file.type && file.type.startsWith('image') ? (
-              <Image source={{ uri: file.uri }} style={{ width: 300, height: 300 }} />
-            ) : null}
+            {/* Conditionally render the image if it's an image file */}
+            {file.assets && file.assets.length > 0 && file.assets[0].mimeType.startsWith('image/') && (
+              <Image source={{ uri: file.assets[0].uri }} style={{ width: 300, height: 300 }} />
+            )}
           </View>
         )}
         <TouchableOpacity style={styles.uploadButton} onPress={uploadMediaFile}>
