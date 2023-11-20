@@ -45,13 +45,6 @@ const Homepage = ({ navigation }) => {
 
   // Start - Manage pull to reload
   const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  };
   // End - Manange pull to reload
 
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
@@ -71,6 +64,7 @@ const Homepage = ({ navigation }) => {
         setAssignNum
       );
       querySchedule(email, setQueriedSchedule);
+      
     };
     setIsLoading(false);
     if(isFocused){
@@ -162,7 +156,7 @@ const Homepage = ({ navigation }) => {
   }, [appendedEvents, day]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={globleStyles.pageContainer}>
       {isloading ? (
         <View
           style={[

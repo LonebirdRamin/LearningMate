@@ -118,7 +118,7 @@ const customStyles = new StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     flex: 0.96,
-    marginBottom: height * 0.1,
+    marginBottom: height * 0.01,
   },
 
   eventWidget: {

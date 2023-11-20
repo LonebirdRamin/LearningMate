@@ -5,16 +5,17 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-} from "react-native";
+  ActivityIndicator} from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import customStyles from "../styles/customStyles";
-import assignmentStyles from "../styles/assignmentStyles";
+import globleStyles from "../styles/globleStyles";
 import DataContext from "../routes/DataContext";
 import queryAssignment from "../backend/hooks/queryGetTeacherAssignment";
 import { useIsFocused } from "@react-navigation/native";
 import AssignmentListTeacher from "../components/LearningZone/AssignmentListTeacher";
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
+import FileRecordList from "../components/LearningZone/FileRecordList";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -52,8 +53,21 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   }, [assignmentData]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={globleStyles.pageContainer}>
+      {isAssignmentLoading ? (
+        <View
+          style={[
+            customStyles.pageBackground,
+            { display: "flex", justifyContent: "center" },
+          ]}
+        >
+          <View style={globleStyles.loading}>
+            <ActivityIndicator size={100} color="#F04E22"></ActivityIndicator>
+          </View>
+        </View>
+      ) : (
       <View style={customStyles.pageBackground}>
+
         <View
           style={[
             customStyles.customBox1,
@@ -70,10 +84,10 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
           <View style={customStyles.pageTitleContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("LearningZoneTeacher")}
+              style={[customStyles.notficationIcon,{right:width*0.9}]}
             >
               <Image
                 source={require("../assets/icons/back.png")}
-                style={{ position: "absolute", right: width * 0.32 }}
               ></Image>
             </TouchableOpacity>
             <Text style={customStyles.pageTitle}>{class_.class_id}</Text>
@@ -134,6 +148,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   {filteredData.length} assignments
                 </Text>
               </View>
+              
               <View style={customStyles.learningZoneAssignmentWidget}>
                 <AssignmentListTeacher data={filteredData} />
                 <View
@@ -150,10 +165,60 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   </TouchableOpacity>
                 </View>
               </View>
+
+              <View>
+                  <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
+                    <Text style={[customStyles.h4,{flex:1}]}>File</Text>
+                  </View>
+                  <View style={customStyles.learningZoneAssignmentWidget}>
+                    <FileRecordList 
+                    data={filteredData}
+                    type='teacher'/>
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: 'row',
+                        marginTop:'auto',
+                        marginBottom: 10
+                      }}
+                    >
+                      <TouchableOpacity>
+                        <Text style={customStyles.bodySmall}>See all...</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+               
+                <View>
+                  <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
+                    <Text style={[customStyles.h4,{flex:1}]}>Record</Text>
+                  </View>
+                  <View style={customStyles.learningZoneAssignmentWidget}>
+                    <FileRecordList 
+                    data={filteredData}
+                    type='teacher'/>
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: 'row',
+                        marginTop:'auto',
+                        marginBottom: 10
+                      }}
+                    >
+                      <TouchableOpacity>
+                        <Text style={customStyles.bodySmall}>See all...</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
             </View>
           </View>
         </ScrollView>
       </View>
+      )}
     </SafeAreaView>
   );
 };
