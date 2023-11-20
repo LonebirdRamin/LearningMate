@@ -14,7 +14,7 @@ const AssignmentForm = ({ selected, setModalVisible }) => {
   const [showDate, handleShowDate] = useState(true);
   const [dateTime, handleDateTime] = useState(null);
   const [insertData, setInsertData] = useState({});
-  const email = "email eiei";
+  const email = "khajonpong.akk@kmutt.ac.th";
   useEffect(() => {
     console.log("---------Assignment--------\n");
     console.log(insertData);

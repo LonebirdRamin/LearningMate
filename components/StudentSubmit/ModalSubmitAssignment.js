@@ -4,6 +4,8 @@ import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import globleStyles from "../../styles/globleStyles";
 import modalStyles from "../../styles/modalStyles";
 import Modal from "react-native-modal";
+import FillBoxForm from "../uploadFileTeacher/FillBoxForm";
+import MainStudentAssignment from "./MainStudentAssignment";
 
 const ModalSubmitAssignment = ({ isVisible, setModalVisible }) => {
   const isLoading = false;
@@ -42,6 +44,7 @@ const ModalSubmitAssignment = ({ isVisible, setModalVisible }) => {
                 <Text style={modalFillAssignmentStyles.text}>
                   Submit Assignment
                 </Text>
+                <MainStudentAssignment setModalVisible={setModalVisible} />
               </View>
             )}
           </View>

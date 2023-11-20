@@ -72,14 +72,15 @@ const formAssignmentStyles = StyleSheet.create({
   },
   inputFile: {
     marginTop: windowHeight * 0.017,
-    justifyContent: "flex-start",
     flexDirection: "row",
-    width: "90%",
-    alignItems: "center",
+    width: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   image: {
     width: 16,
     height: 16,
+    marginTop: "1%",
   },
   text: {
     color: "#C1C1CD",

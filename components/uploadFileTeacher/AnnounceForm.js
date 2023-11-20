@@ -4,10 +4,10 @@ import FillBoxForm from "./FillBoxForm";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 
 const AnnounceForm = ({ selected, setModalVisible }) => {
-  const [title, setTitle] = useState("");
+  // const [title, setTitle] = useState("");
   const [announce, setAnnounce] = useState("");
   const [insertData, setInsertData] = useState({});
-  const email = "test email";
+  const email = "khajonpong.akk@kmutt.ac.th";
 
   useEffect(() => {
     console.log("---------Announce--------\n");
@@ -16,15 +16,15 @@ const AnnounceForm = ({ selected, setModalVisible }) => {
 
   return (
     <View>
-      <FillBoxForm value={setTitle} text={"Title"} />
+      {/* <FillBoxForm value={setTitle} text={"Title"} /> */}
       <Text style={[formAssignmentStyles.text, { marginTop: "-2%" }]}>
-        Information
+        Announcement
       </Text>
       <TextInput
         style={[
           formAssignmentStyles.learningInput,
           {
-            height: "33%",
+            height: "50%",
             textAlignVertical: "top",
             paddingTop: "3%",
           },
@@ -37,16 +37,16 @@ const AnnounceForm = ({ selected, setModalVisible }) => {
         <TouchableOpacity
           style={formAssignmentStyles.confirmButton}
           onPress={() => {
-            if (announce === "" && title === "") {
+            if (announce === "") {
               Alert.alert(
                 "Alert",
                 "Please fill in your title and information",
                 [{ text: "Ok" }]
               );
-            } else if (title === "") {
-              Alert.alert("Alert", "Please fill in your title", [
-                { text: "Ok" },
-              ]);
+              // } else if (title === "") {
+              //   Alert.alert("Alert", "Please fill in your title", [
+              //     { text: "Ok" },
+              //   ]);
             } else if (announce === "") {
               Alert.alert("Alert", "Please fill in your announce", [
                 { text: "Ok" },
@@ -55,7 +55,6 @@ const AnnounceForm = ({ selected, setModalVisible }) => {
               setInsertData({
                 email: email,
                 class_id: selected,
-                announce_title: title,
                 announce_information: announce,
               });
               setModalVisible(false);
