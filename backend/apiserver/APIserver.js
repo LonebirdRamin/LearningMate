@@ -547,6 +547,25 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
   );
 });
 
+app.get('/api/getGrades', function (req, res) {
+  console.log("Query Student Grades");
+  const email = req.query.email;
+
+  connection.query(
+    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;',
+    [email],
+    function(err, result) {
+      if(err) {
+        console.error(err);
+        res.status(500).json({ error: 'Get student grades query error occurted'});
+      } else {
+        console.log("Success student grades query");
+        res.json(result);
+      }
+    }
+  )
+})
+
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });

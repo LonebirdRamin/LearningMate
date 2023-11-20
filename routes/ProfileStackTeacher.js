@@ -1,19 +1,13 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Landing from "../screens/Landing";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
-import NavigationBarStudent from "./NavigationBarStudent";
-import NavigationBarTeacher from "./NavigationBarTeacher";
-import ProfileScreen from "../screens/Student/ProfileScreen";
+
 import customStyles from "../styles/customStyles";
 import profileStyles from "../styles/profileStyle";
-import PersonalInfoStudent from "../screens/Student/PersonalInfoStudent";
+
 import Setting from "../screens/Setting";
 import Help from "../screens/Help";
-import GradeResult from "../screens/Student/GradeResult";
-import Activity from "../screens/Student/Activity";
+
 import ProfileTeacher from "../screens/Teacher/ProfileTeacher";
 import PersonalInfoTeacher from "../screens/Teacher/PersonalInfoTeacher";
 const Stack = createNativeStackNavigator();
@@ -24,10 +18,14 @@ const ProfileStackTeacher = () => {
       <Stack.Screen
         name="ProfileTeacher"
         component={ProfileTeacher}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerRight: () => {
             return (
-              <TouchableOpacity onPress={()=>{navigation.push("Setting")}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("Setting");
+                }}
+              >
                 <Image
                   source={require("../assets/icons/Profile/setting.png")}
                 />
@@ -45,24 +43,27 @@ const ProfileStackTeacher = () => {
         })}
       />
 
-
       <Stack.Screen
         name="Personal Info"
         component={PersonalInfoTeacher}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -75,20 +76,24 @@ const ProfileStackTeacher = () => {
       <Stack.Screen
         name="Setting"
         component={Setting}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -100,20 +105,24 @@ const ProfileStackTeacher = () => {
       <Stack.Screen
         name="Help"
         component={Help}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -122,9 +131,6 @@ const ProfileStackTeacher = () => {
           animation: "slide_from_right",
         })}
       />
-      
-
-      
     </Stack.Navigator>
   );
 };

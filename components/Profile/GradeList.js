@@ -24,7 +24,7 @@ const GradeList = ({ gpax, gpa, data }) => {
           <Text style={profileStyles.text("#C1C1CD", height * 0.015, "500")}>
             Semester
           </Text>
-          <DropDown/>  
+          <DropDown activityLabel={[{label: "All", value: "0"}]}/>  
         </View>
       </View>
       {/*End - GPAX */}
@@ -46,7 +46,7 @@ const GradeList = ({ gpax, gpa, data }) => {
         {/*Start - subject mapping */}
         <FlatList
           showsVerticalScrollIndicator={false}
-          style={{ marginTop: height*0.01, height: height>850? height*0.55: height*0.5}}
+          style={{ marginTop: height*0.01, maxHeight: height>850? height*0.55: height*0.5}}
           data={data}
           renderItem={({item})=>{
             i++;
@@ -56,7 +56,7 @@ const GradeList = ({ gpax, gpa, data }) => {
                   <View style={profileStyles.mapBox}>
                     <View>
                     <Text style={profileStyles.text("#C1C1CD", height * 0.015, "bold")}>
-                {item.code}
+                {item.class_id}
               </Text>
                       <Text
                         style={[
@@ -64,7 +64,7 @@ const GradeList = ({ gpax, gpa, data }) => {
                           { width: width * 0.5 },
                         ]}
                       >
-                        {item.sub}
+                        {item.class_name}
                       </Text>
                     </View>
                     {/*Start - GradeCred */}
@@ -81,7 +81,7 @@ const GradeList = ({ gpax, gpa, data }) => {
                           profileStyles.text("#C1C1CD", height * 0.015, "bold"),
                         ]}
                       >
-                        {item.credit} Credits
+                        {item.class_credit} Credits
                       </Text>
                     </View>
                     {/*End - GradeCred */}

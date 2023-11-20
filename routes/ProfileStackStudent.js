@@ -1,11 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Landing from "../screens/Landing";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
-import NavigationBarStudent from "./NavigationBarStudent";
-import NavigationBarTeacher from "./NavigationBarTeacher";
+
 import ProfileScreen from "../screens/Student/ProfileScreen";
 import customStyles from "../styles/customStyles";
 import profileStyles from "../styles/profileStyle";

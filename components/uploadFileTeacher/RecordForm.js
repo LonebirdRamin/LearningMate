@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import FillBoxForm from "./FillBoxForm";
 import InsertVideo from "./InsertVideo";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
-import UploadFileTeacher from "./UploadFileTeacher";
 import InputFileLearning from "./InputFileLearning";
 
 const RecordForm = ({ selected, setModalVisible }) => {

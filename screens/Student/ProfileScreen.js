@@ -19,6 +19,7 @@ import uuid from "react-native-uuid";
 import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
 import getActivitySummary from "../../backend/hooks/getActivitySummary";
 import getActivityList from "../../backend/hooks/getActivityList";
+import queryGrade from "../../backend/hooks/queryGrade";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
@@ -34,32 +35,55 @@ const grade = {
   last: 3.91,
   GPAX: 3.87,
 };
-const activity = {
-  total: 59,
-};
+
 
 const prepGrade = Object.values(grade);
 
-const prepAct = Object.values(activity);
-const activityKey = Object.keys(activity);
+
+
 
 const ProfileScreen = ({ navigation }) => {
   const email = useContext(DataContext);
   const [isPerInfoIsLoading, setPerInfoIsLoading] = useState(false);
   const [isSumActLoading, setSumActLoading] = useState(false);
   const [isActListLoading, setActListLoading] = useState(false);
+  const [isGradeListLoading, setGradeListLoading] = useState(false);
 
   const [perInfo, setPerInfo] = useState({});
   const [prepPerInfo, setPrepPerInfo] = useState([]);
   const [prepPerInfoDetail, setPerInfoDetail] = useState([]);
   const [sumAct, setSumAct] = useState({});
   const [actList, setActList] = useState([]);
-
+  const [gradeList, setGradeList] = useState([])
+  const [gpax, setGpax] = useState("-")
+  const calculateAverage = (grades) => {
+    // Implement your GPA calculation logic here
+    // Assuming grades have a numeric value, you can calculate the average
+    const totalCredits = grades.reduce((total, grade) => total + parseFloat(grade.class_credit), 0);
+    const totalGradePoints = grades.reduce((total, grade) => total + (parseFloat(grade.grade) * parseFloat(grade.class_credit)), 0);
+    
+    const average = totalGradePoints / totalCredits;
+    setGpax(average.toFixed(2)); // Round to two decimal places
+  }
   useEffect(() => {
     getStudentPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
     getActivitySummary(email, setSumAct, setSumActLoading);
     getActivityList(email, setActList, setActListLoading);
+    queryGrade(email, setGradeList, setGradeListLoading);
+    
   }, []);
+
+  useEffect(()=>{
+  
+        calculateAverage(gradeList)
+    }
+    
+  
+  ,[gradeList])
+
+  useEffect(()=>{
+    
+  },[gpax])
 
   useEffect(() => {
     let {
@@ -100,12 +124,10 @@ const ProfileScreen = ({ navigation }) => {
     ]);
   }, [perInfo]);
 
-  useEffect(()=>{
-    console.log(prepPerInfoDetail)
-  },[prepPerInfoDetail])
+  
   return (
     <View style={[globleStyles.pageContainer]}>
-      {isPerInfoIsLoading && isSumActLoading && isActListLoading ? (
+      {isPerInfoIsLoading && isSumActLoading && isActListLoading && isGradeListLoading? (
         <View style={globleStyles.loadingFull}>
           <ActivityIndicator size={100} color="#F04E22" />
         </View>
@@ -155,15 +177,15 @@ const ProfileScreen = ({ navigation }) => {
           />
           <InfoBox
             header={"Grade Results"}
-            data={prepGrade}
+            data={[4.54,gpax]}
             handlePress={() => {
-              navigation.push("GradeResult");
+              navigation.push("GradeResult", gradeList);
             }}
           />
           <InfoBox
             header={"Activity"}
             data={sumAct}
-            id={activityKey}
+            
             handlePress={() => {
               navigation.push("Activity", actList);
             }}

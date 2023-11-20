@@ -11,7 +11,6 @@ const height = Dimensions.get("screen").height;
 const PersonalInfoStudent = ({ route }) => {
   
   const data = route.params;
-  console.log(data)
 
   
 

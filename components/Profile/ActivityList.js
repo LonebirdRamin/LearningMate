@@ -4,7 +4,7 @@ import profileStyles from '../../styles/profileStyle'
 import DropDown from './DropDown';
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-const ActivityList = ({data}) => {
+const ActivityList = ({data, label}) => {
   let i = 0;  
   return (
     <View>
@@ -19,7 +19,7 @@ const ActivityList = ({data}) => {
           <Text style={profileStyles.text("#C1C1CD", height * 0.015, "500")}>
             Semester
           </Text>
-          <DropDown/>  
+          <DropDown activityLabel={label}/>  
         </View>
       </View>
       {/*End - Semester haeder*/}

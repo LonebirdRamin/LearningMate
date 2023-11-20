@@ -4,7 +4,7 @@ const getActivityList = async (email, setActList, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.golf}getActivityList?email=${email}`
+      `${ipv4.kong}getActivityList?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

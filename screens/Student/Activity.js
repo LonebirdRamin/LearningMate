@@ -12,11 +12,11 @@ const height = Dimensions.get("screen").height;
 const Activity = ({route}) => {
   const email = useContext(DataContext);
   const data = route.params;
-  
+  const activityLabel = [{label: 'All', value: "0"}]
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>
       <View style={[profileStyles.scrollContainer]}>
-        <ActivityList data={data}/>
+        <ActivityList data={data} label={activityLabel}/>
       </View>
     </View>
   );

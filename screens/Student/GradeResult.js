@@ -67,11 +67,12 @@ const data = [
   },
 ]
 
-const GradeResult = () => {
+const GradeResult = ({route}) => {
+  const gradeList = route.params;
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>
         <View style={[profileStyles.scrollContainer]}>
-                <GradeList data={data} gpa={3.92} gpax={3.81}/>
+                <GradeList data={gradeList} gpa={3.92} gpax={3.81}/>
             
         </View>
     </View>
