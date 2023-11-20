@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import UploadFileTeacher from "./UploadFileTeacher";
 
-const LearningzoneAddButton = () => {
+const LearningzoneAddButton = ({ classID, setIsPosting }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -12,7 +12,12 @@ const LearningzoneAddButton = () => {
         <Image source={require("../../assets/icons/plusIcon.png")} />
       </Pressable>
 
-      <UploadFileTeacher isVisible={isVisible} setModalVisible={setIsVisible} />
+      <UploadFileTeacher
+        isVisible={isVisible}
+        setModalVisible={setIsVisible}
+        classID={classID}
+        setIsPosting={setIsPosting}
+      />
     </View>
   );
 };

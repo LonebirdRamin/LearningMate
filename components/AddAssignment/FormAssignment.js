@@ -39,7 +39,6 @@ const FormAssignment = ({
   const [show, setShow] = useState(false);
   const [showDate, handleShowDate] = useState(true);
   const [insertData, setInsertData] = useState(null);
-  console.log("------------------------------");
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
@@ -235,7 +234,7 @@ const FormAssignment = ({
       />
       {/* Input file zone */}
       <TouchableOpacity
-        style={formAssignmentStyles.inputFile}
+        style={[formAssignmentStyles.inputFile, { marginLeft: "10%" }]}
         onPress={handleDocumentSelection}
         activeOpacity={0.5}
       >

@@ -35,7 +35,6 @@ const signUp = async (email, password, navigation, loadState, setModal) => {
     }
     const convertedInfo = await info.json();
     const userRole = convertedInfo[0].role;
-    
 
     await addUserToFirestore(response.user.uid, response.user.email);
 

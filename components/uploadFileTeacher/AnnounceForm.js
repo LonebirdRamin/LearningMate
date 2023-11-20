@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import FillBoxForm from "./FillBoxForm";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 
-const AnnounceForm = ({ selected, setModalVisible }) => {
+const AnnounceForm = ({ selected, setModalVisible, classID, setIsLoading }) => {
   // const [title, setTitle] = useState("");
   const [announce, setAnnounce] = useState("");
   const [insertData, setInsertData] = useState({});

@@ -16,8 +16,13 @@ import globleStyles from "../../styles/globleStyles";
 import DropdownList from "./DropdownList";
 import FormLearningZone from "./FormLearningZone";
 
-const UploadFileTeacher = ({ isVisible, setModalVisible }) => {
-  const isLoading = false;
+const UploadFileTeacher = ({
+  isVisible,
+  setModalVisible,
+  classID,
+  setIsPosting,
+}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState(null);
   useEffect(() => {
     setSelected(null);
@@ -53,6 +58,9 @@ const UploadFileTeacher = ({ isVisible, setModalVisible }) => {
                 <FormLearningZone
                   selected={selected}
                   setModalVisible={setModalVisible}
+                  classID={classID}
+                  setIsPosting={setIsPosting}
+                  setIsLoading={setIsLoading}
                 />
               </View>
             )}

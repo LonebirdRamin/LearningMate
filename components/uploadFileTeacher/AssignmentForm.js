@@ -5,19 +5,36 @@ import FillBoxForm from "./FillBoxForm";
 import InputFileLearning from "./InputFileLearning";
 import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
+import postAssignment from "../../backend/hooks/postAssignment";
 
-const AssignmentForm = ({ selected, setModalVisible }) => {
+const AssignmentForm = ({
+  setIsPosting,
+  setModalVisible,
+  classID,
+  setIsLoading,
+}) => {
   //Don't forget to send "Class_ID" from LearningZone page
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [selectedFile, setFileSelected] = useState(null);
   const [showDate, handleShowDate] = useState(true);
   const [dateTime, handleDateTime] = useState(null);
-  const [insertData, setInsertData] = useState({});
+  const [insertData, setInsertData] = useState(null);
   const email = "khajonpong.akk@kmutt.ac.th";
   useEffect(() => {
-    console.log("---------Assignment--------\n");
-    console.log(insertData);
+    if (insertData !== null) {
+      console.log("---------Inserting Assignment--------\n");
+      console.log(insertData);
+      postAssignment(
+        insertData,
+        setModalVisible,
+        handleDateTime,
+        onChangeInformation,
+        onChangeTitle,
+        setIsLoading,
+        setIsPosting
+      );
+    }
   }, [insertData]);
 
   return (
@@ -45,12 +62,12 @@ const AssignmentForm = ({ selected, setModalVisible }) => {
               ]);
             } else {
               setInsertData({
-                email: email,
-                class_id: selected,
-                assignment_name: textTitle,
-                assignment_due_date: dateTime,
-                assignment_description: textInformation,
-                file: selectedFile,
+                // email: email,
+                classID: classID,
+                assName: textTitle,
+                dueDate: dateTime,
+                description: textInformation,
+                // file: selectedFile,
               });
               setModalVisible(false);
             }

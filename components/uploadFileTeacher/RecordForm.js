@@ -5,7 +5,7 @@ import InsertVideo from "./InsertVideo";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import InputFileLearning from "./InputFileLearning";
 
-const RecordForm = ({ selected, setModalVisible }) => {
+const RecordForm = ({ selected, setModalVisible, classID, setIsLoading }) => {
   const [title, setTitle] = useState("");
   const [description, setDesciption] = useState("");
   const [video, setVideo] = useState(null);

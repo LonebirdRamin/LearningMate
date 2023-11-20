@@ -3,7 +3,7 @@ import ipv4 from "../apiserver/ipv4";
 
 const queryPlanner = async (email, setQueriedPlanner, setIsLoading) => {
   let result;
-  if(setIsLoading != undefined) setIsLoading(true);
+  if (setIsLoading != undefined) setIsLoading(true);
 
   try {
     const response = await axios.get(`${ipv4.kong}getPlanner?email=${email}`);
@@ -28,7 +28,7 @@ const queryPlanner = async (email, setQueriedPlanner, setIsLoading) => {
     console.error(error);
     throw error;
   } finally {
-    if(setIsLoading != undefined) setIsLoading(false);
+    if (setIsLoading != undefined) setIsLoading(false);
   }
 };
 
