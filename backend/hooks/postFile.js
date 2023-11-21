@@ -9,24 +9,17 @@ import { Alert } from "react-native";
 const PostFile = async (classID, fileType, file, setUploading, setFile) => {
   setUploading(true);
   // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
-
   try {
     if (!file || !file.assets || file.assets.length === 0) {
       throw new Error("Invalid file selected");
     }
-
     const firstAsset = file.assets[0];
-
     console.log("File information:", firstAsset);
-
     const fileInfo = await FileSystem.getInfoAsync(firstAsset.uri);
-
     console.log("File info:", fileInfo);
-
     if (!fileInfo.exists || fileInfo.isDirectory) {
       throw new Error("Invalid file information");
     }
-
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = () => {
@@ -40,7 +33,6 @@ const PostFile = async (classID, fileType, file, setUploading, setFile) => {
       xhr.open("GET", fileInfo.uri, true);
       xhr.send(null);
     });
-
     const filename =
       firstAsset.name ||
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
@@ -50,14 +42,12 @@ const PostFile = async (classID, fileType, file, setUploading, setFile) => {
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);
-
     await uploadBytes(storageRef, blob, { contentType: firstAsset.mimeType });
     await setDoc(fileDocRef, {
       // Additional metadata if needed
       filename: filename,
       // ... (other metadata)
     });
-
     setUploading(false);
     Alert.alert("Success");
     setFile(null);
@@ -67,5 +57,4 @@ const PostFile = async (classID, fileType, file, setUploading, setFile) => {
     Alert.alert("An error occurred", e.message);
   }
 };
-
 export default PostFile;

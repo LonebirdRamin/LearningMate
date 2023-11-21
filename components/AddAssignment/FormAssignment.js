@@ -17,7 +17,8 @@ import * as FileSystem from "expo-file-system";
 import CheckBox from "react-native-check-box";
 import postAssignment from "../../backend/hooks/postAssignment";
 import { ref } from "firebase/storage";
-import PostFile from "../../backend/hooks/postFile";
+import PostFile from "../../backend/hooks/submitFileStudent";
+import PostFileTeacher from "../../backend/hooks/postFileTeacher";
 
 /* To do list
 - Change datetime picker function format (Pass!)
@@ -43,7 +44,7 @@ const FormAssignment = ({
   const [insertData, setInsertData] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [fileName, setFileName] = useState("No selected file");
-  const fileType = "Assignment";
+  const fileType = "Assignments";
   const [changedFormatDate, setChangeFormatDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
@@ -94,7 +95,15 @@ const FormAssignment = ({
         setIsLoading,
         setIsPosting
       );
-      PostFile(selected, fileType, file, setUploading, setFile);
+      PostFileTeacher(
+        selected,
+        fileType,
+        file,
+        setUploading,
+        setFile,
+        textTitle
+      );
+      setModalVisible(false);
     }
     // console.log("insertData has been updated:", insertData);
   }, [insertData]);

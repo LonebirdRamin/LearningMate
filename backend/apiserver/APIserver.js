@@ -552,7 +552,7 @@ app.get("/api/getGrades", function (req, res) {
   const email = req.query.email;
 
   connection.query(
-    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_id;',
+    "SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_id;",
     [email],
     function (err, result) {
       if (err) {
@@ -627,17 +627,19 @@ app.get("/api/queryAnnouncement", function (req, res, next) {
   );
 });
 
-app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
+app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
   console.log("Get Current Semester For Teacher");
   const email = req.query.email;
   console.log("Email: ", email);
   connection.query(
-    'SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON t.teacher_id = cl.teacher_id WHERE t.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;',
+    "SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON t.teacher_id = cl.teacher_id WHERE t.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;",
     [email],
-    function(err, semesterResults, fields) {
+    function (err, semesterResults, fields) {
       if (err) {
         console.error(err);
-        res.status(500).json({ error: 'Current semester query error occurred' });
+        res
+          .status(500)
+          .json({ error: "Current semester query error occurred" });
       } else {
         console.log("success current semester query");
         res.json(semesterResults);
@@ -650,17 +652,19 @@ app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });
 
-app.get('/api/getSemesterYear', function (req, res, next) {
+app.get("/api/getSemesterYear", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
   const email = req.query.email;
   console.log("Email: ", email);
   connection.query(
-    'SELECT DISTINCT(c.class_period_year), c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;',
+    "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;",
     [email],
-    function(err, semesterListResults, fields) {
+    function (err, semesterListResults, fields) {
       if (err) {
         console.error(err);
-        res.status(500).json({ error: 'List of semester query error occurred' });
+        res
+          .status(500)
+          .json({ error: "List of semester query error occurred" });
       } else {
         console.log("Success list of semester query");
         res.json(semesterListResults);
