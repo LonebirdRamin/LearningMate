@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import UploadFileTeacher from "./UploadFileTeacher";
 
-const LearningzoneAddButton = ({ classID, setIsPosting }) => {
+const LearningzoneAddButton = ({ classID, setIsPosting, setAnnounce }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (

@@ -5,7 +5,10 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  ActivityIndicator} from "react-native";
+  ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import customStyles from "../styles/customStyles";
@@ -16,6 +19,7 @@ import { useIsFocused } from "@react-navigation/native";
 import AssignmentListTeacher from "../components/LearningZone/AssignmentListTeacher";
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
 import FileRecordList from "../components/LearningZone/FileRecordList";
+import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -28,6 +32,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
   const [isPosting, setIsPosting] = useState(false);
+  const [announce, setAnnounce] = useState("No Announcement");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +42,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         setAssignmentData,
         setAssignNum
       );
+      const result = await queryAnnouncement(class_.class_id);
+      // console.log(result);
+      setAnnounce(result[0].class_announcement);
+      setIsPosting(false);
     };
     if (isFocused) {
       fetchData();
-      setIsPosting(false);
     }
   }, [isFocused, isPosting]);
 
@@ -66,158 +74,171 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
           </View>
         </View>
       ) : (
-      <View style={customStyles.pageBackground}>
-
-        <View
-          style={[
-            customStyles.customBox1,
-            {
-              width: "100%",
-              maxHeight: height * 0.2,
-              height: "fit-content",
-              borderTopLeftRadius: 0,
-              borderTopRightRadius: 0,
-              overflow: "hidden",
-            },
-          ]}
-        >
-          <View style={customStyles.pageTitleContainer}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("LearningZoneTeacher")}
-              style={[customStyles.notficationIcon,{right:width*0.9}]}
-            >
-              <Image
-                source={require("../assets/icons/back.png")}
-              ></Image>
-            </TouchableOpacity>
-            <Text style={customStyles.pageTitle}>{class_.class_id}</Text>
-            <View
-              style={{
-                justifyContent: "center",
-                position: "absolute",
-                right: 0,
-                marginTop: "3%",
-                marginRight: "2%",
-              }}
-            >
-              <LearningzoneAddButton
-                classID={class_.class_id}
-                setIsPosting={setIsPosting}
-              />
-            </View>
-          </View>
-          <Text
+        <View style={customStyles.pageBackground}>
+          <View
             style={[
-              customStyles.h3,
-              { textAlign: "left", marginLeft: 24, marginTop: 10 },
+              customStyles.customBox1,
+              {
+                width: "100%",
+                maxHeight: height * 0.3,
+                height: "fit-content",
+                borderTopLeftRadius: 0,
+                borderTopRightRadius: 0,
+                overflow: "hidden",
+              },
             ]}
           >
-            Class announcement
-          </Text>
-          <Text
-            style={[customStyles.h3, { textAlign: "left", marginLeft: 24 }]}
-          >
-            Insert announcement here!
-          </Text>
-          <View
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "row",
-              marginTop: "auto",
-              marginBottom: 10,
-            }}
-          >
-            <TouchableOpacity>
-              <Text style={customStyles.bodySmall}>See all...</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <ScrollView style={{ marginBottom: height * 0.1 }}>
-          <View style={{ paddingHorizontal: width * 0.05 }}>
-            <View>
+            <View style={customStyles.pageTitleContainer}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("LearningZoneTeacher")}
+                style={[customStyles.notficationIcon, { right: width * 0.9 }]}
+              >
+                <Image source={require("../assets/icons/back.png")}></Image>
+              </TouchableOpacity>
+              <Text style={customStyles.pageTitle}>{class_.class_id}</Text>
               <View
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: height * 0.04,
+                  justifyContent: "center",
+                  position: "absolute",
+                  right: 0,
+                  marginTop: "3%",
+                  marginRight: "2%",
                 }}
               >
-                <Text style={[customStyles.h4, { flex: 1 }]}>Assignment</Text>
-                <Text style={customStyles.h4}>
-                  {filteredData.length} assignments
-                </Text>
+                <LearningzoneAddButton
+                  classID={class_.class_id}
+                  setIsPosting={setIsPosting}
+                />
               </View>
-              
-              <View style={customStyles.learningZoneAssignmentWidget}>
-                <AssignmentListTeacher data={filteredData} />
+            </View>
+            <Text
+              style={[
+                customStyles.h3,
+                { textAlign: "left", marginLeft: 24, marginTop: "5%" },
+              ]}
+            >
+              Class announcement
+            </Text>
+            <Text
+              numberOfLines={3}
+              style={[
+                customStyles.h3,
+                {
+                  textAlign: "left",
+                  marginLeft: 24,
+                  marginTop: 5,
+                  width: "90%",
+                },
+              ]}
+            >
+              {announce}
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "row",
+                marginTop: "auto",
+                marginBottom: 10,
+              }}
+            >
+              <TouchableOpacity>
+                <Text style={customStyles.bodySmall}>See all...</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <ScrollView style={{ marginBottom: height * 0.1 }}>
+            <View style={{ paddingHorizontal: width * 0.05 }}>
+              <View>
                 <View
                   style={{
                     display: "flex",
-                    justifyContent: "center",
                     flexDirection: "row",
-                    marginTop: "auto",
-                    marginBottom: 10,
+                    marginTop: height * 0.04,
                   }}
                 >
-                  <TouchableOpacity>
-                    <Text style={customStyles.bodySmall}>See all...</Text>
-                  </TouchableOpacity>
+                  <Text style={[customStyles.h4, { flex: 1 }]}>Assignment</Text>
+                  <Text style={customStyles.h4}>
+                    {filteredData.length} assignments
+                  </Text>
+                </View>
+
+                <View style={customStyles.learningZoneAssignmentWidget}>
+                  <AssignmentListTeacher data={filteredData} />
+                  <View
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "row",
+                      marginTop: "auto",
+                      marginBottom: 10,
+                    }}
+                  >
+                    <TouchableOpacity>
+                      <Text style={customStyles.bodySmall}>See all...</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginTop: height * 0.04,
+                    }}
+                  >
+                    <Text style={[customStyles.h4, { flex: 1 }]}>File</Text>
+                  </View>
+                  <View style={customStyles.learningZoneAssignmentWidget}>
+                    <FileRecordList data={filteredData} type="teacher" />
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        marginTop: "auto",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <TouchableOpacity>
+                        <Text style={customStyles.bodySmall}>See all...</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
+                <View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginTop: height * 0.04,
+                    }}
+                  >
+                    <Text style={[customStyles.h4, { flex: 1 }]}>Record</Text>
+                  </View>
+                  <View style={customStyles.learningZoneAssignmentWidget}>
+                    <FileRecordList data={filteredData} type="teacher" />
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        flexDirection: "row",
+                        marginTop: "auto",
+                        marginBottom: 10,
+                      }}
+                    >
+                      <TouchableOpacity>
+                        <Text style={customStyles.bodySmall}>See all...</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </View>
               </View>
-
-              <View>
-                  <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
-                    <Text style={[customStyles.h4,{flex:1}]}>File</Text>
-                  </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
-                    <FileRecordList 
-                    data={filteredData}
-                    type='teacher'/>
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: 'row',
-                        marginTop:'auto',
-                        marginBottom: 10
-                      }}
-                    >
-                      <TouchableOpacity>
-                        <Text style={customStyles.bodySmall}>See all...</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-               
-                <View>
-                  <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
-                    <Text style={[customStyles.h4,{flex:1}]}>Record</Text>
-                  </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
-                    <FileRecordList 
-                    data={filteredData}
-                    type='teacher'/>
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: 'row',
-                        marginTop:'auto',
-                        marginBottom: 10
-                      }}
-                    >
-                      <TouchableOpacity>
-                        <Text style={customStyles.bodySmall}>See all...</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-
             </View>
-          </View>
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
       )}
     </SafeAreaView>
   );

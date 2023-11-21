@@ -34,7 +34,7 @@ const postAssignment = async (
     } else {
       throw new Error("Network response was not ok");
     }
-    const assignmentIDResponse = await fetch(`${ipv4.golf}getAssignmentID`);
+    const assignmentIDResponse = await fetch(`${ipv4.mark}getAssignmentID`);
     const assignmentIDData = await assignmentIDResponse.json();
     const maxAssID = assignmentIDData.maxAssignmentId;
 

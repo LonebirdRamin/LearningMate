@@ -1,20 +1,20 @@
+import { View, Text } from "react-native";
+import React from "react";
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
-import moment from "moment";
-const insertPlan = async (
+
+const PostAnnouncement = async (
   insertData,
-  setIsLoading,
-  setNewPlan,
-  setTitle,
-  setDetail,
-  setSelectedType,
-  setDate,
   setModalVisible,
-  setIsChanged
+  setIsLoading,
+  setIsPosting
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.post(`${ipv4.mark}createPlanner`, insertData);
+    const response = await axios.post(
+      `${ipv4.mark}postAnnouncement`,
+      insertData
+    );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;
@@ -27,14 +27,9 @@ const insertPlan = async (
     alert("Add planner failed!" + error.message);
   } finally {
     setIsLoading(false);
-    setNewPlan();
-    setTitle("");
-    setDetail("");
-    setSelectedType("Work");
-    setDate(new Date(moment().format()));
     setModalVisible(false);
-    setIsChanged(true);
+    setIsPosting(true);
   }
 };
 
-export default insertPlan;
+export default PostAnnouncement;

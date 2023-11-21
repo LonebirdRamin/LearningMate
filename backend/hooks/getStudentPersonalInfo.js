@@ -3,7 +3,7 @@ const getStudentPersonalInfo = async (email, setPerInfo, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getStudentPersonalInfo?email=${email}`
+      `${ipv4.mark}getStudentPersonalInfo?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

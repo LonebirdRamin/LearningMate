@@ -4,18 +4,28 @@ import FillBoxForm from "./FillBoxForm";
 import InsertVideo from "./InsertVideo";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import InputFileLearning from "./InputFileLearning";
+import PostFile from "../../backend/hooks/postFile";
 
-const RecordForm = ({ selected, setModalVisible, classID, setIsLoading }) => {
+const RecordForm = ({
+  setIsPosting,
+  setModalVisible,
+  classID,
+  setIsLoading,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDesciption] = useState("");
   const [video, setVideo] = useState(null);
-  const [insertData, setInsertData] = useState({});
-  const [fileSelected, setFileSelected] = useState(null);
-  const email = "temp email";
+  const [insertData, setInsertData] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  const fileType = "Record";
 
   useEffect(() => {
-    console.log("---------Record--------\n");
-    console.log(insertData);
+    if (insertData !== null) {
+      // insertRecord(insertData ,setIsPosting,setModalVisible,classID,setIsLoading )
+      PostFile(classID, fileType, video, setUploading, setVideo);
+      setModalVisible(false);
+    }
   }, [insertData]);
 
   return (
@@ -23,7 +33,6 @@ const RecordForm = ({ selected, setModalVisible, classID, setIsLoading }) => {
       <FillBoxForm value={setTitle} text={"Title"} />
       <FillBoxForm value={setDesciption} text={"Description (optional)"} />
       <InsertVideo setVideo={setVideo} />
-      <InputFileLearning setFileSelected={setFileSelected} />
       <View style={[formAssignmentStyles.buttonMain, { marginTop: "5%" }]}>
         <TouchableOpacity
           style={formAssignmentStyles.confirmButton}
@@ -34,14 +43,11 @@ const RecordForm = ({ selected, setModalVisible, classID, setIsLoading }) => {
               ]);
             } else {
               setInsertData({
-                email: email,
-                class_id: selected,
+                class_id: classID,
                 record_title: title,
                 record_information: description,
-                record_file: fileSelected,
                 record_video: video,
               });
-              setModalVisible(false);
             }
           }}
         >
