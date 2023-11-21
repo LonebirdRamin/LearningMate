@@ -651,3 +651,22 @@ app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });
+
+app.get('/api/getSemesterYear', function (req, res, next) {
+  console.log("Get Semester and Year List For Student");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    'SELECT DISTINCT(c.class_period_year), c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;',
+    [email],
+    function(err, semesterListResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'List of semester query error occurred' });
+      } else {
+        console.log("Success list of semester query");
+        res.json(semesterListResults);
+      }
+    }
+  );
+});
