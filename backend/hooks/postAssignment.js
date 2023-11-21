@@ -23,7 +23,7 @@ const postAssignment = async (
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.golf}createAssignment`,
+      `${ipv4.green}createAssignment`,
       insertData
     );
     console.log("Response From Post Ass: ", response.data);
@@ -34,7 +34,7 @@ const postAssignment = async (
     } else {
       throw new Error("Network response was not ok");
     }
-    const assignmentIDResponse = await fetch(`${ipv4.golf}getAssignmentID`);
+    const assignmentIDResponse = await fetch(`${ipv4.green}getAssignmentID`);
     const assignmentIDData = await assignmentIDResponse.json();
     const maxAssID = assignmentIDData.maxAssignmentId;
 
@@ -64,7 +64,7 @@ const postAssignment = async (
     console.log("STUDENT EACH CLASS:", studentEachClass);
 
     const generateStatusResponse = await axios.post(
-      `${ipv4.golf}generateStatus`,
+      `${ipv4.green}generateStatus`,
       { dataToInsert: studentEachClass }
     );
     if (generateStatusResponse.status === 201) {
@@ -106,7 +106,7 @@ const postAssignment = async (
   //     console.log(insertData);
 
   //     const response = await axios.post(
-  //       `${ipv4.golf}createAssignment`,
+  //       `${ipv4.green}createAssignment`,
   //       insertData
   //     );
   //     console.log(response.data);

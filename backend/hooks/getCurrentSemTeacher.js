@@ -3,7 +3,7 @@ const getCurrentSemTeacher = async (email, setCurrentSem, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.golf}getCurrentSemesterForTeacher?email=${email}`
+      `${ipv4.green}getCurrentSemesterForTeacher?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
