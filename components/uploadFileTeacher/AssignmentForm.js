@@ -6,7 +6,8 @@ import InputFileLearning from "./InputFileLearning";
 import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
 import postAssignment from "../../backend/hooks/postAssignment";
-import PostFile from "../../backend/hooks/postFile";
+import PostFile from "../../backend/hooks/submitFileStudent";
+import PostFileTeacher from "../../backend/hooks/postFileTeacher";
 
 const AssignmentForm = ({
   setIsPosting,
@@ -37,7 +38,14 @@ const AssignmentForm = ({
         setIsLoading,
         setIsPosting
       );
-      PostFile(classID, fileType, file, setUploading, setFile);
+      PostFileTeacher(
+        classID,
+        fileType,
+        file,
+        setUploading,
+        setFile,
+        textTitle
+      );
       setModalVisible(false);
     }
   }, [insertData]);

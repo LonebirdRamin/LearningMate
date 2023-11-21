@@ -6,16 +6,17 @@ import { db } from "../database/firebaseDB";
 import { app, storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 
-const PostFileTeacher = async (
+//Use for handle student submission
+const SubmitFileStudent = async (
   classID,
   fileType,
   file,
   setUploading,
-  setFile,
-  textTitle
+  setFile
 ) => {
   setUploading(true);
-  // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
+  // console.log("Test SubmitFileStudent: \n" + classID + "\n" + fileType + "\n" + file);
+
   try {
     if (!file || !file.assets || file.assets.length === 0) {
       throw new Error("Invalid file selected");
@@ -52,7 +53,7 @@ const PostFileTeacher = async (
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
     const storageRef = ref(
       storage,
-      `storage/${classID}/${fileType}/${textTitle}/teacher/${filename}`
+      `storage/${classID}/${fileType}/${textTitle}/student/${filename}}`
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);
@@ -74,4 +75,4 @@ const PostFileTeacher = async (
   }
 };
 
-export default PostFileTeacher;
+export default SubmitFileStudent;
