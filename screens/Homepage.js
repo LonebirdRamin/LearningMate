@@ -27,6 +27,7 @@ import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import queryPlanner from "../backend/hooks/queryPlanner";
 import { useIsFocused } from '@react-navigation/native';
+import getCurrentSemStudent from "../backend/hooks/getCurrentSemStudent";
 
 const height = Dimensions.get("screen").height;
 
@@ -51,12 +52,15 @@ const Homepage = ({ navigation }) => {
   const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
 
   // Start - manage about assignment
-  const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
+  const [isAssignmentLoading, setIsAssignmentLoading] = useState(true);
+  const [isCurSemLoading, setIsCurSemLoading] = useState(true);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
+  const [curSem, setCurSem] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
+      getCurrentSemStudent(email, setCurSem, setIsCurSemLoading);
       queryAssignment(
         email,
         setIsAssignmentLoading,
@@ -77,7 +81,6 @@ const Homepage = ({ navigation }) => {
     const fetchPlanner = async () => {
       await queryPlanner(email, setQueriedPlanner);
     };
-
     fetchPlanner();
   }, [queriedSchedule]);
 
@@ -102,10 +105,11 @@ const Homepage = ({ navigation }) => {
       return "planner_category" in event;
     };
 
-    //Filter out planner that is not in the 7-day period
+    //Filter out planner that is not in the 7-day period and cur semester/year
     const validEvents = copy.filter((item) => {
       if (isClassEvent(item)) {
-        return true;
+        return item.class_period_year == curSem.class_period_year 
+        && item.class_period_semester == curSem.class_period_semester;
       }
       const eventStartDate = new Date(item.start_time);
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
@@ -148,16 +152,18 @@ const Homepage = ({ navigation }) => {
 
   useEffect(() => {
     //Filter again when day changes
-    const res = filterEvents(appendedEvents).filter(
-      (item) => item.date_name == day
-      //HAVE TO IMPLEMENT FILTER SEMESTER TOO!!!!!!
-    );
-    setValidEvents(res);
-  }, [appendedEvents, day]);
+    if(curSem !== undefined){
+      const res = filterEvents(appendedEvents).filter(
+        (item) => item.date_name == day
+        );
+        setValidEvents(res);
+    }
+      
+  }, [appendedEvents, day, curSem]);
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {isloading ? (
+      {isloading || isCurSemLoading ? (
         <View
           style={[
             customStyles.pageBackground,

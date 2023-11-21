@@ -96,7 +96,7 @@ app.get("/api/getStudentSchedule", function (req, res, next) {
   console.log("Query Student Schedule");
   const email = req.query.email;
   connection.query(
-    "SELECT cs.class_id, c.class_name, d.date_name, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_student` AS `cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
+    "SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester, d.date_name, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_student` AS `cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
     [email],
     function (err, studentResults, fields) {
       if (err) {
@@ -117,7 +117,7 @@ app.get("/api/getTeacherSchedule", function (req, res, next) {
   console.log("Query Teacher Schedule");
   const email = req.query.email;
   connection.query(
-    "SELECT cs.class_id, c.class_name, d.date_name, csd.start_time, csd.end_time FROM `teacher` AS `s` JOIN `class_lecturer` AS `cs` ON cs.teacher_id = s.teacher_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
+    "SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester, d.date_name, csd.start_time, csd.end_time FROM `teacher` AS `s` JOIN `class_lecturer` AS `cs` ON cs.teacher_id = s.teacher_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
     [email],
     function (err, teacherResults, fields) {
       if (err) {
@@ -571,6 +571,25 @@ app.get('/api/getCurrentSemesterForStudent', function (req, res, next) {
   const email = req.query.email;
   connection.query(
     'SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON c.class_id = cs.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;',
+    [email],
+    function(err, semesterResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Current semester query error occurred' });
+      } else {
+        console.log("success current semester query");
+        res.json(semesterResults);
+      }
+    }
+  );
+});
+
+app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
+  console.log("Get Current Semester For Teacher");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    'SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON t.teacher_id = cl.teacher_id WHERE t.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;',
     [email],
     function(err, semesterResults, fields) {
       if (err) {
