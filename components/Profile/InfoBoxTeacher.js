@@ -28,7 +28,7 @@ const InfoBoxTeacher = ({ header, data, handlePress }) => {
   //       : header === "Activity"
   //       ? Object.values(data)
   //       : data;
-  let prepData = Object.values(data).slice(1);
+  
   let i = 0;
   const icon = [user, faculty, department];
   const subHeader =
@@ -47,7 +47,7 @@ const InfoBoxTeacher = ({ header, data, handlePress }) => {
         onPress={() => handlePress()}
       >
         {/* Start - Each row infomation */}
-        {prepData.map((item) => {
+        {data.map((item) => {
           return (
             <View key={uuid.v4()}>
               <View style={profileStyles.gap} />

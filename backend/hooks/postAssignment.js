@@ -40,7 +40,7 @@ const postAssignment = async (
 
     console.log("InsertData classID:" + insertData.classID);
     const queryStudentResponse = await fetch(
-      `${ipv4.mark}getStudent?classID=${insertData.classID}`
+      `${ipv4.kong}getStudent?classID=${insertData.classID}`
     );
 
     const queryStudentData = await queryStudentResponse.json();

@@ -1,6 +1,8 @@
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React from 'react'
 import customStyles from '../../styles/customStyles'
+const height = Dimensions.get("screen").height
+const width = Dimensions.get("screen").width
 
 const ClassList = ({data,navigation,destination}) => {
 
@@ -16,6 +18,7 @@ const ClassList = ({data,navigation,destination}) => {
   return (
     <View style={customStyles.eventsContainer}>
         <FlatList
+        style={{marginBottom: height*0.1}}
         data={data}
         renderItem={({item})=>(
             <TouchableOpacity style={customStyles.classWidget} 
