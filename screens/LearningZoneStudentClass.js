@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
   ActivityIndicator} from 'react-native'
-import React , { useState, useContext, useEffect } from 'react'
+import React , { useState, useContext, useEffect, useRef } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import customStyles from '../styles/customStyles'
 import globleStyles from "../styles/globleStyles";
@@ -29,8 +29,10 @@ const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
 const [assignmentData, setAssignmentData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
 const [assignNum, setAssignNum] = useState("-");
-const [toggleModal, setToggleModal] = useState(false);
+const [isPosting, setIsPosting] = useState(false);
 const [announce, setAnnounce] = useState("No Announcement");
+const [expanded, setExpanded] = useState([false,false,false,false])
+let ref = [];
 
 useEffect(() => {
   const fetchData = async () => {
@@ -41,7 +43,6 @@ useEffect(() => {
       setAssignNum
     );
     const result = await queryAnnouncement(class_.class_id);
-    // console.log(result);
     setAnnounce(result[0].class_announcement);
     setIsPosting(false);
   };
@@ -54,7 +55,32 @@ useEffect(()=>{
   setFilteredData(assignmentData.filter((item)=>{
     return item.class_id == class_.class_id;
   }))
-},[assignmentData])
+},[assignmentData]);
+
+  const initializeRefs = (count) => {
+    ref = Array.from({ length: count }, () => useRef(null));
+  };
+  initializeRefs(4)
+
+const expand = (ref,index,expanded)=>{
+  const array = [...expanded];
+
+    if(array[index]){
+      ref[index].current.setNativeProps({
+        style:{
+          maxHeight: height*0.35
+        }
+      });
+    }else{
+      ref[index].current.setNativeProps({
+        style:{
+          maxHeight: 'none'
+        }
+      })
+    }
+    array[index] = !array[index]
+    setExpanded(array)
+}
 
 
   return (
@@ -74,9 +100,9 @@ useEffect(()=>{
         <View style={customStyles.pageBackground}>
 
             <View style={[customStyles.customBox1,
-                {width:'100%',maxHeight:height*0.2,height:'fit-content'
+                {width:'100%',height:'fit-content'
                 ,borderTopLeftRadius:0,borderTopRightRadius:0,
-                overflow:'hidden'}]}>
+                overflow:'hidden'}]} ref={ref[0]}>
                 <View style={customStyles.pageTitleContainer}>
                     <TouchableOpacity
                       onPress={() => navigation.navigate("LearningZoneStudent")}
@@ -92,7 +118,7 @@ useEffect(()=>{
                 </Text>
                 <Text style={[customStyles.h3,
                   { textAlign: "left", marginLeft: 24}]}>
-                Insert announcement here!</Text>
+                {announce}</Text>
                 <View
                   style={{
                     display: "flex",
@@ -102,20 +128,19 @@ useEffect(()=>{
                     marginBottom: 10
                   }}
                 >
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={()=>expand(ref,0,expanded)}>
                     <Text style={customStyles.bodySmall}>See all...</Text>
                   </TouchableOpacity>
                 </View>
             </View>
             <ScrollView style={{marginBottom: height*0.1}}>
               <View style={{paddingHorizontal:width*0.05 }}>
-                
                 <View>
                   <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
                     <Text style={[customStyles.h4,{flex:1}]}>Assignment</Text>
                     <Text style={customStyles.h4}>{filteredData.length} assignments</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
+                  <View style={customStyles.learningZoneAssignmentWidget} ref={ref[1]}>
                     <AssignmentList 
                     data={filteredData}/>
                     <View
@@ -127,7 +152,7 @@ useEffect(()=>{
                         marginBottom: 10
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>expand(ref,1,expanded)}>
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
@@ -138,7 +163,7 @@ useEffect(()=>{
                   <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
                     <Text style={[customStyles.h4,{flex:1}]}>File</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
+                  <View style={customStyles.learningZoneAssignmentWidget} ref={ref[2]}>
                     <FileRecordList 
                     data={filteredData}/>
                     <View
@@ -150,7 +175,7 @@ useEffect(()=>{
                         marginBottom: 10
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>expand(ref,2,expanded)}>
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
@@ -161,7 +186,7 @@ useEffect(()=>{
                   <View style={{display:'flex',flexDirection:'row',marginTop:height*0.04}}>
                     <Text style={[customStyles.h4,{flex:1}]}>Record</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
+                  <View style={customStyles.learningZoneAssignmentWidget} ref={ref[3]}>
                     <FileRecordList 
                     data={filteredData}/>
                     <View
@@ -173,7 +198,7 @@ useEffect(()=>{
                         marginBottom: 10
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>expand(ref,3,expanded)}>
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>

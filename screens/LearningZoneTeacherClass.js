@@ -9,7 +9,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import customStyles from "../styles/customStyles";
 import globleStyles from "../styles/globleStyles";
@@ -33,6 +33,8 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [assignNum, setAssignNum] = useState("-");
   const [isPosting, setIsPosting] = useState(false);
   const [announce, setAnnounce] = useState("No Announcement");
+  const [expanded, setExpanded] = useState([false,false,false,false])
+  let ref = [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +45,6 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         setAssignNum
       );
       const result = await queryAnnouncement(class_.class_id);
-      // console.log(result);
       setAnnounce(result[0].class_announcement);
       setIsPosting(false);
     };
@@ -59,6 +60,32 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
       })
     );
   }, [assignmentData]);
+  
+const initializeRefs = (count) => {
+    ref = Array.from({ length: count }, () => useRef(null));
+  };
+
+  initializeRefs(4)
+
+const expand = (ref,index,expanded)=>{
+  const array = [...expanded];
+
+    if(array[index]){
+      ref[index].current.setNativeProps({
+        style:{
+          maxHeight: height*0.35
+        }
+      });
+    }else{
+      ref[index].current.setNativeProps({
+        style:{
+          maxHeight: 'none'
+        }
+      })
+    }
+    array[index] = !array[index]
+    setExpanded(array)
+}
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -87,6 +114,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 overflow: "hidden",
               },
             ]}
+            ref={ref[0]}
           >
             <View style={customStyles.pageTitleContainer}>
               <TouchableOpacity
@@ -142,7 +170,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 marginBottom: 10,
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>expand(ref,0,expanded)}>
                 <Text style={customStyles.bodySmall}>See all...</Text>
               </TouchableOpacity>
             </View>
@@ -163,7 +191,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   </Text>
                 </View>
 
-                <View style={customStyles.learningZoneAssignmentWidget}>
+                <View style={customStyles.learningZoneAssignmentWidget} ref={ref[1]}>
                   <AssignmentListTeacher data={filteredData} />
                   <View
                     style={{
@@ -174,7 +202,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                       marginBottom: 10,
                     }}
                   >
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>expand(ref,1,expanded)}>
                       <Text style={customStyles.bodySmall}>See all...</Text>
                     </TouchableOpacity>
                   </View>
@@ -190,7 +218,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>File</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
+                  <View style={customStyles.learningZoneAssignmentWidget}  ref={ref[2]}>
                     <FileRecordList data={filteredData} type="teacher" />
                     <View
                       style={{
@@ -201,7 +229,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                         marginBottom: 10,
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity  onPress={()=>expand(ref,2,expanded)}>
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
@@ -218,7 +246,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>Record</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}>
+                  <View style={customStyles.learningZoneAssignmentWidget}  ref={ref[3]}>
                     <FileRecordList data={filteredData} type="teacher" />
                     <View
                       style={{
@@ -229,7 +257,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                         marginBottom: 10,
                       }}
                     >
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>expand(ref,3,expanded)}>
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
