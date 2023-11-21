@@ -46,6 +46,12 @@ const Homepage = ({ navigation }) => {
 
   // Start - Manage pull to reload
   const [refreshing, setRefreshing] = useState(false);
+  const onRefresh=()=>{
+    queryAssignment(email,
+      setRefreshing,
+      setAssignmentData,
+      setAssignNum)
+  }
   // End - Manange pull to reload
 
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
@@ -61,12 +67,6 @@ const Homepage = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       getCurrentSemStudent(email, setCurSem, setIsCurSemLoading);
-      queryAssignment(
-        email,
-        setIsAssignmentLoading,
-        setAssignmentData,
-        setAssignNum
-      );
       querySchedule(email, setQueriedSchedule);
       
     };
@@ -76,6 +76,19 @@ const Homepage = ({ navigation }) => {
     }
   }, [isFocused]);
   // End - manage about assignment
+
+  useEffect(
+    ()=>{
+      queryAssignment(
+        email,
+        setIsAssignmentLoading,
+        setAssignmentData,
+        setAssignNum
+      );
+    }, []
+
+  );
+  
 
   useEffect(() => {
     const fetchPlanner = async () => {
@@ -163,18 +176,7 @@ const Homepage = ({ navigation }) => {
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {isloading || isCurSemLoading ? (
-        <View
-          style={[
-            customStyles.pageBackground,
-            { display: "flex", justifyContent: "center" },
-          ]}
-        >
-          <View style={globleStyles.loading}>
-            <ActivityIndicator size={100} color="#F04E22"></ActivityIndicator>
-          </View>
-        </View>
-      ) : (
+      {(
         <View style={customStyles.pageBackground}>
           <View
             style={[
@@ -246,6 +248,9 @@ const Homepage = ({ navigation }) => {
               ) : (
                 
                 <FlatList
+                  refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#F04E22", "red"] } progressViewOffset={height/30} />
+                  }
                   
                   data={assignmentData}
                   renderItem={({ item }) => (
@@ -254,7 +259,9 @@ const Homepage = ({ navigation }) => {
                       subject={item.class_name}
                       task={item.assignment_name}
                       dueDate={item.assignment_due_date}
+                      refreshing={refreshing}
                     />
+                    
                   )}
                 />
               )}
