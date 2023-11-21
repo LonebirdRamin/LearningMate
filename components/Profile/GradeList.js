@@ -8,7 +8,12 @@ import DropDown from "./DropDown";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
-const GradeList = ({ gpax, data, currentSem }) => {
+const GradeList = ({ gpax, data, currentSem, semYear }) => {
+  
+
+  
+  
+
   const [selectedSem, setSelectedSem] = useState(
     currentSem.class_period_semester + "/" + currentSem.class_period_year
   );
@@ -72,10 +77,9 @@ const GradeList = ({ gpax, data, currentSem }) => {
                   currentSem.class_period_semester +"/"+
                   currentSem.class_period_year,
               },
-              {
-                label: "2/2022",
-                value: "2/2022",
-              }
+              ...((semYear.slice(1)).map((item)=>{
+                return {label: item.class_period_semester+"/"+item.class_period_year, value: (item.class_period_semester+"/"+item.class_period_year)}
+              }))
             ]}
           />
         </View>
