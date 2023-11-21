@@ -6,6 +6,7 @@ import InputFileLearning from "./InputFileLearning";
 import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
 import postAssignment from "../../backend/hooks/postAssignment";
+import PostFile from "../../backend/hooks/postFile";
 
 const AssignmentForm = ({
   setIsPosting,
@@ -16,15 +17,17 @@ const AssignmentForm = ({
   //Don't forget to send "Class_ID" from LearningZone page
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
-  const [selectedFile, setFileSelected] = useState(null);
+  const [file, setFile] = useState(null);
   const [showDate, handleShowDate] = useState(true);
   const [dateTime, handleDateTime] = useState(null);
   const [insertData, setInsertData] = useState(null);
-  const email = "khajonpong.akk@kmutt.ac.th";
+  const [uploading, setUploading] = useState(false);
+  const fileType = "Assignment";
+
   useEffect(() => {
     if (insertData !== null) {
-      console.log("---------Inserting Assignment--------\n");
-      console.log(insertData);
+      // console.log("---------Inserting Assignment--------\n");
+      // console.log(insertData);
       postAssignment(
         insertData,
         setModalVisible,
@@ -34,6 +37,8 @@ const AssignmentForm = ({
         setIsLoading,
         setIsPosting
       );
+      PostFile(classID, fileType, file, setUploading, setFile);
+      setModalVisible(false);
     }
   }, [insertData]);
 
@@ -49,7 +54,7 @@ const AssignmentForm = ({
         text={"Instruction (optional)"}
       />
       {/* Input file zone */}
-      <InputFileLearning setFileSelected={setFileSelected} />
+      <InputFileLearning setFile={setFile} />
       <CheckBoxLearning handleShowDate={handleShowDate} showDate={showDate} />
       {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}
       <View style={formAssignmentStyles.buttonMain}>
@@ -69,7 +74,6 @@ const AssignmentForm = ({
                 description: textInformation,
                 // file: selectedFile,
               });
-              setModalVisible(false);
             }
           }}
         >

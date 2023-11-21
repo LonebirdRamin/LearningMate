@@ -5,6 +5,7 @@ import FillBoxForm from "./FillBoxForm";
 import InputFileLearning from "./InputFileLearning";
 import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
+import PostFile from "../../backend/hooks/postFile";
 
 const PostFileTeacher = ({
   setIsPosting,
@@ -14,12 +15,18 @@ const PostFileTeacher = ({
 }) => {
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
-  const [selectedFile, setFileSelected] = useState(null);
-  const [insertData, setInsertData] = useState({});
-  const email = "email eiei";
+  const [file, setFile] = useState(null);
+  const [insertData, setInsertData] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const fileType = "Document";
+
   useEffect(() => {
-    console.log("---------File--------\n");
-    console.log(insertData);
+    if (insertData !== null) {
+      console.log("---------File--------\n");
+      console.log(insertData);
+      PostFile(classID, fileType, file, setUploading, setFile);
+      setModalVisible(false);
+    }
   }, [insertData]);
   return (
     <View
@@ -33,7 +40,7 @@ const PostFileTeacher = ({
         text={"Information (optional)"}
       />
       {/* Input file zone */}
-      <InputFileLearning setFileSelected={setFileSelected} />
+      <InputFileLearning setFile={setFile} />
       <View style={[formAssignmentStyles.buttonMain, { marginTop: "5%" }]}>
         <TouchableOpacity
           style={formAssignmentStyles.confirmButton}
@@ -44,13 +51,10 @@ const PostFileTeacher = ({
               ]);
             } else {
               setInsertData({
-                email: email,
-                class_id: selected,
-                assignment_name: textTitle,
-                assignment_description: textInformation,
-                file: selectedFile,
+                class_id: classID,
+                document_name: textTitle,
+                document_description: textInformation,
               });
-              setModalVisible(false);
             }
           }}
         >

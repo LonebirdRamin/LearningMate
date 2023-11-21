@@ -34,8 +34,10 @@ const AnnounceForm = ({
             height: "50%",
             textAlignVertical: "top",
             paddingTop: "3%",
+            paddingHorizontal: "5%",
           },
         ]}
+        multiline={true}
         inputMode="text"
         onChangeText={(text) => setAnnounce(text)}
       />

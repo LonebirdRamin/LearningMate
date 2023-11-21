@@ -6,6 +6,8 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +19,7 @@ import { useIsFocused } from "@react-navigation/native";
 import AssignmentListTeacher from "../components/LearningZone/AssignmentListTeacher";
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
 import FileRecordList from "../components/LearningZone/FileRecordList";
+import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -77,7 +80,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
               customStyles.customBox1,
               {
                 width: "100%",
-                maxHeight: height * 0.2,
+                maxHeight: height * 0.3,
                 height: "fit-content",
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
@@ -117,6 +120,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
               Class announcement
             </Text>
             <Text
+              numberOfLines={3}
               style={[
                 customStyles.h3,
                 {

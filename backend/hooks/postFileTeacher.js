@@ -6,10 +6,15 @@ import { db } from "../database/firebaseDB";
 import { app, storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 
-const PostFile = async (classID, fileType, file, setUploading, setFile) => {
+const PostFileTeacher = async (
+  classID,
+  fileType,
+  file,
+  setUploading,
+  setFile
+) => {
   setUploading(true);
   // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
-
   try {
     if (!file || !file.assets || file.assets.length === 0) {
       throw new Error("Invalid file selected");
@@ -68,4 +73,4 @@ const PostFile = async (classID, fileType, file, setUploading, setFile) => {
   }
 };
 
-export default PostFile;
+export default PostFileTeacher;

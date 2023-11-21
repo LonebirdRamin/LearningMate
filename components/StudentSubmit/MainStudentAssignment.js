@@ -14,8 +14,8 @@ const MainStudentAssignment = ({ setModalVisible }) => {
   const [description, setDescription] = useState("");
   const [fileSelected, setFileSelected] = useState(null);
   const [insertData, setInsertData] = useState(null);
-  const email = "khajonpong.akk@kmutt.ac.th";
-  const selected = "CPE334";
+  const email = "pannawat.duro@kmutt.ac.th";
+  const classID = "CPE334";
 
   useEffect(() => {
     if (insertData !== null) {
@@ -53,7 +53,7 @@ const MainStudentAssignment = ({ setModalVisible }) => {
           onPress={() => {
             setInsertData({
               email: email,
-              class_id: selected,
+              class_id: classID,
               description: description,
               file: fileSelected,
             });

@@ -21,7 +21,7 @@ import DataContext from "../../routes/DataContext";
 import insertPlan from "../../backend/hooks/insertPlan";
 const plannerType = ["Work", "Read", "Chill"];
 
-const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
+const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
   // Start - Information for plan
   const email = useContext(DataContext);
   const [title, setTitle] = useState("");
@@ -73,7 +73,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
     showMode("time");
   };
   // End - Datetime zone
- 
+
   // Start - Start adding plan if the newPlan is add
   useEffect(() => {
     if (newPlan != undefined) {
@@ -86,13 +86,12 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
         setSelectedType,
         setDate,
         setModalVisible,
-        setIsChanged 
+        setIsChanged
       );
     }
   }, [newPlan]);
   // End - Start adding plan if the newPlan is add
 
-  
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Modal

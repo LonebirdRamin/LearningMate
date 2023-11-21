@@ -143,7 +143,7 @@ const FormAssignment = ({
       });
 
       console.log("DocumentPicker result:", result);
-      setFileName(result.name);
+      setFileName(result.assets[0].name);
       if (!result.canceled) {
         setFile(result);
       }

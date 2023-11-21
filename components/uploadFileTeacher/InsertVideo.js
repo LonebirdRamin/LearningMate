@@ -5,38 +5,26 @@ import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
 const InsertVideo = ({ setVideo }) => {
-  const handleDocumentSelection = async () => {
+  const [videoName, setVideoName] = useState("No video selected");
+
+  const pickFile = async () => {
     try {
-      const documentResult = await DocumentPicker.getDocumentAsync({
+      let result = await DocumentPicker.getDocumentAsync({
         type: "video/*",
         multiple: true,
+        copyToCacheDirectory: true,
       });
 
-      if (!documentResult.cancelled) {
-        // Check if assets array is present and not empty
-        if (documentResult.assets && documentResult.assets.length > 0) {
-          documentResult.assets.forEach((asset) => {
-            console.log(
-              `URI: ${asset.uri}\n` +
-                `Title: ${asset.Title}\n` +
-                `Type: ${asset.mimeType}\n` +
-                `Size: ${asset.size}`
-            );
-          });
-
-          // If needed, you can perform additional actions with the selected assets.
-          // For example, you can store them in state using setFileSelected.
-          setVideo(documentResult.assets);
-        } else {
-          console.log("No assets selected");
-        }
-      } else {
-        console.log("Document picking canceled");
+      console.log("DocumentPicker result:", result);
+      setVideoName(result.assets[0].name);
+      if (!result.canceled) {
+        setVideo(result);
       }
     } catch (error) {
-      console.log("Error while selecting file: ", error);
+      console.error("Error picking file:", error);
     }
   };
+
   return (
     <View
       style={{
@@ -47,11 +35,14 @@ const InsertVideo = ({ setVideo }) => {
     >
       <TouchableOpacity
         style={formAssignmentStyles.inputFile}
-        onPress={handleDocumentSelection}
+        onPress={pickFile}
         activeOpacity={0.5}
       >
         <FontAwesome name="video-camera" size={16} color="#C1C1CD" />
-        <Text style={formAssignmentStyles.textFile}> Import Video(s) </Text>
+        <Text style={formAssignmentStyles.textFile}>
+          {" "}
+          Import Video(s) : {videoName}
+        </Text>
       </TouchableOpacity>
     </View>
   );

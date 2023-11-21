@@ -3,40 +3,23 @@ import React, { useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 
-const InputFileLearning = ({ setFileSelected }) => {
+const InputFileLearning = ({ setFile }) => {
   const [fileName, setFileName] = useState("No File Selected");
-  const handleDocumentSelection = async () => {
+  const pickFile = async () => {
     try {
-      const documentResult = await DocumentPicker.getDocumentAsync({
+      let result = await DocumentPicker.getDocumentAsync({
         type: "*/*",
         multiple: true,
+        copyToCacheDirectory: true,
       });
 
-      if (!documentResult.cancelled) {
-        // Check if assets array is present and not empty
-        if (documentResult.assets && documentResult.assets.length > 0) {
-          documentResult.assets.forEach((asset) => {
-            console.log(
-              `URI: ${asset.uri}\n` +
-                `Title: ${asset.Title}\n` +
-                `Type: ${asset.mimeType}\n` +
-                `Size: ${asset.size}`
-            );
-          });
-
-          // If needed, you can perform additional actions with the selected assets.
-          // For example, you can store them in state using setFileSelected.
-          const fileResult = documentResult.assets;
-          setFileSelected(fileResult);
-          setFileName(fileResult[0].name);
-        } else {
-          console.log("No assets selected");
-        }
-      } else {
-        console.log("Document picking canceled");
+      console.log("DocumentPicker result:", result);
+      setFileName(result.assets[0].name);
+      if (!result.canceled) {
+        setFile(result);
       }
     } catch (error) {
-      console.log("Error while selecting file: ", error);
+      console.error("Error picking file:", error);
     }
   };
   return (
@@ -47,14 +30,14 @@ const InputFileLearning = ({ setFileSelected }) => {
     >
       <TouchableOpacity
         style={formAssignmentStyles.inputFile}
-        onPress={handleDocumentSelection}
+        onPress={pickFile}
         activeOpacity={0.5}
       >
         <Image
           source={require("../../assets/icons/clipboardFile.png")}
           style={formAssignmentStyles.image}
         />
-        <Text style={formAssignmentStyles.textFile}>
+        <Text style={formAssignmentStyles.textFile} numberOfLines={1}>
           {" "}
           Attach file(s): {fileName}{" "}
         </Text>
