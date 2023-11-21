@@ -23,11 +23,12 @@ const data = {
   };
 const prepData = Object.values(data);
 
-const PersonalInfoTeacher = () => {
+const PersonalInfoTeacher = ({route}) => {
+  const data =  route.params;
   return (
     <View style={[globleStyles.pageContainer, {paddingTop: height*0.03}]}>
         <ScrollView style={profileStyles.scrollContainer}>
-            <InfoBoxLineTeacher header={"Info"} data={prepData} handlePress={()=>{}}/>
+            <InfoBoxLineTeacher header={"Info"} data={data} handlePress={()=>{}}/>
 
         </ScrollView>
 

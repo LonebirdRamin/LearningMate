@@ -24,26 +24,31 @@ import getTeacherPersonalInfo from "../../backend/hooks/getTeacherPersonalInfo";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-  
-  
 
-const ProfileTeacher = ({navigation}) => {
-const email = useContext(DataContext);
+const ProfileTeacher = ({ navigation }) => {
+  const email = useContext(DataContext);
   const [isPerInfoIsLoading, setPerInfoIsLoading] = useState(false);
   const [perInfo, setPerInfo] = useState([]);
+  const [prepPerInfo, setPrepPerInfo] = useState([]);
+  const [prepPerInfoDetail, setPrepPerInfoDetail] = useState([]);
 
-  useEffect(
-    ()=>{
-      getTeacherPersonalInfo(email, setPerInfo, setPerInfoIsLoading)
-    }
-    ,[])
-  
+  useEffect(() => {
+    getTeacherPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
+  }, []);
 
+  useEffect(() => {
+    let { teacher_id, faculty_name, department_name,  date_of_birth, gender, id_card, personal_email, teacher_name} = perInfo;
+    setPrepPerInfo([teacher_id, faculty_name, department_name]);
+    setPrepPerInfoDetail([teacher_id, teacher_name,gender,faculty_name, department_name, (new Date(date_of_birth)).toLocaleDateString("en-US", {day: 'numeric', month: 'short', year: 'numeric'}), id_card, personal_email,  email])
+  }, [perInfo]);
+  useEffect(()=>{
+    console.log(prepPerInfo)
+  },[prepPerInfo])
   return (
     <View style={[globleStyles.pageContainer]}>
       {isPerInfoIsLoading ? (
         <View style={globleStyles.loadingFull}>
-          <ActivityIndicator size={100} color="#F04E22"/>
+          <ActivityIndicator size={100} color="#F04E22" />
         </View>
       ) : (
         <ScrollView style={profileStyles.scrollContainer}>
@@ -83,16 +88,16 @@ const email = useContext(DataContext);
           {/*Start - Info */}
           <InfoBoxTeacher
             header={"Personal Info"}
-            data={perInfo}
+            data={prepPerInfo}
             handlePress={() => {
-              navigation.push("Personal Info");
+              navigation.push("Personal Info", prepPerInfoDetail);
             }}
           />
           {/*End -  Info */}
         </ScrollView>
       )}
     </View>
-  )
-}
+  );
+};
 
-export default ProfileTeacher
+export default ProfileTeacher;

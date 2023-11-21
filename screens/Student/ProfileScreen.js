@@ -148,7 +148,7 @@ const ProfileScreen = ({ navigation }) => {
       faculty_name,
       department_name,
       degree_name,
-      (new Date(date_of_birth)).toLocaleDateString({day: "2-digit", month: 'short', year: 'numeric'}),
+      (new Date(date_of_birth)).toLocaleDateString("en-US", {day: 'numeric', month: 'short', year: 'numeric'}),
       teacher_name,
       id_card,
       email,

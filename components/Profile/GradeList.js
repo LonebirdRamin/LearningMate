@@ -17,6 +17,7 @@ const GradeList = ({ gpax, data, currentSem }) => {
   useEffect(()=>{
     let temp = data.filter((item)=> item.class_period_semester+"/"+item.class_period_year === selectedSem)
     setDisplayData(temp)
+    
   },[selectedSem])
   useEffect(()=>{
     if(displayData !== undefined)
@@ -43,7 +44,6 @@ const GradeList = ({ gpax, data, currentSem }) => {
     return average.toFixed(2); // Round to two decimal places
   }
 
-  let i = 0;
   return (
     <View>
       {/*Start - GPAX*/}
@@ -104,8 +104,9 @@ const GradeList = ({ gpax, data, currentSem }) => {
             maxHeight: height > 850 ? height * 0.55 : height * 0.5,
           }}
           data={displayData}
-          renderItem={({ item }) => {
-            i++;
+          renderItem={({ item, index }) => {
+            
+
             return (
               <View style={profileStyles.wrapper} key={uuid.v4()}>
                 <View style={profileStyles.mapBox}>
@@ -147,7 +148,7 @@ const GradeList = ({ gpax, data, currentSem }) => {
                   </View>
                   {/*End - GradeCred */}
                 </View>
-                {i === data.length ? (
+                {index == displayData.length-1 ? (
                   <></>
                 ) : (
                   <View style={profileStyles.line} />

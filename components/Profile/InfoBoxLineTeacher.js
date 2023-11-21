@@ -1,11 +1,11 @@
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, Image, TouchableOpacity, Pressable, Dimensions } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
 import uuid from 'react-native-uuid';
 
 
-
+const width = Dimensions.get('screen').width;
 
 
 
@@ -20,11 +20,11 @@ const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
           "Gender",
           "Faculty",
           "Department",
-          "Degree",
+          
           "Date of Birth",
           "ID. card number",
           "Teacher email",
-          "Your email address"
+          "Email address"
         ]
       : [];
   return (
@@ -46,10 +46,10 @@ const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
 
               <View style={profileStyles.infoRow}>
                 {/*Start - text container */}
-                <View style={profileStyles.textContainer}>
+                <View style={[profileStyles.textContainer, {overflow: "hidden"}]}>
                   <Text style={customStyles.h2}>{subHeader[i++]}</Text>
-                  <Text style={profileStyles.text("#A2A2B5", 12, "500")}>
-                    {item}
+                  <Text numberOfLines={1} style={[profileStyles.text("#A2A2B5", width*0.027, "500")]}>
+                    {item===null? "-":item}
             
                   </Text>
                 </View>

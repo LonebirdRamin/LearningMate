@@ -533,7 +533,7 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
   const email = req.query.email;
 
   connection.query(
-    "SELECT t.`teacher_name`, t.`teacher_id`,  f.faculty_name, d.department_name FROM `teacher` as t LEFT JOIN `department` AS d ON d.department_id = t.department_id LEFT JOIN `faculty` AS f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;",
+    "SELECT t.teacher_id, t.teacher_name, t.gender, f.faculty_name, d.department_name, t.date_of_birth, t.id_card, t.personal_email FROM `teacher` as t JOIN `department` as d ON t.department_id = d.department_id JOIN `faculty` as f ON d.faculty_id = f.faculty_id WHERE t.academic_email = ?;",
     [email],
     function (err, teacherResults, fields) {
       if (err) {
@@ -552,7 +552,7 @@ app.get('/api/getGrades', function (req, res) {
   const email = req.query.email;
 
   connection.query(
-    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;',
+    'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_id;',
     [email],
     function(err, result) {
       if(err) {
