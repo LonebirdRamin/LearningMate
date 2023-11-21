@@ -13,7 +13,7 @@ const LandingStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Landing"
           component={Landing}
           options={{ headerShown: false }}
@@ -36,7 +36,7 @@ const LandingStack = () => {
             // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
-        />
+        /> */}
 
         <Stack.Screen
           name="HomepageStudent"
