@@ -16,7 +16,6 @@ import Calendar from "../components/Calendar";
 import EventList from "../components/EventList";
 import assignmentStyles from "../styles/assignmentStyles";
 import AssignmentHeader from "../components/Homepage/AssignmentHeader";
-import AssignmentBox from "../components/Homepage/AssignmentBox";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SeeAllModal from "../components/Eventlist/SeeAllModal";
 import { useIsFocused, useRoute } from "@react-navigation/native";
@@ -24,10 +23,10 @@ import DataContext from "../routes/DataContext";
 import queryScheduleTeacher from "../backend/hooks/queryScheduleTeacher";
 import queryPlanner from "../backend/hooks/queryPlanner";
 import moment from "moment";
-import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
 import AssignmentBoxTeacher from "../components/Homepage/AssignmentBoxTeacher";
 import queryGetTeacherAssignment from "../backend/hooks/queryGetTeacherAssignment";
+import getCurrentSemTeacher from "../backend/hooks/getCurrentSemTeacher";
 
 const height = Dimensions.get("screen").height;
 
@@ -44,13 +43,16 @@ const HomepageTeacher = ({ navigation }) => {
   const isFocused = useIsFocused();
 
   // Start - manage about assignment
-  const [isAssignmentLoading, setIsAssignmentLoading] = useState(false);
+  const [isAssignmentLoading, setIsAssignmentLoading] = useState(true);
+  const [isCurSemLoading, setIsCurSemLoading] = useState(true);
   const [assignmentData, setAssignmentData] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
   const [isPosting, setIsPosting] = useState(false);
+  const [curSem, setCurSem] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
+      getCurrentSemTeacher(email, setCurSem, setIsCurSemLoading);
       queryGetTeacherAssignment(
         email,
         setIsAssignmentLoading,
@@ -65,27 +67,10 @@ const HomepageTeacher = ({ navigation }) => {
     }
   }, [isFocused, isPosting]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     queryGetTeacherAssignment(
-  //       email,
-  //       setIsAssignmentLoading,
-  //       setAssignmentData,
-  //       setAssignNum
-  //     );
-  //     queryScheduleTeacher(email, setQueriedSchedule);
-  //   };
-  //   fetchData();
-  //   setIsPosting(false);
-  // }, [isPosting]);
-
-  // End - manage about assignment
-
   useEffect(() => {
     const fetchPlanner = async () => {
       await queryPlanner(email, setQueriedPlanner);
     };
-
     fetchPlanner();
   }, [queriedSchedule]);
 
@@ -110,10 +95,11 @@ const HomepageTeacher = ({ navigation }) => {
       return "planner_category" in event;
     };
 
-    //Filter out planner that is not in the 7-day period
+    //Filter out planner that is not in the 7-day period and cur semester/year
     const validEvents = copy.filter((item) => {
       if (isClassEvent(item)) {
-        return true;
+        return item.class_period_year == curSem.class_period_year 
+        && item.class_period_semester == curSem.class_period_semester;
       }
       const eventStartDate = new Date(item.start_time);
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
@@ -155,15 +141,18 @@ const HomepageTeacher = ({ navigation }) => {
 
   useEffect(() => {
     //Filter again when day changes
-    const res = filterEvents(appendedEvents).filter(
-      (item) => item.date_name == day
-    );
-    setValidEvents(res);
-  }, [appendedEvents, day]);
+    if(curSem !== undefined)
+    {
+      const res = filterEvents(appendedEvents).filter(
+        (item) => item.date_name == day
+      );
+      setValidEvents(res);
+    }
+  }, [appendedEvents, day, curSem]);
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {isloading ? (
+      {isloading || isCurSemLoading? (
         <View
           style={[
             customStyles.pageBackground,
