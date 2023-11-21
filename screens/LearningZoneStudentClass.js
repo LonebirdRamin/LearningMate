@@ -15,6 +15,7 @@ import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import { useIsFocused } from '@react-navigation/native';
 import AssignmentList from '../components/LearningZone/AssignmentList'
 import FileRecordList from '../components/LearningZone/FileRecordList'
+import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 
 
 const LearningZoneStudentClass = ({route, navigation}) => {
@@ -29,6 +30,7 @@ const [assignmentData, setAssignmentData] = useState([]);
 const [filteredData, setFilteredData] = useState([]);
 const [assignNum, setAssignNum] = useState("-");
 const [toggleModal, setToggleModal] = useState(false);
+const [announce, setAnnounce] = useState("No Announcement");
 
 useEffect(() => {
   const fetchData = async () => {
@@ -38,11 +40,15 @@ useEffect(() => {
       setAssignmentData,
       setAssignNum
     );
+    const result = await queryAnnouncement(class_.class_id);
+    // console.log(result);
+    setAnnounce(result[0].class_announcement);
+    setIsPosting(false);
   };
   if(isFocused){
     fetchData();
   }
-}, [isFocused]);
+}, [isFocused, isPosting]);
 
 useEffect(()=>{
   setFilteredData(assignmentData.filter((item)=>{

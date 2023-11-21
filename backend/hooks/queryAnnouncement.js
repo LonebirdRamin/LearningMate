@@ -10,7 +10,7 @@ const queryAnnouncement = async (classID) => {
   console.log(classID);
   try {
     const response = await axios.get(
-      `${ipv4.mark}queryAnnouncement?classID=${classID}`
+      `${ipv4.golf}queryAnnouncement?classID=${classID}`
     );
 
     if (response.status === 200) {

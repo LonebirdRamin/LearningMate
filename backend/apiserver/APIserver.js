@@ -552,11 +552,7 @@ app.get("/api/getGrades", function (req, res) {
   const email = req.query.email;
 
   connection.query(
-<<<<<<< HEAD
-    "SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ?;",
-=======
     'SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_id;',
->>>>>>> 4d3e28376e55a4697f50ef90f4c5d887072236ee
     [email],
     function (err, result) {
       if (err) {
@@ -592,7 +588,6 @@ app.get("/api/getCurrentSemesterForStudent", function (req, res, next) {
   );
 });
 
-<<<<<<< HEAD
 app.post("/api/postAnnouncement", (req, res) => {
   const { classID, announcement } = req.body;
   // pass in the Class ID and Announcement as the string.
@@ -627,7 +622,11 @@ app.get("/api/queryAnnouncement", function (req, res, next) {
       } else {
         console.log("success announcement query");
         res.json(announcementResults);
-=======
+      }
+    }
+  );
+});
+
 app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
   console.log("Get Current Semester For Teacher");
   const email = req.query.email;
@@ -642,7 +641,6 @@ app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
       } else {
         console.log("success current semester query");
         res.json(semesterResults);
->>>>>>> 4d3e28376e55a4697f50ef90f4c5d887072236ee
       }
     }
   );
