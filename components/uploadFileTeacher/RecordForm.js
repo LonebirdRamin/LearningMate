@@ -18,12 +18,12 @@ const RecordForm = ({
   const [insertData, setInsertData] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const fileType = "Record";
+  const fileType = "Records";
 
   useEffect(() => {
     if (insertData !== null) {
       // insertRecord(insertData ,setIsPosting,setModalVisible,classID,setIsLoading )
-      PostFile(classID, fileType, video, setUploading, setVideo);
+      PostFile(classID, fileType, video, setUploading, setVideo, title);
       setModalVisible(false);
     }
   }, [insertData]);

@@ -6,7 +6,14 @@ import { db } from "../database/firebaseDB";
 import { app, storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 
-const PostFile = async (classID, fileType, file, setUploading, setFile) => {
+const PostFile = async (
+  classID,
+  fileType,
+  file,
+  setUploading,
+  setFile,
+  textTitle
+) => {
   setUploading(true);
   // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
   try {
@@ -38,7 +45,7 @@ const PostFile = async (classID, fileType, file, setUploading, setFile) => {
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
     const storageRef = ref(
       storage,
-      `storage/${classID}/${fileType}/${filename}`
+      `storage/${classID}/${fileType}/${textTitle}/${filename}`
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);

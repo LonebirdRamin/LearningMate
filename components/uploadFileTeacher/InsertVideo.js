@@ -38,7 +38,12 @@ const InsertVideo = ({ setVideo }) => {
         onPress={pickFile}
         activeOpacity={0.5}
       >
-        <FontAwesome name="video-camera" size={16} color="#C1C1CD" />
+        <FontAwesome
+          name="video-camera"
+          size={16}
+          color="#C1C1CD"
+          style={{ marginTop: "0.5%", marginRight: "1.5%" }}
+        />
         <Text style={formAssignmentStyles.textFile}>
           {" "}
           Import Video(s) : {videoName}

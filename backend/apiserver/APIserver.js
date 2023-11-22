@@ -191,6 +191,40 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
   );
 });
 
+app.post("/api/submitAssignment", (req, res) => {
+  const { student_id, assID, formattedCurrentDate, formattedDueDate } =
+    req.body;
+  console.log(req.body);
+  console.log("studentID : ========", student_id);
+
+  let status = 0; // not submit
+
+  if (formattedDueDate < formattedCurrentDate) {
+    status = 2; // late submit
+  } else {
+    status = 1; // on-time submit
+  }
+
+  const sql =
+    "UPDATE assignment_submission SET status = ?, submission_date = ? WHERE student_id = ? AND assignment_id = ?";
+
+  connection.query(
+    sql,
+    [status, formattedCurrentDate, student_id, assID],
+    (err, results) => {
+      if (err) {
+        console.log("Error while updating a submission from the database", err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update a submission." });
+      }
+      return res
+        .status(201)
+        .json({ message: "Submission successfully updated!" });
+    }
+  );
+});
+
 app.get("/api/getAssignmentID", function (req, res, next) {
   console.log("Query Assignment ID");
 
@@ -204,6 +238,24 @@ app.get("/api/getAssignmentID", function (req, res, next) {
         const maxAssignmentId = notiResults[0].maxAssignmentId;
         console.log(maxAssignmentId);
         res.json({ maxAssignmentId });
+      }
+    }
+  );
+});
+
+app.get("/api/getSubjectAssignmentID", function (req, res, next) {
+  const assignment_name = req.query.assignment_name;
+  console.log("AssignmentName student query: ", assignment_name);
+  connection.query(
+    "SELECT assignment_id, assignment_due_date FROM `assignment` WHERE assignment_name = ?;",
+    [assignment_name],
+    function (err, studentResults, fields) {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Student query error occurred" });
+      } else {
+        console.log("success student query");
+        res.json(studentResults);
       }
     }
   );
@@ -279,7 +331,7 @@ app.get("/api/getClassTeacher", (req, res) => {
   const email = req.query.email;
 
   connection.query(
-    "SELECT cl.class_id, c.class_name FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ?;",
+    "SELECT cl.class_id, c.class_name FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ? ORDER BY c.class_name ASC;;",
     [email],
     function (err, results, fields) {
       if (err) {

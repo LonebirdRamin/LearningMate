@@ -18,13 +18,13 @@ const PostFileTeacher = ({
   const [file, setFile] = useState(null);
   const [insertData, setInsertData] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const fileType = "Document";
+  const fileType = "Documents";
 
   useEffect(() => {
     if (insertData !== null) {
       console.log("---------File--------\n");
       console.log(insertData);
-      PostFile(classID, fileType, file, setUploading, setFile);
+      PostFile(classID, fileType, file, setUploading, setFile, textTitle);
       setModalVisible(false);
     }
   }, [insertData]);

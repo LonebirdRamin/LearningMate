@@ -23,7 +23,7 @@ const AssignmentForm = ({
   const [dateTime, handleDateTime] = useState(null);
   const [insertData, setInsertData] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const fileType = "Assignment";
+  const fileType = "Assignments";
 
   useEffect(() => {
     if (insertData !== null) {
