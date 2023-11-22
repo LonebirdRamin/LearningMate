@@ -12,7 +12,7 @@ import customStyles from "../../styles/customStyles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 
-const AssignmentListTeacher = ({ data }) => {
+const AssignmentListTeacher = ({ data, setModalVisible }) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -64,7 +64,7 @@ const AssignmentListTeacher = ({ data }) => {
             <Text style={[customStyles.h2, { flex: 1 }]}>
               {truncate(item.assignment_name, maxLength)}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Image
                 source={require("../../assets/icons/threedots.png")}
               ></Image>

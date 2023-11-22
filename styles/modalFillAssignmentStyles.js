@@ -42,6 +42,10 @@ const modalFillAssignmentStyles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  textLearning: {
+    fontSize: 23,
+    color: "#C1C1CD",
+  },
 });
 
 export default modalFillAssignmentStyles;

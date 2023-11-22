@@ -20,6 +20,7 @@ import AssignmentListTeacher from "../components/LearningZone/AssignmentListTeac
 import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneAddButton";
 import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
+import ModifileFile from "../components/LearningZone/modifileFile";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -33,8 +34,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [assignNum, setAssignNum] = useState("-");
   const [isPosting, setIsPosting] = useState(false);
   const [announce, setAnnounce] = useState("No Announcement");
-  const [expanded, setExpanded] = useState([false,false,false,false])
+  const [expanded, setExpanded] = useState([false, false, false, false]);
   let ref = [];
+  const [isVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,32 +62,32 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
       })
     );
   }, [assignmentData]);
-  
-const initializeRefs = (count) => {
+
+  const initializeRefs = (count) => {
     ref = Array.from({ length: count }, () => useRef(null));
   };
 
-  initializeRefs(4)
+  initializeRefs(4);
 
-const expand = (ref,index,expanded)=>{
-  const array = [...expanded];
+  const expand = (ref, index, expanded) => {
+    const array = [...expanded];
 
-    if(array[index]){
+    if (array[index]) {
       ref[index].current.setNativeProps({
-        style:{
-          maxHeight: height*0.35
-        }
+        style: {
+          maxHeight: height * 0.35,
+        },
       });
-    }else{
+    } else {
       ref[index].current.setNativeProps({
-        style:{
-          maxHeight: 'none'
-        }
-      })
+        style: {
+          maxHeight: "none",
+        },
+      });
     }
-    array[index] = !array[index]
-    setExpanded(array)
-}
+    array[index] = !array[index];
+    setExpanded(array);
+  };
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -170,7 +172,7 @@ const expand = (ref,index,expanded)=>{
                 marginBottom: 10,
               }}
             >
-              <TouchableOpacity onPress={()=>expand(ref,0,expanded)}>
+              <TouchableOpacity onPress={() => expand(ref, 0, expanded)}>
                 <Text style={customStyles.bodySmall}>See all...</Text>
               </TouchableOpacity>
             </View>
@@ -191,8 +193,14 @@ const expand = (ref,index,expanded)=>{
                   </Text>
                 </View>
 
-                <View style={customStyles.learningZoneAssignmentWidget} ref={ref[1]}>
-                  <AssignmentListTeacher data={filteredData} />
+                <View
+                  style={customStyles.learningZoneAssignmentWidget}
+                  ref={ref[1]}
+                >
+                  <AssignmentListTeacher
+                    data={filteredData}
+                    setModalVisible={setModalVisible}
+                  />
                   <View
                     style={{
                       display: "flex",
@@ -202,7 +210,7 @@ const expand = (ref,index,expanded)=>{
                       marginBottom: 10,
                     }}
                   >
-                    <TouchableOpacity onPress={()=>expand(ref,1,expanded)}>
+                    <TouchableOpacity onPress={() => expand(ref, 1, expanded)}>
                       <Text style={customStyles.bodySmall}>See all...</Text>
                     </TouchableOpacity>
                   </View>
@@ -218,7 +226,10 @@ const expand = (ref,index,expanded)=>{
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>File</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}  ref={ref[2]}>
+                  <View
+                    style={customStyles.learningZoneAssignmentWidget}
+                    ref={ref[2]}
+                  >
                     <FileRecordList data={filteredData} type="teacher" />
                     <View
                       style={{
@@ -229,7 +240,9 @@ const expand = (ref,index,expanded)=>{
                         marginBottom: 10,
                       }}
                     >
-                      <TouchableOpacity  onPress={()=>expand(ref,2,expanded)}>
+                      <TouchableOpacity
+                        onPress={() => expand(ref, 2, expanded)}
+                      >
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
@@ -246,7 +259,10 @@ const expand = (ref,index,expanded)=>{
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>Record</Text>
                   </View>
-                  <View style={customStyles.learningZoneAssignmentWidget}  ref={ref[3]}>
+                  <View
+                    style={customStyles.learningZoneAssignmentWidget}
+                    ref={ref[3]}
+                  >
                     <FileRecordList data={filteredData} type="teacher" />
                     <View
                       style={{
@@ -257,7 +273,9 @@ const expand = (ref,index,expanded)=>{
                         marginBottom: 10,
                       }}
                     >
-                      <TouchableOpacity onPress={()=>expand(ref,3,expanded)}>
+                      <TouchableOpacity
+                        onPress={() => expand(ref, 3, expanded)}
+                      >
                         <Text style={customStyles.bodySmall}>See all...</Text>
                       </TouchableOpacity>
                     </View>
@@ -266,6 +284,10 @@ const expand = (ref,index,expanded)=>{
               </View>
             </View>
           </ScrollView>
+          <ModifileFile
+            isVisible={isVisible}
+            setModalVisible={setModalVisible}
+          />
         </View>
       )}
     </SafeAreaView>
