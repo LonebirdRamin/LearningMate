@@ -19,7 +19,6 @@ import GradeScreen from './screens/gpax_hook';
 import PostAnnouncement from './screens/postAnnouncement';
 import UploadMedia from './screens/uploadMedia';
 import chatFirebase from './screens/chatFirebase';
-import chat from './screens/chat';
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
@@ -54,10 +53,10 @@ function MyStack() {
           name="ChatFirebase"
           component={chatFirebase}
           options={{title: 'Chat Screen'}}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Chat"
-          component={chat}
+          component={Chat}
           options={{title: 'Chat Screen'}}
         /> */}
         <Stack.Screen

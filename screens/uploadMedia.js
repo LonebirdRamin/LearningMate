@@ -12,9 +12,10 @@ import {
 } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker'; // Import DocumentPicker
 import * as FileSystem from 'expo-file-system';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
 import { collection, doc, setDoc, getDocs, query } from 'firebase/firestore';
 import { db } from '../database/firebaseDB';
+
 
 const UploadMedia = () => {
   const [classID, setClassID] = useState('CPE301'); // Set the initial classID
@@ -22,6 +23,7 @@ const UploadMedia = () => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState([]);
+  const [path, setPath] = useState(''); // Set the initial path
 
   const pickFile = async () => {
     try {
@@ -98,40 +100,38 @@ const UploadMedia = () => {
   }
 };
 
-  const loadFiles = async () => {
-    console.log('Loading files...')
-    setClassID('CPE334'); // Update classID
-    setFileType('Assignment'); // Update fileType
-    // Line 103,104 -> Change it dynamically base on user input
+const loadFiles = async () => {
+  console.log('Loading files...')
 
-    try {
-      const filesRef = collection(db, 'storage', classID, fileType);
-      const q = query(filesRef);
+  // set path to load files from
+  setPath(`CPE241/Assignments/Test sent/teacher`)
+  console.log(path)
 
-      const querySnapshot = await getDocs(q);
+  const storageRef = ref(storage, `storage/${path}`);
 
-      const filesData = [];
-      querySnapshot.forEach((doc) => {
-        filesData.push({ id: doc.id, ...doc.data() });
-      });
-
-      console.log('Files loaded:', filesData)
-
-      setFiles(filesData);
-    } catch (error) {
-      console.error('Error loading files:', error);
-    }
-  };
+  try {
+    const res = await listAll(storageRef);
+    const fileList = res.items.map((itemRef) => ({
+      filename: itemRef.name,
+      // Add other metadata as needed
+    }));
+    setFiles(fileList);
+    console.log(fileList);
+  } catch (error) {
+    console.error('Error listing files:', error);
+  }
+};
 
   const downloadFile = async (item, classID, fileType) => {
     try {
-      console.log('classID:', classID); // Add this line
-      console.log('fileType:', fileType); // Add this line
-      // Line 128,129 -> Change it dynamically base on user input
+      // Set path to download file from
+      setPath(`CPE241/Assignments/Test sent/teacher`)
+      console.log('path:', path)
   
       const { filename } = item;
-    
-      const storageRef = ref(storage, `storage/${classID}/${fileType}/${filename}`);
+      
+      // set storage reference to storage/path/filename
+      const storageRef = ref(storage, `storage/${path}/${filename}`);
       const url = await getDownloadURL(storageRef);
     
       const fileUri = FileSystem.cacheDirectory + filename;
