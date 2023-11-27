@@ -23,7 +23,15 @@ const RecordForm = ({
   useEffect(() => {
     if (insertData !== null) {
       // insertRecord(insertData ,setIsPosting,setModalVisible,classID,setIsLoading )
-      PostFile(classID, fileType, video, setUploading, setVideo, title);
+      PostFile(
+        classID,
+        fileType,
+        video,
+        setUploading,
+        setVideo,
+        title,
+        setIsPosting
+      );
       setModalVisible(false);
     }
   }, [insertData]);
