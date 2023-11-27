@@ -98,7 +98,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {isAssignmentLoading ? (
+      {isAssignmentLoading || isLoading ? (
         <View
           style={[
             customStyles.pageBackground,
