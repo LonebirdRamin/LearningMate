@@ -15,8 +15,8 @@ const AnnounceForm = ({
 
   useEffect(() => {
     if (insertData !== null) {
-      console.log("---------Update Announcement--------\n");
-      console.log(insertData);
+      // console.log("---------Update Announcement--------\n");
+      // console.log(insertData);
       PostAnnouncement(insertData, setModalVisible, setIsLoading, setIsPosting);
     }
   }, [insertData]);

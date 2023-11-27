@@ -1,10 +1,15 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-native-modal";
 import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import TextField from "./TextField";
 
-const ModifileFile = ({ isVisible, setModalVisible }) => {
+const ModifileFile = ({
+  isVisible,
+  setModalVisible,
+  setModalModifiedVisible,
+  setText,
+}) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -21,11 +26,26 @@ const ModifileFile = ({ isVisible, setModalVisible }) => {
           <View style={modalFillAssignmentStyles.barIcon} />
           <View style={modalFillAssignmentStyles.wrapper}>
             <View style={{ marginLeft: "5%", marginTop: "3.5%" }}>
-              <TextField text={"Edit"} setModalVisible={setModalVisible} />
+              <TextField
+                setText={setText}
+                text={"Edit"}
+                setModalVisible={setModalVisible}
+                setModalModifiedVisible={setModalModifiedVisible}
+              />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
-              <TextField text={"Delete"} setModalVisible={setModalVisible} />
+              <TextField
+                setText={setText}
+                text={"Delete"}
+                setModalVisible={setModalVisible}
+                setModalModifiedVisible={setModalModifiedVisible}
+              />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
-              <TextField text={"Download"} setModalVisible={setModalVisible} />
+              <TextField
+                setText={setText}
+                text={"Download"}
+                setModalVisible={setModalVisible}
+                setModalModifiedVisible={setModalModifiedVisible}
+              />
             </View>
             {/* <TouchableOpacity style={modalFillAssignmentStyles.text}>
                 <Text style={{ color: "white" }}>Edit</Text>

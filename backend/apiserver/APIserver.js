@@ -245,7 +245,7 @@ app.get("/api/getAssignmentID", function (req, res, next) {
 
 app.get("/api/getSubjectAssignmentID", function (req, res, next) {
   const assignment_name = req.query.assignment_name;
-  console.log("AssignmentName student query: ", assignment_name);
+  // console.log("AssignmentName student query: ", assignment_name);
   connection.query(
     "SELECT assignment_id, assignment_due_date FROM `assignment` WHERE assignment_name = ?;",
     [assignment_name],

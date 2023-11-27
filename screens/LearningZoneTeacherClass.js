@@ -21,6 +21,11 @@ import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneA
 import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 import ModifileFile from "../components/LearningZone/modifileFile";
+import ModalModified from "../components/LearningZone/ModalModified";
+import LoadFiles from "../backend/hooks/loadFiles";
+import modalFillAssignmentStyles from "../styles/modalFillAssignmentStyles";
+import LoadRecord from "../backend/hooks/loadRecord";
+import LoadDocument from "../backend/hooks/loadDocument";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -37,6 +42,12 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [expanded, setExpanded] = useState([false, false, false, false]);
   let ref = [];
   const [isVisible, setModalVisible] = useState(false);
+  const [isVisibleModalModified, setModalModifiedVisible] = useState(false);
+  const [text, setText] = useState("");
+  const [files, setFiles] = useState([]);
+  const [recordFile, setRecordFile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const type = "teacher";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +73,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
       })
     );
   }, [assignmentData]);
+
+  useEffect(() => {
+    // console.log(filteredData);
+    // LoadFiles(type, filteredData, setFiles, setIsLoading);
+    LoadDocument(filteredData, setFiles, setIsLoading);
+    LoadRecord(filteredData, setRecordFile, setIsLoading);
+  }, [filteredData]);
 
   const initializeRefs = (count) => {
     ref = Array.from({ length: count }, () => useRef(null));
@@ -227,27 +245,40 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>File</Text>
                   </View>
-                  <View
-                    style={customStyles.learningZoneAssignmentWidget}
-                    ref={ref[2]}
-                  >
-                    <FileRecordList data={filteredData} type="teacher" />
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "row",
-                        marginTop: "auto",
-                        marginBottom: 10,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => expand(ref, 2, expanded)}
-                      >
-                        <Text style={customStyles.bodySmall}>See all...</Text>
-                      </TouchableOpacity>
+                  {isLoading ? (
+                    <View style={globleStyles.loading}>
+                      <ActivityIndicator
+                        size={100}
+                        color="#F04E22"
+                      ></ActivityIndicator>
                     </View>
-                  </View>
+                  ) : (
+                    <View
+                      style={customStyles.learningZoneAssignmentWidget}
+                      ref={ref[2]}
+                    >
+                      <FileRecordList
+                        data={files}
+                        type={type}
+                        setModalVisible={setModalVisible}
+                      />
+                      <View
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "row",
+                          marginTop: "auto",
+                          marginBottom: 10,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => expand(ref, 2, expanded)}
+                        >
+                          <Text style={customStyles.bodySmall}>See all...</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  )}
                 </View>
 
                 <View>
@@ -260,27 +291,40 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   >
                     <Text style={[customStyles.h4, { flex: 1 }]}>Record</Text>
                   </View>
-                  <View
-                    style={customStyles.learningZoneAssignmentWidget}
-                    ref={ref[3]}
-                  >
-                    <FileRecordList data={filteredData} type="teacher" />
-                    <View
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "row",
-                        marginTop: "auto",
-                        marginBottom: 10,
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => expand(ref, 3, expanded)}
-                      >
-                        <Text style={customStyles.bodySmall}>See all...</Text>
-                      </TouchableOpacity>
+                  {isLoading ? (
+                    <View style={globleStyles.loading}>
+                      <ActivityIndicator
+                        size={100}
+                        color="#F04E22"
+                      ></ActivityIndicator>
                     </View>
-                  </View>
+                  ) : (
+                    <View
+                      style={customStyles.learningZoneAssignmentWidget}
+                      ref={ref[3]}
+                    >
+                      <FileRecordList
+                        data={recordFile}
+                        type={type}
+                        setModalVisible={setModalVisible}
+                      />
+                      <View
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          flexDirection: "row",
+                          marginTop: "auto",
+                          marginBottom: 10,
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => expand(ref, 3, expanded)}
+                        >
+                          <Text style={customStyles.bodySmall}>See all...</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  )}
                 </View>
               </View>
             </View>
@@ -288,6 +332,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
           <ModifileFile
             isVisible={isVisible}
             setModalVisible={setModalVisible}
+            setModalModifiedVisible={setModalModifiedVisible}
+            setText={setText}
+          />
+          <ModalModified
+            text={text}
+            isVisibleModalModified={isVisibleModalModified}
+            setModalModifiedVisible={setModalModifiedVisible}
           />
         </View>
       )}
