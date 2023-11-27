@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import globleStyles from "../../styles/globleStyles";
@@ -22,23 +23,12 @@ import getActivityList from "../../backend/hooks/getActivityList";
 import queryGrade from "../../backend/hooks/queryGrade";
 import getCurrentSemStudent from "../../backend/hooks/getCurrentSemStudent";
 import getSemesterYear from "../../backend/hooks/getSemesterYear";
+import loadProfilePic from "../../backend/hooks/loadProfilePic";
+import changeProfilePicture from "../../backend/hooks/changeProfilePicture";
+import pickFilePicture from "../../backend/hooks/pickFilePicture";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
-const data = {
-  id: 64070503433,
-  eduLevel: "Bechelor's Degree",
-  Faculty: "Engineering",
-  Department: "Computer Engineering",
-};
-
-const grade = {
-  last: 3.91,
-  GPAX: 3.87,
-};
-
-const prepGrade = Object.values(grade);
 
 const ProfileScreen = ({ navigation }) => {
   const email = useContext(DataContext);
@@ -50,6 +40,7 @@ const ProfileScreen = ({ navigation }) => {
   const [isGradeListLoading, setGradeListLoading] = useState(false);
   const [isCurrentSemLoading, setCurrentSemLoading] = useState(false);
   const [isSemYearLoading, setSemYearLoading] = useState(false);
+  const [isPicLoading, setIsPicLoading] = useState(true);
   const [perInfo, setPerInfo] = useState({});
   const [prepPerInfo, setPrepPerInfo] = useState([]);
   const [prepPerInfoDetail, setPerInfoDetail] = useState([]);
@@ -60,6 +51,9 @@ const ProfileScreen = ({ navigation }) => {
   const [currentSem, setCurrentSem] = useState();
   const [lastSemGrade, setLastSemGrade] = useState("-");
   const [semYear, setSemYear] = useState([]);
+  const [picUrl, setPicUrl] = useState();
+  const [file, setFile] = useState();
+  const [profilePicSuccess, setProfilePicSuccess] = useState(false)
   const calculateAverage = (grades) => {
     // Implement your GPA calculation logic here
     // Assuming grades have a numeric value, you can calculate the average
@@ -82,10 +76,18 @@ const ProfileScreen = ({ navigation }) => {
     getActivityList(email, setActList, setActListLoading);
     queryGrade(email, setGradeList, setGradeListLoading);
     getCurrentSemStudent(email, setCurrentSem, setCurrentSemLoading);
-    getSemesterYear(email, setSemYear, setCurrentSemLoading);
+    getSemesterYear(email, setSemYear, setSemYearLoading);
+    // loadProfilePic(setPicUrl, `user/student/`);
   }, []);
 
-  
+  useEffect(() => {
+    loadProfilePic(
+      setPicUrl,
+      `users/student/${perInfo.student_id}`,
+      setIsPicLoading
+    );
+  }, [perInfo]);
+
   useEffect(() => {
     setGpax(calculateAverage(gradeList));
   }, [gradeList]);
@@ -160,13 +162,17 @@ const ProfileScreen = ({ navigation }) => {
     ]);
   }, [perInfo]);
 
+  useEffect(()=>{console.log(profilePicSuccess)},[profilePicSuccess])
+
   return (
     <View style={[globleStyles.pageContainer]}>
       {isPerInfoIsLoading ||
       isSumActLoading ||
       isActListLoading ||
       isGradeListLoading ||
-      isCurrentSemLoading ? (
+      isCurrentSemLoading ||
+      isSemYearLoading ||
+      isPicLoading ? (
         <View style={globleStyles.loadingFull}>
           <ActivityIndicator size={100} color="#F04E22" />
         </View>
@@ -174,14 +180,73 @@ const ProfileScreen = ({ navigation }) => {
         <ScrollView style={profileStyles.scrollContainer}>
           {/*Start - Icon, details, edit */}
           <View style={profileStyles.picNameContainer}>
-            <View
+            {/* <View
               style={{
-                width: 100,
-                height: 100,
+                width: width*0.27,
+                height: width*0.27,
                 backgroundColor: "white",
-                borderRadius: 55,
+                borderRadius: width,
               }}
-            />
+            /> */}
+            {isPicLoading? 
+               <ActivityIndicator></ActivityIndicator>:<TouchableOpacity
+              onPress={() => {
+                pickFilePicture(setFile, false, setProfilePicSuccess);
+                // setPicUrl(file?.assets[0].uri)
+              }}
+            >
+              {picUrl === undefined ? (
+                <Image
+                  resizeMode={"contain"}
+                  source={require("../../assets/icons/Profile/user.png")}
+                  style={{
+                    borderRadius: width,
+                    width: width * 0.27,
+                    height: width * 0.27,
+                  }}
+                />
+              ) : file?.assets &&
+                file?.assets.length > 0 &&
+                file?.assets[0].mimeType.startsWith("image/") ? (
+                <Image
+                  source={{ uri: file?.assets[0].uri }}
+                  style={{
+                    width: width * 0.27,
+                    borderRadius: width,
+                    height: width * 0.27,
+                  }}
+                />
+              ) : (
+                <Image
+                  resizeMode={"contain"}
+                  source={{
+                    uri: picUrl?.downloadURL,
+                    width: width * 0.27,
+                    height: width * 0.27,
+                  }}
+                  style={{ borderRadius: width }}
+                />
+              )}
+            </TouchableOpacity>
+            }
+            
+            {(file && profilePicSuccess)? (
+              <TouchableOpacity
+                style={[
+                  {
+                    backgroundColor: "#5C90D2",
+                    paddingVertical: height * 0.01,
+                    paddingHorizontal: width * 0.03,
+                    borderRadius: 999,
+                  },
+                ]}
+                onPress={()=>{changeProfilePicture(perInfo?.student_id, file, setFile, setProfilePicSuccess, setIsPicLoading)}}
+              >
+                <Text style={[customStyles.h1, { color: "white" }]}>
+                  Save Change
+                </Text>
+              </TouchableOpacity>
+            ):<></>}
             <View style={profileStyles.nameEmail}>
               <Text style={profileStyles.text("white", width * 0.045, "bold")}>
                 {prepPerInfo[0]}
@@ -217,7 +282,12 @@ const ProfileScreen = ({ navigation }) => {
             header={"Grade Results"}
             data={[lastSemGrade, gpax]}
             handlePress={() => {
-              navigation.push("GradeResult", [gradeList, currentSem, gpax, semYear]);
+              navigation.push("GradeResult", [
+                gradeList,
+                currentSem,
+                gpax,
+                semYear,
+              ]);
             }}
           />
           <InfoBox

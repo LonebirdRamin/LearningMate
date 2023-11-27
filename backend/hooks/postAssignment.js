@@ -23,7 +23,7 @@ const postAssignment = async (
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.mark}createAssignment`,
+      `${ipv4.kong}createAssignment`,
       insertData
     );
     console.log("Response From Post Ass: ", response.data);

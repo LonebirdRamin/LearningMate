@@ -6,7 +6,7 @@ import LandingStack from '../routes/LandingStack';
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 
-const menu = ["Change Language", "Notification Setting", "Help", "Log out"]
+const menu = ["Log out"]
 
 
 
