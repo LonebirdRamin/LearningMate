@@ -102,7 +102,7 @@ const expand = (ref,index,expanded)=>{
             <View style={[customStyles.customBox1,
                 {width:'100%',height:'fit-content'
                 ,borderTopLeftRadius:0,borderTopRightRadius:0,
-                overflow:'hidden'}]} ref={ref[0]}>
+                overflow:'hidden',maxHeight: height*0.35,}]} ref={ref[0]}>
                 <View style={customStyles.pageTitleContainer}>
                     <TouchableOpacity
                       onPress={() => navigation.navigate("LearningZoneStudent")}
@@ -116,7 +116,9 @@ const expand = (ref,index,expanded)=>{
                   { textAlign: "left", marginLeft: 24, marginVertical:10}]}>
                   Class announcement
                 </Text>
-                <Text style={[customStyles.h3,
+                <Text 
+                numberOfLines={expanded[0]? 999:3}
+                style={[customStyles.h3,
                   { textAlign: "left", marginLeft: 24}]}>
                 {announce}</Text>
                 <View

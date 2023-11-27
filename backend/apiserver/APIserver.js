@@ -331,7 +331,7 @@ app.get("/api/getClassTeacher", (req, res) => {
   const email = req.query.email;
 
   connection.query(
-    "SELECT cl.class_id, c.class_name FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ? ORDER BY c.class_name ASC;;",
+    "SELECT cl.class_id, c.class_name, c.class_period_year, c.class_period_semester FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ? ORDER BY c.class_name ASC;;",
     [email],
     function (err, results, fields) {
       if (err) {
@@ -710,6 +710,27 @@ app.get("/api/getSemesterYear", function (req, res, next) {
   console.log("Email: ", email);
   connection.query(
     "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;",
+    [email],
+    function (err, semesterListResults, fields) {
+      if (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "List of semester query error occurred" });
+      } else {
+        console.log("Success list of semester query");
+        res.json(semesterListResults);
+      }
+    }
+  );
+});
+
+app.get("/api/getSemesterYearTeacher", function (req, res, next) {
+  console.log("Get Semester and Year List For Student");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    "SELECT DISTINCT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON cl.teacher_id = t.teacher_id WHERE t.academic_email = ?;",
     [email],
     function (err, semesterListResults, fields) {
       if (err) {

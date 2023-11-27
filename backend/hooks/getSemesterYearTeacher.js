@@ -1,8 +1,8 @@
 import ipv4 from "../apiserver/ipv4";
-const getSemesterYear = async (email, setSemYear, setIsLoading) => {
+const getSemesterYearTeacher = async (email, setSemYear, setIsLoading) => {
   setIsLoading(true);
   try {
-    const response = await fetch(`${ipv4.golf}getSemesterYear?email=${email}`);
+    const response = await fetch(`${ipv4.golf}getSemesterYearTeacher?email=${email}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -16,4 +16,4 @@ const getSemesterYear = async (email, setSemYear, setIsLoading) => {
   }
 };
 
-export default getSemesterYear;
+export default getSemesterYearTeacher;
