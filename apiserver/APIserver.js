@@ -916,6 +916,20 @@ app.delete('/api/deleteAssignment', (req, res) => {
   });
 });
 
+app.post('/api/editAssignment', (req, res) => {
+  const { classID, assName, duedate, description } = req.body;
+
+  const sql = "UPDATE assignment SET assignment_name = ?, assignment_due_date = ?, assignment_desciption = ? WHERE assignment_name = ? AND class_id = ?";
+
+  connection.query(sql, [assName, duedate, description, assName, classID], (err, results) => {
+    if (err) {
+      console.log("Error while updating an assignment from the database", err);
+      return res.status(400).json({ message: "Failed to update an assignment." });
+    }
+    return res.status(201).json({ message: "Assignment successfully updated!" });
+  });
+});
+
 
 
 app.listen(5001, function () {
