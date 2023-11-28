@@ -13,7 +13,7 @@ const LandingStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Landing"
           component={Landing}
           options={{ headerShown: false }}
@@ -42,7 +42,7 @@ const LandingStack = () => {
           name="HomepageStudent"
           component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
-        />
+        /> */}
 
         <Stack.Screen
           name="HomepageTeacher"

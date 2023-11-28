@@ -27,12 +27,17 @@ const LoadRecord = async (data, setRecordFile, setIsLoading) => {
           filesInSubdirectory.items.map(async (itemRef) => {
             const downloadURL = await getDownloadURL(itemRef);
             const metadata = await getMetadata(itemRef);
-            const pathArray = itemRef.fullPath.split("/");
-            const folder = pathArray.slice(4, pathArray.length - 1).join("/");
+            const pathComponents = itemRef.fullPath.split("/");
+            const folderName =
+              pathComponents.length > 1
+                ? pathComponents[pathComponents.length - 2]
+                : null;
+
             return {
               filename: itemRef.name,
               uploadDate: metadata.timeCreated,
               downloadURL,
+              folderName, // Add the folderName property
               // Add other metadata as needed
             };
           })
@@ -42,7 +47,7 @@ const LoadRecord = async (data, setRecordFile, setIsLoading) => {
 
     // Flatten the array of arrays into a single array
     const flattenedFileList = fileList.flat();
-    console.log(flattenedFileList);
+    // console.log(flattenedFileList);
     setRecordFile(flattenedFileList);
     setIsLoading(false);
   } catch (error) {

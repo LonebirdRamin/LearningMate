@@ -7,6 +7,8 @@ import LearningzoneAddButton from "../components/uploadFileTeacher/LearningzoneA
 import ButtonSubmitStudent from "../components/StudentSubmit/ButtonSubmitStudent";
 
 const ChatScreen = () => {
+  const classID = "CPE334";
+  const email = "pannawat.duro@kmutt.ac.th";
   return (
     <SafeAreaView style={styles.mainView}>
       <Text
@@ -17,7 +19,7 @@ const ChatScreen = () => {
         Test add upload file on learning zone
       </Text>
       <LearningzoneAddButton />
-      <ButtonSubmitStudent />
+      <ButtonSubmitStudent classID={classID} email={email} />
     </SafeAreaView>
   );
 };

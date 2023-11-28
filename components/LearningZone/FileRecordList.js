@@ -13,7 +13,13 @@ import LoadFiles from "../../backend/hooks/loadFiles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 
-const FileRecordList = ({ data, type, setModalVisible }) => {
+const FileRecordList = ({
+  onClickHandler,
+  data,
+  type,
+  setModalVisible,
+  setAssName,
+}) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -62,12 +68,14 @@ const FileRecordList = ({ data, type, setModalVisible }) => {
           >
             <Text style={[customStyles.h2, { flex: 1 }]}>
               {/* {truncate(item.filename, maxLength)} */}
-              {item.filename}
+              {item.folderName}
             </Text>
             <TouchableOpacity
               onPress={() => {
                 if (type == "teacher") {
                   setModalVisible(true);
+                  setAssName(item.folderName);
+                  onClickHandler();
                 } else if (type == "student") {
                   console.log("Student Click!");
                 }

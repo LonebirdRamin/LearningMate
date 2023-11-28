@@ -27,10 +27,16 @@ const LoadDocument = async (data, setFiles, setIsLoading) => {
           filesInSubdirectory.items.map(async (itemRef) => {
             const downloadURL = await getDownloadURL(itemRef);
             const metadata = await getMetadata(itemRef);
+            const pathComponents = itemRef.fullPath.split("/");
+            const folderName =
+              pathComponents.length > 1
+                ? pathComponents[pathComponents.length - 2]
+                : null;
             return {
               filename: itemRef.name,
               uploadDate: metadata.timeCreated,
               downloadURL,
+              folderName,
               // Add other metadata as needed
             };
           })

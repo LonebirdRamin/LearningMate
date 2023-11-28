@@ -7,7 +7,12 @@ import Modal from "react-native-modal";
 import FillBoxForm from "../uploadFileTeacher/FillBoxForm";
 import MainStudentAssignment from "./MainStudentAssignment";
 
-const ModalSubmitAssignment = ({ isVisible, setModalVisible }) => {
+const ModalSubmitAssignment = ({
+  isVisible,
+  setModalVisible,
+  classID,
+  email,
+}) => {
   const isLoading = false;
   const [selected, setSelected] = useState(null);
 
@@ -44,7 +49,11 @@ const ModalSubmitAssignment = ({ isVisible, setModalVisible }) => {
                 <Text style={modalFillAssignmentStyles.text}>
                   Submit Assignment
                 </Text>
-                <MainStudentAssignment setModalVisible={setModalVisible} />
+                <MainStudentAssignment
+                  setModalVisible={setModalVisible}
+                  classID={classID}
+                  email={email}
+                />
               </View>
             )}
           </View>

@@ -47,6 +47,8 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [files, setFiles] = useState([]);
   const [recordFile, setRecordFile] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [assName, setAssName] = useState("");
+  const [option, setOption] = useState("");
   const type = "teacher";
 
   useEffect(() => {
@@ -75,11 +77,19 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   }, [assignmentData]);
 
   useEffect(() => {
+    setOption("");
+  }, [isVisibleModalModified]);
+
+  useEffect(() => {
     // console.log(filteredData);
     // LoadFiles(type, filteredData, setFiles, setIsLoading);
     LoadDocument(filteredData, setFiles, setIsLoading);
     LoadRecord(filteredData, setRecordFile, setIsLoading);
   }, [filteredData]);
+
+  const setOptionFunc = (selectedOption) => {
+    setOption(selectedOption);
+  };
 
   const initializeRefs = (count) => {
     ref = Array.from({ length: count }, () => useRef(null));
@@ -132,7 +142,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 overflow: "hidden",
-                maxHeight: height*0.35,
+                maxHeight: height * 0.35,
               },
             ]}
             ref={ref[0]}
@@ -169,7 +179,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
               Class announcement
             </Text>
             <Text
-              numberOfLines={expanded[0]? 999:3}
+              numberOfLines={expanded[0] ? 999 : 3}
               style={[
                 customStyles.h3,
                 {
@@ -217,8 +227,12 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                   ref={ref[1]}
                 >
                   <AssignmentListTeacher
+                    onClickHandler={() => setOptionFunc("Assignments")}
+                    // setOption={setOption}
+                    // optionTemp={"Assignments"}
                     data={filteredData}
                     setModalVisible={setModalVisible}
+                    setAssName={setAssName} //To send assignment name that clicked!
                   />
                   <View
                     style={{
@@ -258,9 +272,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                       ref={ref[2]}
                     >
                       <FileRecordList
+                        // setOption={setOption}
+                        onClickHandler={() => setOptionFunc("Documents")}
+                        // optionTemp={"Files"}
                         data={files}
                         type={type}
                         setModalVisible={setModalVisible}
+                        setAssName={setAssName} //To send assignment name that clicked!
                       />
                       <View
                         style={{
@@ -304,9 +322,13 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                       ref={ref[3]}
                     >
                       <FileRecordList
+                        onClickHandler={() => setOptionFunc("Records")}
+                        // setOption={setOption}
+                        // optionTemp={"Records"} //Bug,
                         data={recordFile}
                         type={type}
                         setModalVisible={setModalVisible}
+                        setAssName={setAssName}
                       />
                       <View
                         style={{
@@ -334,11 +356,23 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
             setModalVisible={setModalVisible}
             setModalModifiedVisible={setModalModifiedVisible}
             setText={setText}
+            assName={assName}
+            setAssName={setAssName}
+            classID={class_.class_id}
+            option={option}
+            setIsPosting={setIsPosting}
+            type={type}
           />
           <ModalModified
-            text={text}
+            text={text} //To tell type: edit, delete, or download?
             isVisibleModalModified={isVisibleModalModified}
             setModalModifiedVisible={setModalModifiedVisible}
+            data={filteredData}
+            assName={assName}
+            setIsPosting={setIsPosting}
+            setIsLoading={setIsLoading}
+            setAssName={setAssName}
+            option={option}
           />
         </View>
       )}

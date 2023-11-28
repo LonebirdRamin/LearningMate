@@ -17,6 +17,7 @@ const FormLearningZone = ({
     <View style={formAssignmentStyles.mainViewLearningZone}>
       {selected === "Assignment" ? (
         <AssignmentForm
+          type={"insert"}
           setIsPosting={setIsPosting}
           setModalVisible={setModalVisible}
           classID={classID}

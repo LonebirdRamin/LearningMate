@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import ModalSubmitAssignment from "./ModalSubmitAssignment";
 
-const ButtonSubmitStudent = () => {
+const ButtonSubmitStudent = ({ classID, email }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -24,6 +24,8 @@ const ButtonSubmitStudent = () => {
       <ModalSubmitAssignment
         isVisible={isVisible}
         setModalVisible={setIsVisible}
+        classID={classID}
+        email={email}
       />
     </View>
   );

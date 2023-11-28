@@ -700,6 +700,77 @@ app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
   );
 });
 
+app.delete("/api/deleteAssignment", (req, res) => {
+  const assName = req.query.assName;
+  console.log(assName);
+  console.log("DELETE ASSIGNMENT");
+
+  const sql =
+    "DELETE FROM assignment_submission WHERE assignment_id IN (SELECT assignment_id FROM assignment WHERE assignment_name = ?);";
+
+  connection.query(sql, [assName], (err, results) => {
+    if (err) {
+      console.log(
+        "Error while deleting an assignment from the table assignment_submission in the database",
+        err
+      );
+      return res
+        .status(400)
+        .json({ message: "Failed to delete an assignment." });
+    }
+
+    // Send the response for the assignment_submission deletion
+    res.status(201).json({
+      message:
+        "Assignment successfully deleted from the table assignment_submission!",
+    });
+
+    // Perform the second query to delete from the 'assignment' table
+    const sql2 = "DELETE FROM assignment WHERE assignment_name = ?;";
+
+    connection.query(sql2, [assName], (err2, results2) => {
+      if (err2) {
+        console.log(
+          "Error while deleting an assignment from the table assignment in the database",
+          err2
+        );
+        // Handle the error, send a response here
+      } else {
+        // Send a response for the 'assignment' table deletion if it was successful
+        console.log(
+          "Assignment successfully deleted from the table assignment!"
+        );
+      }
+    });
+  });
+});
+
+app.post("/api/editAssignment", (req, res) => {
+  const { classID, assName, duedate, description } = req.body;
+
+  const sql =
+    "UPDATE assignment SET assignment_name = ?, assignment_due_date = ?, assignment_desciption = ? WHERE assignment_name = ? AND class_id = ?";
+
+  connection.query(
+    sql,
+    [assName, duedate, description, assName, classID],
+    (err, results) => {
+      if (err) {
+        console.log(
+          "Error while updating an assignment from the database",
+          err
+        );
+        return res
+          .status(400)
+          .json({ message: "Failed to update an assignment." });
+      }
+      return res
+        .status(201)
+        .json({ message: "Assignment successfully updated!" });
+    }
+  );
+});
+
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });

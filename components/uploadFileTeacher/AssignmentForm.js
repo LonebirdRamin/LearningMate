@@ -10,6 +10,7 @@ import PostFile from "../../backend/hooks/submitFileStudent";
 import PostFileTeacher from "../../backend/hooks/postFileTeacher";
 
 const AssignmentForm = ({
+  type,
   setIsPosting,
   setModalVisible,
   classID,
@@ -29,23 +30,28 @@ const AssignmentForm = ({
     if (insertData !== null) {
       // console.log("---------Inserting Assignment--------\n");
       // console.log(insertData);
-      postAssignment(
-        insertData,
-        setModalVisible,
-        handleDateTime,
-        onChangeInformation,
-        onChangeTitle,
-        setIsLoading,
-        setIsPosting
-      );
-      PostFileTeacher(
-        classID,
-        fileType,
-        file,
-        setUploading,
-        setFile,
-        textTitle
-      );
+      if (type === "insert") {
+        postAssignment(
+          insertData,
+          setModalVisible,
+          handleDateTime,
+          onChangeInformation,
+          onChangeTitle,
+          setIsLoading,
+          setIsPosting
+        );
+        PostFileTeacher(
+          classID,
+          fileType,
+          file,
+          setUploading,
+          setFile,
+          textTitle
+        );
+      } else if (type === "edit") {
+        //To edit
+        console.log("Edit");
+      }
       setModalVisible(false);
     }
   }, [insertData]);
@@ -63,7 +69,11 @@ const AssignmentForm = ({
       />
       {/* Input file zone */}
       <InputFileLearning setFile={setFile} />
-      <CheckBoxLearning handleShowDate={handleShowDate} showDate={showDate} />
+      <CheckBoxLearning
+        type={type}
+        handleShowDate={handleShowDate}
+        showDate={showDate}
+      />
       {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}
       <View style={formAssignmentStyles.buttonMain}>
         <TouchableOpacity

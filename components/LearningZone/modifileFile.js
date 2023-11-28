@@ -9,6 +9,12 @@ const ModifileFile = ({
   setModalVisible,
   setModalModifiedVisible,
   setText,
+  assName,
+  setAssName,
+  classID,
+  option,
+  setIsPosting,
+  type,
 }) => {
   return (
     <Modal
@@ -31,6 +37,12 @@ const ModifileFile = ({
                 text={"Edit"}
                 setModalVisible={setModalVisible}
                 setModalModifiedVisible={setModalModifiedVisible}
+                assName={assName}
+                setAssName={setAssName}
+                classID={classID}
+                option={option}
+                setIsPosting={setIsPosting}
+                type={type}
               />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
               <TextField
@@ -38,6 +50,12 @@ const ModifileFile = ({
                 text={"Delete"}
                 setModalVisible={setModalVisible}
                 setModalModifiedVisible={setModalModifiedVisible}
+                assName={assName}
+                setAssName={setAssName}
+                classID={classID}
+                option={option}
+                setIsPosting={setIsPosting}
+                type={type}
               />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
               <TextField
@@ -45,6 +63,12 @@ const ModifileFile = ({
                 text={"Download"}
                 setModalVisible={setModalVisible}
                 setModalModifiedVisible={setModalModifiedVisible}
+                assName={assName}
+                setAssName={setAssName}
+                classID={classID}
+                option={option}
+                setIsPosting={setIsPosting}
+                type={type}
               />
             </View>
             {/* <TouchableOpacity style={modalFillAssignmentStyles.text}>

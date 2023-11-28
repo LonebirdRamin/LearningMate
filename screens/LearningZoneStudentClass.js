@@ -120,7 +120,6 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
                 overflow: "hidden",
-                maxHeight: height*0.35,
               },
             ]}
             ref={ref[0]}
@@ -143,7 +142,6 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
               Class announcement
             </Text>
             <Text
-              numberOfLines={expanded[0]? 999:3}
               style={[customStyles.h3, { textAlign: "left", marginLeft: 24 }]}
             >
               {announce}

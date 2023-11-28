@@ -7,7 +7,7 @@ const modifiedModal = StyleSheet.create({
     alignItems: "center",
   },
   mainview: {
-    height: "50%",
+    height: "60%",
     width: "80%",
     backgroundColor: "#353542",
     borderRadius: 12,
