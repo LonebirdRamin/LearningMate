@@ -844,6 +844,80 @@ app.get('/api/getCurrentSemesterForTeacher', function (req, res, next) {
   );
 });
 
+app.get("/api/getSemesterYearStudent", function (req, res, next) {
+  console.log("Get Semester and Year List For Student");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;",
+    [email],
+    function (err, semesterListResults, fields) {
+      if (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "List of semester query error occurred" });
+      } else {
+        console.log("Success list of semester query");
+        res.json(semesterListResults);
+      }
+    }
+  );
+});
+
+app.get("/api/getSemesterYearTeacher", function (req, res, next) {
+  console.log("Get Semester and Year List For Student");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    "SELECT DISTINCT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON cl.teacher_id = t.teacher_id WHERE t.academic_email = ?;",
+    [email],
+    function (err, semesterListResults, fields) {
+      if (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "List of semester query error occurred" });
+      } else {
+        console.log("Success list of semester query");
+        res.json(semesterListResults);
+      }
+    }
+  );
+});
+
+app.delete('/api/deleteAssignment', (req, res) => {
+  const assName = req.body.assName;
+  console.log("DELETE ASSIGNMENT")
+
+  const sql = "DELETE FROM assignment_submission WHERE assignment_id IN (SELECT assignment_id FROM assignment WHERE assignment_name = ?);";
+
+  connection.query(sql, [assName], (err, results) => {
+    if (err) {
+      console.log("Error while deleting an assignment from the table assignment_submission in the database", err);
+      return res.status(400).json({ message: "Failed to delete an assignment." });
+    }
+    
+    // Send the response for the assignment_submission deletion
+    res.status(201).json({ message: "Assignment successfully deleted from the table assignment_submission!" });
+    
+    // Perform the second query to delete from the 'assignment' table
+    const sql2 = "DELETE FROM assignment WHERE assignment_name = ?;";
+    
+    connection.query(sql2, [assName], (err2, results2) => {
+      if (err2) {
+        console.log("Error while deleting an assignment from the table assignment in the database", err2);
+        // Handle the error, send a response here
+      } else {
+        // Send a response for the 'assignment' table deletion if it was successful
+        console.log("Assignment successfully deleted from the table assignment!");
+      }
+    });
+  });
+});
+
+
+
 app.listen(5001, function () {
   console.log('CORS-enabled web server listening on port 5001')
 })

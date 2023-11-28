@@ -124,11 +124,50 @@ const loadFiles = async () => {
       };
     }));
     setFiles(fileList);
-    console.log(fileList);
+    console.log("Array : ", fileList);
   } catch (error) {
     console.error('Error listing files:', error);
   }
 };
+
+const loadFilesTopFolder = async () => {
+  // This load files from all subfolders in the top folder Ex. files are in users/student/64070503421, users/student/64070503471
+  console.log('Loading files...');
+
+  // set path to load files from
+  const basePath = 'users/student';
+  setPath(basePath);
+  console.log(path);
+
+  const storageRef = ref(storage, `storage/${basePath}`);
+
+  try {
+    const topDirectories = await listAll(storageRef);
+    const fileList = await Promise.all(
+      topDirectories.prefixes.map(async (prefix) => {
+        const subdirectoryRef = ref(storage, prefix.fullPath);
+        const filesInSubdirectory = await listAll(subdirectoryRef);
+        return Promise.all(filesInSubdirectory.items.map(async (itemRef) => {
+          const downloadURL = await getDownloadURL(itemRef);
+          return {
+            filename: itemRef.name,
+            downloadURL,
+            // Add other metadata as needed
+          };
+        }));
+      })
+    );
+
+    // Flatten the array of arrays into a single array
+    const flattenedFileList = fileList.flat();
+
+    setFiles(flattenedFileList);
+    console.log("Array : ", flattenedFileList);
+  } catch (error) {
+    console.error('Error listing files:', error);
+  }
+};
+
 
   const downloadFile = async (item, classID, fileType) => {
     try {
@@ -158,7 +197,7 @@ const loadFiles = async () => {
 
   const changeProfilePicture = async () => {
     setUploading(true);
-    const newPath = `users/student/64070503471`;
+    const newPath = `users/student/64070503433`;
     console.log("========CHANGE PROFILE PICTURE========", newPath);
     setPath(newPath); // Update the state
   
@@ -260,7 +299,7 @@ const loadFiles = async () => {
               )}
             </View>
           )}
-          <TouchableOpacity style={styles.uploadButton} onPress={changeProfilePicture}>
+          <TouchableOpacity style={styles.changeButton} onPress={changeProfilePicture}>
             <Text style={styles.buttonText}>Change Picture</Text>
           </TouchableOpacity>
         </View>
@@ -320,6 +359,15 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  changeButton: {
+    borderRadius: 5,
+    width: 150,
+    height: 150,
+    backgroundColor: '#ADD8E6',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
