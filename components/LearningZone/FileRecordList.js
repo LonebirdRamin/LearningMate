@@ -19,6 +19,7 @@ const FileRecordList = ({
   type,
   setModalVisible,
   setAssName,
+  setFileName,
 }) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
@@ -75,6 +76,7 @@ const FileRecordList = ({
                 if (type == "teacher") {
                   setModalVisible(true);
                   setAssName(item.folderName);
+                  setFileName(item.filename);
                   onClickHandler();
                 } else if (type == "student") {
                   console.log("Student Click!");

@@ -15,6 +15,7 @@ const ModifileFile = ({
   option,
   setIsPosting,
   type,
+  fileName,
 }) => {
   return (
     <Modal
@@ -43,6 +44,7 @@ const ModifileFile = ({
                 option={option}
                 setIsPosting={setIsPosting}
                 type={type}
+                fileName={fileName}
               />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
               <TextField
@@ -56,6 +58,7 @@ const ModifileFile = ({
                 option={option}
                 setIsPosting={setIsPosting}
                 type={type}
+                fileName={fileName}
               />
               <View style={{ backgroundColor: "#454545", height: 1 }} />
               <TextField
@@ -69,6 +72,7 @@ const ModifileFile = ({
                 option={option}
                 setIsPosting={setIsPosting}
                 type={type}
+                fileName={fileName}
               />
             </View>
             {/* <TouchableOpacity style={modalFillAssignmentStyles.text}>

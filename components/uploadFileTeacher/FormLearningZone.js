@@ -22,6 +22,7 @@ const FormLearningZone = ({
           setModalVisible={setModalVisible}
           classID={classID}
           setIsLoading={setIsLoading}
+          assNameOld={""}
         />
       ) : selected === "Announce" ? (
         <AnnounceForm

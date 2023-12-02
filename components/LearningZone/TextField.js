@@ -5,6 +5,7 @@ import Modal from "react-native-modal";
 import ModalModified from "./ModalModified";
 import DeleteFile from "../../backend/hooks/deleteFile";
 import DeleteAssignment from "../../backend/hooks/deleteAssignment";
+import DownloadFile from "../../backend/hooks/downloadFile";
 
 const TextField = ({
   setText,
@@ -14,9 +15,10 @@ const TextField = ({
   assName,
   setAssName,
   classID,
-  option,
+  option, //Assignment/document/record
   setIsPosting,
-  type,
+  type, //Teacher or Student
+  fileName,
 }) => {
   // if (isDelete === true) {
   //   console.log("Delete");
@@ -70,8 +72,16 @@ const TextField = ({
         } else if (text === "Download") {
           // storage/${classID}/${Record/Assignment/Document}/${assName}
           console.log("Download some shit: " + assName);
+          DownloadFile(
+            classID,
+            assName,
+            setAssName,
+            setIsPosting,
+            fileName,
+            option,
+            type
+          );
           setModalVisible(false);
-          setAssName("");
         }
       }}
       style={{

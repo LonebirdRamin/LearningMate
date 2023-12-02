@@ -746,14 +746,14 @@ app.delete("/api/deleteAssignment", (req, res) => {
 });
 
 app.post("/api/editAssignment", (req, res) => {
-  const { classID, assName, duedate, description } = req.body;
+  const { classID, assName, dueDate, description, assNameOld } = req.body;
 
   const sql =
     "UPDATE assignment SET assignment_name = ?, assignment_due_date = ?, assignment_desciption = ? WHERE assignment_name = ? AND class_id = ?";
 
   connection.query(
     sql,
-    [assName, duedate, description, assName, classID],
+    [assName, dueDate, description, assNameOld, classID],
     (err, results) => {
       if (err) {
         console.log(

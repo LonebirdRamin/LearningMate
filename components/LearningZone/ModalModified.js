@@ -17,7 +17,7 @@ const ModalModified = ({
   setIsLoading,
   setIsPosting,
   setAssName,
-  option,
+  classID,
 }) => {
   return (
     <Modal
@@ -54,8 +54,9 @@ const ModalModified = ({
                 type={"edit"}
                 setIsPosting={setIsPosting}
                 setModalVisible={setModalModifiedVisible}
-                classID={data.class_id}
+                classID={classID}
                 setIsLoading={setIsLoading}
+                assNameOld={assName}
               />
               {/* <FormLearningZone
                 setModalVisible={setModalVisible}

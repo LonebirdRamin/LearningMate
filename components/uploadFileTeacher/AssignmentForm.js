@@ -8,6 +8,7 @@ import DateTimeLearning from "./DateTimeLearning";
 import postAssignment from "../../backend/hooks/postAssignment";
 import PostFile from "../../backend/hooks/submitFileStudent";
 import PostFileTeacher from "../../backend/hooks/postFileTeacher";
+import EditAssignment from "../../backend/hooks/editAssignment";
 
 const AssignmentForm = ({
   type,
@@ -15,6 +16,7 @@ const AssignmentForm = ({
   setModalVisible,
   classID,
   setIsLoading,
+  assNameOld,
 }) => {
   //Don't forget to send "Class_ID" from LearningZone page
   const [textTitle, onChangeTitle] = useState("");
@@ -50,7 +52,20 @@ const AssignmentForm = ({
         );
       } else if (type === "edit") {
         //To edit
-        console.log("Edit");
+        // console.log("Edit");
+        insertData["assNameOld"] = assNameOld;
+        // console.log(insertData);
+        console.log(insertData);
+        EditAssignment(
+          insertData,
+          setModalVisible,
+          handleDateTime,
+          onChangeInformation,
+          onChangeTitle,
+          setIsLoading,
+          setIsPosting
+        );
+        //classID, assName, duedate, description
       }
       setModalVisible(false);
     }

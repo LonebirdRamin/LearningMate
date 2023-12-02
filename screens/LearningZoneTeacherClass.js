@@ -49,6 +49,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [assName, setAssName] = useState("");
   const [option, setOption] = useState("");
+  const [fileName, setFileName] = useState(null);
   const type = "teacher";
 
   useEffect(() => {
@@ -228,8 +229,6 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 >
                   <AssignmentListTeacher
                     onClickHandler={() => setOptionFunc("Assignments")}
-                    // setOption={setOption}
-                    // optionTemp={"Assignments"}
                     data={filteredData}
                     setModalVisible={setModalVisible}
                     setAssName={setAssName} //To send assignment name that clicked!
@@ -279,6 +278,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                         type={type}
                         setModalVisible={setModalVisible}
                         setAssName={setAssName} //To send assignment name that clicked!
+                        setFileName={setFileName}
                       />
                       <View
                         style={{
@@ -329,6 +329,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                         type={type}
                         setModalVisible={setModalVisible}
                         setAssName={setAssName}
+                        setFileName={setFileName}
                       />
                       <View
                         style={{
@@ -351,7 +352,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
               </View>
             </View>
           </ScrollView>
-          <ModifileFile
+          <ModifileFile //Popup modal to choose Edit, Delete, Download
             isVisible={isVisible}
             setModalVisible={setModalVisible}
             setModalModifiedVisible={setModalModifiedVisible}
@@ -362,9 +363,10 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
             option={option}
             setIsPosting={setIsPosting}
             type={type}
+            fileName={fileName}
           />
-          <ModalModified
-            text={text} //To tell type: edit, delete, or download?
+          <ModalModified //Edit modal
+            text={text}
             isVisibleModalModified={isVisibleModalModified}
             setModalModifiedVisible={setModalModifiedVisible}
             data={filteredData}
@@ -372,7 +374,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
             setIsPosting={setIsPosting}
             setIsLoading={setIsLoading}
             setAssName={setAssName}
-            option={option}
+            classID={class_.class_id}
           />
         </View>
       )}
