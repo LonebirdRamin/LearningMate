@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native'
+import { Text, SafeAreaView } from 'react-native'
 import React from 'react'
+import customStyles from '../styles/customStyles'
 
 const Notification = () => {
   return (
-    <View>
-      <Text>Notification</Text>
-    </View>
+    <SafeAreaView style={[customStyles.pageBackground,{display:'flex',width:'100%',
+    height:'100%',justifyContent:'center',alignItems:'center'}]}>
+      <Text style={customStyles.h4}>Work in progress.</Text>
+    </SafeAreaView>
   )
 }
 
