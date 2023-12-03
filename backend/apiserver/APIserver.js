@@ -245,7 +245,7 @@ app.get("/api/getAssignmentID", function (req, res, next) {
 
 app.get("/api/getSubjectAssignmentID", function (req, res, next) {
   const assignment_name = req.query.assignment_name;
-  console.log("AssignmentName student query: ", assignment_name);
+  // console.log("AssignmentName student query: ", assignment_name);
   connection.query(
     "SELECT assignment_id, assignment_due_date FROM `assignment` WHERE assignment_name = ?;",
     [assignment_name],
@@ -331,7 +331,7 @@ app.get("/api/getClassTeacher", (req, res) => {
   const email = req.query.email;
 
   connection.query(
-    "SELECT cl.class_id, c.class_name FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ? ORDER BY c.class_name ASC;;",
+    "SELECT cl.class_id, c.class_name, c.class_period_year, c.class_period_semester FROM class_lecturer AS cl JOIN teacher AS t ON t.teacher_id = cl.teacher_id JOIN class AS c ON cl.class_id = c.class_id WHERE academic_email = ? ORDER BY c.class_name ASC;;",
     [email],
     function (err, results, fields) {
       if (err) {
@@ -699,6 +699,80 @@ app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
     }
   );
 });
+
+app.delete("/api/deleteAssignment", (req, res) => {
+  const assName = req.query.assName;
+  console.log(assName);
+  console.log("DELETE ASSIGNMENT");
+
+  const sql =
+    "DELETE FROM assignment_submission WHERE assignment_id IN (SELECT assignment_id FROM assignment WHERE assignment_name = ?);";
+
+  connection.query(sql, [assName], (err, results) => {
+    if (err) {
+      console.log(
+        "Error while deleting an assignment from the table assignment_submission in the database",
+        err
+      );
+      return res
+        .status(400)
+        .json({ message: "Failed to delete an assignment." });
+    }
+
+    // Send the response for the assignment_submission deletion
+    res.status(201).json({
+      message:
+        "Assignment successfully deleted from the table assignment_submission!",
+    });
+
+    // Perform the second query to delete from the 'assignment' table
+    const sql2 = "DELETE FROM assignment WHERE assignment_name = ?;";
+
+    connection.query(sql2, [assName], (err2, results2) => {
+      if (err2) {
+        console.log(
+          "Error while deleting an assignment from the table assignment in the database",
+          err2
+        );
+        // Handle the error, send a response here
+      } else {
+        // Send a response for the 'assignment' table deletion if it was successful
+        console.log(
+          "Assignment successfully deleted from the table assignment!"
+        );
+      }
+    });
+  });
+});
+
+app.post("/api/editAssignment", (req, res) => {
+  const { classID, assName, duedate, description } = req.body;
+
+  const sql =
+    "UPDATE assignment SET assignment_name = ?, assignment_due_date = ?, assignment_desciption = ? WHERE assignment_name = ? AND class_id = ?";
+
+  connection.query(
+    sql,
+    [assName, duedate, description, assName, classID],
+    (err, results) => {
+      if (err) {
+        console.log(
+          "Error while updating an assignment from the database",
+          err
+        );
+        return res
+          .status(400)
+          .json({ message: "Failed to update an assignment." });
+      }
+      return res
+        .status(201)
+        .json({ message: "Assignment successfully updated!" });
+    }
+  );
+});
+
+
+
 app.get("/api/getSemesterYear", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
   const email = req.query.email;
@@ -720,7 +794,29 @@ app.get("/api/getSemesterYear", function (req, res, next) {
   );
 });
 
+
+
+app.get("/api/getSemesterYearTeacher", function (req, res, next) {
+  console.log("Get Semester and Year List For Student");
+  const email = req.query.email;
+  console.log("Email: ", email);
+  connection.query(
+    "SELECT DISTINCT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON cl.teacher_id = t.teacher_id WHERE t.academic_email = ?;",
+    [email],
+    function (err, semesterListResults, fields) {
+      if (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ error: "List of semester query error occurred" });
+      } else {
+        console.log("Success list of semester query");
+        res.json(semesterListResults);
+      }
+    }
+  );
+});
+
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });
-

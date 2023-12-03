@@ -14,10 +14,10 @@ import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
 import queryAssignment from "../../backend/hooks/queryAssignmentStudent";
 import getSubjectAssignmentID from "../../backend/hooks/getSubjectAssignmentID";
 import SubmitFileStudent from "../../backend/hooks/submitFileStudent";
-const email = "pannawat.duro@kmutt.ac.th";
+// const email = "pannawat.duro@kmutt.ac.th";
 
 //Need email, setModalVisible, classID, assignmentName
-const MainStudentAssignment = ({ setModalVisible }) => {
+const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const [insertData, setInsertData] = useState(null);
@@ -27,7 +27,7 @@ const MainStudentAssignment = ({ setModalVisible }) => {
   const [assignmentData, setAssignmentData] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const classID = "CPE241";
+  // const classID = "CPE241";
   const assignment_name = "Test sent";
   const fileType = "Assignments";
 

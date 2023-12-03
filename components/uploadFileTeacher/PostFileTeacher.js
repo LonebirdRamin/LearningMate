@@ -24,7 +24,15 @@ const PostFileTeacher = ({
     if (insertData !== null) {
       console.log("---------File--------\n");
       console.log(insertData);
-      PostFile(classID, fileType, file, setUploading, setFile, textTitle);
+      PostFile(
+        classID,
+        fileType,
+        file,
+        setUploading,
+        setFile,
+        textTitle,
+        setIsPosting
+      );
       setModalVisible(false);
     }
   }, [insertData]);

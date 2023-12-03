@@ -6,13 +6,23 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import profileStyles from "../../styles/profileStyle";
 import customStyles from "../../styles/customStyles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 
-const AssignmentListTeacher = ({ data, setModalVisible }) => {
+const AssignmentListTeacher = ({
+  onClickHandler,
+  data,
+  setModalVisible,
+  setAssName,
+}) => {
+  // setOption(optionTemp);
+  const handleItemClick = (selectedOption) => {
+    onClickHandler(selectedOption);
+    // Add any other logic you need when an item is clicked
+  };
   const maxLength = 25;
   const truncate = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -64,7 +74,13 @@ const AssignmentListTeacher = ({ data, setModalVisible }) => {
             <Text style={[customStyles.h2, { flex: 1 }]}>
               {truncate(item.assignment_name, maxLength)}
             </Text>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity
+              onPress={() => {
+                setModalVisible(true);
+                setAssName(item.assignment_name);
+                handleItemClick();
+              }}
+            >
               <Image
                 source={require("../../assets/icons/threedots.png")}
               ></Image>

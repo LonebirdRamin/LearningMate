@@ -12,7 +12,8 @@ const PostFile = async (
   file,
   setUploading,
   setFile,
-  textTitle
+  textTitle,
+  setIsPosting
 ) => {
   setUploading(true);
   // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
@@ -57,6 +58,7 @@ const PostFile = async (
     });
     setUploading(false);
     Alert.alert("Success");
+    setIsPosting(true);
     setFile(null);
   } catch (e) {
     console.log(e);

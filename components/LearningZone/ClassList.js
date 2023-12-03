@@ -6,7 +6,7 @@ const width = Dimensions.get("screen").width
 
 const ClassList = ({data,navigation,destination}) => {
 
-    const maxLength = 40;
+    const maxLength = 30;
     const truncate = (text,maxLength)=>{
       if(text.length > maxLength){
         return text.slice(0,maxLength)+'...'
