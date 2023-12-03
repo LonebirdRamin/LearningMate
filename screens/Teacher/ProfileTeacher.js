@@ -37,13 +37,36 @@ const ProfileTeacher = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    let { teacher_id, faculty_name, department_name,  date_of_birth, gender, id_card, personal_email, teacher_name} = perInfo;
+    let {
+      teacher_id,
+      faculty_name,
+      department_name,
+      date_of_birth,
+      gender,
+      id_card,
+      personal_email,
+      teacher_name,
+    } = perInfo;
     setPrepPerInfo([teacher_id, faculty_name, department_name]);
-    setPrepPerInfoDetail([teacher_id, teacher_name,gender,faculty_name, department_name, (new Date(date_of_birth)).toLocaleDateString("en-US", {day: 'numeric', month: 'short', year: 'numeric'}), id_card, personal_email,  email])
+    setPrepPerInfoDetail([
+      teacher_id,
+      teacher_name,
+      gender,
+      faculty_name,
+      department_name,
+      new Date(date_of_birth).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }),
+      id_card,
+      personal_email,
+      email,
+    ]);
   }, [perInfo]);
-  useEffect(()=>{
-    console.log(prepPerInfo)
-  },[prepPerInfo])
+  useEffect(() => {
+    console.log(prepPerInfo);
+  }, [prepPerInfo]);
   return (
     <View style={[globleStyles.pageContainer]}>
       {isPerInfoIsLoading ? (
@@ -54,12 +77,13 @@ const ProfileTeacher = ({ navigation }) => {
         <ScrollView style={profileStyles.scrollContainer}>
           {/*Start - Icon, details, edit */}
           <View style={profileStyles.picNameContainer}>
-            <View
+            <Image
+              resizeMode={"contain"}
+              source={require("../../assets/icons/Profile/user.png")}
               style={{
-                width: 100,
-                height: 100,
-                backgroundColor: "white",
-                borderRadius: 55,
+                borderRadius: width,
+                width: width * 0.27,
+                height: width * 0.27,
               }}
             />
             <View style={profileStyles.nameEmail}>

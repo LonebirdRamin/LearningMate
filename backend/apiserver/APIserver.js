@@ -771,9 +771,7 @@ app.post("/api/editAssignment", (req, res) => {
   );
 });
 
-app.listen(5001, function () {
-  console.log("CORS-enabled web server listening on port 5001");
-});
+
 
 app.get("/api/getSemesterYear", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
@@ -796,6 +794,8 @@ app.get("/api/getSemesterYear", function (req, res, next) {
   );
 });
 
+
+
 app.get("/api/getSemesterYearTeacher", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
   const email = req.query.email;
@@ -815,4 +815,8 @@ app.get("/api/getSemesterYearTeacher", function (req, res, next) {
       }
     }
   );
+});
+
+app.listen(5001, function () {
+  console.log("CORS-enabled web server listening on port 5001");
 });
