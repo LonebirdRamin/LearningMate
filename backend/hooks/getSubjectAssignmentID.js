@@ -8,7 +8,7 @@ const getSubjectAssignmentID = async (
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getSubjectAssignmentID?assignment_name=${assignment_name}`
+      `${ipv4.mark}getSubjectAssignmentID?assignment_name=${assignment_name}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
