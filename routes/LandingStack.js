@@ -36,9 +36,9 @@ const LandingStack = () => {
             // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
-        /> */}
+        /> 
 
-        {/* <Stack.Screen
+         <Stack.Screen
           name="HomepageStudent"
           component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
