@@ -39,7 +39,7 @@ const InfoBoxTeacher = ({ header, data, handlePress }) => {
         style={profileStyles.infoContainer}
         onPress={() => handlePress()}
       >
-        {/* Start - Each row infomation */}
+        {/* Start - - Each row infomation */}
         {data.map((item) => {
           return (
             <View key={uuid.v4()}>
@@ -65,7 +65,7 @@ const InfoBoxTeacher = ({ header, data, handlePress }) => {
           );
         })}
 
-        {/* End - Each row infomation */}
+        {/* End - - Each row infomation */}
       </TouchableOpacity>
     </View>
     // End - entire infobox

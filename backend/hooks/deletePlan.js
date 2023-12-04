@@ -10,11 +10,11 @@ const deletePlan = async (
   deleteData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged
+  setIsChanged,
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.delete(`${ipv4.kong}deletePlanner`, {
+    const response = await axios.delete(`${ipv4.golf}deletePlanner`, {
       data: deleteData,
     });
     // Check the response status code to determine if it was successful

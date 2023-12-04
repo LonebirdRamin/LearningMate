@@ -52,7 +52,7 @@ const PlannerScreen = () => {
   // End - manage day of planner
 
   // Start - data for adding new planner
-  const [isChanged, setIsChanged] = useState(false); 
+  const [isChanged, setIsChanged] = useState(false);
   // End - data for adding new planner
 
   // Start - formatting the start_time for DB

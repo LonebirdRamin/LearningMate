@@ -1,6 +1,8 @@
 import { SafeAreaView, Text } from "react-native";
 import customStyles from "../styles/customStyles";
-
+/*
+  A screen for showing the chats.
+*/
 const ChatScreen = () => {
   return (
     <SafeAreaView

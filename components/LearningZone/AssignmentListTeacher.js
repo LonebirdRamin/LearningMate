@@ -11,17 +11,17 @@ import profileStyles from "../../styles/profileStyle";
 import customStyles from "../../styles/customStyles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A component for storing the assignments in a list for the LearningZone (Teacher), with status and details.
+*/
 const AssignmentListTeacher = ({
   onClickHandler,
   data,
   setModalVisible,
   setAssName,
 }) => {
-  // setOption(optionTemp);
   const handleItemClick = (selectedOption) => {
     onClickHandler(selectedOption);
-    // Add any other logic you need when an item is clicked
   };
   const maxLength = 25;
   const truncate = (text, maxLength) => {
@@ -31,7 +31,7 @@ const AssignmentListTeacher = ({
     return text;
   };
   const status_dict = {
-    true: "#58E555", //all student submitted
+    true: "#58E555" /*all student submitted*/,
     false: "#5C90D2",
   };
   const formatDate = (data) => {
@@ -40,6 +40,9 @@ const AssignmentListTeacher = ({
   };
 
   if (data.length == 0) {
+    {
+      /*Start no assignments*/
+    }
     return (
       <View>
         <View
@@ -55,6 +58,9 @@ const AssignmentListTeacher = ({
         </View>
       </View>
     );
+    {
+      /*End no assignments*/
+    }
   }
 
   return (
@@ -63,6 +69,7 @@ const AssignmentListTeacher = ({
       nestedScrollEnabled={true}
       renderItem={({ item, index }) => (
         <View>
+          {/*Start first row*/}
           <View
             style={{
               display: "flex",
@@ -86,6 +93,9 @@ const AssignmentListTeacher = ({
               ></Image>
             </TouchableOpacity>
           </View>
+          {/*End first row*/}
+
+          {/*Start second row*/}
           <View
             style={{
               display: "flex",
@@ -137,6 +147,7 @@ const AssignmentListTeacher = ({
               </Text>
             </View>
           </View>
+          {/*End second row*/}
           {index != data.length - 1 && <View style={profileStyles.line} />}
         </View>
       )}

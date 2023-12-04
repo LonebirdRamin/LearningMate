@@ -10,7 +10,9 @@ import profileStyles from "../../styles/profileStyle";
 import customStyles from "../../styles/customStyles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A component for storing the assignments in a list for the LearningZone (Student), with status and details.
+*/
 const AssignmentList = ({ data }) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
@@ -30,6 +32,9 @@ const AssignmentList = ({ data }) => {
   };
 
   if (data.length == 0) {
+    {
+      /*Start no assignments*/
+    }
     return (
       <View>
         <View
@@ -45,14 +50,21 @@ const AssignmentList = ({ data }) => {
         </View>
       </View>
     );
+    {
+      /*End no assignments*/
+    }
   }
 
+  {
+    /*Start assignment list*/
+  }
   return (
     <FlatList
       data={data}
       nestedScrollEnabled={true}
       renderItem={({ item, index }) => (
         <View>
+          {/*Start first row*/}
           <View
             style={{
               display: "flex",
@@ -74,6 +86,9 @@ const AssignmentList = ({ data }) => {
               {status_dict[item.status].status}
             </Text>
           </View>
+          {/*End first row*/}
+
+          {/*Start second row*/}
           <View
             style={{
               display: "flex",
@@ -122,11 +137,15 @@ const AssignmentList = ({ data }) => {
               </Text>
             </TouchableOpacity>
           </View>
+          {/*End second row*/}
           {index != data.length - 1 && <View style={profileStyles.line} />}
         </View>
       )}
     />
   );
+  {
+    /*End assignment list*/
+  }
 };
 
 export default AssignmentList;

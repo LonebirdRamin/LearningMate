@@ -10,7 +10,9 @@ import React from "react";
 import customStyles from "../../styles/customStyles";
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A component for storing the classes in a list for the LearningZone.
+*/
 const ClassList = ({ data, navigation, destination }) => {
   const maxLength = 30;
   const truncate = (text, maxLength) => {

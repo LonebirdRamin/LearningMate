@@ -38,14 +38,14 @@ const EditPlannerModal = ({
   const [selectedType, setSelectedType] = useState();
   const [detail, setDetail] = useState();
   const [date, setDate] = useState(
-    new Date(selectedPlan.date + " " + selectedPlan.time)
+    new Date(selectedPlan.date + " " + selectedPlan.time),
   );
   const [formattedDate, setFormattedDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" })
+      date.toLocaleString("default", { day: "2-digit" }),
   );
   // End - Information for plan
 
@@ -72,7 +72,7 @@ const EditPlannerModal = ({
         "-" +
         date.toLocaleString("default", { month: "2-digit" }) +
         "-" +
-        date.toLocaleString("default", { day: "2-digit" })
+        date.toLocaleString("default", { day: "2-digit" }),
     );
   }, [date]);
 
@@ -136,13 +136,13 @@ const EditPlannerModal = ({
           </View>
         ) : (
           <View style={addPlannerModalStyles.formContainer}>
-            {/* Start - Type */}
+            {/* Start - - Type */}
             <View>
-              {/* Start - Header type */}
+              {/* Start - - Header type */}
               <Text style={addPlannerModalStyles.subHeaderText}>Type</Text>
-              {/* End - Header type */}
+              {/* End - - Header type */}
 
-              {/* Start - All type display */}
+              {/* Start - - All type display */}
               <View style={addPlannerModalStyles.typeContainer}>
                 <FlatList
                   keyExtractor={(item) => item}
@@ -163,11 +163,11 @@ const EditPlannerModal = ({
                   }}
                 />
               </View>
-              {/* End - All type display */}
+              {/* End - - All type display */}
             </View>
-            {/* End - Type */}
+            {/* End - - Type */}
 
-            {/* Start - Title */}
+            {/* Start - - Title */}
             <View>
               <Text style={addPlannerModalStyles.subHeaderText}>Title</Text>
               <TextInput
@@ -178,9 +178,9 @@ const EditPlannerModal = ({
                 }}
               />
             </View>
-            {/* End - Title */}
+            {/* End - - Title */}
 
-            {/* Start - Detail */}
+            {/* Start - - Detail */}
             <View>
               <Text style={addPlannerModalStyles.subHeaderText}>Detail</Text>
               <TextInput
@@ -199,9 +199,9 @@ const EditPlannerModal = ({
                 }}
               />
             </View>
-            {/* End - Detail*/}
+            {/* End - - Detail*/}
 
-            {/* Start - date zone */}
+            {/* Start - - date zone */}
             <View style={addPlannerModalStyles.dateTimeContainer}>
               <TouchableOpacity
                 onPress={showDatepicker}
@@ -218,9 +218,9 @@ const EditPlannerModal = ({
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* End - date zone */}
+            {/* End - - date zone */}
 
-            {/* Start - Time */}
+            {/* Start - - Time */}
             <View style={addPlannerModalStyles.dateTimeContainer}>
               <TouchableOpacity
                 onPress={showTimepicker}
@@ -248,7 +248,7 @@ const EditPlannerModal = ({
                     Alert.alert(
                       "Planner",
                       "Please type in title and detail of this plan",
-                      [{ text: "OK" }]
+                      [{ text: "OK" }],
                     );
                   } else {
                     setEditedPlan({
@@ -288,11 +288,11 @@ const EditPlannerModal = ({
                               },
                               setIsLoading,
                               setModalVisible,
-                              setIsChanged
+                              setIsChanged,
                             );
                           },
                         },
-                      ]
+                      ],
                     );
                   }}
                 >

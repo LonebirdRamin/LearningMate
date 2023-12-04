@@ -1,9 +1,13 @@
 import ipv4 from "../apiserver/ipv4";
+/*
+  This hook will get all the semester and year that the sepecific teacher has 
+  been teaching.
+*/
 const getSemesterYearTeacher = async (email, setSemYear, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getSemesterYearTeacher?email=${email}`,
+      `${ipv4.golf}getSemesterYearTeacher?email=${email}`,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

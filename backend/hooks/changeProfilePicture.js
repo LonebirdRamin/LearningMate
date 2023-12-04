@@ -31,7 +31,7 @@ const changeProfilePicture = async (
   file,
   setFile,
   setProfilePicSuccess,
-  setIsPicLoading
+  setIsPicLoading,
 ) => {
   setIsPicLoading(true);
   const path = `users/student/${id}`;
@@ -45,7 +45,7 @@ const changeProfilePicture = async (
     await Promise.all(
       existingFilesRes.items.map(async (existingFileRef) => {
         await deleteObject(existingFileRef);
-      })
+      }),
     );
 
     if (!file || !file.assets || file.assets.length === 0) {

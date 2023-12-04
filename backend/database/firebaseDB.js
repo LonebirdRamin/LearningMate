@@ -20,7 +20,6 @@ const firebaseConfig = {
   measurementId: "G-LT0PCE10K5",
 };
 
-
 /*
   Initialize Firebase and its services. (Firestore, Storage, Auth, etc.)
 */

@@ -61,12 +61,12 @@ const ProfileScreen = ({ navigation }) => {
     // Assuming grades have a numeric value, you can calculate the average
     const totalCredits = grades.reduce(
       (total, grade) => total + parseFloat(grade.class_credit),
-      0
+      0,
     );
     const totalGradePoints = grades.reduce(
       (total, grade) =>
         total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
-      0
+      0,
     );
 
     const average = totalGradePoints / totalCredits;
@@ -86,7 +86,7 @@ const ProfileScreen = ({ navigation }) => {
     loadProfilePic(
       setPicUrl,
       `users/student/${perInfo.student_id}`,
-      setIsPicLoading
+      setIsPicLoading,
     );
   }, [perInfo]);
 
@@ -240,7 +240,7 @@ const ProfileScreen = ({ navigation }) => {
                     file,
                     setFile,
                     setProfilePicSuccess,
-                    setIsPicLoading
+                    setIsPicLoading,
                   );
                 }}
               >

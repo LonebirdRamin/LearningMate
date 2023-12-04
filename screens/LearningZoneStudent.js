@@ -10,7 +10,9 @@ import DropDown from "../components/Profile/DropDown";
 import getCurrentSemStudent from "../backend/hooks/getCurrentSemStudent";
 import getSemesterYear from "../backend/hooks/getSemesterYear";
 import profileStyles from "../styles/profileStyle";
-
+/*
+  This is a screen for listing all the class that the student is enrolled in
+*/
 const LearningZoneStudent = ({ navigation }) => {
   const height = Dimensions.get("screen").height;
   const width = Dimensions.get("screen").width;
@@ -24,6 +26,7 @@ const LearningZoneStudent = ({ navigation }) => {
   const [currentSem, setCurrentSem] = useState();
   const [semYear, setSemYear] = useState([]);
 
+  /* Start - manage class */
   useEffect(() => {
     const fetchData = async () => {
       getSemesterYear(email, setSemYear, setIsCurSemLoading);
@@ -33,11 +36,15 @@ const LearningZoneStudent = ({ navigation }) => {
 
     fetchData();
   }, []);
+  /* End - manage class */
 
+  /* Start - manage semester */
   useEffect(() => {
     getCurrentSemStudent(email, setCurrentSem, setIsCurSemLoading);
   }, [semYear]);
+  /* End - manage semester */
 
+  /* Start - manage current semester */
   useEffect(() => {
     if (
       currentSem &&
@@ -49,7 +56,9 @@ const LearningZoneStudent = ({ navigation }) => {
       );
     }
   }, [currentSem]);
+  /* End - manage current semester */
 
+  /* Start - manage filter schedule */
   useEffect(() => {
     if (_class != null) {
       const copy = JSON.parse(JSON.stringify(_class));
@@ -64,6 +73,7 @@ const LearningZoneStudent = ({ navigation }) => {
       );
     }
   }, [selectedSem]);
+  /* End - manage filter schedule */
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -80,6 +90,7 @@ const LearningZoneStudent = ({ navigation }) => {
         </View>
       ) : (
         <View style={[customStyles.pageBackground]}>
+          {/* Start - top of page*/}
           <View style={customStyles.pageTitleContainer}>
             <Text style={customStyles.pageTitle}>Learning Zone</Text>
           </View>
@@ -121,6 +132,7 @@ const LearningZoneStudent = ({ navigation }) => {
               ]}
             />
           </View>
+          {/* End - top of page*/}
           <ClassList
             data={filteredClass}
             navigation={navigation}

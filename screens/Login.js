@@ -97,7 +97,7 @@ const Login = ({ navigation }) => {
                     Alert.alert(
                       "Login",
                       "Please fill in your email and password",
-                      [{ text: "Ok" }]
+                      [{ text: "Ok" }],
                     );
                   } else if (password === "") {
                     Alert.alert("Login", "Please fill in your password", [
