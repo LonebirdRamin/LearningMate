@@ -12,7 +12,7 @@ const EditAssignment = async (
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.post(`${ipv4.golf}editAssignment`, insertData);
+    const response = await axios.post(`${ipv4.kong}editAssignment`, insertData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;

@@ -23,8 +23,8 @@ const postAssignment = async (
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.golf}createAssignment`,
-      insertData,
+      `${ipv4.kong}createAssignment`,
+      insertData
     );
     console.log("Response From Post Ass: ", response.data);
 
@@ -34,13 +34,13 @@ const postAssignment = async (
     } else {
       throw new Error("Network response was not ok");
     }
-    const assignmentIDResponse = await fetch(`${ipv4.golf}getAssignmentID`);
+    const assignmentIDResponse = await fetch(`${ipv4.kong}getAssignmentID`);
     const assignmentIDData = await assignmentIDResponse.json();
     const maxAssID = assignmentIDData.maxAssignmentId;
 
     console.log("InsertData classID:" + insertData.classID);
     const queryStudentResponse = await fetch(
-      `${ipv4.golf}getStudent?classID=${insertData.classID}`,
+      `${ipv4.kong}getStudent?classID=${insertData.classID}`
     );
 
     const queryStudentData = await queryStudentResponse.json();
@@ -64,8 +64,8 @@ const postAssignment = async (
     console.log("STUDENT EACH CLASS:", studentEachClass);
 
     const generateStatusResponse = await axios.post(
-      `${ipv4.golf}generateStatus`,
-      { dataToInsert: studentEachClass },
+      `${ipv4.kong}generateStatus`,
+      { dataToInsert: studentEachClass }
     );
     if (generateStatusResponse.status === 201) {
       const result = generateStatusResponse.data;
@@ -84,91 +84,6 @@ const postAssignment = async (
     onChangeTitle("");
     setIsPosting(true);
   }
-  // const [classID, setClassID] = useState("");
-  // const [assName, setAssName] = useState("");
-  // const [publishDate, setPublishDate] = useState("");
-  // const [dueDate, setDueDate] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [loading, setLoading] = useState(false);
-  // const [fileSelected, setFileSelected] = useState(null);
-  // const navigation = useNavigation();
-
-  // const goInsert = async (classID, assName, dueDate, description) => {
-  //   setLoading(true);
-  //   try {
-  //     const insertData = {
-  //       classID,
-  //       assName,
-  //       dueDate,
-  //       description,
-  //     };
-
-  //     console.log(insertData);
-
-  //     const response = await axios.post(
-  //       `${ipv4.golf}createAssignment`,
-  //       insertData
-  //     );
-  //     console.log(response.data);
-
-  //     if (response.status === 201) {
-  //       const result = response.data;
-  //       console.log(result);
-  //     } else {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Post assignment failed!" + error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const goBack = () => {
-  //   navigation.goBack();
-  // };
-
-  // const handleDocumentSelection = async () => {
-  //   try {
-  //     const documentResult = await DocumentPicker.getDocumentAsync({
-  //       type: "*/*",
-  //       multiple: true,
-  //     });
-
-  //     if (!documentResult.cancelled) {
-  //       if (documentResult.assets && documentResult.assets.length > 0) {
-  //         documentResult.assets.forEach((asset) => {
-  //           console.log(
-  //             `URI: ${asset.uri}\n` +
-  //               `Name: ${asset.name}\n` +
-  //               `Type: ${asset.mimeType}\n` +
-  //               `Size: ${asset.size}`
-  //           );
-  //         });
-
-  //         setFileSelected(documentResult.assets);
-  //       } else {
-  //         console.log("No assets selected");
-  //       }
-  //     } else {
-  //       console.log("Document picking canceled");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error while selecting file: ", error);
-  //   }
-  // };
-
-  // const uploadFilesToFirebaseStorage = async () => {
-  //   console.log("Starting uploadFilesToFirebaseStorage");
-  //   if (imageUpload == null) return;
-  //   const imageRef = ref(storage, `${imageUpload.name + v4()}`);
-  //   uploadBytes(imageRef, imageUpload).then((snapshot) => {
-  //     getDownloadURL(snapshot.ref).then((url) => {
-  //       setImageUrls((prev) => [...prev, url]);
-  //     });
-  //   });
-  // };
 };
 
 export default postAssignment;

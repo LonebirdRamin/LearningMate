@@ -604,7 +604,7 @@ app.get("/api/getGrades", function (req, res) {
   const email = req.query.email;
 
   connection.query(
-    "SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_id;",
+    "SELECT c.class_id, c.class_name, cs.grade, c.class_credit, c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON cs.class_id = c.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? AND cs.grade IS NOT NULL ORDER BY c.class_id;",
     [email],
     function (err, result) {
       if (err) {
@@ -776,7 +776,7 @@ app.get("/api/getSemesterYear", function (req, res, next) {
   const email = req.query.email;
   console.log("Email: ", email);
   connection.query(
-    "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ?;",
+    "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC;",
     [email],
     function (err, semesterListResults, fields) {
       if (err) {
