@@ -17,14 +17,14 @@ const postAssignment = async (
   onChangeInformation,
   onChangeTitle,
   setIsLoading,
-  setIsPosting
+  setIsPosting,
 ) => {
   console.log(insertData);
   setIsLoading(true);
   try {
     const response = await axios.post(
       `${ipv4.golf}createAssignment`,
-      insertData
+      insertData,
     );
     console.log("Response From Post Ass: ", response.data);
 
@@ -40,7 +40,7 @@ const postAssignment = async (
 
     console.log("InsertData classID:" + insertData.classID);
     const queryStudentResponse = await fetch(
-      `${ipv4.golf}getStudent?classID=${insertData.classID}`
+      `${ipv4.golf}getStudent?classID=${insertData.classID}`,
     );
 
     const queryStudentData = await queryStudentResponse.json();
@@ -65,7 +65,7 @@ const postAssignment = async (
 
     const generateStatusResponse = await axios.post(
       `${ipv4.golf}generateStatus`,
-      { dataToInsert: studentEachClass }
+      { dataToInsert: studentEachClass },
     );
     if (generateStatusResponse.status === 201) {
       const result = generateStatusResponse.data;

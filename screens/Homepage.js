@@ -8,7 +8,7 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import customStyles from "../styles/customStyles";
@@ -26,11 +26,10 @@ import querySchedule from "../backend/hooks/querySchedule";
 import moment from "moment";
 import queryAssignment from "../backend/hooks/queryAssignmentStudent";
 import queryPlanner from "../backend/hooks/queryPlanner";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 import getCurrentSemStudent from "../backend/hooks/getCurrentSemStudent";
 
 const height = Dimensions.get("screen").height;
-
 
 const Homepage = ({ navigation }) => {
   const isFocused = useIsFocused();
@@ -46,12 +45,9 @@ const Homepage = ({ navigation }) => {
 
   // Start - Manage pull to reload
   const [refreshing, setRefreshing] = useState(false);
-  const onRefresh=()=>{
-    queryAssignment(email,
-      setRefreshing,
-      setAssignmentData,
-      setAssignNum)
-  }
+  const onRefresh = () => {
+    queryAssignment(email, setRefreshing, setAssignmentData, setAssignNum);
+  };
   // End - Manange pull to reload
 
   // const [date,setDate] = useState(moment().format('DD')) //Numerical date
@@ -68,27 +64,22 @@ const Homepage = ({ navigation }) => {
     const fetchData = async () => {
       getCurrentSemStudent(email, setCurSem, setIsCurSemLoading);
       querySchedule(email, setQueriedSchedule);
-      
     };
     setIsLoading(false);
-    if(isFocused){
+    if (isFocused) {
       fetchData();
     }
   }, [isFocused]);
   // End - manage about assignment
 
-  useEffect(
-    ()=>{
-      queryAssignment(
-        email,
-        setIsAssignmentLoading,
-        setAssignmentData,
-        setAssignNum
-      );
-    }, []
-
-  );
-  
+  useEffect(() => {
+    queryAssignment(
+      email,
+      setIsAssignmentLoading,
+      setAssignmentData,
+      setAssignNum,
+    );
+  }, []);
 
   useEffect(() => {
     const fetchPlanner = async () => {
@@ -108,8 +99,8 @@ const Homepage = ({ navigation }) => {
     const currentDate = new Date();
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + 6);
-    dateLimit.setHours(0,0,0,0);
-    currentDate.setHours(0,0,0,0);
+    dateLimit.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
 
     const isClassEvent = (event) => {
       return "class_id" in event;
@@ -121,13 +112,14 @@ const Homepage = ({ navigation }) => {
     //Filter out planner that is not in the 7-day period and cur semester/year
     const validEvents = copy.filter((item) => {
       if (isClassEvent(item)) {
-        return item.class_period_year == curSem.class_period_year 
-        && item.class_period_semester == curSem.class_period_semester;
+        return (
+          item.class_period_year == curSem.class_period_year &&
+          item.class_period_semester == curSem.class_period_semester
+        );
       }
       const eventStartDate = new Date(item.start_time);
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
     });
-
 
     //Format the planner object to be appropriate for filtering
     validEvents.map((event) => {
@@ -165,18 +157,17 @@ const Homepage = ({ navigation }) => {
 
   useEffect(() => {
     //Filter again when day changes
-    if(curSem !== undefined){
+    if (curSem !== undefined) {
       const res = filterEvents(appendedEvents).filter(
-        (item) => item.date_name == day
-        );
-        setValidEvents(res);
+        (item) => item.date_name == day,
+      );
+      setValidEvents(res);
     }
-      
   }, [appendedEvents, day, curSem]);
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {(
+      {
         <View style={customStyles.pageBackground}>
           <View
             style={[
@@ -246,12 +237,15 @@ const Homepage = ({ navigation }) => {
                   <ActivityIndicator size={50} color="#F04E22" />
                 </View>
               ) : (
-                
                 <FlatList
                   refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#F04E22", "red"] } progressViewOffset={height/30} />
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                      colors={["#F04E22", "red"]}
+                      progressViewOffset={height / 30}
+                    />
                   }
-                  
                   data={assignmentData}
                   renderItem={({ item }) => (
                     <AssignmentBox
@@ -261,14 +255,13 @@ const Homepage = ({ navigation }) => {
                       dueDate={item.assignment_due_date}
                       refreshing={refreshing}
                     />
-                    
                   )}
                 />
               )}
             </View>
           </View>
         </View>
-      )}
+      }
     </SafeAreaView>
   );
 };

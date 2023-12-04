@@ -30,7 +30,7 @@ const RecordForm = ({
         setUploading,
         setVideo,
         title,
-        setIsPosting
+        setIsPosting,
       );
       setModalVisible(false);
     }

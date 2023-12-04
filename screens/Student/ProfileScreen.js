@@ -53,18 +53,18 @@ const ProfileScreen = ({ navigation }) => {
   const [semYear, setSemYear] = useState([]);
   const [picUrl, setPicUrl] = useState();
   const [file, setFile] = useState();
-  const [profilePicSuccess, setProfilePicSuccess] = useState(false)
+  const [profilePicSuccess, setProfilePicSuccess] = useState(false);
   const calculateAverage = (grades) => {
     // Implement your GPA calculation logic here
     // Assuming grades have a numeric value, you can calculate the average
     const totalCredits = grades.reduce(
       (total, grade) => total + parseFloat(grade.class_credit),
-      0
+      0,
     );
     const totalGradePoints = grades.reduce(
       (total, grade) =>
         total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
-      0
+      0,
     );
 
     const average = totalGradePoints / totalCredits;
@@ -84,7 +84,7 @@ const ProfileScreen = ({ navigation }) => {
     loadProfilePic(
       setPicUrl,
       `users/student/${perInfo.student_id}`,
-      setIsPicLoading
+      setIsPicLoading,
     );
   }, [perInfo]);
 
@@ -162,7 +162,9 @@ const ProfileScreen = ({ navigation }) => {
     ]);
   }, [perInfo]);
 
-  useEffect(()=>{console.log(profilePicSuccess)},[profilePicSuccess])
+  useEffect(() => {
+    console.log(profilePicSuccess);
+  }, [profilePicSuccess]);
 
   return (
     <View style={[globleStyles.pageContainer]}>
@@ -188,49 +190,51 @@ const ProfileScreen = ({ navigation }) => {
                 borderRadius: width,
               }}
             /> */}
-            {isPicLoading? 
-               <ActivityIndicator></ActivityIndicator>:<TouchableOpacity
-              onPress={() => {
-                pickFilePicture(setFile, false, setProfilePicSuccess);
-                // setPicUrl(file?.assets[0].uri)
-              }}
-            >
-              {picUrl === undefined ? (
-                <Image
-                  resizeMode={"contain"}
-                  source={require("../../assets/icons/Profile/user.png")}
-                  style={{
-                    borderRadius: width,
-                    width: width * 0.27,
-                    height: width * 0.27,
-                  }}
-                />
-              ) : file?.assets &&
-                file?.assets.length > 0 &&
-                file?.assets[0].mimeType.startsWith("image/") ? (
-                <Image
-                  source={{ uri: file?.assets[0].uri }}
-                  style={{
-                    width: width * 0.27,
-                    borderRadius: width,
-                    height: width * 0.27,
-                  }}
-                />
-              ) : (
-                <Image
-                  resizeMode={"contain"}
-                  source={{
-                    uri: picUrl?.downloadURL,
-                    width: width * 0.27,
-                    height: width * 0.27,
-                  }}
-                  style={{ borderRadius: width }}
-                />
-              )}
-            </TouchableOpacity>
-            }
-            
-            {(file && profilePicSuccess)? (
+            {isPicLoading ? (
+              <ActivityIndicator></ActivityIndicator>
+            ) : (
+              <TouchableOpacity
+                onPress={() => {
+                  pickFilePicture(setFile, false, setProfilePicSuccess);
+                  // setPicUrl(file?.assets[0].uri)
+                }}
+              >
+                {picUrl === undefined ? (
+                  <Image
+                    resizeMode={"contain"}
+                    source={require("../../assets/icons/Profile/user.png")}
+                    style={{
+                      borderRadius: width,
+                      width: width * 0.27,
+                      height: width * 0.27,
+                    }}
+                  />
+                ) : file?.assets &&
+                  file?.assets.length > 0 &&
+                  file?.assets[0].mimeType.startsWith("image/") ? (
+                  <Image
+                    source={{ uri: file?.assets[0].uri }}
+                    style={{
+                      width: width * 0.27,
+                      borderRadius: width,
+                      height: width * 0.27,
+                    }}
+                  />
+                ) : (
+                  <Image
+                    resizeMode={"contain"}
+                    source={{
+                      uri: picUrl?.downloadURL,
+                      width: width * 0.27,
+                      height: width * 0.27,
+                    }}
+                    style={{ borderRadius: width }}
+                  />
+                )}
+              </TouchableOpacity>
+            )}
+
+            {file && profilePicSuccess ? (
               <TouchableOpacity
                 style={[
                   {
@@ -240,13 +244,23 @@ const ProfileScreen = ({ navigation }) => {
                     borderRadius: 999,
                   },
                 ]}
-                onPress={()=>{changeProfilePicture(perInfo?.student_id, file, setFile, setProfilePicSuccess, setIsPicLoading)}}
+                onPress={() => {
+                  changeProfilePicture(
+                    perInfo?.student_id,
+                    file,
+                    setFile,
+                    setProfilePicSuccess,
+                    setIsPicLoading,
+                  );
+                }}
               >
                 <Text style={[customStyles.h1, { color: "white" }]}>
                   Save Change
                 </Text>
               </TouchableOpacity>
-            ):<></>}
+            ) : (
+              <></>
+            )}
             <View style={profileStyles.nameEmail}>
               <Text style={profileStyles.text("white", width * 0.045, "bold")}>
                 {prepPerInfo[0]}

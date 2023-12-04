@@ -49,12 +49,12 @@ const TextField = ({
               assName,
               setAssName,
               setIsPosting,
-              type
+              type,
             );
             setModalVisible(false);
           },
         },
-      ]
+      ],
     );
   };
 
@@ -79,7 +79,7 @@ const TextField = ({
             setIsPosting,
             fileName,
             option,
-            type
+            type,
           );
           setModalVisible(false);
         }

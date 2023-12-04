@@ -4,50 +4,48 @@ import profileStyles from "../../styles/profileStyle";
 import uuid from "react-native-uuid";
 import DropDown from "./DropDown";
 
-
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
 const GradeList = ({ gpax, data, currentSem, semYear }) => {
-  
-
-  
-  
-
   const [selectedSem, setSelectedSem] = useState(
-    currentSem.class_period_semester + "/" + currentSem.class_period_year
+    currentSem.class_period_semester + "/" + currentSem.class_period_year,
   );
   const [gpa, setGpa] = useState("-");
-  const [displayData, setDisplayData] = useState()
-  useEffect(()=>{
-    let temp = data.filter((item)=> item.class_period_semester+"/"+item.class_period_year === selectedSem)
-    setDisplayData(temp)
-    
-  },[selectedSem])
-  useEffect(()=>{
-    if(displayData !== undefined)
-    {
-        if(displayData.length === 0)
-        {
-          setGpa("-")
-        }
-        else
-        {
-    
-          setGpa(calculateAverage(displayData))
-        }
-
+  const [displayData, setDisplayData] = useState();
+  useEffect(() => {
+    let temp = data.filter(
+      (item) =>
+        item.class_period_semester + "/" + item.class_period_year ===
+        selectedSem,
+    );
+    setDisplayData(temp);
+  }, [selectedSem]);
+  useEffect(() => {
+    if (displayData !== undefined) {
+      if (displayData.length === 0) {
+        setGpa("-");
+      } else {
+        setGpa(calculateAverage(displayData));
+      }
     }
-  },[displayData])
+  }, [displayData]);
   const calculateAverage = (grades) => {
     // Implement your GPA calculation logic here
     // Assuming grades have a numeric value, you can calculate the average
-    const totalCredits = grades.reduce((total, grade) => total + parseFloat(grade.class_credit), 0);
-    const totalGradePoints = grades.reduce((total, grade) => total + (parseFloat(grade.grade) * parseFloat(grade.class_credit)), 0);
-    
+    const totalCredits = grades.reduce(
+      (total, grade) => total + parseFloat(grade.class_credit),
+      0,
+    );
+    const totalGradePoints = grades.reduce(
+      (total, grade) =>
+        total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
+      0,
+    );
+
     const average = totalGradePoints / totalCredits;
     return average.toFixed(2); // Round to two decimal places
-  }
+  };
 
   return (
     <View>
@@ -74,12 +72,18 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
                   "/" +
                   currentSem.class_period_year,
                 value:
-                  currentSem.class_period_semester +"/"+
+                  currentSem.class_period_semester +
+                  "/" +
                   currentSem.class_period_year,
               },
-              ...((semYear.slice(1)).map((item)=>{
-                return {label: item.class_period_semester+"/"+item.class_period_year, value: (item.class_period_semester+"/"+item.class_period_year)}
-              }))
+              ...semYear.slice(1).map((item) => {
+                return {
+                  label:
+                    item.class_period_semester + "/" + item.class_period_year,
+                  value:
+                    item.class_period_semester + "/" + item.class_period_year,
+                };
+              }),
             ]}
           />
         </View>
@@ -109,8 +113,6 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
           }}
           data={displayData}
           renderItem={({ item, index }) => {
-            
-
             return (
               <View style={profileStyles.wrapper} key={uuid.v4()}>
                 <View style={profileStyles.mapBox}>
@@ -119,7 +121,7 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
                       style={profileStyles.text(
                         "#C1C1CD",
                         height * 0.015,
-                        "bold"
+                        "bold",
                       )}
                     >
                       {item.class_id}
@@ -152,7 +154,7 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
                   </View>
                   {/*End - GradeCred */}
                 </View>
-                {index == displayData.length-1 ? (
+                {index == displayData.length - 1 ? (
                   <></>
                 ) : (
                   <View style={profileStyles.line} />

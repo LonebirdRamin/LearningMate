@@ -33,7 +33,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" })
+      date.toLocaleString("default", { day: "2-digit" }),
   );
   // End - Information for plan
 
@@ -52,7 +52,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
         "-" +
         date.toLocaleString("default", { month: "2-digit" }) +
         "-" +
-        date.toLocaleString("default", { day: "2-digit" })
+        date.toLocaleString("default", { day: "2-digit" }),
     );
   }, [date]);
 
@@ -86,7 +86,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
         setSelectedType,
         setDate,
         setModalVisible,
-        setIsChanged
+        setIsChanged,
       );
     }
   }, [newPlan]);
@@ -230,7 +230,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
                     Alert.alert(
                       "Planner",
                       "Please type in title and detail of this plan",
-                      [{ text: "OK" }]
+                      [{ text: "OK" }],
                     );
                   } else {
                     setNewPlan({

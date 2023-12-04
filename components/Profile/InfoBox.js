@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 // const profile = require("../../assets/icons/Profile/profile.png")
 const data = {
   id: 64070503433,
@@ -13,41 +13,52 @@ const data = {
 
 const grade = {
   last: 3.91,
-  GPAX: 3.87
-}
+  GPAX: 3.87,
+};
 
-const user = require("../../assets/icons/Profile/user.png")
-const education = require("../../assets/icons/Profile/graduation.png")
-const faculty = require("../../assets/icons/Profile/layer.png")
-const department = require("../../assets/icons/Profile/hierarchy.png")
+const user = require("../../assets/icons/Profile/user.png");
+const education = require("../../assets/icons/Profile/graduation.png");
+const faculty = require("../../assets/icons/Profile/layer.png");
+const department = require("../../assets/icons/Profile/hierarchy.png");
 
-
-
-
-
-
-const InfoBox = ({ header, data, handlePress}) => {
-
-  let prepData = header==="Personal Info"? Object.values(data).slice(1): header==="Activity"? Object.values(data):data;
+const InfoBox = ({ header, data, handlePress }) => {
+  let prepData =
+    header === "Personal Info"
+      ? Object.values(data).slice(1)
+      : header === "Activity"
+        ? Object.values(data)
+        : data;
   let i = 0;
-  const icon = header==="Personal Info"? [user, education, faculty, department]:header==="Grade Results"? [user, user]:[user]
-  const subHeader = header==="Personal Info"? ["Student ID", "Education level", "Faculty", "Department"]:header==="Grade Results"? ["Last semester result", "GPAX"]:["Total activity hour"];
+  const icon =
+    header === "Personal Info"
+      ? [user, education, faculty, department]
+      : header === "Grade Results"
+        ? [user, user]
+        : [user];
+  const subHeader =
+    header === "Personal Info"
+      ? ["Student ID", "Education level", "Faculty", "Department"]
+      : header === "Grade Results"
+        ? ["Last semester result", "GPAX"]
+        : ["Total activity hour"];
   return (
     // Start - entire infobox
-    <View >
+    <View>
       {/*Start - Header of infobox */}
       <Text style={customStyles.h2}>{header}</Text>
       {/*Start - Header of infobox */}
 
-      <TouchableOpacity style={profileStyles.infoContainer} onPress={()=>handlePress()}>
+      <TouchableOpacity
+        style={profileStyles.infoContainer}
+        onPress={() => handlePress()}
+      >
         {/* Start - Each row infomation */}
         {prepData.map((item) => {
-          
           return (
             <View key={uuid.v4()}>
               <View style={profileStyles.gap} />
 
-              <View style={profileStyles.infoRow} >
+              <View style={profileStyles.infoRow}>
                 <Image
                   style={profileStyles.iconSize}
                   resizeMode="contain"
@@ -58,12 +69,11 @@ const InfoBox = ({ header, data, handlePress}) => {
                   <Text style={customStyles.h2}>{subHeader[i++]}</Text>
                   <Text style={profileStyles.text("#A2A2B5", 12, "500")}>
                     {item}
-                    {header==="Activity"? " hrs":""}
+                    {header === "Activity" ? " hrs" : ""}
                   </Text>
                 </View>
               </View>
-              <View style={profileStyles.gap}/>
-
+              <View style={profileStyles.gap} />
             </View>
           );
         })}

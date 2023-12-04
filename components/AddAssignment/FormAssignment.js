@@ -50,7 +50,7 @@ const FormAssignment = ({
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" })
+      date.toLocaleString("default", { day: "2-digit" }),
   );
 
   const setUpVariable = (
@@ -60,7 +60,7 @@ const FormAssignment = ({
     time,
     subjectTitle,
     subjectInformation,
-    showDate
+    showDate,
   ) => {
     let dateTime;
 
@@ -93,7 +93,7 @@ const FormAssignment = ({
         onChangeInformation,
         onChangeTitle,
         setIsLoading,
-        setIsPosting
+        setIsPosting,
       );
       PostFileTeacher(
         selected,
@@ -101,7 +101,7 @@ const FormAssignment = ({
         file,
         setUploading,
         setFile,
-        textTitle
+        textTitle,
       );
       setModalVisible(false);
     }
@@ -269,7 +269,7 @@ const FormAssignment = ({
             date.toLocaleTimeString("en-GB"),
             textTitle,
             textInformation,
-            showDate
+            showDate,
           ),
         ]}
       >

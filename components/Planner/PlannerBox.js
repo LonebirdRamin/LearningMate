@@ -30,8 +30,8 @@ const PlannerBox = ({
             type === plannerType[1]
               ? require("../../assets/icons/Planner/book.png")
               : type === plannerType[2]
-              ? require("../../assets/icons/Planner/game.png")
-              : require("../../assets/icons/Planner/pen.png")
+                ? require("../../assets/icons/Planner/game.png")
+                : require("../../assets/icons/Planner/pen.png")
           }
         />
         <View style={plannerBoxStyles.plannerDetail}>

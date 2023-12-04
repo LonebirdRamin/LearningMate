@@ -19,7 +19,7 @@ const signIn = async (email, password, navigation, loadState) => {
     const response = await signInWithEmailAndPassword(
       firebaseAuth,
       email,
-      password
+      password,
     );
 
     const info = await fetch(`${ipv4.golf}checkRole?email=${email}`);

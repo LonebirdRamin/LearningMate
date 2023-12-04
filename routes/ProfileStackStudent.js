@@ -18,10 +18,14 @@ const ProfileStackStudent = () => {
       <Stack.Screen
         name="ProfileStudentStack"
         component={ProfileScreen}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerRight: () => {
             return (
-              <TouchableOpacity onPress={()=>{navigation.push("Setting")}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("Setting");
+                }}
+              >
                 <Image
                   source={require("../assets/icons/Profile/setting.png")}
                 />
@@ -39,24 +43,27 @@ const ProfileStackStudent = () => {
         })}
       />
 
-
       <Stack.Screen
         name="Personal Info"
         component={PersonalInfoStudent}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -69,20 +76,24 @@ const ProfileStackStudent = () => {
       <Stack.Screen
         name="Setting"
         component={Setting}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -94,20 +105,24 @@ const ProfileStackStudent = () => {
       <Stack.Screen
         name="Help"
         component={Help}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -119,20 +134,24 @@ const ProfileStackStudent = () => {
       <Stack.Screen
         name="GradeResult"
         component={GradeResult}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (
@@ -145,20 +164,24 @@ const ProfileStackStudent = () => {
       <Stack.Screen
         name="Activity"
         component={Activity}
-        options={({navigation})=>({
+        options={({ navigation }) => ({
           headerTitleAlign: "center",
           headerStyle: {
             backgroundColor: "#1C1C23",
             height: 50,
           },
           headerBackVisible: false,
-          headerLeft:()=>(
-            <TouchableOpacity onPress={()=>{navigation.goBack()}}>
-                <Image
-                    style={profileStyles.back}
-                    resizeMode="cover"
-                    source={require("../assets/icons/Profile/back.png")}
-                />
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Image
+                style={profileStyles.back}
+                resizeMode="cover"
+                source={require("../assets/icons/Profile/back.png")}
+              />
             </TouchableOpacity>
           ),
           headerTitle: () => (

@@ -40,7 +40,7 @@ const AssignmentForm = ({
           onChangeInformation,
           onChangeTitle,
           setIsLoading,
-          setIsPosting
+          setIsPosting,
         );
         PostFileTeacher(
           classID,
@@ -48,7 +48,7 @@ const AssignmentForm = ({
           file,
           setUploading,
           setFile,
-          textTitle
+          textTitle,
         );
       } else if (type === "edit") {
         //To edit
@@ -63,7 +63,7 @@ const AssignmentForm = ({
           onChangeInformation,
           onChangeTitle,
           setIsLoading,
-          setIsPosting
+          setIsPosting,
         );
         //classID, assName, duedate, description
       }

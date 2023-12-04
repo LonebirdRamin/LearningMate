@@ -8,7 +8,7 @@ const EditAssignment = async (
   onChangeInformation,
   onChangeTitle,
   setIsLoading,
-  setIsPosting
+  setIsPosting,
 ) => {
   setIsLoading(true);
   try {

@@ -117,7 +117,7 @@ const Register = ({ navigation }) => {
                     Alert.alert(
                       "Register",
                       "Password should contain at least 6 letters",
-                      [{ text: "Ok" }]
+                      [{ text: "Ok" }],
                     );
                   } else if (password !== conPass) {
                     Alert.alert("Register", "Password is not the same", [

@@ -57,12 +57,12 @@ const HomepageTeacher = ({ navigation }) => {
         email,
         setIsAssignmentLoading,
         setAssignmentData,
-        setAssignNum
+        setAssignNum,
       );
       queryScheduleTeacher(email, setQueriedSchedule);
     };
     setIsPosting(false);
-    if(isFocused){
+    if (isFocused) {
       fetchData();
     }
   }, [isFocused, isPosting]);
@@ -85,8 +85,8 @@ const HomepageTeacher = ({ navigation }) => {
     const currentDate = new Date();
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() + 6);
-    dateLimit.setHours(0,0,0,0);
-    currentDate.setHours(0,0,0,0);
+    dateLimit.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
 
     const isClassEvent = (event) => {
       return "class_id" in event;
@@ -98,8 +98,10 @@ const HomepageTeacher = ({ navigation }) => {
     //Filter out planner that is not in the 7-day period and cur semester/year
     const validEvents = copy.filter((item) => {
       if (isClassEvent(item)) {
-        return item.class_period_year == curSem.class_period_year 
-        && item.class_period_semester == curSem.class_period_semester;
+        return (
+          item.class_period_year == curSem.class_period_year &&
+          item.class_period_semester == curSem.class_period_semester
+        );
       }
       const eventStartDate = new Date(item.start_time);
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
@@ -141,10 +143,9 @@ const HomepageTeacher = ({ navigation }) => {
 
   useEffect(() => {
     //Filter again when day changes
-    if(curSem !== undefined)
-    {
+    if (curSem !== undefined) {
       const res = filterEvents(appendedEvents).filter(
-        (item) => item.date_name == day
+        (item) => item.date_name == day,
       );
       setValidEvents(res);
     }
@@ -152,7 +153,7 @@ const HomepageTeacher = ({ navigation }) => {
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
-      {isloading || isCurSemLoading? (
+      {isloading || isCurSemLoading ? (
         <View
           style={[
             customStyles.pageBackground,

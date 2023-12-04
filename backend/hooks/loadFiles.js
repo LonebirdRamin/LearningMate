@@ -25,7 +25,7 @@ const LoadFiles = async (type, data, setFiles, setIsLoading) => {
     for (let i = 0; i < data.length; i++) {
       storageRef = ref(
         storage,
-        `storage/${data[i].class_id}/Assignments/${data[i].assignment_name}/${type}/`
+        `storage/${data[i].class_id}/Assignments/${data[i].assignment_name}/${type}/`,
       );
       res = await listAll(storageRef);
       fileList = await Promise.all(
@@ -38,7 +38,7 @@ const LoadFiles = async (type, data, setFiles, setIsLoading) => {
             downloadURL,
             // Add other metadata as needed
           };
-        })
+        }),
       );
       if (fileList.length !== 0) {
         filetemp.push(...fileList);

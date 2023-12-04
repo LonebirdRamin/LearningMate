@@ -46,7 +46,7 @@ const height = Dimensions.get("screen").height;
 //     grade: "C",
 //     credit: 3
 //   },
-  
+
 //   {
 //     code: "PRE380",
 //     sub: "Engineering Economics",
@@ -67,15 +67,19 @@ const height = Dimensions.get("screen").height;
 //   },
 // ]
 
-const GradeResult = ({route}) => {
+const GradeResult = ({ route }) => {
   const params = route.params;
-  
+
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>
-        <View style={[profileStyles.scrollContainer]}>
-                <GradeList data={params[0]}  gpax={params[2]} currentSem={params[1]} semYear={params[3]}/>
-            
-        </View>
+      <View style={[profileStyles.scrollContainer]}>
+        <GradeList
+          data={params[0]}
+          gpax={params[2]}
+          currentSem={params[1]}
+          semYear={params[3]}
+        />
+      </View>
     </View>
   );
 };

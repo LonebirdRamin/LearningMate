@@ -19,7 +19,7 @@ const DeleteFile = async (
   assName,
   setAssName,
   setIsPosting,
-  type
+  type,
 ) => {
   try {
     let filesRef = "";
@@ -28,7 +28,7 @@ const DeleteFile = async (
     if (option === "Assignments") {
       filesRef = ref(
         storage,
-        `storage/${classID}/${option}/${assName}/${type}`
+        `storage/${classID}/${option}/${assName}/${type}`,
       );
     } else {
       filesRef = ref(storage, `storage/${classID}/${option}/${assName}`);
@@ -39,7 +39,7 @@ const DeleteFile = async (
     await Promise.all(
       filesRes.items.map(async (fileRef) => {
         await deleteObject(fileRef);
-      })
+      }),
     );
 
     console.log("Files in path deleted successfully");

@@ -5,7 +5,7 @@ import IconBox from "./IconBox";
 import AssignmentDetail from "./AssignmentDetail";
 import DueDate from "./DueDate";
 
-const height = Dimensions.get("screen").height
+const height = Dimensions.get("screen").height;
 
 const AssignmentBox = ({
   iconColor = "#F04E22",
@@ -13,9 +13,11 @@ const AssignmentBox = ({
   subject = "Software Engineering",
   task = "Lab7: Refactoring",
   dueDate = "00000-00-00",
-  refreshing
+  refreshing,
 }) => {
-  return refreshing? (<View style={{flex:1, height: height}}></View>):(
+  return refreshing ? (
+    <View style={{ flex: 1, height: height }}></View>
+  ) : (
     <TouchableOpacity
       style={assignmentStyles.box}
       onPress={() => {

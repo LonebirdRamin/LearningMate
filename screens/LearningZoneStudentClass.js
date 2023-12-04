@@ -17,8 +17,8 @@ import { useIsFocused } from "@react-navigation/native";
 import AssignmentList from "../components/LearningZone/AssignmentList";
 import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
-import LoadDocument from "../backend/hooks/loadDocument";
-import LoadRecord from "../backend/hooks/loadRecord";
+import loadDocument from "../backend/hooks/loadDocument";
+import loadRecord from "../backend/hooks/loadRecord";
 
 const LearningZoneStudentClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -47,7 +47,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
         email,
         setIsAssignmentLoading,
         setAssignmentData,
-        setAssignNum
+        setAssignNum,
       );
       const result = await queryAnnouncement(class_.class_id);
       setAnnounce(result[0].class_announcement);
@@ -62,13 +62,13 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
     setFilteredData(
       assignmentData.filter((item) => {
         return item.class_id == class_.class_id;
-      })
+      }),
     );
   }, [assignmentData]);
 
   useEffect(() => {
-    LoadDocument(filteredData, setFiles, setIsLoading);
-    LoadRecord(filteredData, setRecordFile, setIsLoading);
+    loadDocument(class_.class_id, setFiles, setIsLoading);
+    loadRecord(class_.class_id, setRecordFile, setIsLoading);
   }, [filteredData]);
 
   const initializeRefs = (count) => {

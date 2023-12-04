@@ -37,7 +37,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
       assignment_name,
       setAssignmentData,
       setIsLoading,
-      setDescription
+      setDescription,
     );
     // console.log(perInfo.student_id);
   }, []);
@@ -65,7 +65,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
         setModalVisible,
         setIsLoading,
         setDescription,
-        setCurrentDate
+        setCurrentDate,
       );
       SubmitFileStudent(
         classID,
@@ -74,7 +74,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
         setUploading,
         setFile,
         assignment_name,
-        perInfo.student_id //student ID
+        perInfo.student_id, //student ID
       );
     }
   }, [insertData]);
@@ -112,7 +112,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
               assID: assignmentData.assignment_id,
               formattedCurrentDate: changeFormatDate(currentDate),
               formattedDueDate: changeFormatDate(
-                assignmentData.assignment_due_date
+                assignmentData.assignment_due_date,
               ),
               // description: description,
             });

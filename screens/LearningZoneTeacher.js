@@ -21,7 +21,7 @@ const LearningZoneTeacher = ({ navigation }) => {
   const [isCurSemLoading, setIsCurSemLoading] = useState(true);
   const destination = "LearningZoneTeacherClass";
   const [selectedSem, setSelectedSem] = useState();
-  const [currentSem,setCurrentSem] = useState();
+  const [currentSem, setCurrentSem] = useState();
   const [semYear, setSemYear] = useState([]);
 
   useEffect(() => {
@@ -30,30 +30,40 @@ const LearningZoneTeacher = ({ navigation }) => {
       const data = await queryClassTeacher(email, setIsLoading);
       setClass(data);
     };
-    
+
     fetchData();
   }, []);
-  
-  useEffect(()=>{
-    getCurrentSemTeacher(email,setCurrentSem,setIsCurSemLoading);
-  },[semYear])
 
-  useEffect(()=>{
-    if(currentSem && currentSem.class_period_semester && currentSem.class_period_year)
-    {
-      setSelectedSem(currentSem.class_period_semester + "/" + currentSem.class_period_year)
-    }
-  },[currentSem])
+  useEffect(() => {
+    getCurrentSemTeacher(email, setCurrentSem, setIsCurSemLoading);
+  }, [semYear]);
 
-  useEffect(()=>{
-    if(_class != null){
-      const copy = JSON.parse(JSON.stringify(_class))
-      const [semester, year] = selectedSem.split('/');
-      setFilteredClass(copy.filter(item=>{
-        return (item.class_period_year == year
-                && item.class_period_semester == semester)}));
+  useEffect(() => {
+    if (
+      currentSem &&
+      currentSem.class_period_semester &&
+      currentSem.class_period_year
+    ) {
+      setSelectedSem(
+        currentSem.class_period_semester + "/" + currentSem.class_period_year,
+      );
     }
-  },[selectedSem])
+  }, [currentSem]);
+
+  useEffect(() => {
+    if (_class != null) {
+      const copy = JSON.parse(JSON.stringify(_class));
+      const [semester, year] = selectedSem.split("/");
+      setFilteredClass(
+        copy.filter((item) => {
+          return (
+            item.class_period_year == year &&
+            item.class_period_semester == semester
+          );
+        }),
+      );
+    }
+  }, [selectedSem]);
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
@@ -73,7 +83,12 @@ const LearningZoneTeacher = ({ navigation }) => {
           <View style={customStyles.pageTitleContainer}>
             <Text style={customStyles.pageTitle}>Learning Zone</Text>
           </View>
-          <View style={[profileStyles.semester,{ marginLeft: "auto", marginRight: 10 }]}>
+          <View
+            style={[
+              profileStyles.semester,
+              { marginLeft: "auto", marginRight: 10 },
+            ]}
+          >
             <Image
               style={profileStyles.calendar}
               resizeMode="contain"
@@ -91,12 +106,18 @@ const LearningZoneTeacher = ({ navigation }) => {
                     "/" +
                     currentSem?.class_period_year,
                   value:
-                    currentSem?.class_period_semester +"/"+
+                    currentSem?.class_period_semester +
+                    "/" +
                     currentSem?.class_period_year,
                 },
-                ...((semYear.slice(1)).map((item)=>{
-                  return {label: item.class_period_semester+"/"+item.class_period_year, value: (item.class_period_semester+"/"+item.class_period_year)}
-                }))
+                ...semYear.slice(1).map((item) => {
+                  return {
+                    label:
+                      item.class_period_semester + "/" + item.class_period_year,
+                    value:
+                      item.class_period_semester + "/" + item.class_period_year,
+                  };
+                }),
               ]}
             />
           </View>

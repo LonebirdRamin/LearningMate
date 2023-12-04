@@ -1,9 +1,16 @@
-import { View, Text, Image, TouchableOpacity, Pressable, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
 import uuid from "react-native-uuid";
-const width = Dimensions.get('screen').width;
+const width = Dimensions.get("screen").width;
 
 const InfoBoxLineStudent = ({ header, data, handlePress }) => {
   let i = 0;
@@ -43,7 +50,9 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
                 {/*Start - text container */}
                 <View style={profileStyles.textContainer}>
                   <Text style={customStyles.h2}>{subHeader[i++]}</Text>
-                  <Text style={profileStyles.text("#A2A2B5", width*0.027, "500")}>
+                  <Text
+                    style={profileStyles.text("#A2A2B5", width * 0.027, "500")}
+                  >
                     {item}
                     {header === "Activity" ? " hrs" : ""}
                   </Text>

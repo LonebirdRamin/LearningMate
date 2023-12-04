@@ -13,7 +13,7 @@ const PostFile = async (
   setUploading,
   setFile,
   textTitle,
-  setIsPosting
+  setIsPosting,
 ) => {
   setUploading(true);
   // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
@@ -46,7 +46,7 @@ const PostFile = async (
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
     const storageRef = ref(
       storage,
-      `storage/${classID}/${fileType}/${textTitle}/${filename}`
+      `storage/${classID}/${fileType}/${textTitle}/${filename}`,
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);

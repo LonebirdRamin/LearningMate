@@ -31,7 +31,7 @@ const PostFileTeacher = ({
         setUploading,
         setFile,
         textTitle,
-        setIsPosting
+        setIsPosting,
       );
       setModalVisible(false);
     }

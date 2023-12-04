@@ -23,27 +23,26 @@ const plannerBoxStyles = StyleSheet.create({
   contentWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    columnGap: width*0.06,
+    columnGap: width * 0.06,
   },
-  title: (isTime)=> ({
-    color: 'white',
-    fontWeight: '600',
-    fontSize: height*0.018,
-    width: isTime? 0:width*0.45
-
+  title: (isTime) => ({
+    color: "white",
+    fontWeight: "600",
+    fontSize: height * 0.018,
+    width: isTime ? 0 : width * 0.45,
   }),
-  subtitle:{
+  subtitle: {
     color: "#A2A2B5",
-    fontWeight: '500',
-    fontSize: height*0.015,
-    width: width*0.45
+    fontWeight: "500",
+    fontSize: height * 0.015,
+    width: width * 0.45,
   },
-  plannerDetail:{
+  plannerDetail: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 export default plannerBoxStyles;

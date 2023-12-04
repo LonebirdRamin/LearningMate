@@ -7,7 +7,6 @@ import uuid from "react-native-uuid";
 import logout from "../../backend/hooks/logOut";
 import logOut from "../../backend/hooks/logOut";
 
-
 const height = Dimensions.get("screen").height;
 
 const SettingBox = ({ menu, navigation }) => {
@@ -27,10 +26,16 @@ const SettingBox = ({ menu, navigation }) => {
                 onPress={() => {
                   if (selectedMenu == "Help") {
                     navigation.push("Help");
-                  }
-                  else if(selectedMenu == "Log out")
-                  { 
-                    Alert.alert("Logout", "Are you sure you want to logout?", [{text: "No"}, {text:"Yes", onPress: ()=>{logOut(navigation)}}])
+                  } else if (selectedMenu == "Log out") {
+                    Alert.alert("Logout", "Are you sure you want to logout?", [
+                      { text: "No" },
+                      {
+                        text: "Yes",
+                        onPress: () => {
+                          logOut(navigation);
+                        },
+                      },
+                    ]);
                   }
                 }}
               >

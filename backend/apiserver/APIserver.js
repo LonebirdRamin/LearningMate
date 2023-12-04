@@ -28,7 +28,7 @@ app.get("/api/queryTest", function (req, res, next) {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -43,7 +43,7 @@ app.get("/api/scheduleQuery", function (req, res, next) {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -64,7 +64,7 @@ app.get("/api/queryIdCard", function (req, res, next) {
       } else {
         res.json(results);
       }
-    }
+    },
   );
   console.log("query id card");
 });
@@ -87,7 +87,7 @@ app.get("/api/checkRole", function (req, res, next) {
         console.log(results);
         res.json(results);
       }
-    }
+    },
   );
   console.log("Done check role");
 });
@@ -109,7 +109,7 @@ app.get("/api/getStudentSchedule", function (req, res, next) {
         res.json(studentResults);
         console.log("Student In");
       }
-    }
+    },
   );
 });
 
@@ -129,7 +129,7 @@ app.get("/api/getTeacherSchedule", function (req, res, next) {
         res.json(teacherResults);
         console.log("teacher IN");
       }
-    }
+    },
   );
 });
 
@@ -149,7 +149,7 @@ app.get("/api/getTeacherAssignment", function (req, res, next) {
         res.json(teacherResults);
         console.log("teacher IN");
       }
-    }
+    },
   );
 });
 
@@ -167,7 +167,7 @@ app.get("/api/getPlanner", function (req, res, next) {
         res.json(plannerResults);
         console.log("Planner IN");
       }
-    }
+    },
   );
 });
 
@@ -187,7 +187,7 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
         res.json(teacherResults);
         console.log("teacher IN");
       }
-    }
+    },
   );
 });
 
@@ -221,7 +221,7 @@ app.post("/api/submitAssignment", (req, res) => {
       return res
         .status(201)
         .json({ message: "Submission successfully updated!" });
-    }
+    },
   );
 });
 
@@ -239,7 +239,7 @@ app.get("/api/getAssignmentID", function (req, res, next) {
         console.log(maxAssignmentId);
         res.json({ maxAssignmentId });
       }
-    }
+    },
   );
 });
 
@@ -257,7 +257,7 @@ app.get("/api/getSubjectAssignmentID", function (req, res, next) {
         console.log("success student query");
         res.json(studentResults);
       }
-    }
+    },
   );
 });
 
@@ -276,7 +276,7 @@ app.get("/api/getStudent", function (req, res, next) {
         console.log("success student query");
         res.json(studentResults);
       }
-    }
+    },
   );
 });
 
@@ -323,7 +323,7 @@ app.get("/api/getClass", (req, res) => {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -340,7 +340,7 @@ app.get("/api/getClassTeacher", (req, res) => {
       } else {
         res.json(results);
       }
-    }
+    },
   );
 });
 
@@ -366,7 +366,7 @@ app.post("/api/createPlanner", (req, res) => {
       return res
         .status(201)
         .json({ message: "New assignment successfully created!" });
-    }
+    },
   );
 });
 
@@ -387,7 +387,7 @@ app.post("/api/editPlanner", (req, res) => {
         return res.status(400).json({ message: "Failed to update a planner." });
       }
       return res.status(201).json({ message: "Planner successfully updated!" });
-    }
+    },
   );
 });
 
@@ -428,7 +428,7 @@ app.get("/api/getTodayNotiPlanner", function (req, res, next) {
         res.json(notiResults);
         console.log("noti IN");
       }
-    }
+    },
   );
 });
 
@@ -455,7 +455,7 @@ app.get("/api/getTodayNotiAssignmentStudent", function (req, res, next) {
         res.json(notiResults);
         console.log("noti IN");
       }
-    }
+    },
   );
 });
 
@@ -482,7 +482,7 @@ app.get("/api/getTodayNotiAssignmentTeacher", function (req, res, next) {
         res.json(notiResults);
         console.log("noti IN");
       }
-    }
+    },
   );
 });
 
@@ -516,7 +516,7 @@ app.post("/api/createAssignment", (req, res) => {
       return res
         .status(201)
         .json({ message: "New assignment successfully created!" });
-    }
+    },
   );
 });
 
@@ -535,7 +535,7 @@ app.get("/api/getStudentPersonalInfo", function (req, res, next) {
         console.log("success student query");
         res.json(studentResults);
       }
-    }
+    },
   );
 });
 
@@ -556,7 +556,7 @@ app.get("/api/getActivitySummary", function (req, res, next) {
         console.log("success activity summary query");
         res.json(studentResults);
       }
-    }
+    },
   );
 });
 
@@ -576,7 +576,7 @@ app.get("/api/getActivityList", function (req, res, next) {
         console.log("success activity list query");
         res.json(studentResults);
       }
-    }
+    },
   );
 });
 
@@ -595,7 +595,7 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
         console.log("success teacher query");
         res.json(teacherResults);
       }
-    }
+    },
   );
 });
 
@@ -616,7 +616,7 @@ app.get("/api/getGrades", function (req, res) {
         console.log("Success student grades query");
         res.json(result);
       }
-    }
+    },
   );
 });
 
@@ -636,7 +636,7 @@ app.get("/api/getCurrentSemesterForStudent", function (req, res, next) {
         console.log("success current semester query");
         res.json(semesterResults);
       }
-    }
+    },
   );
 });
 
@@ -675,7 +675,7 @@ app.get("/api/queryAnnouncement", function (req, res, next) {
         console.log("success announcement query");
         res.json(announcementResults);
       }
-    }
+    },
   );
 });
 
@@ -696,7 +696,7 @@ app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
         console.log("success current semester query");
         res.json(semesterResults);
       }
-    }
+    },
   );
 });
 
@@ -712,7 +712,7 @@ app.delete("/api/deleteAssignment", (req, res) => {
     if (err) {
       console.log(
         "Error while deleting an assignment from the table assignment_submission in the database",
-        err
+        err,
       );
       return res
         .status(400)
@@ -732,13 +732,13 @@ app.delete("/api/deleteAssignment", (req, res) => {
       if (err2) {
         console.log(
           "Error while deleting an assignment from the table assignment in the database",
-          err2
+          err2,
         );
         // Handle the error, send a response here
       } else {
         // Send a response for the 'assignment' table deletion if it was successful
         console.log(
-          "Assignment successfully deleted from the table assignment!"
+          "Assignment successfully deleted from the table assignment!",
         );
       }
     });
@@ -758,7 +758,7 @@ app.post("/api/editAssignment", (req, res) => {
       if (err) {
         console.log(
           "Error while updating an assignment from the database",
-          err
+          err,
         );
         return res
           .status(400)
@@ -767,11 +767,9 @@ app.post("/api/editAssignment", (req, res) => {
       return res
         .status(201)
         .json({ message: "Assignment successfully updated!" });
-    }
+    },
   );
 });
-
-
 
 app.get("/api/getSemesterYear", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
@@ -790,11 +788,9 @@ app.get("/api/getSemesterYear", function (req, res, next) {
         console.log("Success list of semester query");
         res.json(semesterListResults);
       }
-    }
+    },
   );
 });
-
-
 
 app.get("/api/getSemesterYearTeacher", function (req, res, next) {
   console.log("Get Semester and Year List For Student");
@@ -813,7 +809,7 @@ app.get("/api/getSemesterYearTeacher", function (req, res, next) {
         console.log("Success list of semester query");
         res.json(semesterListResults);
       }
-    }
+    },
   );
 });
 

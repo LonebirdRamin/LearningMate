@@ -1,16 +1,19 @@
-import { View, Text, Image, TouchableOpacity, Pressable, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 
-
-const width = Dimensions.get('screen').width;
-
-
+const width = Dimensions.get("screen").width;
 
 const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
-  
   let i = 0;
   const subHeader =
     header === "Info"
@@ -20,11 +23,11 @@ const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
           "Gender",
           "Faculty",
           "Department",
-          
+
           "Date of Birth",
           "ID. card number",
           "Teacher email",
-          "Email address"
+          "Email address",
         ]
       : [];
   return (
@@ -34,10 +37,7 @@ const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
       <Text style={customStyles.h2}>{header}</Text>
       {/*Start - Header of infobox */}
 
-      <View
-        style={profileStyles.infoContainer}
-        onPress={() => handlePress()}
-      >
+      <View style={profileStyles.infoContainer} onPress={() => handlePress()}>
         {/* Start - Each row infomation */}
         {data.map((item) => {
           return (
@@ -46,16 +46,22 @@ const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
 
               <View style={profileStyles.infoRow}>
                 {/*Start - text container */}
-                <View style={[profileStyles.textContainer, {overflow: "hidden"}]}>
+                <View
+                  style={[profileStyles.textContainer, { overflow: "hidden" }]}
+                >
                   <Text style={customStyles.h2}>{subHeader[i++]}</Text>
-                  <Text numberOfLines={1} style={[profileStyles.text("#A2A2B5", width*0.027, "500")]}>
-                    {item===null? "-":item}
-            
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      profileStyles.text("#A2A2B5", width * 0.027, "500"),
+                    ]}
+                  >
+                    {item === null ? "-" : item}
                   </Text>
                 </View>
               </View>
               <View style={profileStyles.lineGap} />
-              {i===(data.length)? <></>:<View style={profileStyles.line}/>}
+              {i === data.length ? <></> : <View style={profileStyles.line} />}
             </View>
           );
         })}

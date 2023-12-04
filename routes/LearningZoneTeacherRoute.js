@@ -8,26 +8,25 @@ const Stack = createNativeStackNavigator();
 
 const LearningZoneTeacherRoute = () => {
   return (
-      <Stack.Navigator initialRouteName="LearningZoneTeacher">
-        <Stack.Screen
-          name="LearningZoneTeacher"
-          component={LearningZoneTeacher}
-          options={{
-            headerShown: false,
-            animation: "slide_from_bottom",
-          }}
-        />
+    <Stack.Navigator initialRouteName="LearningZoneTeacher">
+      <Stack.Screen
+        name="LearningZoneTeacher"
+        component={LearningZoneTeacher}
+        options={{
+          headerShown: false,
+          animation: "slide_from_bottom",
+        }}
+      />
 
-        <Stack.Screen
-          name="LearningZoneTeacherClass"
-          component={LearningZoneTeacherClass}
-          options={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        />
-
-      </Stack.Navigator>
+      <Stack.Screen
+        name="LearningZoneTeacherClass"
+        component={LearningZoneTeacherClass}
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 

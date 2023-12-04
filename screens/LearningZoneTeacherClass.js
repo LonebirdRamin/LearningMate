@@ -24,8 +24,8 @@ import ModifileFile from "../components/LearningZone/modifileFile";
 import ModalModified from "../components/LearningZone/ModalModified";
 import LoadFiles from "../backend/hooks/loadFiles";
 import modalFillAssignmentStyles from "../styles/modalFillAssignmentStyles";
-import LoadRecord from "../backend/hooks/loadRecord";
-import LoadDocument from "../backend/hooks/loadDocument";
+import loadRecord from "../backend/hooks/loadRecord";
+import loadDocument from "../backend/hooks/loadDocument";
 
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
@@ -58,7 +58,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         email,
         setIsAssignmentLoading,
         setAssignmentData,
-        setAssignNum
+        setAssignNum,
       );
       const result = await queryAnnouncement(class_.class_id);
       setAnnounce(result[0].class_announcement);
@@ -73,7 +73,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
     setFilteredData(
       assignmentData.filter((item) => {
         return item.class_id == class_.class_id;
-      })
+      }),
     );
   }, [assignmentData]);
 
@@ -82,10 +82,8 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   }, [isVisibleModalModified]);
 
   useEffect(() => {
-    // console.log(filteredData);
-    // LoadFiles(type, filteredData, setFiles, setIsLoading);
-    LoadDocument(filteredData, setFiles, setIsLoading);
-    LoadRecord(filteredData, setRecordFile, setIsLoading);
+    loadDocument(class_.class_id, setFiles, setIsLoading);
+    loadRecord(class_.class_id, setRecordFile, setIsLoading);
   }, [filteredData]);
 
   const setOptionFunc = (selectedOption) => {

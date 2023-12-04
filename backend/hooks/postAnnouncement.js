@@ -7,13 +7,13 @@ const PostAnnouncement = async (
   insertData,
   setModalVisible,
   setIsLoading,
-  setIsPosting
+  setIsPosting,
 ) => {
   setIsLoading(true);
   try {
     const response = await axios.post(
       `${ipv4.golf}postAnnouncement`,
-      insertData
+      insertData,
     );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {

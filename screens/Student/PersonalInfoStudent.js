@@ -9,10 +9,7 @@ const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
 const PersonalInfoStudent = ({ route }) => {
-  
   const data = route.params;
-
-  
 
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>

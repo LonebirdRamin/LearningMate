@@ -3,12 +3,12 @@ import ipv4 from "../apiserver/ipv4";
 const getSubjectAssignmentID = async (
   assignment_name,
   setAssignmentData,
-  setIsLoading
+  setIsLoading,
 ) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.golf}getSubjectAssignmentID?assignment_name=${assignment_name}`
+      `${ipv4.golf}getSubjectAssignmentID?assignment_name=${assignment_name}`,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

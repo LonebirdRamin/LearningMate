@@ -1,4 +1,4 @@
-import * as DocumentPicker from 'expo-document-picker';
+import * as DocumentPicker from "expo-document-picker";
 const pickFile = async (setFile, multiple, setProfilePicSuccess) => {
   try {
     let result = await DocumentPicker.getDocumentAsync({
@@ -11,9 +11,8 @@ const pickFile = async (setFile, multiple, setProfilePicSuccess) => {
 
     if (!result.canceled) {
       setFile(result);
-      setProfilePicSuccess(true)
+      setProfilePicSuccess(true);
     }
-    
   } catch (error) {
     console.error("Error picking file:", error);
   }

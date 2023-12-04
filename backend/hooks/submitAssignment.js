@@ -7,13 +7,13 @@ const SubmitAssignment = async (
   setModalVisible,
   setIsLoading,
   setDescription,
-  setCurrentDate
+  setCurrentDate,
 ) => {
   setIsLoading(true);
   try {
     const response = await axios.post(
       `${ipv4.golf}submitAssignment`,
-      insertData
+      insertData,
     );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {

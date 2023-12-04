@@ -4,7 +4,7 @@ const getTeacherPersonalInfo = async (email, setPerInfo, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.golf}getTeacherPersonalInfo?email=${email}`
+      `${ipv4.golf}getTeacherPersonalInfo?email=${email}`,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

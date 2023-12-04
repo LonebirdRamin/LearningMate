@@ -5,9 +5,11 @@ const auth = getAuth();
 const user = auth.currentUser;
 const newPassword = getASecureRandomPassword();
 
-updatePassword(user, newPassword).then(() => {
-  // Update successful.
-}).catch((error) => {
-  // An error ocurred
-  // ...
-});
+updatePassword(user, newPassword)
+  .then(() => {
+    // Update successful.
+  })
+  .catch((error) => {
+    // An error ocurred
+    // ...
+  });

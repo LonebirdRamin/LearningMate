@@ -18,7 +18,7 @@ const DownloadFile = async (
   setIsPosting,
   fileName,
   option,
-  type
+  type,
 ) => {
   try {
     let path = "";

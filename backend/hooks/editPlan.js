@@ -5,7 +5,7 @@ const editPlan = async (
   editedData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged
+  setIsChanged,
 ) => {
   setIsLoading(true);
   try {

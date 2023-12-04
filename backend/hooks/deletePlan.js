@@ -5,7 +5,7 @@ const deletePlan = async (
   deleteData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged
+  setIsChanged,
 ) => {
   setIsLoading(true);
   try {

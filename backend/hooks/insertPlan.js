@@ -10,7 +10,7 @@ const insertPlan = async (
   setSelectedType,
   setDate,
   setModalVisible,
-  setIsChanged
+  setIsChanged,
 ) => {
   setIsLoading(true);
   try {

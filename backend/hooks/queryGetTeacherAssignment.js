@@ -6,14 +6,14 @@ const queryGetTeacherAssignment = async (
   email,
   setIsAssignmentLoading,
   setAssignData,
-  setAssignmentNum
+  setAssignmentNum,
 ) => {
   setIsAssignmentLoading(true);
   setAssignmentNum("-");
 
   try {
     const response = await fetch(
-      `${ipv4.golf}getTeacherAssignment?email=${email}`
+      `${ipv4.golf}getTeacherAssignment?email=${email}`,
     );
     console.log("query response: " + response);
     if (!response.ok) {

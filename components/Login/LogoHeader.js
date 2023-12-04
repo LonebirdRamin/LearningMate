@@ -5,14 +5,16 @@ import loginStyles from "../../styles/loginStyles";
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
-
 const LogoHeader = ({ text = "None" }) => {
   return (
     <View
       style={[
         loginStyles.textLogo,
-        { alignItems: "center", justifyContent: "center", 
-        rowGap: screenHeight*0.02},
+        {
+          alignItems: "center",
+          justifyContent: "center",
+          rowGap: screenHeight * 0.02,
+        },
       ]}
     >
       <Image

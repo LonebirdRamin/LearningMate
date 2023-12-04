@@ -13,9 +13,9 @@ import {
 import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../database/firebaseDB";
 
-const LoadRecord = async (data, setRecordFile, setIsLoading) => {
+const loadRecord = async (class_id, setRecordFile, setIsLoading) => {
   setIsLoading(true);
-  const storageRef = ref(storage, `storage/${data[0].class_id}/Records/`);
+  const storageRef = ref(storage, `storage/${class_id}/Records/`);
 
   try {
     const topDirectories = await listAll(storageRef);
@@ -40,9 +40,9 @@ const LoadRecord = async (data, setRecordFile, setIsLoading) => {
               folderName, // Add the folderName property
               // Add other metadata as needed
             };
-          })
+          }),
         );
-      })
+      }),
     );
 
     // Flatten the array of arrays into a single array
@@ -55,4 +55,4 @@ const LoadRecord = async (data, setRecordFile, setIsLoading) => {
   }
 };
 
-export default LoadRecord;
+export default loadRecord;
