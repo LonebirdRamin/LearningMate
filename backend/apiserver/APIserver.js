@@ -1,11 +1,18 @@
+/*
+  This is the API server for the LearningMate application.
+*/
+
+/*
+  Import the required modules.
+*/
 var express = require("express");
 var cors = require("cors");
 var app = express();
-
-// get the client
 const mysql = require("mysql2");
 
-// create the connection to database
+/*
+  Create a connection to the database.
+*/
 const connection = mysql.createConnection({
   host: "learningmate.cwfmrnlx2tvp.ap-southeast-1.rds.amazonaws.com",
   user: "admin",
@@ -13,27 +20,16 @@ const connection = mysql.createConnection({
   database: "learningmate",
 });
 
+/*
+  Connect to the database.
+*/
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/queryTest", function (req, res, next) {
-  //hello => path
-  // simple query
-  connection.query(
-    "SELECT * FROM `department`",
-    function (err, results, fields) {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "An error occurred" });
-      } else {
-        res.json(results);
-      }
-    },
-  );
-});
-
+/*
+  This API endpoint is used to query the database for the list of classes that a student is enrolled in.
+*/
 app.get("/api/scheduleQuery", function (req, res, next) {
-  console.log("schedule query log test");
   connection.query(
     "SELECT cs.class_id, c.class_name, d.date_namdent` AS e, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_stu`cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id ORDER BY d.date_id, csd.start_time;",
     function (err, results, fields) {
@@ -47,34 +43,11 @@ app.get("/api/scheduleQuery", function (req, res, next) {
   );
 });
 
-app.get("/api/queryIdCard", function (req, res, next) {
-  console.log("query id card");
-  // const email = req.query.email;
-  const email = "ramin.such@kmutt.ac.th";
-  console.log(email);
-
-  connection.query(
-    "SELECT `id_card` FROM `student` WHERE academic_email = ?;",
-    [email],
-    // 'SELECT `id_card` FROM `student` WHERE academic_email = "ramin.such@kmutt.ac.th";',
-    function (err, results, fields) {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "Query id card error occurred" });
-      } else {
-        res.json(results);
-      }
-    },
-  );
-  console.log("query id card");
-});
-
+/*
+  This API endpoint is used to query the user's role from the database.
+*/
 app.get("/api/checkRole", function (req, res, next) {
-  console.log("Begin check role");
-  // const email = "ramin.such@kmutt.ac.th";
   const email = req.query.email;
-  console.log(req.query);
-  console.log(email);
 
   connection.query(
     "SELECT role FROM (SELECT role, academic_email FROM student UNION ALL SELECT role, academic_email FROM teacher) AS combined_data WHERE academic_email = ?;",
@@ -89,11 +62,13 @@ app.get("/api/checkRole", function (req, res, next) {
       }
     },
   );
-  console.log("Done check role");
 });
 
+
+/*
+  This API endpoint is used to query the student's schedule from the database.
+*/
 app.get("/api/getStudentSchedule", function (req, res, next) {
-  console.log("Query Student Schedule");
   const email = req.query.email;
   connection.query(
     "SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester, d.date_name, csd.start_time, csd.end_time FROM `student` AS `s` JOIN `class_student` AS `cs` ON cs.student_id = s.student_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
@@ -105,16 +80,16 @@ app.get("/api/getStudentSchedule", function (req, res, next) {
           .status(500)
           .json({ error: "Student schedule query error occurred" });
       } else {
-        console.log("success student query");
         res.json(studentResults);
-        console.log("Student In");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the teacher's schedule from the database.
+*/
 app.get("/api/getTeacherSchedule", function (req, res, next) {
-  console.log("Query Teacher Schedule");
   const email = req.query.email;
   connection.query(
     "SELECT cs.class_id, c.class_name, c.class_period_year, c.class_period_semester, d.date_name, csd.start_time, csd.end_time FROM `teacher` AS `s` JOIN `class_lecturer` AS `cs` ON cs.teacher_id = s.teacher_id JOIN `class_schedule` AS `csd` ON cs.class_id = csd.class_id JOIN `date` AS `d` ON d.date_id = csd.date_id JOIN `class` AS `c` ON c.class_id = csd.class_id WHERE s.academic_email = ? ORDER BY d.date_id, csd.start_time;",
@@ -127,14 +102,15 @@ app.get("/api/getTeacherSchedule", function (req, res, next) {
           .json({ error: "Teacher schedule query error occurred" });
       } else {
         res.json(teacherResults);
-        console.log("teacher IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the teacher's assignment from the database.
+*/
 app.get("/api/getTeacherAssignment", function (req, res, next) {
-  console.log("Query Teacher Assignment");
   const email = req.query.email;
   connection.query(
     'SELECT ac.`class_id`, ac.class_name, ac.assignment_name, ac.assignment_id, ac.assignment_due_date, COUNT(CASE WHEN asu.status > 0 THEN 1 END) as "Submit_Count", COUNT(asu.student_id) as "Assigned_Count" FROM `assignment_submission` as asu LEFT JOIN (SELECT c.`class_id`, a.assignment_id, c.`class_name`, a.`assignment_name`, a.`assignment_due_date` FROM `assignment` as a LEFT JOIN `class` as c ON a.`class_id` = `c`.`class_id`) as ac ON asu.assignment_id = ac.assignment_id GROUP BY ac.`assignment_id` HAVING ac.`class_id` IN (SELECT `class_id` FROM `class_lecturer` WHERE `teacher_id` = (SELECT `teacher_id` FROM `teacher` as t WHERE t.academic_email = ?));;',
@@ -147,14 +123,15 @@ app.get("/api/getTeacherAssignment", function (req, res, next) {
           .json({ error: "Teacher assignment query error occurred" });
       } else {
         res.json(teacherResults);
-        console.log("teacher IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the planner for the user from the database.
+*/
 app.get("/api/getPlanner", function (req, res, next) {
-  console.log("Query Planner");
   const email = req.query.email;
   connection.query(
     "SELECT  `planner_id`, `planner_name`, `planner_category`, `planner_detail`, `start_time` FROM `planner` WHERE `academic_email` = ? ORDER BY start_time ASC;",
@@ -165,14 +142,15 @@ app.get("/api/getPlanner", function (req, res, next) {
         res.status(500).json({ error: "Planner query error occurred" });
       } else {
         res.json(plannerResults);
-        console.log("Planner IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the student's assignment from the database.
+*/
 app.get("/api/getStudentAssignment", function (req, res, next) {
-  console.log("Query Student Assignment");
   const email = req.query.email;
   connection.query(
     "SELECT c.class_id, c.class_name, asm.assignment_name, asm.assignment_publish_date, asm.assignment_due_date, asub.status FROM `assignment_submission` AS asub JOIN `student` AS s ON asub.student_id = s.student_id JOIN `assignment` AS asm ON asm.assignment_id = asub.assignment_id JOIN `class` AS c ON asm.class_id = c.class_id WHERE s.academic_email = ?",
@@ -185,17 +163,16 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
           .json({ error: "Teacher assignment query error occurred" });
       } else {
         res.json(teacherResults);
-        console.log("teacher IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to post the student's assignment submission to the database.
+*/
 app.post("/api/submitAssignment", (req, res) => {
-  const { student_id, assID, formattedCurrentDate, formattedDueDate } =
-    req.body;
-  console.log(req.body);
-  console.log("studentID : ========", student_id);
+  const { student_id, assID, formattedCurrentDate, formattedDueDate } = req.body;
 
   let status = 0; // not submit
 
@@ -225,9 +202,10 @@ app.post("/api/submitAssignment", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to query the Assignment ID from the database.
+*/
 app.get("/api/getAssignmentID", function (req, res, next) {
-  console.log("Query Assignment ID");
-
   connection.query(
     "SELECT MAX(assignment_id) as maxAssignmentId FROM assignment",
     function (err, notiResults, fields) {
@@ -236,16 +214,17 @@ app.get("/api/getAssignmentID", function (req, res, next) {
         res.status(500).json({ error: "Assignment ID query error occurred" });
       } else {
         const maxAssignmentId = notiResults[0].maxAssignmentId;
-        console.log(maxAssignmentId);
         res.json({ maxAssignmentId });
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query Assignment ID and due date from the database.
+*/
 app.get("/api/getSubjectAssignmentID", function (req, res, next) {
   const assignment_name = req.query.assignment_name;
-  // console.log("AssignmentName student query: ", assignment_name);
   connection.query(
     "SELECT assignment_id, assignment_due_date FROM `assignment` WHERE assignment_name = ?;",
     [assignment_name],
@@ -254,17 +233,17 @@ app.get("/api/getSubjectAssignmentID", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Student query error occurred" });
       } else {
-        console.log("success student query");
         res.json(studentResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query student list from the database.
+*/
 app.get("/api/getStudent", function (req, res, next) {
-  console.log("Query Student Schedule");
   const classID = req.query.classID;
-  console.log("ClassID student query: ", classID);
   connection.query(
     "SELECT student_id FROM `class_student` WHERE class_id = ?;",
     [classID],
@@ -273,16 +252,17 @@ app.get("/api/getStudent", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Student query error occurred" });
       } else {
-        console.log("success student query");
         res.json(studentResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to post the student's assignment submission status to the database.
+*/
 app.post("/api/generateStatus", (req, res) => {
   const { dataToInsert } = req.body;
-  console.log("dataToInsert: ", dataToInsert);
 
   if (
     !dataToInsert ||
@@ -310,6 +290,9 @@ app.post("/api/generateStatus", (req, res) => {
   });
 });
 
+/*
+  This API endpoint is used to query classes that student is enrolled in from the database.
+*/
 app.get("/api/getClass", (req, res) => {
   const email = req.query.email;
 
@@ -327,6 +310,9 @@ app.get("/api/getClass", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to query classes that teacher has reponsed in from the database.
+*/
 app.get("/api/getClassTeacher", (req, res) => {
   const email = req.query.email;
 
@@ -344,11 +330,11 @@ app.get("/api/getClassTeacher", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to post new planner to the database.
+*/
 app.post("/api/createPlanner", (req, res) => {
-  console.log(req.query);
   const { email, eventType, eventName, description, dueDate } = req.body;
-
-  console.log("eventName : ========", eventName);
 
   const sql =
     "INSERT INTO planner (`planner_name`, `academic_email`, `planner_category`, `planner_detail`, `start_time`) VALUES (?, ?, ?, ?, ?)";
@@ -370,10 +356,12 @@ app.post("/api/createPlanner", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to update the planner in the database.
+*/
 app.post("/api/editPlanner", (req, res) => {
   const { plannerName, plannerId, email, eventType, description, dueDate } =
     req.body;
-  console.log("plannerName : ========", plannerName);
 
   const sql =
     "UPDATE planner SET planner_name = ?, planner_category = ?, planner_detail = ?, start_time = ? WHERE planner_id = ? AND academic_email = ?";
@@ -391,6 +379,9 @@ app.post("/api/editPlanner", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to delete a planner from the database.
+*/
 app.delete("/api/deletePlanner", (req, res) => {
   const { plannerId, email } = req.body;
 
@@ -405,10 +396,11 @@ app.delete("/api/deletePlanner", (req, res) => {
   });
 });
 
+/*
+  This API endpoint is used to query planner notifications from the database.
+*/
 app.get("/api/getTodayNotiPlanner", function (req, res, next) {
-  console.log("Query Today Noti Planner");
   const email = req.query.email;
-
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 
@@ -426,16 +418,16 @@ app.get("/api/getTodayNotiPlanner", function (req, res, next) {
         res.status(500).json({ error: "Today noti query error occurred" });
       } else {
         res.json(notiResults);
-        console.log("noti IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query student's assignment notifications from the database.
+*/
 app.get("/api/getTodayNotiAssignmentStudent", function (req, res, next) {
-  console.log("Query Today Noti Assignment Student");
   const email = req.query.email;
-
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 
@@ -453,16 +445,16 @@ app.get("/api/getTodayNotiAssignmentStudent", function (req, res, next) {
         res.status(500).json({ error: "Today noti query error occurred" });
       } else {
         res.json(notiResults);
-        console.log("noti IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query teacher's assignment notifications from the database.
+*/
 app.get("/api/getTodayNotiAssignmentTeacher", function (req, res, next) {
-  console.log("Query Today Noti Assignment Teacher");
   const email = req.query.email;
-
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 
@@ -480,21 +472,17 @@ app.get("/api/getTodayNotiAssignmentTeacher", function (req, res, next) {
         res.status(500).json({ error: "Today noti query error occurred" });
       } else {
         res.json(notiResults);
-        console.log("noti IN");
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to post new assignment into the database.
+*/
 app.post("/api/createAssignment", (req, res) => {
   const { classID, assName, dueDate, description } = req.body;
-
-  console.log("CLASS ID : ========", classID);
   const currentDate = new Date();
-  // console.log(
-  //   "Current date: ",
-  //   currentDate.setHours(currentDate.getHours() + 7)
-  // );
   const formattedDate = currentDate
     .toISOString()
     .slice(0, 19)
@@ -520,8 +508,10 @@ app.post("/api/createAssignment", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to query student's personal information from the database.
+*/
 app.get("/api/getStudentPersonalInfo", function (req, res, next) {
-  console.log("Query Personal Info");
   const email = req.query.email;
 
   connection.query(
@@ -532,15 +522,16 @@ app.get("/api/getStudentPersonalInfo", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Student query error occurred" });
       } else {
-        console.log("success student query");
         res.json(studentResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query activity summary from the database.
+*/
 app.get("/api/getActivitySummary", function (req, res, next) {
-  console.log("Query Activity Summary");
   const email = req.query.email;
 
   connection.query(
@@ -553,17 +544,17 @@ app.get("/api/getActivitySummary", function (req, res, next) {
           .status(500)
           .json({ error: "Activity summary query error occurred" });
       } else {
-        console.log("success activity summary query");
         res.json(studentResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query list of activities from the database.
+*/
 app.get("/api/getActivityList", function (req, res, next) {
-  console.log("Query Activity List");
   const email = req.query.email;
-  console.log("email: ", email);
 
   connection.query(
     "SELECT a.activity_name, a.activity_hour FROM `activity_attendants` as aa LEFT JOIN `activity` as a ON a.activity_id = aa.activity_id WHERE aa.student_id = (SELECT s.student_id FROM student as s WHERE s.academic_email = ?) ORDER BY a.activity_name;",
@@ -573,15 +564,16 @@ app.get("/api/getActivityList", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Activity query error occurred" });
       } else {
-        console.log("success activity list query");
         res.json(studentResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query teacher's personal information from the database.
+*/
 app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
-  console.log("Query Personal Info");
   const email = req.query.email;
 
   connection.query(
@@ -592,15 +584,16 @@ app.get("/api/getTeacherPersonalInfo", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Teacher query error occurred" });
       } else {
-        console.log("success teacher query");
         res.json(teacherResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the grades of a student from the database.
+*/
 app.get("/api/getGrades", function (req, res) {
-  console.log("Query Student Grades");
   const email = req.query.email;
 
   connection.query(
@@ -613,16 +606,18 @@ app.get("/api/getGrades", function (req, res) {
           .status(500)
           .json({ error: "Get student grades query error occurted" });
       } else {
-        console.log("Success student grades query");
         res.json(result);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the current semester for a student from the database.
+*/
 app.get("/api/getCurrentSemesterForStudent", function (req, res, next) {
-  console.log("Get Current Semester For Student");
   const email = req.query.email;
+
   connection.query(
     "SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_student AS cs ON c.class_id = cs.class_id JOIN student AS s ON s.student_id = cs.student_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;",
     [email],
@@ -633,17 +628,17 @@ app.get("/api/getCurrentSemesterForStudent", function (req, res, next) {
           .status(500)
           .json({ error: "Current semester query error occurred" });
       } else {
-        console.log("success current semester query");
         res.json(semesterResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to post the announcement of a class to the database.
+*/
 app.post("/api/postAnnouncement", (req, res) => {
   const { classID, announcement } = req.body;
-  // pass in the Class ID and Announcement as the string.
-  console.log(classID, announcement);
 
   const sql = "UPDATE class SET class_announcement = ? WHERE class_id = ?;";
 
@@ -660,10 +655,12 @@ app.post("/api/postAnnouncement", (req, res) => {
   });
 });
 
+/*
+  This API endpoint is used to query the announcement of a class from the database.
+*/
 app.get("/api/queryAnnouncement", function (req, res, next) {
-  console.log("Query Announcement");
   const classID = req.query.classID;
-  console.log("ClassID: ", classID);
+
   connection.query(
     "SELECT class_announcement FROM `class` WHERE class_id = ?;",
     [classID],
@@ -672,17 +669,18 @@ app.get("/api/queryAnnouncement", function (req, res, next) {
         console.error(err);
         res.status(500).json({ error: "Announcement query error occurred" });
       } else {
-        console.log("success announcement query");
         res.json(announcementResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query the current semester for the teacher from the database.
+*/
 app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
-  console.log("Get Current Semester For Teacher");
   const email = req.query.email;
-  console.log("Email: ", email);
+
   connection.query(
     "SELECT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON t.teacher_id = cl.teacher_id WHERE t.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC LIMIT 1;",
     [email],
@@ -693,17 +691,17 @@ app.get("/api/getCurrentSemesterForTeacher", function (req, res, next) {
           .status(500)
           .json({ error: "Current semester query error occurred" });
       } else {
-        console.log("success current semester query");
         res.json(semesterResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to delete an assignment from the database.
+*/
 app.delete("/api/deleteAssignment", (req, res) => {
   const assName = req.query.assName;
-  console.log(assName);
-  console.log("DELETE ASSIGNMENT");
 
   const sql =
     "DELETE FROM assignment_submission WHERE assignment_id IN (SELECT assignment_id FROM assignment WHERE assignment_name = ?);";
@@ -734,7 +732,6 @@ app.delete("/api/deleteAssignment", (req, res) => {
           "Error while deleting an assignment from the table assignment in the database",
           err2,
         );
-        // Handle the error, send a response here
       } else {
         // Send a response for the 'assignment' table deletion if it was successful
         console.log(
@@ -745,6 +742,9 @@ app.delete("/api/deleteAssignment", (req, res) => {
   });
 });
 
+/*
+  This API endpoint is used to edit an assignment information from the database.
+*/
 app.post("/api/editAssignment", (req, res) => {
   const { classID, assName, dueDate, description, assNameOld } = req.body;
 
@@ -771,10 +771,12 @@ app.post("/api/editAssignment", (req, res) => {
   );
 });
 
+/*
+  This API endpoint is used to query distinct semester and year list for student from the database.
+*/
 app.get("/api/getSemesterYear", function (req, res, next) {
-  console.log("Get Semester and Year List For Student");
   const email = req.query.email;
-  console.log("Email: ", email);
+
   connection.query(
     "SELECT DISTINCT(c.class_period_year) , c.class_period_semester FROM `student` AS s JOIN `class_student` AS cs ON s.student_id = cs.student_id JOIN `class` AS c ON cs.class_id = c.class_id WHERE s.academic_email = ? ORDER BY c.class_period_year DESC, c.class_period_semester DESC;",
     [email],
@@ -785,17 +787,18 @@ app.get("/api/getSemesterYear", function (req, res, next) {
           .status(500)
           .json({ error: "List of semester query error occurred" });
       } else {
-        console.log("Success list of semester query");
         res.json(semesterListResults);
       }
     },
   );
 });
 
+/*
+  This API endpoint is used to query distinct semester and year list for teacher from the database.
+*/
 app.get("/api/getSemesterYearTeacher", function (req, res, next) {
-  console.log("Get Semester and Year List For Student");
   const email = req.query.email;
-  console.log("Email: ", email);
+
   connection.query(
     "SELECT DISTINCT c.class_period_year, c.class_period_semester FROM class AS c JOIN class_lecturer AS cl ON c.class_id = cl.class_id JOIN teacher AS t ON cl.teacher_id = t.teacher_id WHERE t.academic_email = ?;",
     [email],
@@ -806,13 +809,15 @@ app.get("/api/getSemesterYearTeacher", function (req, res, next) {
           .status(500)
           .json({ error: "List of semester query error occurred" });
       } else {
-        console.log("Success list of semester query");
         res.json(semesterListResults);
       }
     },
   );
 });
 
+/*
+  Start the server on port 5001
+*/
 app.listen(5001, function () {
   console.log("CORS-enabled web server listening on port 5001");
 });
