@@ -13,7 +13,7 @@ const width = Dimensions.get("screen").width;
 /*
   A component for storing the assignments in a list for the LearningZone (Student), with status and details.
 */
-const AssignmentList = ({ data }) => {
+const AssignmentList = ({ data, setModalFormVisible, setAssName }) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -125,7 +125,14 @@ const AssignmentList = ({ data }) => {
               </Text>
             </View>
             <View style={{ marginRight: "auto" }}></View>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (item.status == 0) {
+                  setModalFormVisible(true);
+                  setAssName(item.assignment_name);
+                }
+              }}
+            >
               <Text
                 style={[
                   customStyles.h1,
@@ -133,7 +140,9 @@ const AssignmentList = ({ data }) => {
                   { backgroundColor: "#5C90D2" },
                 ]}
               >
-                {item.status == 1 ? "Edit submission" : "Submit"}
+                {item.status == 1 || item.status == 2
+                  ? "Edit submission"
+                  : "Submit"}
               </Text>
             </TouchableOpacity>
           </View>

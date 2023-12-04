@@ -18,7 +18,8 @@ const SubmitFileStudent = async (
   setUploading,
   setFile,
   assignment_name,
-  student_id
+  student_id,
+  setIsPosting
 ) => {
   setUploading(true);
   try {
@@ -70,6 +71,7 @@ const SubmitFileStudent = async (
     });
 
     setUploading(false);
+    setIsPosting(true);
     Alert.alert("Success");
     setFile(null);
   } catch (e) {

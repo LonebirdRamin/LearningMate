@@ -15,13 +15,15 @@ const ModalSubmitAssignment = ({
   setModalVisible,
   classID,
   email,
+  assName, //assignment name
+  setIsPosting,
 }) => {
-  const isLoading = false;
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    setSelected(null);
-  }, [isVisible]);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [selected, setSelected] = useState(null);
+  // console.log(assName + classID + email);
+  // useEffect(() => {
+  //   setSelected(null);
+  // }, [isVisible]);
 
   return (
     <Modal
@@ -56,6 +58,9 @@ const ModalSubmitAssignment = ({
                   setModalVisible={setModalVisible}
                   classID={classID}
                   email={email}
+                  assName={assName}
+                  setIsLoading={setIsLoading}
+                  setIsPosting={setIsPosting}
                 />
               </View>
             )}

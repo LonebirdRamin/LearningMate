@@ -19,29 +19,40 @@ import SubmitFileStudent from "../../backend/hooks/submitFileStudent";
   This component handles the submission form in student Learningzone 
 */
 
-const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
+const MainStudentAssignment = ({
+  setModalVisible,
+  classID,
+  email,
+  assName,
+  setIsLoading,
+  setIsPosting,
+}) => {
   const [description, setDescription] = useState("");
+  const [isLoadingFunc, setIsLoadingFunc] = useState(false);
   const [file, setFile] = useState(null);
   const [insertData, setInsertData] = useState(null);
   const [perInfo, setPerInfo] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [assignmentData, setAssignmentData] = useState(null);
   const [uploading, setUploading] = useState(false);
-
-  const assignment_name = "Test sent";
   const fileType = "Assignments";
 
   useEffect(() => {
-    getStudentPersonalInfo(email, setPerInfo, setIsLoading);
+    /* Start - Query to student personal info */
+    getStudentPersonalInfo(email, setPerInfo, setIsLoadingFunc);
+    /* End - Query to student personal info */
+
+    /* Start - Query to get Assignment ID */
     getSubjectAssignmentID(
-      assignment_name,
+      assName,
       setAssignmentData,
-      setIsLoading,
+      setIsLoadingFunc,
       setDescription
     );
+    /* End - Query to get Assignment ID */
   }, []);
 
+  /*Start - Change the date format */
   const changeFormatDate = (date) => {
     const formattedDate = new Date(date);
     return (
@@ -54,12 +65,12 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
       formattedDate.toLocaleTimeString("en-GB")
     );
   };
+  /*End - Change the date format */
 
   useEffect(() => {
-    // const studentID = perInfo.student_id;
     if (insertData !== null) {
-      console.log("Insert Data: ");
-      console.log(insertData);
+      // console.log("Insert Data: ");
+      // console.log(insertData);
       SubmitAssignment(
         insertData,
         setModalVisible,
@@ -73,8 +84,9 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
         file,
         setUploading,
         setFile,
-        assignment_name,
-        perInfo.student_id //student ID
+        assName,
+        perInfo.student_id, //student ID
+        setIsPosting
       );
     }
   }, [insertData]);
@@ -115,6 +127,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
                 assignmentData.assignment_due_date
               ),
             });
+            setModalVisible(false);
           }}
         >
           <Text style={formAssignmentStyles.buttonStyle}>Confirm</Text>
