@@ -6,7 +6,9 @@ import AssignmentDetail from "./AssignmentDetail";
 import DueDate from "./DueDate";
 
 const height = Dimensions.get("screen").height;
-
+/*
+  A component for store the information of each assignment.
+*/
 const AssignmentBox = ({
   iconColor = "#F04E22",
   code = "CPE333",
@@ -18,12 +20,7 @@ const AssignmentBox = ({
   return refreshing ? (
     <View style={{ flex: 1, height: height }}></View>
   ) : (
-    <TouchableOpacity
-      style={assignmentStyles.box}
-      onPress={() => {
-        console.log("TEST");
-      }}
-    >
+    <TouchableOpacity style={assignmentStyles.box} onPress={() => {}}>
       <View style={assignmentStyles.upperPart}>
         <IconBox color={iconColor} name={code} />
         <AssignmentDetail subject={subject} task={task} />

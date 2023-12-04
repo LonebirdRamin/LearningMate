@@ -22,7 +22,9 @@ import moment from "moment";
 import PlannerCalendar from "../components/Planner/PlannerCalender";
 import queryPlanner from "../backend/hooks/queryPlanner";
 import EditPlannerModal from "../components/Planner/EditPlannerModal";
-
+/*
+  A screen for planner section acccessed from the homepage.
+*/
 const PlannerScreen = () => {
   const [isModalVisible, setModalVisible] = useState();
 
@@ -50,7 +52,7 @@ const PlannerScreen = () => {
   // End - manage day of planner
 
   // Start - data for adding new planner
-  const [isChanged, setIsChanged] = useState(false); // plan = {type: "", title: "", detail: "", date: "", startTime: "", endTime: ""}
+  const [isChanged, setIsChanged] = useState(false); 
   // End - data for adding new planner
 
   // Start - formatting the start_time for DB

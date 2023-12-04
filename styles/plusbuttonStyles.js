@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
+/*
+  A style for AddAssignmentButton component.
+*/
 const plusbuttonStyles = StyleSheet.create({
   mainView: {
     height: 48,

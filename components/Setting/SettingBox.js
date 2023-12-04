@@ -8,7 +8,9 @@ import logout from "../../backend/hooks/logOut";
 import logOut from "../../backend/hooks/logOut";
 
 const height = Dimensions.get("screen").height;
-
+/*
+  This component is used to show all setting options in a column group.
+*/
 const SettingBox = ({ menu, navigation }) => {
   let i = 0;
   return (

@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import customStyles from "../../styles/customStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import moment from "moment";
-
+/*
+  The component that will show the horizontal list of date for selection the specific list
+  of plan date.
+*/
 const PlannerCalendar = ({ day, setDay }) => {
   // day = selected day
   let week = [];
@@ -48,8 +51,6 @@ const PlannerCalendar = ({ day, setDay }) => {
       );
     });
   };
-
-  // getDaysFromWeek(week)
 
   return (
     <View>

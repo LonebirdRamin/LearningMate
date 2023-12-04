@@ -1,11 +1,15 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 import moment from "moment";
+
+/*
+  This hook is used to edit the existing plan of the user
+*/
 const editPlan = async (
   editedData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged,
+  setIsChanged
 ) => {
   setIsLoading(true);
   try {
@@ -18,7 +22,6 @@ const editPlan = async (
       throw new Error("Network response was not ok");
     }
   } catch (error) {
-    console.error(error);
     alert("Edit planner failed!" + error.message);
   } finally {
     setIsLoading(false);

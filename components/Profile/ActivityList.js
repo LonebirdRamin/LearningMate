@@ -4,6 +4,9 @@ import profileStyles from "../../styles/profileStyle";
 import DropDown from "./DropDown";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
+/*
+  This component is used to encapsulate all activity details into scrollable.
+*/
 const ActivityList = ({ data, label }) => {
   let i = 0;
   return (

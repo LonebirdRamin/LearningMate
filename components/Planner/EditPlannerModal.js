@@ -22,6 +22,9 @@ import editPlan from "../../backend/hooks/editPlan";
 import deletePlan from "../../backend/hooks/deletePlan";
 const plannerType = ["Work", "Read", "Chill"];
 
+/*
+  The component responsible for show the detail of editing planner detail.
+*/
 const EditPlannerModal = ({
   setMainPageLoad,
   isEditModalVisible,
@@ -35,14 +38,14 @@ const EditPlannerModal = ({
   const [selectedType, setSelectedType] = useState();
   const [detail, setDetail] = useState();
   const [date, setDate] = useState(
-    new Date(selectedPlan.date + " " + selectedPlan.time),
+    new Date(selectedPlan.date + " " + selectedPlan.time)
   );
   const [formattedDate, setFormattedDate] = useState(
     date.toLocaleString("default", { year: "numeric" }) +
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" }),
+      date.toLocaleString("default", { day: "2-digit" })
   );
   // End - Information for plan
 
@@ -69,7 +72,7 @@ const EditPlannerModal = ({
         "-" +
         date.toLocaleString("default", { month: "2-digit" }) +
         "-" +
-        date.toLocaleString("default", { day: "2-digit" }),
+        date.toLocaleString("default", { day: "2-digit" })
     );
   }, [date]);
 
@@ -245,7 +248,7 @@ const EditPlannerModal = ({
                     Alert.alert(
                       "Planner",
                       "Please type in title and detail of this plan",
-                      [{ text: "OK" }],
+                      [{ text: "OK" }]
                     );
                   } else {
                     setEditedPlan({
@@ -261,8 +264,6 @@ const EditPlannerModal = ({
                         ":00",
                     });
                   }
-
-                  // setIsAdded(true);
                 }}
               />
               <View
@@ -287,11 +288,11 @@ const EditPlannerModal = ({
                               },
                               setIsLoading,
                               setModalVisible,
-                              setIsChanged,
+                              setIsChanged
                             );
                           },
                         },
-                      ],
+                      ]
                     );
                   }}
                 >

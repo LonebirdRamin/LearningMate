@@ -24,7 +24,9 @@ import getTeacherPersonalInfo from "../../backend/hooks/getTeacherPersonalInfo";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
+/*
+  A screen used to show the teahcer picture and information.
+*/
 const ProfileTeacher = ({ navigation }) => {
   const email = useContext(DataContext);
   const [isPerInfoIsLoading, setPerInfoIsLoading] = useState(false);

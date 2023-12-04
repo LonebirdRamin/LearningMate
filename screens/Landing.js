@@ -4,7 +4,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import globleStyles from "../styles/globleStyles";
 import landingStyles from "../styles/landingStyles";
 import AppButton from "../components/AppButton";
-
+/*
+  A initail screen for user to select wheter login or register.
+*/
 const Landing = ({ navigation }) => {
   return (
     <SafeAreaView style={[globleStyles.pageContainer]}>

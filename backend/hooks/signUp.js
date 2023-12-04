@@ -3,7 +3,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../database/firebaseDB";
 import { Alert } from "react-native";
 import ipv4 from "../apiserver/ipv4";
-
+/*
+  This function will be called to create the new user to the Firebase authentication.
+*/
 const addUserToFirestore = async (uid, email) => {
   const db = getFirestore();
   const userData = {
@@ -14,10 +16,7 @@ const addUserToFirestore = async (uid, email) => {
     const userRef = doc(db, "react-native-crud", uid);
 
     await setDoc(userRef, userData);
-    console.log("User added to Firestore!");
-  } catch (error) {
-    console.log(error + "User not added to Firestore!");
-  }
+  } catch (error) {}
 };
 
 const signUp = async (email, password, navigation, loadState, setModal) => {
@@ -27,7 +26,7 @@ const signUp = async (email, password, navigation, loadState, setModal) => {
     const response = await createUserWithEmailAndPassword(
       firebaseAuth,
       email,
-      password,
+      password
     );
     const info = await fetch(`${ipv4.kong}checkRole?email=${email}`);
     if (!info.ok) {
@@ -44,7 +43,6 @@ const signUp = async (email, password, navigation, loadState, setModal) => {
       navigation("HomepageTeacher", email);
     }
   } catch (error) {
-    console.log(error);
     Alert.alert("Error", "Register failed, try again", [{ text: "Ok" }]);
   } finally {
     loadState(false);

@@ -1,5 +1,7 @@
 import { Dimensions, StyleSheet } from "react-native";
-
+/*
+  A style for any modal use.
+*/
 const modalStyles = StyleSheet.create({
   modal: {
     justifyContent: "flex-end",

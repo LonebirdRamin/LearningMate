@@ -2,6 +2,9 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
+/*
+  A style for ProfileScreen.
+*/
 const profileStyles = StyleSheet.create({
   scrollContainer: {
     paddingHorizontal: width * 0.09,

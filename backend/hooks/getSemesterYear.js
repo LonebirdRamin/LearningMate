@@ -1,4 +1,8 @@
 import ipv4 from "../apiserver/ipv4";
+/*
+  This hook will get all the semester and year that the sepecific student has 
+  been studying.
+*/
 const getSemesterYear = async (email, setSemYear, setIsLoading) => {
   setIsLoading(true);
   try {

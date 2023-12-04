@@ -1,6 +1,8 @@
 import { View, Text, TextInput } from "react-native";
 import React from "react";
-
+/*
+  This component is a form that has a title indicated, it is for general use.
+*/
 const FormText = ({
   type = "text",
   text = "None",

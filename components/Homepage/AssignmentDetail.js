@@ -1,7 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
-
+/*
+  A component contains the assignment details inside.
+*/
 const AssignmentDetail = ({ subject, task }) => {
   return (
     <View style={assignmentStyles.detailContainer}>

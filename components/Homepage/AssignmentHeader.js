@@ -1,7 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
-
+/*
+  The component storing the title of the assignment section.
+*/
 const AssignmentHeader = ({ number = 0 }) => {
   return (
     <View style={assignmentStyles.textContainer}>

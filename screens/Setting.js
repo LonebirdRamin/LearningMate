@@ -7,7 +7,9 @@ const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
 
 const menu = ["Log out"];
-
+/*
+  The screen for showing a setting option.
+*/
 const Setting = ({ navigation }) => {
   const changePage = () => {
     navigation.reset({ index: 0, routes: [{ name: "Landing" }] });

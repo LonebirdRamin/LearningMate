@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
-
+/*
+  A style for Register Screen.
+*/
 const registerStyles = StyleSheet.create({
   formContainer: {
     top: -Dimensions.get("screen").height / 20,

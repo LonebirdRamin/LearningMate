@@ -8,10 +8,11 @@ const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
 const data = [{ label: "All", value: "0" }];
-
+/*
+  This component is used for dropdown menu selection.
+*/
 const DropDown = ({ activityLabel, setSelectedSem }) => {
   const [value, setValue] = useState(data[0].value);
-  const [isFocus, setIsFocus] = useState(false);
 
   return (
     <View style={dropDownGradeStyles.container}>

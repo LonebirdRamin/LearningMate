@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
-
+/*
+  A style for general use.
+*/
 const globleStyles = StyleSheet.create({
   pageContainer: {
     flex: 1,

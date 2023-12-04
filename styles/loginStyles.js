@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
-
+/*
+  A style for Login screen and component.
+*/
 const loginStyles = StyleSheet.create({
   textLogo: {
     flex: 1,

@@ -1,4 +1,7 @@
 import * as DocumentPicker from "expo-document-picker";
+/*
+  This hook will be used to access the user file selection.
+*/
 const pickFile = async (setFile, multiple, setProfilePicSuccess) => {
   try {
     let result = await DocumentPicker.getDocumentAsync({
@@ -7,15 +10,11 @@ const pickFile = async (setFile, multiple, setProfilePicSuccess) => {
       copyToCacheDirectory: true,
     });
 
-    console.log("DocumentPicker result:", result);
-
     if (!result.canceled) {
       setFile(result);
       setProfilePicSuccess(true);
     }
-  } catch (error) {
-    console.error("Error picking file:", error);
-  }
+  } catch (error) {}
 };
 
 export default pickFile;

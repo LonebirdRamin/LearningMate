@@ -23,17 +23,18 @@ import {
 import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../database/firebaseDB";
 
+/*
+  This hooks is used for confirm the picture changing selection.
+*/
 const changeProfilePicture = async (
   id,
   file,
   setFile,
   setProfilePicSuccess,
-  setIsPicLoading,
+  setIsPicLoading
 ) => {
-  // setUploading(true);
   setIsPicLoading(true);
   const path = `users/student/${id}`;
-  // setPath(newPath); // Update the state
 
   try {
     // Delete existing files in the storage path
@@ -44,7 +45,7 @@ const changeProfilePicture = async (
     await Promise.all(
       existingFilesRes.items.map(async (existingFileRef) => {
         await deleteObject(existingFileRef);
-      }),
+      })
     );
 
     if (!file || !file.assets || file.assets.length === 0) {
@@ -53,11 +54,7 @@ const changeProfilePicture = async (
 
     const firstAsset = file.assets[0];
 
-    console.log("File information:", firstAsset);
-
     const fileInfo = await FileSystem.getInfoAsync(firstAsset.uri);
-
-    console.log("File info:", fileInfo);
 
     if (!fileInfo.exists || fileInfo.isDirectory) {
       throw new Error("Invalid file information");
@@ -91,14 +88,11 @@ const changeProfilePicture = async (
       // ... (other metadata)
     });
 
-    // setUploading(false);
     Alert.alert("Success");
     setFile(file);
     setProfilePicSuccess(false);
     setIsPicLoading(false);
   } catch (e) {
-    console.log(e);
-    // setUploading(false);
     Alert.alert("An error occurred", e.message);
   }
 };

@@ -25,11 +25,13 @@ import getCurrentSemStudent from "../../backend/hooks/getCurrentSemStudent";
 import getSemesterYear from "../../backend/hooks/getSemesterYear";
 import loadProfilePic from "../../backend/hooks/loadProfilePic";
 import changeProfilePicture from "../../backend/hooks/changeProfilePicture";
-import pickFilePicture from "../../backend/hooks/pickFilePicture";
+import pickFile from "../../backend/hooks/pickFile";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
+/*
+  A screen used to show the student picture, information, grade, and activity.
+*/
 const ProfileScreen = ({ navigation }) => {
   const email = useContext(DataContext);
   let prevSem;
@@ -59,12 +61,12 @@ const ProfileScreen = ({ navigation }) => {
     // Assuming grades have a numeric value, you can calculate the average
     const totalCredits = grades.reduce(
       (total, grade) => total + parseFloat(grade.class_credit),
-      0,
+      0
     );
     const totalGradePoints = grades.reduce(
       (total, grade) =>
         total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
-      0,
+      0
     );
 
     const average = totalGradePoints / totalCredits;
@@ -84,7 +86,7 @@ const ProfileScreen = ({ navigation }) => {
     loadProfilePic(
       setPicUrl,
       `users/student/${perInfo.student_id}`,
-      setIsPicLoading,
+      setIsPicLoading
     );
   }, [perInfo]);
 
@@ -178,20 +180,12 @@ const ProfileScreen = ({ navigation }) => {
         <ScrollView style={profileStyles.scrollContainer}>
           {/*Start - Icon, details, edit */}
           <View style={profileStyles.picNameContainer}>
-            {/* <View
-              style={{
-                width: width*0.27,
-                height: width*0.27,
-                backgroundColor: "white",
-                borderRadius: width,
-              }}
-            /> */}
             {isPicLoading ? (
               <ActivityIndicator></ActivityIndicator>
             ) : (
               <TouchableOpacity
                 onPress={() => {
-                  pickFilePicture(setFile, false, setProfilePicSuccess);
+                  pickFile(setFile, false, setProfilePicSuccess);
                   // setPicUrl(file?.assets[0].uri)
                 }}
               >
@@ -246,7 +240,7 @@ const ProfileScreen = ({ navigation }) => {
                     file,
                     setFile,
                     setProfilePicSuccess,
-                    setIsPicLoading,
+                    setIsPicLoading
                   );
                 }}
               >

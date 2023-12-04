@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
 const width = Dimensions.get("screen").width;
-
+/*
+  A style for dropdown in the Profile details.
+*/
 const dropDownGradeStyles = StyleSheet.create({
   container: {
     width: width * 0.2,

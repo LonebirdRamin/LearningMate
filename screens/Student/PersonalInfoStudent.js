@@ -7,7 +7,9 @@ import InfoBoxLineStudent from "../../components/Profile/InfoBoxLineStudent";
 import DataContext from "../../routes/DataContext";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
+/*
+  A screen used to show the detail of student information.
+*/
 const PersonalInfoStudent = ({ route }) => {
   const data = route.params;
 

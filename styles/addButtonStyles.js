@@ -2,7 +2,9 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A style for AddplannerButton component
+*/
 const addButtonStyles = StyleSheet.create({
   container: {
     width: "100%",

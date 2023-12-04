@@ -20,15 +20,10 @@ const user = require("../../assets/icons/Profile/user.png");
 const education = require("../../assets/icons/Profile/graduation.png");
 const faculty = require("../../assets/icons/Profile/layer.png");
 const department = require("../../assets/icons/Profile/hierarchy.png");
-
+/*
+  This component is used to dynamically display the data into column group for teacher screen. 
+*/
 const InfoBoxTeacher = ({ header, data, handlePress }) => {
-  //   let prepData =
-  //     header === "Personal Info"
-  //       ? Object.values(data).slice(1)
-  //       : header === "Activity"
-  //       ? Object.values(data)
-  //       : data;
-
   let i = 0;
   const icon = [user, faculty, department];
   const subHeader =

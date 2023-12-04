@@ -12,7 +12,10 @@ import profileStyles from "../../styles/profileStyle";
 import uuid from "react-native-uuid";
 
 const width = Dimensions.get("screen").width;
-
+/*
+  This component is used to dynamically display the data into column group for teacher profile screen
+  with the horizontal line seperation. 
+*/
 const InfoBoxLineTeacher = ({ header, data, handlePress }) => {
   let i = 0;
   const subHeader =

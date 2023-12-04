@@ -1,6 +1,8 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-
+/*
+  This component is a app button for general use.
+*/
 const AppButton = ({
   bgColor = true,
   text = "None",
@@ -23,7 +25,6 @@ const AppButton = ({
     >
       <Text style={{ color: textColor }}>{text}</Text>
     </TouchableOpacity>
-    // <Text style={{color: 'white'}}>test</Text>
   );
 };
 

@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
-
+/*
+  A style for Landing screen.
+*/
 const landingStyles = StyleSheet.create({
   pageLogo: {
     flex: 3,

@@ -1,10 +1,12 @@
 import ipv4 from "../apiserver/ipv4";
-
+/*
+  This hook gets the personal information of the specific student.
+*/
 const getStudentPersonalInfo = async (email, setPerInfo, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getStudentPersonalInfo?email=${email}`,
+      `${ipv4.kong}getStudentPersonalInfo?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -12,7 +14,6 @@ const getStudentPersonalInfo = async (email, setPerInfo, setIsLoading) => {
     const personalInfoJASON = await response.json();
     setPerInfo(personalInfoJASON[0]);
   } catch (error) {
-    console.error(error);
     alert("Get student personal info failed!" + error.message);
   } finally {
     setIsLoading(false);

@@ -3,7 +3,9 @@ import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
 import Modal from "react-native-modal";
 import modalStyles from "../../styles/modalStyles";
 import AppButton from "../AppButton";
-
+/*
+  This component is used for asking the registration confirm.
+*/
 function ConfirmModal({
   isModalVisible,
   toggleModal,

@@ -1,4 +1,7 @@
 import ipv4 from "../apiserver/ipv4";
+/*
+  This function will get all the specific student grade
+*/
 const queryGrade = async (email, setStudentGrade, setLoading) => {
   setLoading(true);
   try {
@@ -10,7 +13,6 @@ const queryGrade = async (email, setStudentGrade, setLoading) => {
 
     setStudentGrade(result);
   } catch (error) {
-    console.error(error);
     alert("Query grades failed!", error.message);
   } finally {
     setLoading(false);

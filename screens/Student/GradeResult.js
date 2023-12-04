@@ -9,8 +9,12 @@ import DropDown from "../../components/Profile/DropDown";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 
+/*
+  This is a screen used to show the grade result.
+*/
+
 const GradeResult = ({ route }) => {
-  const params = route.params;
+  const params = route.params; // get paramerter from the passing route
 
   return (
     <View style={[globleStyles.pageContainer, { paddingTop: height * 0.03 }]}>

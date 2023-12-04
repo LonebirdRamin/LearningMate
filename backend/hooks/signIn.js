@@ -9,17 +9,16 @@ import { useEffect, useState } from "react";
 import Homepage from "../../screens/Homepage";
 import ipv4 from "../apiserver/ipv4";
 
-//Change ipv4 with the correspoing name: (kong,golf,ramin,mark,green)
-//If your location change from the recorded in ipv4 obj
-//Replace the ip accordingly in backend/apiserver/ipv4.js
-
+/*
+  This function is used to authenticate the incoming login user. 
+*/
 const signIn = async (email, password, navigation, loadState) => {
   loadState(true);
   try {
     const response = await signInWithEmailAndPassword(
       firebaseAuth,
       email,
-      password,
+      password
     );
 
     const info = await fetch(`${ipv4.kong}checkRole?email=${email}`);

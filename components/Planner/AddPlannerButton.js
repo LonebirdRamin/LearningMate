@@ -2,7 +2,9 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import addButtonStyles from "../../styles/addButtonStyles";
 import { TouchableOpacity } from "react-native";
-
+/*
+  The component to show the add modal planner. 
+*/
 const AddPlannerButton = ({ handlePress }) => {
   return (
     <TouchableOpacity onPress={handlePress}>

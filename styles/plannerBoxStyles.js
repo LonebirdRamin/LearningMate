@@ -2,7 +2,9 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A style for Planner box component.
+*/
 const plannerBoxStyles = StyleSheet.create({
   plannerBox: {
     justifyContent: "center",

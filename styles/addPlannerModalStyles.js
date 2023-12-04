@@ -2,7 +2,9 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A style for AddPlannerModal, EditPlannerModal, and PlannerType component
+*/
 const addPlannerModalStyles = StyleSheet.create({
   modalView: {
     margin: 0,

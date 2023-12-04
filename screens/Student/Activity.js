@@ -6,7 +6,9 @@ import profileStyles from "../../styles/profileStyle";
 import ActivityList from "../../components/Profile/ActivityList";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
+/*
+  This is a screen used to show the activity detail.
+*/
 const Activity = ({ route }) => {
   const email = useContext(DataContext);
   const data = route.params;

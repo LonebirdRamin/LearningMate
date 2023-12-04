@@ -2,7 +2,9 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  A style for any field involved in assignment.
+*/
 const assignmentStyles = StyleSheet.create({
   container: {
     height: height > 850 ? height * 0.3 : height * 0.25,
@@ -27,9 +29,6 @@ const assignmentStyles = StyleSheet.create({
   },
   list: {
     paddingTop: Dimensions.get("screen").height * 0.01,
-
-    // minHeight: height*0.05,
-
     width: "100%",
   },
   box: {
@@ -66,12 +65,10 @@ const assignmentStyles = StyleSheet.create({
     minHeight: 45,
   },
   dueDateContainer: {
-    // backgroundColor: "white",
     flex: 1,
     justifyContent: "flex-end",
   },
   dueDateWrapper: {
-    // backgroundColor: "green",
     paddingHorizontal: width * 0.03,
     borderColor: "#353542",
     borderWidth: 1,

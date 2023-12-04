@@ -13,10 +13,13 @@ import DropDown from "./DropDown";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
-
+/*
+  This component is used to encapsulate all grade result details into scrollable
+  with depending on the selected semester and year of study.
+*/
 const GradeList = ({ gpax, data, currentSem, semYear }) => {
   const [selectedSem, setSelectedSem] = useState(
-    currentSem.class_period_semester + "/" + currentSem.class_period_year,
+    currentSem.class_period_semester + "/" + currentSem.class_period_year
   );
   const [gpa, setGpa] = useState("-");
   const [displayData, setDisplayData] = useState();
@@ -24,7 +27,7 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
     let temp = data.filter(
       (item) =>
         item.class_period_semester + "/" + item.class_period_year ===
-        selectedSem,
+        selectedSem
     );
     setDisplayData(temp);
   }, [selectedSem]);
@@ -42,12 +45,12 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
     // Assuming grades have a numeric value, you can calculate the average
     const totalCredits = grades.reduce(
       (total, grade) => total + parseFloat(grade.class_credit),
-      0,
+      0
     );
     const totalGradePoints = grades.reduce(
       (total, grade) =>
         total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
-      0,
+      0
     );
 
     const average = totalGradePoints / totalCredits;
@@ -129,7 +132,7 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
                       style={profileStyles.text(
                         "#C1C1CD",
                         height * 0.015,
-                        "bold",
+                        "bold"
                       )}
                     >
                       {item.class_id}

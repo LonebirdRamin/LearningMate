@@ -1,5 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import ipv4 from "../apiserver/ipv4";
+/*
+  This hook function is used to get all the activity of the specific student.
+*/
 const getActivityList = async (email, setActList, setIsLoading) => {
   setIsLoading(true);
   try {
@@ -10,7 +13,6 @@ const getActivityList = async (email, setActList, setIsLoading) => {
     const actListJASON = await response.json();
     setActList(actListJASON);
   } catch (error) {
-    console.error(error);
     alert("Get activity list failed!" + error.message);
   } finally {
     setIsLoading(false);
