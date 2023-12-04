@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 
 const user = require("../../assets/icons/Profile/user.png");
 const education = require("../../assets/icons/Profile/graduation.png");
