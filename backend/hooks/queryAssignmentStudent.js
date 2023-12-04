@@ -1,18 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
 import ipv4 from "../apiserver/ipv4";
 import { Text } from "react-native";
+
+/* 
+  This hook is for getting student assignment by using 
+  student email as parameter.
+*/
+
 const queryAssignment = async (
   email,
   setIsAssignmentLoading,
   setAssignmentData,
-  setAssignNum,
+  setAssignNum
 ) => {
   setIsAssignmentLoading(true);
   setAssignNum("-");
   setAssignmentData([<Text>Test</Text>]);
   try {
     const response = await fetch(
-      `${ipv4.kong}getStudentAssignment?email=${email}`,
+      `${ipv4.mark}getStudentAssignment?email=${email}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

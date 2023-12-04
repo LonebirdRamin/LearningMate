@@ -4,8 +4,11 @@ import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import globleStyles from "../../styles/globleStyles";
 import modalStyles from "../../styles/modalStyles";
 import Modal from "react-native-modal";
-import FillBoxForm from "../uploadFileTeacher/FillBoxForm";
 import MainStudentAssignment from "./MainStudentAssignment";
+
+/*
+  This component handles student modal in student submission learningzone.
+*/
 
 const ModalSubmitAssignment = ({
   isVisible,

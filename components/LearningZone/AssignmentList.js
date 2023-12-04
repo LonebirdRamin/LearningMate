@@ -8,8 +8,6 @@ import {
 import React from "react";
 import profileStyles from "../../styles/profileStyle";
 import customStyles from "../../styles/customStyles";
-const height = Dimensions.get("screen").height;
-const width = Dimensions.get("screen").width;
 
 const AssignmentList = ({ data }) => {
   const maxLength = 25;

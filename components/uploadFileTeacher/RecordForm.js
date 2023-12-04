@@ -6,6 +6,10 @@ import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import InputFileLearning from "./InputFileLearning";
 import PostFile from "../../backend/hooks/postFile";
 
+/*
+  This component handles the record posting on LearningZone. 
+*/
+
 const RecordForm = ({
   setIsPosting,
   setModalVisible,
@@ -17,12 +21,10 @@ const RecordForm = ({
   const [video, setVideo] = useState(null);
   const [insertData, setInsertData] = useState(null);
   const [uploading, setUploading] = useState(false);
-
   const fileType = "Records";
 
   useEffect(() => {
     if (insertData !== null) {
-      // insertRecord(insertData ,setIsPosting,setModalVisible,classID,setIsLoading )
       PostFile(
         classID,
         fileType,
@@ -30,7 +32,7 @@ const RecordForm = ({
         setUploading,
         setVideo,
         title,
-        setIsPosting,
+        setIsPosting
       );
       setModalVisible(false);
     }

@@ -1,20 +1,17 @@
-import { app, storage } from "../database/firebaseDB";
-import React, { useState } from "react";
-import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
+import { storage } from "../database/firebaseDB";
 import {
   ref,
-  uploadBytes,
   getDownloadURL,
   listAll,
   getMetadata, // Import getMetadata
-  deleteObject,
 } from "firebase/storage";
-import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
-import { db } from "../database/firebaseDB";
+
+/* 
+  This hook is for loading the assignments name, folderName, 
+  publish data, and downloadURL from Firebase storage.
+*/
 
 const LoadFiles = async (type, data, setFiles, setIsLoading) => {
-  // console.log("Loading files...");
   setIsLoading(true);
   const filetemp = [];
   let storageRef;
@@ -25,7 +22,7 @@ const LoadFiles = async (type, data, setFiles, setIsLoading) => {
     for (let i = 0; i < data.length; i++) {
       storageRef = ref(
         storage,
-        `storage/${data[i].class_id}/Assignments/${data[i].assignment_name}/${type}/`,
+        `storage/${data[i].class_id}/Assignments/${data[i].assignment_name}/${type}/`
       );
       res = await listAll(storageRef);
       fileList = await Promise.all(
@@ -38,7 +35,7 @@ const LoadFiles = async (type, data, setFiles, setIsLoading) => {
             downloadURL,
             // Add other metadata as needed
           };
-        }),
+        })
       );
       if (fileList.length !== 0) {
         filetemp.push(...fileList);

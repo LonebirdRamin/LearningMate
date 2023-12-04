@@ -1,15 +1,12 @@
-import { app, storage } from "../database/firebaseDB";
+import { storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 import * as FileSystem from "expo-file-system";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  deleteObject,
-} from "firebase/storage";
-import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
-import { db } from "../database/firebaseDB";
+import { ref, getDownloadURL } from "firebase/storage";
+
+/* 
+  This hook is for downloading file in Firebase to local storage
+  which can be Assignments, Documents, and Recording.
+*/
 
 const DownloadFile = async (
   classID,
@@ -18,7 +15,7 @@ const DownloadFile = async (
   setIsPosting,
   fileName,
   option,
-  type,
+  type
 ) => {
   try {
     let path = "";

@@ -16,6 +16,10 @@ import globleStyles from "../../styles/globleStyles";
 import DropdownList from "./DropdownList";
 import FormLearningZone from "./FormLearningZone";
 
+/*
+  This component is a modal on a posting form. 
+*/
+
 const UploadFileTeacher = ({
   isVisible,
   setModalVisible,

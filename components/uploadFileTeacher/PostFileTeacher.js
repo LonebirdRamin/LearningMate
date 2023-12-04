@@ -7,6 +7,10 @@ import CheckBoxLearning from "./checkBoxLearning";
 import DateTimeLearning from "./DateTimeLearning";
 import PostFile from "../../backend/hooks/postFile";
 
+/*
+  This component handles the document posting on LearningZone. 
+*/
+
 const PostFileTeacher = ({
   setIsPosting,
   setModalVisible,
@@ -22,8 +26,6 @@ const PostFileTeacher = ({
 
   useEffect(() => {
     if (insertData !== null) {
-      console.log("---------File--------\n");
-      console.log(insertData);
       PostFile(
         classID,
         fileType,
@@ -31,7 +33,7 @@ const PostFileTeacher = ({
         setUploading,
         setFile,
         textTitle,
-        setIsPosting,
+        setIsPosting
       );
       setModalVisible(false);
     }

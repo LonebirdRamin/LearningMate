@@ -13,6 +13,11 @@ import {
 import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../database/firebaseDB";
 
+/* 
+  This hook is for loading the document name, folderName, 
+  publish data, and downloadURL from Firebase storage.
+*/
+
 const loadDocument = async (class_id, setFiles, setIsLoading) => {
   setIsLoading(true);
   const storageRef = ref(storage, `storage/${class_id}/Documents/`);
@@ -39,9 +44,9 @@ const loadDocument = async (class_id, setFiles, setIsLoading) => {
               folderName,
               // Add other metadata as needed
             };
-          }),
+          })
         );
-      }),
+      })
     );
 
     // Flatten the array of arrays into a single array

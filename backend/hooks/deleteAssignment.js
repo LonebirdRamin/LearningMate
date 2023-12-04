@@ -1,13 +1,14 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 import { Alert } from "react-native";
+/* 
+  This hook is for deleting assignments in database.
+*/
 
 const DeleteAssignment = async (assName) => {
-  // console.log(assName);
   try {
-    console.log(assName);
     const response = await axios.delete(
-      `${ipv4.kong}deleteAssignment?assName=${assName}`,
+      `${ipv4.mark}deleteAssignment?assName=${assName}`
     );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {

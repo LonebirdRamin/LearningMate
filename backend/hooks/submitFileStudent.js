@@ -6,7 +6,11 @@ import { db } from "../database/firebaseDB";
 import { app, storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 
-//Use for handle student submission
+/* 
+  This hook is for handle student submission which will 
+  upload to Firebasestore.
+*/
+
 const SubmitFileStudent = async (
   classID,
   fileType,
@@ -14,11 +18,9 @@ const SubmitFileStudent = async (
   setUploading,
   setFile,
   assignment_name,
-  student_id,
+  student_id
 ) => {
   setUploading(true);
-  // console.log("Test SubmitFileStudent: \n" + classID + "\n" + fileType + "\n" + file);
-
   try {
     if (!file || !file.assets || file.assets.length === 0) {
       throw new Error("Invalid file selected");
@@ -55,7 +57,7 @@ const SubmitFileStudent = async (
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
     const storageRef = ref(
       storage,
-      `storage/${classID}/${fileType}/${assignment_name}/student/${student_id}/${filename}`,
+      `storage/${classID}/${fileType}/${assignment_name}/student/${student_id}/${filename}`
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);

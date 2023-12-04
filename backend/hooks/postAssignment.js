@@ -10,6 +10,10 @@ import { getStorage, ref, uploadBytes } from "@react-native-firebase/storage";
 import { v4 } from "uuid";
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for Teacher to posting assignment in the database
+*/
+
 const postAssignment = async (
   insertData,
   setModalVisible,
@@ -17,14 +21,14 @@ const postAssignment = async (
   onChangeInformation,
   onChangeTitle,
   setIsLoading,
-  setIsPosting,
+  setIsPosting
 ) => {
   console.log(insertData);
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.kong}createAssignment`,
-      insertData,
+      `${ipv4.mark}createAssignment`,
+      insertData
     );
     console.log("Response From Post Ass: ", response.data);
 
@@ -34,13 +38,13 @@ const postAssignment = async (
     } else {
       throw new Error("Network response was not ok");
     }
-    const assignmentIDResponse = await fetch(`${ipv4.kong}getAssignmentID`);
+    const assignmentIDResponse = await fetch(`${ipv4.mark}getAssignmentID`);
     const assignmentIDData = await assignmentIDResponse.json();
     const maxAssID = assignmentIDData.maxAssignmentId;
 
     console.log("InsertData classID:" + insertData.classID);
     const queryStudentResponse = await fetch(
-      `${ipv4.kong}getStudent?classID=${insertData.classID}`,
+      `${ipv4.mark}getStudent?classID=${insertData.classID}`
     );
 
     const queryStudentData = await queryStudentResponse.json();
@@ -64,8 +68,8 @@ const postAssignment = async (
     console.log("STUDENT EACH CLASS:", studentEachClass);
 
     const generateStatusResponse = await axios.post(
-      `${ipv4.kong}generateStatus`,
-      { dataToInsert: studentEachClass },
+      `${ipv4.mark}generateStatus`,
+      { dataToInsert: studentEachClass }
     );
     if (generateStatusResponse.status === 201) {
       const result = generateStatusResponse.data;

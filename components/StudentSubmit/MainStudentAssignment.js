@@ -14,9 +14,11 @@ import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
 import queryAssignment from "../../backend/hooks/queryAssignmentStudent";
 import getSubjectAssignmentID from "../../backend/hooks/getSubjectAssignmentID";
 import SubmitFileStudent from "../../backend/hooks/submitFileStudent";
-// const email = "pannawat.duro@kmutt.ac.th";
 
-//Need email, setModalVisible, classID, assignmentName
+/*
+  This component handles the submission form in student Learningzone 
+*/
+
 const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
@@ -27,7 +29,6 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
   const [assignmentData, setAssignmentData] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // const classID = "CPE241";
   const assignment_name = "Test sent";
   const fileType = "Assignments";
 
@@ -37,9 +38,8 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
       assignment_name,
       setAssignmentData,
       setIsLoading,
-      setDescription,
+      setDescription
     );
-    // console.log(perInfo.student_id);
   }, []);
 
   const changeFormatDate = (date) => {
@@ -65,7 +65,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
         setModalVisible,
         setIsLoading,
         setDescription,
-        setCurrentDate,
+        setCurrentDate
       );
       SubmitFileStudent(
         classID,
@@ -74,7 +74,7 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
         setUploading,
         setFile,
         assignment_name,
-        perInfo.student_id, //student ID
+        perInfo.student_id //student ID
       );
     }
   }, [insertData]);
@@ -112,9 +112,8 @@ const MainStudentAssignment = ({ setModalVisible, classID, email }) => {
               assID: assignmentData.assignment_id,
               formattedCurrentDate: changeFormatDate(currentDate),
               formattedDueDate: changeFormatDate(
-                assignmentData.assignment_due_date,
+                assignmentData.assignment_due_date
               ),
-              // description: description,
             });
           }}
         >

@@ -5,6 +5,7 @@ import moment from "moment";
 /*
   This hook is used to edit the existing plan of the user
 */
+
 const editPlan = async (
   editedData,
   setIsLoading,
@@ -13,7 +14,7 @@ const editPlan = async (
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.post(`${ipv4.kong}editPlanner`, editedData);
+    const response = await axios.post(`${ipv4.mark}editPlanner`, editedData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;

@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { Pressable } from "react-native";
 import UploadFileTeacher from "./UploadFileTeacher";
 
+/*
+  This component handles the button to pop-up the form modal.
+*/
+
 const LearningzoneAddButton = ({ classID, setIsPosting, setAnnounce }) => {
   const [isVisible, setIsVisible] = useState(false);
 

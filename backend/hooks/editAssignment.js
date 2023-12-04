@@ -1,6 +1,10 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for editing the assignment name in Database 
+*/
+
 const EditAssignment = async (
   insertData,
   setModalVisible,
@@ -8,11 +12,11 @@ const EditAssignment = async (
   onChangeInformation,
   onChangeTitle,
   setIsLoading,
-  setIsPosting,
+  setIsPosting
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.post(`${ipv4.kong}editAssignment`, insertData);
+    const response = await axios.post(`${ipv4.mark}editAssignment`, insertData);
     // Check the response status code to determine if it was successful
     if (response.status === 201) {
       const result = response.data;

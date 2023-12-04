@@ -6,6 +6,10 @@ import AnnounceForm from "./AnnounceForm";
 import RecordForm from "./RecordForm";
 import PostFileTeacher from "./PostFileTeacher";
 
+/*
+  This component handles the form type on the learningZoneTeacher
+*/
+
 const FormLearningZone = ({
   selected,
   setModalVisible,

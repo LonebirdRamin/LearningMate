@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import ModalSubmitAssignment from "./ModalSubmitAssignment";
 
+/*
+  This component handles the submission button of student.
+*/
+
 const ButtonSubmitStudent = ({ classID, email }) => {
   const [isVisible, setIsVisible] = useState(false);
 

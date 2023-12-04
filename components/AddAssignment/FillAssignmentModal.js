@@ -1,5 +1,3 @@
-//Use for popup the when click AddAssignment button
-
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -17,6 +15,11 @@ import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import customStyles from "../../styles/customStyles";
 import globleStyles from "../../styles/globleStyles";
 import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
+
+/* 
+  Use for popup the when the AddAssignment button is clicked
+*/
+
 const FillAssignmentModal = ({
   isVisible,
   setModalVisible,

@@ -4,12 +4,12 @@ import ipv4 from "../apiserver/ipv4";
 const queryScheduleTeacher = async (
   email,
   setQueriedSchedule,
-  setIsLoading,
+  setIsLoading
 ) => {
   let result;
   try {
     const response = await axios.get(
-      `${ipv4.kong}getTeacherSchedule?email=${email}`,
+      `${ipv4.mark}getTeacherSchedule?email=${email}`
     );
 
     // Check the response status code to determine if it was successful
