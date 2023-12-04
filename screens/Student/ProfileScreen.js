@@ -183,11 +183,7 @@ const ProfileScreen = ({ navigation }) => {
             {isPicLoading ? (
               <ActivityIndicator></ActivityIndicator>
             ) : (
-              <TouchableOpacity
-                onPress={() => {
-                  pickFile(setFile, false, setProfilePicSuccess);
-                  // setPicUrl(file?.assets[0].uri)
-                }}
+              <View
               >
                 {picUrl === undefined ? (
                   <Image
@@ -221,7 +217,7 @@ const ProfileScreen = ({ navigation }) => {
                     style={{ borderRadius: width }}
                   />
                 )}
-              </TouchableOpacity>
+              </View>
             )}
 
             {file && profilePicSuccess ? (
@@ -270,6 +266,12 @@ const ProfileScreen = ({ navigation }) => {
                 backgroundColor: "rgba(78,78,97, 0.5)",
               }}
               height={height * 0.045}
+              handlePress={()=>{
+                
+                  pickFile(setFile, false, setProfilePicSuccess);
+                  
+                
+              }}
             />
           </View>
           {/*End - Icon, details, edit */}
