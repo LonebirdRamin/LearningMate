@@ -89,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
   }, [perInfo]);
 
   useEffect(() => {
-    setGpax(calculateAverage(gradeList).slice(0,4));
+    setGpax(calculateAverage(gradeList).slice(0, 4));
   }, [gradeList]);
 
   useEffect(() => {
@@ -112,9 +112,9 @@ const ProfileScreen = ({ navigation }) => {
         );
       });
       if (gradeListPrev.length == 0) {
-        setLastSemGrade(calculateAverage(gradeList).slice(0,4));
+        setLastSemGrade(calculateAverage(gradeList).slice(0, 4));
       } else {
-        setLastSemGrade(calculateAverage(gradeListPrev).slice(0,4));
+        setLastSemGrade(calculateAverage(gradeListPrev).slice(0, 4));
       }
     }
   }, [currentSem, gradeList]);
@@ -161,8 +161,6 @@ const ProfileScreen = ({ navigation }) => {
       personal_email,
     ]);
   }, [perInfo]);
-
-  
 
   return (
     <View style={[globleStyles.pageContainer]}>
