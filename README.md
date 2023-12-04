@@ -6,9 +6,11 @@ This repository is use for the term project of CPE334 Software Engineering from 
   
 
 ## Project structure 
-![Project structure](https://cdn.discordapp.com/attachments/1039171333172506726/1169223761615142922/image.png?ex=65549f7b&is=65422a7b&hm=d23f04a85ecfe1450b1eb8c8a36d570d3923d7b5243312fc7861813fed00757e&)
+![image](https://github.com/LonebirdRamin/LearningMate/assets/133381159/0b13fb51-ac9a-41a9-8e8e-75bfc8c1d3ab)
 ### assets
    For image and icon.
+### backend
+   For backend related files such as APIserver, Firebase config, and hooks.
 ### components
    For components that make up a application such as buttons, widgets, and popup window.
 ### node_modules
@@ -20,3 +22,6 @@ This repository is use for the term project of CPE334 Software Engineering from 
    For different screens that the app will show, this will be use in conjunction with the **routes** folder.
 ### styles
    For StyleSheet that contains css-like object.
+
+### Other folders
+   Auto generated - DO NOT TOUCH.
