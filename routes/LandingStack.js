@@ -23,7 +23,6 @@ const LandingStack = () => {
           component={Register}
           options={{
             headerShown: false,
-            // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
         />

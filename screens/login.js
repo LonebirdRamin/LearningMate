@@ -82,11 +82,6 @@ const Login = ({ navigation }) => {
             </View>
 
             <View style={loginStyles.lowerForm}>
-              <TouchableOpacity style={{ alignSelf: "flex-end" }}>
-                <Text style={{ color: "#666680", textAlign: "right" }}>
-                  Forget Password
-                </Text>
-              </TouchableOpacity>
 
               <AppButton
                 text="Login"
