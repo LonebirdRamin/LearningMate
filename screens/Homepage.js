@@ -59,6 +59,7 @@ const Homepage = ({ navigation }) => {
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(true);
   const [isCurSemLoading, setIsCurSemLoading] = useState(true);
   const [assignmentData, setAssignmentData] = useState([]);
+  const [filteredAssignments, setfilteredAssignments] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
   const [curSem, setCurSem] = useState();
 
@@ -85,6 +86,14 @@ const Homepage = ({ navigation }) => {
     );
   }, []);
   /* End - manage about assignment */
+
+  useEffect(()=>{
+    if(assignmentData){
+      setfilteredAssignments(assignmentData.filter(
+        item => {return(item.status == 1)}
+      ));
+    };
+  },[assignmentData]);
 
   /* Start - manage about planner */
   useEffect(() => {
@@ -239,7 +248,7 @@ const Homepage = ({ navigation }) => {
 
           {/* Start - assignment section */}
           <View style={assignmentStyles.container}>
-            <AssignmentHeader number={assignNum} />
+            <AssignmentHeader number={filteredAssignments.length} />
             <View style={assignmentStyles.list}>
               {isAssignmentLoading ? (
                 <View
@@ -263,7 +272,7 @@ const Homepage = ({ navigation }) => {
                       progressViewOffset={height / 30}
                     />
                   }
-                  data={assignmentData}
+                  data={filteredAssignments}
                   renderItem={({ item }) => (
                     <AssignmentBox
                       code={item.class_id}
