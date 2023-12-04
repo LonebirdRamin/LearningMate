@@ -7,7 +7,7 @@ const DeleteAssignment = async (assName) => {
   try {
     console.log(assName);
     const response = await axios.delete(
-      `${ipv4.golf}deleteAssignment?assName=${assName}`
+      `${ipv4.kong}deleteAssignment?assName=${assName}`
     );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {

@@ -68,7 +68,7 @@ const ProfileScreen = ({ navigation }) => {
     );
 
     const average = totalGradePoints / totalCredits;
-    return average.toFixed(2); // Round to two decimal places
+    return average.toFixed(3); // Round to two decimal places
   };
   useEffect(() => {
     getStudentPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
@@ -89,7 +89,7 @@ const ProfileScreen = ({ navigation }) => {
   }, [perInfo]);
 
   useEffect(() => {
-    setGpax(calculateAverage(gradeList));
+    setGpax(calculateAverage(gradeList).slice(0,4));
   }, [gradeList]);
 
   useEffect(() => {
@@ -112,9 +112,9 @@ const ProfileScreen = ({ navigation }) => {
         );
       });
       if (gradeListPrev.length == 0) {
-        setLastSemGrade(calculateAverage(gradeList));
+        setLastSemGrade(calculateAverage(gradeList).slice(0,4));
       } else {
-        setLastSemGrade(calculateAverage(gradeListPrev));
+        setLastSemGrade(calculateAverage(gradeListPrev).slice(0,4));
       }
     }
   }, [currentSem, gradeList]);
@@ -162,7 +162,7 @@ const ProfileScreen = ({ navigation }) => {
     ]);
   }, [perInfo]);
 
-  useEffect(()=>{console.log(profilePicSuccess)},[profilePicSuccess])
+  
 
   return (
     <View style={[globleStyles.pageContainer]}>

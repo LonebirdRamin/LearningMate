@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, FlatList, Image } from "react-native";
+import { View, Text, Dimensions, FlatList, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import profileStyles from "../../styles/profileStyle";
 import uuid from "react-native-uuid";
@@ -46,7 +46,7 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
     const totalGradePoints = grades.reduce((total, grade) => total + (parseFloat(grade.grade) * parseFloat(grade.class_credit)), 0);
     
     const average = totalGradePoints / totalCredits;
-    return average.toFixed(2); // Round to two decimal places
+    return average.toFixed(3); // Round to two decimal places
   }
 
   return (
@@ -96,8 +96,9 @@ const GradeList = ({ gpax, data, currentSem, semYear }) => {
             { paddingTop: height * 0.04 },
           ]}
         >
-          GPA {gpa}
+          GPA {gpa.slice(0,4)}
         </Text>
+        
         {/*End -  GPA*/}
 
         {/*Start - subject mapping */}

@@ -3,18 +3,10 @@ import React from "react";
 import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
 import uuid from 'react-native-uuid';
-// const profile = require("../../assets/icons/Profile/profile.png")
-const data = {
-  id: 64070503433,
-  eduLevel: "Bechelor's Degree",
-  Faculty: "Engineering",
-  Department: "Computer Engineering",
-};
 
-const grade = {
-  last: 3.91,
-  GPAX: 3.87
-}
+
+
+
 
 const user = require("../../assets/icons/Profile/user.png")
 const education = require("../../assets/icons/Profile/graduation.png")
