@@ -43,7 +43,6 @@ const loadProfilePic = async (setPicUrl, path, setIsPicLoading) => {
 
     setIsPicLoading(false);
   } catch (error) {
-    console.error("Error listing files:", error);
   }
 };
 

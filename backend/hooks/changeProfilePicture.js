@@ -27,6 +27,7 @@ import { db } from "../database/firebaseDB";
   This hooks is used for confirm the picture changing selection.
 */
 const changeProfilePicture = async (
+  role,
   id,
   file,
   setFile,
@@ -34,7 +35,7 @@ const changeProfilePicture = async (
   setIsPicLoading,
 ) => {
   setIsPicLoading(true);
-  const path = `users/student/${id}`;
+  const path = `users/${role}/${id}`;
 
   try {
     // Delete existing files in the storage path

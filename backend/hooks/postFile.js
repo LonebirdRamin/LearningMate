@@ -16,7 +16,6 @@ const PostFile = async (
   setIsPosting,
 ) => {
   setUploading(true);
-  // console.log("Test PostFile: \n" + classID + "\n" + fileType + "\n" + file);
   try {
     if (!file || !file.assets || file.assets.length === 0) {
       throw new Error("Invalid file selected");

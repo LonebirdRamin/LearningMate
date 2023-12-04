@@ -61,12 +61,12 @@ const ProfileScreen = ({ navigation }) => {
     // Assuming grades have a numeric value, you can calculate the average
     const totalCredits = grades.reduce(
       (total, grade) => total + parseFloat(grade.class_credit),
-      0,
+      0
     );
     const totalGradePoints = grades.reduce(
       (total, grade) =>
         total + parseFloat(grade.grade) * parseFloat(grade.class_credit),
-      0,
+      0
     );
 
     const average = totalGradePoints / totalCredits;
@@ -79,14 +79,13 @@ const ProfileScreen = ({ navigation }) => {
     queryGrade(email, setGradeList, setGradeListLoading);
     getCurrentSemStudent(email, setCurrentSem, setCurrentSemLoading);
     getSemesterYear(email, setSemYear, setSemYearLoading);
-    // loadProfilePic(setPicUrl, `user/student/`);
   }, []);
 
   useEffect(() => {
     loadProfilePic(
       setPicUrl,
       `users/student/${perInfo.student_id}`,
-      setIsPicLoading,
+      setIsPicLoading
     );
   }, [perInfo]);
 
@@ -183,9 +182,8 @@ const ProfileScreen = ({ navigation }) => {
             {isPicLoading ? (
               <ActivityIndicator></ActivityIndicator>
             ) : (
-              <View
-              >
-                {picUrl === undefined ? (
+              <View>
+                {(picUrl === undefined)&&!file ? (
                   <Image
                     resizeMode={"contain"}
                     source={require("../../assets/icons/Profile/user.png")}
@@ -232,11 +230,12 @@ const ProfileScreen = ({ navigation }) => {
                 ]}
                 onPress={() => {
                   changeProfilePicture(
+                    "student",
                     perInfo?.student_id,
                     file,
                     setFile,
                     setProfilePicSuccess,
-                    setIsPicLoading,
+                    setIsPicLoading
                   );
                 }}
               >
@@ -266,11 +265,8 @@ const ProfileScreen = ({ navigation }) => {
                 backgroundColor: "rgba(78,78,97, 0.5)",
               }}
               height={height * 0.045}
-              handlePress={()=>{
-                
-                  pickFile(setFile, false, setProfilePicSuccess);
-                  
-                
+              handlePress={() => {
+                pickFile(setFile, false, setProfilePicSuccess);
               }}
             />
           </View>

@@ -14,13 +14,11 @@ import customStyles from "../../styles/customStyles";
 import profileStyles from "../../styles/profileStyle";
 import DataContext from "../../routes/DataContext";
 import AppButton from "../../components/AppButton";
-import InfoBox from "../../components/Profile/InfoBox";
-import uuid from "react-native-uuid";
-import getStudentPersonalInfo from "../../backend/hooks/getStudentPersonalInfo";
-import getActivitySummary from "../../backend/hooks/getActivitySummary";
-import getActivityList from "../../backend/hooks/getActivityList";
 import InfoBoxTeacher from "../../components/Profile/InfoBoxTeacher";
 import getTeacherPersonalInfo from "../../backend/hooks/getTeacherPersonalInfo";
+import loadProfilePic from "../../backend/hooks/loadProfilePic";
+import pickFile from "../../backend/hooks/pickFile";
+import changeProfilePicture from "../../backend/hooks/changeProfilePicture";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
@@ -33,7 +31,10 @@ const ProfileTeacher = ({ navigation }) => {
   const [perInfo, setPerInfo] = useState([]);
   const [prepPerInfo, setPrepPerInfo] = useState([]);
   const [prepPerInfoDetail, setPrepPerInfoDetail] = useState([]);
-
+  const [picUrl, setPicUrl] = useState();
+  const [isPicLoading, setIsPicLoading] = useState(true);
+  const [file, setFile] = useState();
+  const [profilePicSuccess, setProfilePicSuccess] = useState(false);
   useEffect(() => {
     getTeacherPersonalInfo(email, setPerInfo, setPerInfoIsLoading);
   }, []);
@@ -65,13 +66,17 @@ const ProfileTeacher = ({ navigation }) => {
       personal_email,
       email,
     ]);
+    loadProfilePic(
+      setPicUrl,
+      `users/teacher/${perInfo.teacher_id}`,
+      setIsPicLoading
+    );
   }, [perInfo]);
-  useEffect(() => {
-    console.log(prepPerInfo);
-  }, [prepPerInfo]);
+
+  useEffect(()=>{console.log(file)},[file])
   return (
     <View style={[globleStyles.pageContainer]}>
-      {isPerInfoIsLoading ? (
+      {isPerInfoIsLoading || isPicLoading? (
         <View style={globleStyles.loadingFull}>
           <ActivityIndicator size={100} color="#F04E22" />
         </View>
@@ -79,15 +84,73 @@ const ProfileTeacher = ({ navigation }) => {
         <ScrollView style={profileStyles.scrollContainer}>
           {/*Start - Icon, details, edit */}
           <View style={profileStyles.picNameContainer}>
-            <Image
-              resizeMode={"contain"}
-              source={require("../../assets/icons/Profile/user.png")}
-              style={{
-                borderRadius: width,
-                width: width * 0.27,
-                height: width * 0.27,
-              }}
-            />
+            {isPicLoading ? (
+              <ActivityIndicator></ActivityIndicator>
+            ) : (
+              <View>
+                {(picUrl === undefined)&&!file ? (
+                  <Image
+                    resizeMode={"contain"}
+                    source={require("../../assets/icons/Profile/user.png")}
+                    style={{
+                      borderRadius: width,
+                      width: width * 0.27,
+                      height: width * 0.27,
+                    }}
+                  />
+                ) : file?.assets &&
+                  file?.assets.length > 0 &&
+                  file?.assets[0].mimeType.startsWith("image/") ? (
+                  <Image
+                    source={{ uri: file?.assets[0].uri }}
+                    style={{
+                      width: width * 0.27,
+                      borderRadius: width,
+                      height: width * 0.27,
+                    }}
+                  />
+                ) : (
+                  <Image
+                    resizeMode={"contain"}
+                    source={{
+                      uri: picUrl?.downloadURL,
+                      width: width * 0.27,
+                      height: width * 0.27,
+                    }}
+                    style={{ borderRadius: width }}
+                  />
+                )}
+              </View>
+            )}
+
+            {file && profilePicSuccess ? (
+              <TouchableOpacity
+                style={[
+                  {
+                    backgroundColor: "#5C90D2",
+                    paddingVertical: height * 0.01,
+                    paddingHorizontal: width * 0.03,
+                    borderRadius: 999,
+                  },
+                ]}
+                onPress={() => {
+                  changeProfilePicture(
+                    "teacher",
+                    perInfo?.teacher_id,
+                    file,
+                    setFile,
+                    setProfilePicSuccess,
+                    setIsPicLoading
+                  );
+                }}
+              >
+                <Text style={[customStyles.h1, { color: "white" }]}>
+                  Save Change
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <></>
+            )}
             <View style={profileStyles.nameEmail}>
               <Text style={profileStyles.text("white", width * 0.045, "bold")}>
                 {perInfo.teacher_name}
@@ -107,6 +170,9 @@ const ProfileTeacher = ({ navigation }) => {
                 backgroundColor: "rgba(78,78,97, 0.5)",
               }}
               height={height * 0.045}
+              handlePress={() => {
+                pickFile(setFile, false, setProfilePicSuccess);
+              }}
             />
           </View>
           {/*End - Icon, details, edit */}
