@@ -1,12 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import ipv4 from "../apiserver/ipv4";
 import { Text } from "react-native";
-
-/* 
-  This hook is for getting student assignment by using 
-  student email as parameter.
+/*
+  This hook will get all the assignments that a student has, also will set the number of assignments.
 */
-
 const queryAssignment = async (
   email,
   setIsAssignmentLoading,

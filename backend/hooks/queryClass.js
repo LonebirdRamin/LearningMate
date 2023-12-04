@@ -1,10 +1,8 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
-
-/* 
-  This hook is for getting class infomation in database.
+/*
+  This hook will get all classes that the student had enrolled in.
 */
-
 const queryClass = async (email, setLoading) => {
   let result;
   try {

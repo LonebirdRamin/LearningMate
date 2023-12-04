@@ -30,15 +30,13 @@ import { useIsFocused } from "@react-navigation/native";
 import getCurrentSemStudent from "../backend/hooks/getCurrentSemStudent";
 
 const height = Dimensions.get("screen").height;
-
-
 /* 
-  This component is used for ....
+  This component is used for displaying the homepage (Student)
 */
 const Homepage = ({ navigation }) => {
   const isFocused = useIsFocused();
   const [seeAll, setSeeAll] = useState(false);
-  const email = useContext(DataContext); // email from login
+  const email = useContext(DataContext);
 
   const [isloading, setIsLoading] = useState(true);
 
@@ -47,23 +45,25 @@ const Homepage = ({ navigation }) => {
   const [appendedEvents, setAppendedEvents] = useState([]);
   const [validEvents, setValidEvents] = useState([]);
 
-  // Start - Manage pull to reload
+  /* Start - - Manage pull to reload */
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     queryAssignment(email, setRefreshing, setAssignmentData, setAssignNum);
   };
-  // End - Manange pull to reload
+  /* End - - Manange pull to reload */
 
-  // const [date,setDate] = useState(moment().format('DD')) //Numerical date
-  const [day, setDay] = useState(moment().format("dddd")); //Day such as Wednesday
+  const [day, setDay] = useState(
+    moment().format("dddd"),
+  ); /* Day such as Wednesday */
 
-  // Start - manage about assignment
   const [isAssignmentLoading, setIsAssignmentLoading] = useState(true);
   const [isCurSemLoading, setIsCurSemLoading] = useState(true);
   const [assignmentData, setAssignmentData] = useState([]);
+  const [filteredAssignments, setfilteredAssignments] = useState([]);
   const [assignNum, setAssignNum] = useState("-");
   const [curSem, setCurSem] = useState();
 
+  /* Start - manage about schedule */
   useEffect(() => {
     const fetchData = async () => {
       getCurrentSemStudent(email, setCurSem, setIsCurSemLoading);
@@ -74,8 +74,9 @@ const Homepage = ({ navigation }) => {
       fetchData();
     }
   }, [isFocused]);
-  // End - manage about assignment
+  /* End - manage about schedule */
 
+  /* Start - manage about assignment */
   useEffect(() => {
     queryAssignment(
       email,
@@ -84,20 +85,34 @@ const Homepage = ({ navigation }) => {
       setAssignNum,
     );
   }, []);
+  /* End - manage about assignment */
 
+  useEffect(()=>{
+    if(assignmentData){
+      setfilteredAssignments(assignmentData.filter(
+        item => {return(item.status == 1)}
+      ));
+    };
+  },[assignmentData]);
+
+  /* Start - manage about planner */
   useEffect(() => {
     const fetchPlanner = async () => {
       await queryPlanner(email, setQueriedPlanner);
     };
     fetchPlanner();
   }, [queriedSchedule]);
+  /* End - manage about planner */
 
+  /* Start - combine event and planner */
   useEffect(() => {
     const combinedEvents = [...queriedSchedule, ...queriedPlanner];
     setAppendedEvents(combinedEvents);
     setIsLoading(false);
   }, [queriedPlanner]);
+  /* End - combine event and planner */
 
+  /* Start - filter event and planner */
   const filterEvents = (appendedEvents) => {
     const copy = JSON.parse(JSON.stringify(appendedEvents));
     const currentDate = new Date();
@@ -113,7 +128,7 @@ const Homepage = ({ navigation }) => {
       return "planner_category" in event;
     };
 
-    //Filter out planner that is not in the 7-day period and cur semester/year
+    /* Filter out planner that is not in the 7-day period and cur semester/year */
     const validEvents = copy.filter((item) => {
       if (isClassEvent(item)) {
         return (
@@ -125,7 +140,7 @@ const Homepage = ({ navigation }) => {
       return currentDate <= eventStartDate && eventStartDate <= dateLimit;
     });
 
-    //Format the planner object to be appropriate for filtering
+    /* Format the planner object to be appropriate for filtering */
     validEvents.map((event) => {
       if (isPlannerEvent(event)) {
         const dateTimeString = event.start_time;
@@ -140,7 +155,7 @@ const Homepage = ({ navigation }) => {
     });
 
     validEvents.sort((a, b) => {
-      //Filter by START_TIME ONLY! (date_name will be filtered on eventList.js)
+      /* Filter by START_TIME ONLY! (date_name will be filtered on eventList.js) */
       const aStartDateTime = a.start_time.split(":");
       const bStartDateTime = b.start_time.split(":");
 
@@ -158,9 +173,11 @@ const Homepage = ({ navigation }) => {
 
     return validEvents;
   };
+  /* End - filter event and planner */
 
+  /* Start - filter event and planner when day changes*/
   useEffect(() => {
-    //Filter again when day changes
+    /* Filter again when day changes */
     if (curSem !== undefined) {
       const res = filterEvents(appendedEvents).filter(
         (item) => item.date_name == day,
@@ -168,11 +185,13 @@ const Homepage = ({ navigation }) => {
       setValidEvents(res);
     }
   }, [appendedEvents, day, curSem]);
+  /* End - filter event and planner when day changes*/
 
   return (
     <SafeAreaView style={globleStyles.pageContainer}>
       {
         <View style={customStyles.pageBackground}>
+          {/* Start - top of page */}
           <View
             style={[
               customStyles.customBox1,
@@ -225,8 +244,11 @@ const Homepage = ({ navigation }) => {
               toggleModal={setSeeAll}
             ></SeeAllModal>
           </View>
+          {/* End - top of page */}
+
+          {/* Start - assignment section */}
           <View style={assignmentStyles.container}>
-            <AssignmentHeader number={assignNum} />
+            <AssignmentHeader number={filteredAssignments.length} />
             <View style={assignmentStyles.list}>
               {isAssignmentLoading ? (
                 <View
@@ -250,7 +272,7 @@ const Homepage = ({ navigation }) => {
                       progressViewOffset={height / 30}
                     />
                   }
-                  data={assignmentData}
+                  data={filteredAssignments}
                   renderItem={({ item }) => (
                     <AssignmentBox
                       code={item.class_id}
@@ -264,6 +286,7 @@ const Homepage = ({ navigation }) => {
               )}
             </View>
           </View>
+          {/* End - assignment section */}
         </View>
       }
     </SafeAreaView>

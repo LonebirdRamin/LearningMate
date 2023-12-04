@@ -27,14 +27,15 @@ import { db } from "../database/firebaseDB";
   This hooks is used for confirm the picture changing selection.
 */
 const changeProfilePicture = async (
+  role,
   id,
   file,
   setFile,
   setProfilePicSuccess,
-  setIsPicLoading
+  setIsPicLoading,
 ) => {
   setIsPicLoading(true);
-  const path = `users/student/${id}`;
+  const path = `users/${role}/${id}`;
 
   try {
     // Delete existing files in the storage path
@@ -45,7 +46,7 @@ const changeProfilePicture = async (
     await Promise.all(
       existingFilesRes.items.map(async (existingFileRef) => {
         await deleteObject(existingFileRef);
-      })
+      }),
     );
 
     if (!file || !file.assets || file.assets.length === 0) {

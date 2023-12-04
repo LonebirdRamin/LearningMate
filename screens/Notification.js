@@ -1,7 +1,9 @@
 import { Text, SafeAreaView } from "react-native";
 import React from "react";
 import customStyles from "../styles/customStyles";
-
+/*
+  This screen is for the notification page
+*/
 const Notification = () => {
   return (
     <SafeAreaView

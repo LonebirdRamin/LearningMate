@@ -1,6 +1,8 @@
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
-
+/*
+  This hook will get all classes that the teacher had taught in, plus date and time of the class.
+*/
 const queryScheduleTeacher = async (
   email,
   setQueriedSchedule,

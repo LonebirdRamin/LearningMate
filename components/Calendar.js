@@ -1,16 +1,19 @@
-import { View, Text, Button, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React, { useState } from "react";
 import customStyles from "../styles/customStyles";
-import { SafeAreaView } from "react-native-safe-area-context";
 import moment from "moment";
 
+/*
+  A component for displaying the interactable weekly calendar widget for the Homepage.
+*/
+
+/* Day = selected day */
 const Calendar = ({ day, setDay }) => {
-  // day = selected day
+  /* Setting up the calendar */
   let week = [];
   for (i = 0; i < 7; i++) {
-    week.push(moment().add(i, "days").format("DD:dddd")); // dddd = sunday bla bla
+    week.push(moment().add(i, "days").format("DD:dddd"));
   }
-  // Create a list of 7 days from now on
 
   const getDaysFromWeek = (week) => {
     return week.map((item) => {
@@ -44,8 +47,6 @@ const Calendar = ({ day, setDay }) => {
       );
     });
   };
-
-  // getDaysFromWeek(week)
 
   return (
     <View>

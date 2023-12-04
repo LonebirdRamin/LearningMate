@@ -16,21 +16,21 @@ const InfoBox = ({ header, data, handlePress }) => {
     header === "Personal Info"
       ? Object.values(data).slice(1)
       : header === "Activity"
-      ? Object.values(data)
-      : data;
+        ? Object.values(data)
+        : data;
   let i = 0;
   const icon =
     header === "Personal Info"
       ? [user, education, faculty, department]
       : header === "Grade Results"
-      ? [user, user]
-      : [user];
+        ? [user, user]
+        : [user];
   const subHeader =
     header === "Personal Info"
       ? ["Student ID", "Education level", "Faculty", "Department"]
       : header === "Grade Results"
-      ? ["Last semester result", "GPAX"]
-      : ["Total activity hour"];
+        ? ["Last semester result", "GPAX"]
+        : ["Total activity hour"];
   return (
     // Start - entire infobox
     <View>
@@ -42,7 +42,7 @@ const InfoBox = ({ header, data, handlePress }) => {
         style={profileStyles.infoContainer}
         onPress={() => handlePress()}
       >
-        {/* Start - Each row infomation */}
+        {/* Start - - Each row infomation */}
         {prepData.map((item) => {
           return (
             <View key={uuid.v4()}>
@@ -68,7 +68,7 @@ const InfoBox = ({ header, data, handlePress }) => {
           );
         })}
 
-        {/* End - Each row infomation */}
+        {/* End - - Each row infomation */}
       </TouchableOpacity>
     </View>
     // End - entire infobox

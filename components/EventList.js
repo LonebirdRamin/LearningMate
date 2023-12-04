@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { React, useState } from "react";
 import customStyles from "../styles/customStyles";
-
+/*
+  A component for displaying the events within that specific day.
+*/
 const EventList = ({ data }) => {
   const maxLength = 25;
   const truncate = (text, maxLength) => {
@@ -28,6 +30,9 @@ const EventList = ({ data }) => {
 
   const renderItem = ({ item }) => {
     if (isClassEvent(item)) {
+      {
+        /* Start - class rendering */
+      }
       return (
         <View style={customStyles.eventWidget}>
           <View style={customStyles.eventDetails}>
@@ -55,7 +60,13 @@ const EventList = ({ data }) => {
           </View>
         </View>
       );
+      {
+        /* End - class rendering */
+      }
     } else {
+      {
+        /* Start - event rendering */
+      }
       return (
         <View style={customStyles.eventWidget}>
           <View style={customStyles.eventDetails}>
@@ -79,6 +90,9 @@ const EventList = ({ data }) => {
           </View>
         </View>
       );
+      {
+        /* End - event rendering */
+      }
     }
   };
 

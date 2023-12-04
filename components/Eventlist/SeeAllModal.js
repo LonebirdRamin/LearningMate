@@ -4,7 +4,9 @@ import Modal from "react-native-modal";
 import customStyles from "../../styles/customStyles";
 import AppButton from "../AppButton";
 import EventList from "../EventList";
-
+/*
+  A component for modal to see all of the event in a day (class + planner).
+*/
 const SeeAllModal = (props) => {
   return (
     <Modal

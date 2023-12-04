@@ -16,7 +16,7 @@ const SettingBox = ({ menu, navigation }) => {
   return (
     <View>
       <View style={profileStyles.infoContainer} onPress={() => handlePress()}>
-        {/* Start - Each row infomation */}
+        {/* Start - - Each row infomation */}
         {menu.map((item) => {
           const selectedMenu = item;
           return (
@@ -52,7 +52,7 @@ const SettingBox = ({ menu, navigation }) => {
           );
         })}
 
-        {/* End - Each row infomation */}
+        {/* End - - Each row infomation */}
       </View>
     </View>
   );

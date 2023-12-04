@@ -64,7 +64,6 @@ app.get("/api/checkRole", function (req, res, next) {
   );
 });
 
-
 /*
   This API endpoint is used to query the student's schedule from the database.
 */
@@ -172,7 +171,8 @@ app.get("/api/getStudentAssignment", function (req, res, next) {
   This API endpoint is used to post the student's assignment submission to the database.
 */
 app.post("/api/submitAssignment", (req, res) => {
-  const { student_id, assID, formattedCurrentDate, formattedDueDate } = req.body;
+  const { student_id, assID, formattedCurrentDate, formattedDueDate } =
+    req.body;
 
   let status = 0; // not submit
 

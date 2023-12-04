@@ -6,8 +6,6 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -22,11 +20,11 @@ import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 import ModifileFile from "../components/LearningZone/modifileFile";
 import ModalModified from "../components/LearningZone/ModalModified";
-import LoadFiles from "../backend/hooks/loadFiles";
-import modalFillAssignmentStyles from "../styles/modalFillAssignmentStyles";
 import loadRecord from "../backend/hooks/loadRecord";
 import loadDocument from "../backend/hooks/loadDocument";
-
+/*
+  This is a screen for the interactable LearningZone (Teacher)
+*/
 const LearningZoneTeacherClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
   const width = Dimensions.get("screen").width;
@@ -40,7 +38,6 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [isPosting, setIsPosting] = useState(false);
   const [announce, setAnnounce] = useState("No Announcement");
   const [expanded, setExpanded] = useState([false, false, false, false]);
-  let ref = [];
   const [isVisible, setModalVisible] = useState(false);
   const [isVisibleModalModified, setModalModifiedVisible] = useState(false);
   const [text, setText] = useState("");
@@ -50,8 +47,11 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
   const [assName, setAssName] = useState("");
   const [option, setOption] = useState("");
   const [fileName, setFileName] = useState(null);
-  const type = "teacher";
 
+  const type = "teacher";
+  let ref = [];
+
+  /* Start - manage assignment & announcement */
   useEffect(() => {
     const fetchData = async () => {
       queryAssignment(
@@ -68,7 +68,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
       fetchData();
     }
   }, [isFocused, isPosting]);
+  /* End - manage assignment & announcement */
 
+  /* Start - filter assignment */
   useEffect(() => {
     setFilteredData(
       assignmentData.filter((item) => {
@@ -76,15 +78,20 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
       }),
     );
   }, [assignmentData]);
+  /* End - filter assignment */
 
+  /* Start - manage modal option */
   useEffect(() => {
     setOption("");
   }, [isVisibleModalModified]);
+  /* End - manage modal option */
 
+  /* Start - manage file & document */
   useEffect(() => {
     loadDocument(class_.class_id, setFiles, setIsLoading);
     loadRecord(class_.class_id, setRecordFile, setIsLoading);
   }, [filteredData]);
+  /* End - manage file & document */
 
   const setOptionFunc = (selectedOption) => {
     setOption(selectedOption);
@@ -131,6 +138,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         </View>
       ) : (
         <View style={customStyles.pageBackground}>
+          {/* Start - announcement */}
           <View
             style={[
               customStyles.customBox1,
@@ -204,6 +212,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 <Text style={customStyles.bodySmall}>See all...</Text>
               </TouchableOpacity>
             </View>
+            {/* End - announcement */}
+
+            {/* Start - assignments */}
           </View>
           <ScrollView style={{ marginBottom: height * 0.1 }}>
             <View style={{ paddingHorizontal: width * 0.05 }}>
@@ -245,7 +256,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 </View>
+                {/* End - assignments */}
 
+                {/* Start - files */}
                 <View>
                   <View
                     style={{
@@ -296,7 +309,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                     </View>
                   )}
                 </View>
+                {/* End - files */}
 
+                {/* Start - recordings */}
                 <View>
                   <View
                     style={{
@@ -349,8 +364,9 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                 </View>
               </View>
             </View>
+            {/* End - recordings */}
           </ScrollView>
-          <ModifileFile //Popup modal to choose Edit, Delete, Download
+          <ModifileFile /* Popup modal to choose Edit, Delete, Download */
             isVisible={isVisible}
             setModalVisible={setModalVisible}
             setModalModifiedVisible={setModalModifiedVisible}
@@ -363,7 +379,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
             type={type}
             fileName={fileName}
           />
-          <ModalModified //Edit modal
+          <ModalModified /* Edit modal */
             text={text}
             isVisibleModalModified={isVisibleModalModified}
             setModalModifiedVisible={setModalModifiedVisible}

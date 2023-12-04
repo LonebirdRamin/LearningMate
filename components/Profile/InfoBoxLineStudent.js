@@ -43,7 +43,7 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
       {/*Start - Header of infobox */}
 
       <View style={profileStyles.infoContainer} onPress={() => handlePress()}>
-        {/* Start - Each row infomation */}
+        {/* Start - - Each row infomation */}
         {data.map((item) => {
           return (
             <View key={uuid.v4()}>
@@ -67,7 +67,7 @@ const InfoBoxLineStudent = ({ header, data, handlePress }) => {
           );
         })}
 
-        {/* End - Each row infomation */}
+        {/* End - - Each row infomation */}
       </View>
     </View>
     // End - entire infobox

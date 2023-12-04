@@ -2,17 +2,19 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const height = Dimensions.get("screen").height;
 const width = Dimensions.get("screen").width;
-
+/*
+  This style consist most of the page designed by Sirivarakul and general use styles.
+*/
 const customStyles = new StyleSheet.create({
   pageBackground: {
-    //For main page background
+    /* For main page background */
     backgroundColor: "#1C1C23",
     width: "100%",
     height: "100%",
   },
 
   pageTitleContainer: {
-    //Wrapper of page title
+    /* Wrapper of page title */
     width: "100%",
     justifyContent: "center",
     display: "flex",
@@ -21,7 +23,7 @@ const customStyles = new StyleSheet.create({
   },
 
   pageTitle: {
-    //For title page on the top
+    /* For title page on the top */
     justifyContent: "center",
     alignSelf: "center",
     fontSize: 16,
@@ -33,7 +35,7 @@ const customStyles = new StyleSheet.create({
   },
 
   calendarWidget: {
-    //For interactable calendar blocks
+    /* For interactable calendar blocks */
     width: 42,
     height: 85,
     flexShrink: 0,
@@ -46,14 +48,14 @@ const customStyles = new StyleSheet.create({
   },
 
   calendarContainer: {
-    //Wrapper for calendars widget
+    /* Wrapper for calendars widget */
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
   },
 
   h1: {
-    //h1 fonts according to Figma (Use dev mode to see)
+    /* h1 fonts according to Figma (Use dev mode to see) */
     color: "#FFF",
     fontSize: 12,
     fontStyle: "normal",
@@ -61,7 +63,7 @@ const customStyles = new StyleSheet.create({
   },
 
   h2: {
-    //h2 fonts according to Figma (Use dev mode to see)
+    /* h2 fonts according to Figma (Use dev mode to see) */
     color: "#FFF",
     fontSize: 14,
     fontStyle: "normal",
@@ -69,7 +71,7 @@ const customStyles = new StyleSheet.create({
   },
 
   h3: {
-    //h3 fonts according to Figma (Use dev mode to see)
+    /* h3 fonts according to Figma (Use dev mode to see) */
     fontSize: 16,
     fontStyle: "normal",
     fontWeight: "600",
@@ -78,7 +80,7 @@ const customStyles = new StyleSheet.create({
   },
 
   h4: {
-    //h4 fonts according to Figma (Use dev mode to see)
+    /* h4 fonts according to Figma (Use dev mode to see) */
     fontSize: 20,
     fontStyle: "normal",
     fontWeight: "700",
@@ -87,7 +89,7 @@ const customStyles = new StyleSheet.create({
   },
 
   bodySmall: {
-    //bodySmall fonts according to Figma (Use dev mode to see)
+    /* bodySmall fonts according to Figma (Use dev mode to see) */
     fontSize: 12,
     fontStyle: "normal",
     fontWeight: "500",
@@ -96,13 +98,14 @@ const customStyles = new StyleSheet.create({
   },
 
   customBox1: {
-    //A variant for dialog box ie. on top of home page wrapping the schedule.
-    //Customize size or border radius using inline style
+    /*A variant for dialog box ie. on top of home page wrapping the schedule.
+    Customize size or border radius using inline style */
     borderRadius: 24,
     backgroundColor: "#353542",
   },
 
   plannerIconText: {
+    /* For the icon text of planner */
     color: "#A2A2B5",
     fontSize: 10,
     fontStyle: "normal",
@@ -112,7 +115,7 @@ const customStyles = new StyleSheet.create({
   },
 
   eventsContainer: {
-    //Wrapper for the 2 upcoming events under the calendar
+    /* Wrapper for the 2 upcoming events under the calendar */
     marginTop: 30,
     display: "flex",
     flexDirection: "column",
@@ -122,7 +125,7 @@ const customStyles = new StyleSheet.create({
   },
 
   eventWidget: {
-    //Each box for the event details
+    /* Each box for the event details */
     display: "flex",
     flexDirection: "row",
     width: "100%",
@@ -137,7 +140,7 @@ const customStyles = new StyleSheet.create({
   },
 
   eventDetails: {
-    //Wrapper for the details in each event -> icons, name, and duration
+    /* Wrapper for the details in each event -> icons, name, and duration */
     flexGrow: 1,
     width: width * 0.8,
     display: "flex",
@@ -147,7 +150,7 @@ const customStyles = new StyleSheet.create({
   },
 
   eventIcon: {
-    //Event box that contains the code such as CPE123
+    /* Event box that contains the code such as CPE123 */
     width: 40,
     height: 40,
     flexShrink: 0,
@@ -158,14 +161,14 @@ const customStyles = new StyleSheet.create({
   },
 
   notficationIcon: {
-    //Bell icon on top right of page
+    /* Bell icon on top right of page */
     position: "absolute",
     right: 23,
     top: 33,
   },
 
   classWidget: {
-    //Class wrapper for LearningZone (Pre-select class)
+    /* Class wrapper for LearningZone (Pre-select class) */
     backgroundColor: "rgba(78,78,97,0.2)",
     height: height * 0.1,
     width: width * 0.9,
@@ -178,7 +181,7 @@ const customStyles = new StyleSheet.create({
   },
 
   learningZoneAssignmentWidget: {
-    //widget for LearningZone(Student/Teacher)Class
+    /* widget for LearningZone(Student/Teacher)Class */
     borderRadius: 16,
     borderWidth: 1,
     borderColor: "rgba(207,207,252, 0.2)",
@@ -190,7 +193,7 @@ const customStyles = new StyleSheet.create({
   },
 
   assignmentButton: {
-    //For status/submit button on LearningZone(Student/Teacher)Class
+    /* For status/submit button on LearningZone(Student/Teacher)Class */
     paddingHorizontal: "3%",
     paddingVertical: "1%",
     borderRadius: 999,

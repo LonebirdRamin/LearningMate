@@ -1,9 +1,7 @@
 import ipv4 from "../apiserver/ipv4";
-
-/* 
-  This hook is for querying teacher's semester 
+/*
+  This function will get the current semester and year of specific teacher.
 */
-
 const getCurrentSemTeacher = async (email, setCurrentSem, setIsLoading) => {
   setIsLoading(true);
   try {

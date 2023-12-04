@@ -19,7 +19,9 @@ import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 import loadDocument from "../backend/hooks/loadDocument";
 import loadRecord from "../backend/hooks/loadRecord";
-
+/*
+  This is a screen for the interactable LearningZone (Student)
+*/
 const LearningZoneStudentClass = ({ route, navigation }) => {
   const height = Dimensions.get("screen").height;
   const width = Dimensions.get("screen").width;
@@ -41,6 +43,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
   const type = "student";
   let ref = [];
 
+  /* Start - manage assignment & announcement */
   useEffect(() => {
     const fetchData = async () => {
       queryAssignment(
@@ -57,7 +60,9 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
       fetchData();
     }
   }, [isFocused, isPosting]);
+  /* End - manage assignment & announcement */
 
+  /* Start - filter assignment */
   useEffect(() => {
     setFilteredData(
       assignmentData.filter((item) => {
@@ -65,11 +70,14 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
       }),
     );
   }, [assignmentData]);
+  /* End - filter assignment */
 
+  /* Start - manage file & document */
   useEffect(() => {
     loadDocument(class_.class_id, setFiles, setIsLoading);
     loadRecord(class_.class_id, setRecordFile, setIsLoading);
   }, [filteredData]);
+  /* End - manage file & document */
 
   const initializeRefs = (count) => {
     ref = Array.from({ length: count }, () => useRef(null));
@@ -111,6 +119,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
         </View>
       ) : (
         <View style={customStyles.pageBackground}>
+          {/* Start - announcement */}
           <View
             style={[
               customStyles.customBox1,
@@ -159,6 +168,9 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                 <Text style={customStyles.bodySmall}>See all...</Text>
               </TouchableOpacity>
             </View>
+            {/* End - announcement */}
+
+            {/* Start - assignments */}
           </View>
           <ScrollView style={{ marginBottom: height * 0.1 }}>
             <View style={{ paddingHorizontal: width * 0.05 }}>
@@ -195,7 +207,9 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                   </View>
                 </View>
               </View>
+              {/* End - assignments */}
 
+              {/* Start - files */}
               <View>
                 <View
                   style={{
@@ -241,7 +255,9 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                   </View>
                 )}
               </View>
+              {/* End - files */}
 
+              {/* Start - recordings */}
               <View>
                 <View
                   style={{
@@ -288,6 +304,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                 )}
               </View>
             </View>
+            {/* End - recordings */}
           </ScrollView>
         </View>
       )}
