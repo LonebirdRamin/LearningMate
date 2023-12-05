@@ -2,7 +2,6 @@ import { storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 import * as FileSystem from "expo-file-system";
 import { ref, getDownloadURL } from "firebase/storage";
-
 /* 
   This hook is for downloading file in Firebase to local storage
   which can be Assignments, Documents, and Recording.
@@ -40,12 +39,14 @@ const DownloadFile = async (
     } else {
       Alert.alert("Download Failed", "Unable to download the file.");
     }
+
   } catch (error) {
     console.error("Error downloading file:", error);
     Alert.alert("Error", "An error occurred while downloading the file.");
   } finally {
     setAssName("");
     setIsPosting(true);
+
   }
 };
 

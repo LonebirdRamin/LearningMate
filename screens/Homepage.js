@@ -90,7 +90,7 @@ const Homepage = ({ navigation }) => {
   useEffect(()=>{
     if(assignmentData){
       setfilteredAssignments(assignmentData.filter(
-        item => {return(item.status == 1)}
+        item => {return(item.status == 0)}
       ));
     };
   },[assignmentData]);
