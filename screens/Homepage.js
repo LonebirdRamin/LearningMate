@@ -31,7 +31,7 @@ import getCurrentSemStudent from "../backend/hooks/getCurrentSemStudent";
 
 const height = Dimensions.get("screen").height;
 /* 
-  This component is used for displaying the homepage (Student)
+  This screen is used for displaying the homepage (Student)
 */
 const Homepage = ({ navigation }) => {
   const isFocused = useIsFocused();

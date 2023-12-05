@@ -30,7 +30,7 @@ import getCurrentSemTeacher from "../backend/hooks/getCurrentSemTeacher";
 
 const height = Dimensions.get("screen").height;
 /* 
-  This component is used for displaying the homepage (Teacher)
+  This screen is used for displaying the homepage (Teacher)
 */
 const HomepageTeacher = ({ navigation }) => {
   const [seeAll, setSeeAll] = useState(false);
