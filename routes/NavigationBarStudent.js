@@ -30,12 +30,11 @@ const screenOptions = {
     height: "8%",
   },
 };
-
+/*
+    This route is for Navigation bar (Student).
+*/
 const NavigationBarStudent = () => {
   const email = useRoute();
-  // const email = "ramin.such@kmutt.ac.th"
-  // console.log("Homepage " + email.params.email)
-  // console.log("HOMESTUDENT " + user.params.test); ได้ data มาแล้ว
   const handleImage = () => {};
   return (
     <DataContext.Provider value={email.params.email}>

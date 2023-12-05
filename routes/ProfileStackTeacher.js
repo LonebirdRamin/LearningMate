@@ -11,7 +11,9 @@ import Help from "../screens/Help";
 import ProfileTeacher from "../screens/Teacher/ProfileTeacher";
 import PersonalInfoTeacher from "../screens/Teacher/PersonalInfoTeacher";
 const Stack = createNativeStackNavigator();
-
+/*
+    This route is for Profile screen (Teacher).
+*/
 const ProfileStackTeacher = () => {
   return (
     <Stack.Navigator>
