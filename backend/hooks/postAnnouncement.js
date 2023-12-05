@@ -17,8 +17,8 @@ const PostAnnouncement = async (
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.mark}postAnnouncement`,
-      insertData
+      `${ipv4.kong}postAnnouncement`,
+      insertData,
     );
     // Check the response status code to determine if it was successful
     if (response.status === 201) {

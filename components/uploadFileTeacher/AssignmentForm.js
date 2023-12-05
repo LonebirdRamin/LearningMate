@@ -85,7 +85,8 @@ const AssignmentForm = ({
         handleShowDate={handleShowDate}
         showDate={showDate}
       />
-      {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}{" "}
+      {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}
+      <Text>{" "}</Text>
       {/* If the checkbox checked --> showDate*/}
       <View style={formAssignmentStyles.buttonMain}>
         <TouchableOpacity
