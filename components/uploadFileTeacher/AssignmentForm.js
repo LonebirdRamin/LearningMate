@@ -10,6 +10,10 @@ import PostFile from "../../backend/hooks/submitFileStudent";
 import PostFileTeacher from "../../backend/hooks/postFileTeacher";
 import EditAssignment from "../../backend/hooks/editAssignment";
 
+/* 
+  This component used to show assignment form. 
+*/
+
 const AssignmentForm = ({
   type,
   setIsPosting,
@@ -18,7 +22,6 @@ const AssignmentForm = ({
   setIsLoading,
   assNameOld,
 }) => {
-  //Don't forget to send "Class_ID" from LearningZone page
   const [textTitle, onChangeTitle] = useState("");
   const [textInformation, onChangeInformation] = useState("");
   const [file, setFile] = useState(null);
@@ -30,8 +33,6 @@ const AssignmentForm = ({
 
   useEffect(() => {
     if (insertData !== null) {
-      // console.log("---------Inserting Assignment--------\n");
-      // console.log(insertData);
       if (type === "insert") {
         postAssignment(
           insertData,
@@ -40,7 +41,7 @@ const AssignmentForm = ({
           onChangeInformation,
           onChangeTitle,
           setIsLoading,
-          setIsPosting,
+          setIsPosting
         );
         PostFileTeacher(
           classID,
@@ -48,14 +49,10 @@ const AssignmentForm = ({
           file,
           setUploading,
           setFile,
-          textTitle,
+          textTitle
         );
       } else if (type === "edit") {
-        //To edit
-        // console.log("Edit");
         insertData["assNameOld"] = assNameOld;
-        // console.log(insertData);
-        console.log(insertData);
         EditAssignment(
           insertData,
           setModalVisible,
@@ -63,9 +60,8 @@ const AssignmentForm = ({
           onChangeInformation,
           onChangeTitle,
           setIsLoading,
-          setIsPosting,
+          setIsPosting
         );
-        //classID, assName, duedate, description
       }
       setModalVisible(false);
     }
@@ -89,7 +85,8 @@ const AssignmentForm = ({
         handleShowDate={handleShowDate}
         showDate={showDate}
       />
-      {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}
+      {!showDate && <DateTimeLearning handleDateTime={handleDateTime} />}{" "}
+      {/* If the checkbox checked --> showDate*/}
       <View style={formAssignmentStyles.buttonMain}>
         <TouchableOpacity
           style={formAssignmentStyles.confirmButton}
@@ -100,12 +97,10 @@ const AssignmentForm = ({
               ]);
             } else {
               setInsertData({
-                // email: email,
                 classID: classID,
                 assName: textTitle,
                 dueDate: dateTime,
                 description: textInformation,
-                // file: selectedFile,
               });
             }
           }}

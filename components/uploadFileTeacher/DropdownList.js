@@ -4,6 +4,10 @@ import { SelectList } from "react-native-dropdown-select-list";
 import dropDownStyles from "../../styles/dropDownStyle";
 import { FontAwesome } from "@expo/vector-icons";
 
+/*
+  This component shows the dropdown in the submitting button in learningzone
+*/
+
 const DropdownList = ({ setSelected }) => {
   const selectList = ["File", "Assignment", "Announce", "Record"];
   return (

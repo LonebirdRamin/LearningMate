@@ -5,11 +5,12 @@ import moment from "moment";
 /*
   This hook is used to edit the existing plan of the user
 */
+
 const editPlan = async (
   editedData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged,
+  setIsChanged
 ) => {
   setIsLoading(true);
   try {

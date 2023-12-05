@@ -1,9 +1,14 @@
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for getting the subject assignmentID
+  from assignment name
+*/
+
 const getSubjectAssignmentID = async (
   assignment_name,
   setAssignmentData,
-  setIsLoading,
+  setIsLoading
 ) => {
   setIsLoading(true);
   try {

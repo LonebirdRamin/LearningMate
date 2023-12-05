@@ -1,8 +1,11 @@
 import { View, Text, Dimensions } from "react-native";
 import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
-
 const width = Dimensions.get("screen").width;
+
+/*
+  This component used to display due date box on flatlist. 
+*/
 
 const DueDate = ({ dueDate = "00 January 0000" }) => {
   let slicedDueDate = "";

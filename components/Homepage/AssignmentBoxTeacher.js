@@ -6,6 +6,11 @@ import AssignmentDetail from "./AssignmentDetail";
 import DueDate from "./DueDate";
 import SubmitValue from "./SubmitValue";
 
+/* 
+  This component uses to display assignment in Flatlist 
+  which data = submission info of teacher
+*/
+
 const AssignmentBoxTeacher = ({
   iconColor = "#F04E22",
   code,
@@ -19,7 +24,7 @@ const AssignmentBoxTeacher = ({
     <TouchableOpacity
       style={assignmentStyles.box}
       onPress={() => {
-        console.log("TEST");
+        console.log("Assignment Teacher Clicked!");
       }}
     >
       <View style={assignmentStyles.upperPart}>

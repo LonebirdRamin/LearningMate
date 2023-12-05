@@ -58,7 +58,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
         email,
         setIsAssignmentLoading,
         setAssignmentData,
-        setAssignNum,
+        setAssignNum
       );
       const result = await queryAnnouncement(class_.class_id);
       setAnnounce(result[0].class_announcement);
@@ -75,7 +75,7 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
     setFilteredData(
       assignmentData.filter((item) => {
         return item.class_id == class_.class_id;
-      }),
+      })
     );
   }, [assignmentData]);
   /* End - filter assignment */
@@ -336,8 +336,6 @@ const LearningZoneTeacherClass = ({ route, navigation }) => {
                     >
                       <FileRecordList
                         onClickHandler={() => setOptionFunc("Records")}
-                        // setOption={setOption}
-                        // optionTemp={"Records"} //Bug,
                         data={recordFile}
                         type={type}
                         setModalVisible={setModalVisible}

@@ -2,12 +2,17 @@ import moment from "moment";
 import ipv4 from "../apiserver/ipv4";
 import axios from "axios";
 
+/* 
+  This hook is for student to submit the assignment 
+  by changing in database.
+*/
+
 const SubmitAssignment = async (
   insertData,
   setModalVisible,
   setIsLoading,
   setDescription,
-  setCurrentDate,
+  setCurrentDate
 ) => {
   setIsLoading(true);
   try {

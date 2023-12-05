@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 
+/*
+  This component handles the input file zone 
+*/
+
 const InputFileLearning = ({ setFile }) => {
   const [fileName, setFileName] = useState("No File Selected");
   const pickFile = async () => {

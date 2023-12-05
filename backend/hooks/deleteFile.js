@@ -1,17 +1,10 @@
-import { app, storage } from "../database/firebaseDB";
-import React, { useState } from "react";
-import * as DocumentPicker from "expo-document-picker";
-import * as FileSystem from "expo-file-system";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  listAll,
-  getMetadata,
-  deleteObject,
-} from "firebase/storage";
-import { collection, doc, setDoc, getDocs, query } from "firebase/firestore";
-import { db } from "../database/firebaseDB";
+import { storage } from "../database/firebaseDB";
+import { ref, listAll, deleteObject } from "firebase/storage";
+
+/* 
+  This hook is for deleting file in Firebase 
+  which can be Assignments, Documents, and Recording.
+*/
 
 const DeleteFile = async (
   classID,
@@ -19,16 +12,14 @@ const DeleteFile = async (
   assName,
   setAssName,
   setIsPosting,
-  type,
+  type
 ) => {
   try {
     let filesRef = "";
-    // console.log(`storage/${classID}/${option}/${assName}`);
-    // const newPath = `storage/${classID}/${option}/${assName}`;
     if (option === "Assignments") {
       filesRef = ref(
         storage,
-        `storage/${classID}/${option}/${assName}/${type}`,
+        `storage/${classID}/${option}/${assName}/${type}`
       );
     } else {
       filesRef = ref(storage, `storage/${classID}/${option}/${assName}`);
@@ -39,9 +30,8 @@ const DeleteFile = async (
     await Promise.all(
       filesRes.items.map(async (fileRef) => {
         await deleteObject(fileRef);
-      }),
+      })
     );
-
     console.log("Files in path deleted successfully");
     setAssName("");
     setIsPosting(true);

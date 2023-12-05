@@ -4,6 +4,10 @@ import * as DocumentPicker from "expo-document-picker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
 import { FontAwesome } from "@expo/vector-icons";
 
+/*
+  This component handles the input video zone.
+*/
+
 const InsertVideo = ({ setVideo }) => {
   const [videoName, setVideoName] = useState("No video selected");
 

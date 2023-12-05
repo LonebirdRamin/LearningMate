@@ -8,7 +8,7 @@ const queryAssignment = async (
   email,
   setIsAssignmentLoading,
   setAssignmentData,
-  setAssignNum,
+  setAssignNum
 ) => {
   setIsAssignmentLoading(true);
   setAssignNum("-");

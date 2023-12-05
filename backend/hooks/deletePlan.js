@@ -6,11 +6,12 @@ import { Alert } from "react-native";
   This hook is used to delete the plan that is existing in 
   the database for the specific user.
 */
+
 const deletePlan = async (
   deleteData,
   setIsLoading,
   setEditModalVisible,
-  setIsChanged,
+  setIsChanged
 ) => {
   setIsLoading(true);
   try {

@@ -4,21 +4,26 @@ import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
 import globleStyles from "../../styles/globleStyles";
 import modalStyles from "../../styles/modalStyles";
 import Modal from "react-native-modal";
-import FillBoxForm from "../uploadFileTeacher/FillBoxForm";
 import MainStudentAssignment from "./MainStudentAssignment";
+
+/*
+  This component handles student modal in student submission learningzone.
+*/
 
 const ModalSubmitAssignment = ({
   isVisible,
   setModalVisible,
   classID,
   email,
+  assName, //assignment name
+  setIsPosting,
 }) => {
-  const isLoading = false;
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    setSelected(null);
-  }, [isVisible]);
+  const [isLoading, setIsLoading] = useState(false);
+  // const [selected, setSelected] = useState(null);
+  // console.log(assName + classID + email);
+  // useEffect(() => {
+  //   setSelected(null);
+  // }, [isVisible]);
 
   return (
     <Modal
@@ -53,6 +58,9 @@ const ModalSubmitAssignment = ({
                   setModalVisible={setModalVisible}
                   classID={classID}
                   email={email}
+                  assName={assName}
+                  setIsLoading={setIsLoading}
+                  setIsPosting={setIsPosting}
                 />
               </View>
             )}

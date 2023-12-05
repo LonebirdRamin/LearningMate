@@ -6,7 +6,7 @@ import ipv4 from "../apiserver/ipv4";
 const queryScheduleTeacher = async (
   email,
   setQueriedSchedule,
-  setIsLoading,
+  setIsLoading
 ) => {
   let result;
   try {

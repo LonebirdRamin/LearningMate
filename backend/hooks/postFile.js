@@ -6,6 +6,10 @@ import { db } from "../database/firebaseDB";
 import { app, storage } from "../database/firebaseDB";
 import { Alert } from "react-native";
 
+/* 
+  This hook is for posting the document/recording in Firebase system
+*/
+
 const PostFile = async (
   classID,
   fileType,
@@ -13,7 +17,7 @@ const PostFile = async (
   setUploading,
   setFile,
   textTitle,
-  setIsPosting,
+  setIsPosting
 ) => {
   setUploading(true);
   try {
@@ -45,7 +49,7 @@ const PostFile = async (
       fileInfo.uri.substring(fileInfo.uri.lastIndexOf("/") + 1);
     const storageRef = ref(
       storage,
-      `storage/${classID}/${fileType}/${textTitle}/${filename}`,
+      `storage/${classID}/${fileType}/${textTitle}/${filename}`
     );
     const firestoreRef = collection(db, "storage", classID, fileType);
     const fileDocRef = doc(firestoreRef, filename);

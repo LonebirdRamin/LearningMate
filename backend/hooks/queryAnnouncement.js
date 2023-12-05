@@ -3,6 +3,10 @@ import React from "react";
 import axios from "axios";
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for getting the announcement
+*/
+
 const queryAnnouncement = async (classID) => {
   let result;
   // setIsLoading(true);

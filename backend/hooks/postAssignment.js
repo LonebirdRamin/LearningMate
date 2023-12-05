@@ -10,6 +10,10 @@ import { getStorage, ref, uploadBytes } from "@react-native-firebase/storage";
 import { v4 } from "uuid";
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for Teacher to posting assignment in the database
+*/
+
 const postAssignment = async (
   insertData,
   setModalVisible,
@@ -17,7 +21,7 @@ const postAssignment = async (
   onChangeInformation,
   onChangeTitle,
   setIsLoading,
-  setIsPosting,
+  setIsPosting
 ) => {
   console.log(insertData);
   setIsLoading(true);

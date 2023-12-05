@@ -2,11 +2,15 @@ import { View, Text } from "react-native";
 import React from "react";
 import ipv4 from "../apiserver/ipv4";
 
+/* 
+  This hook is for getting teacher assignment to display.
+*/
+
 const queryGetTeacherAssignment = async (
   email,
   setIsAssignmentLoading,
   setAssignData,
-  setAssignmentNum,
+  setAssignmentNum
 ) => {
   setIsAssignmentLoading(true);
   setAssignmentNum("-");

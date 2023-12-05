@@ -19,6 +19,7 @@ import FileRecordList from "../components/LearningZone/FileRecordList";
 import queryAnnouncement from "../backend/hooks/queryAnnouncement";
 import loadDocument from "../backend/hooks/loadDocument";
 import loadRecord from "../backend/hooks/loadRecord";
+import ModalSubmitAssignment from "../components/StudentSubmit/ModalSubmitAssignment";
 /*
   This is a screen for the interactable LearningZone (Student)
 */
@@ -39,6 +40,8 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
   const [recordFile, setRecordFile] = useState([]);
   const [isVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFormVisible, setModalFormVisible] = useState(false);
+  const [assName, setAssName] = useState("");
 
   const type = "student";
   let ref = [];
@@ -50,7 +53,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
         email,
         setIsAssignmentLoading,
         setAssignmentData,
-        setAssignNum,
+        setAssignNum
       );
       const result = await queryAnnouncement(class_.class_id);
       setAnnounce(result[0].class_announcement);
@@ -67,7 +70,7 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
     setFilteredData(
       assignmentData.filter((item) => {
         return item.class_id == class_.class_id;
-      }),
+      })
     );
   }, [assignmentData]);
   /* End - filter assignment */
@@ -191,7 +194,11 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
                   style={customStyles.learningZoneAssignmentWidget}
                   ref={ref[1]}
                 >
-                  <AssignmentList data={filteredData} />
+                  <AssignmentList
+                    data={filteredData}
+                    setModalFormVisible={setModalFormVisible}
+                    setAssName={setAssName} //To send assignment name that clicked!
+                  />
                   <View
                     style={{
                       display: "flex",
@@ -306,6 +313,16 @@ const LearningZoneStudentClass = ({ route, navigation }) => {
             </View>
             {/* End - recordings */}
           </ScrollView>
+          {/* Start - Modified Modal*/}
+          <ModalSubmitAssignment
+            isVisible={isFormVisible}
+            setModalVisible={setModalFormVisible}
+            classID={class_.class_id}
+            email={email}
+            assName={assName}
+            setIsPosting={setIsPosting}
+          />
+          {/* End - Modified Modal*/}
         </View>
       )}
     </SafeAreaView>

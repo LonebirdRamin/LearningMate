@@ -3,30 +3,23 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   Image,
   TouchableOpacity,
-  Dimensions,
   Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import * as DocumentPicker from "expo-document-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import formAssignmentStyles from "../../styles/formAssignmentStyles";
-import * as FileSystem from "expo-file-system";
 import CheckBox from "react-native-check-box";
 import postAssignment from "../../backend/hooks/postAssignment";
-import { ref } from "firebase/storage";
-import PostFile from "../../backend/hooks/submitFileStudent";
 import PostFileTeacher from "../../backend/hooks/postFileTeacher";
 
-/* To do list
-- Change datetime picker function format (Pass!)
-- Find the way to change format of date  (PASS!)
-- Change stylesheet format  (PASS!)
-- make some condition => if no fill on Name => error!
-- make date condition => if no fill on date => no due date
+/* 
+  This component used to display the form to fill for 
+  adding the teacher assignment. 
 */
+
 const FormAssignment = ({
   selected,
   setModalVisible,
@@ -50,7 +43,7 @@ const FormAssignment = ({
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" }),
+      date.toLocaleString("default", { day: "2-digit" })
   );
 
   const setUpVariable = (
@@ -60,7 +53,7 @@ const FormAssignment = ({
     time,
     subjectTitle,
     subjectInformation,
-    showDate,
+    showDate
   ) => {
     let dateTime;
 
@@ -83,7 +76,6 @@ const FormAssignment = ({
     }
   };
   useEffect(() => {
-    //ใส่ Data ตรงนี้ เพื่อส่งไป DB เน้อออ
     // This block of code will run whenever insertData changes
     if (insertData !== null) {
       postAssignment(
@@ -93,7 +85,7 @@ const FormAssignment = ({
         onChangeInformation,
         onChangeTitle,
         setIsLoading,
-        setIsPosting,
+        setIsPosting
       );
       PostFileTeacher(
         selected,
@@ -101,7 +93,7 @@ const FormAssignment = ({
         file,
         setUploading,
         setFile,
-        textTitle,
+        textTitle
       );
       setModalVisible(false);
     }
@@ -216,6 +208,7 @@ const FormAssignment = ({
         alignItems: "center",
       }}
     >
+      {/* Start */}
       <Text style={formAssignmentStyles.text}>Title</Text>
       <TextInput
         style={formAssignmentStyles.input}
@@ -269,7 +262,7 @@ const FormAssignment = ({
             date.toLocaleTimeString("en-GB"),
             textTitle,
             textInformation,
-            showDate,
+            showDate
           ),
         ]}
       >
@@ -283,6 +276,7 @@ const FormAssignment = ({
           Confirm
         </Text>
       </TouchableOpacity>
+      {/* End */}
     </View>
   );
 };
