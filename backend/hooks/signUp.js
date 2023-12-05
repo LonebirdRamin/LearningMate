@@ -16,33 +16,39 @@ const addUserToFirestore = async (uid, email) => {
     const userRef = doc(db, "react-native-crud", uid);
 
     await setDoc(userRef, userData);
-  } catch (error) {}
+  } catch (error) { }
 };
 
 const signUp = async (email, password, navigation, loadState, setModal) => {
   loadState(true);
   setModal(false);
   try {
-    const response = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password,
-    );
-    const info = await fetch(`${ipv4.golf}checkRole?email=${email}`);
-    if (!info.ok) {
+    const response = await fetch(`${ipv4.kong}checkRole?email=${email}`);
+    const info = await response.json();
+
+    if (info.length > 0 && info[0].role) {
+      console.log("info.role =", info[0].role);
+
+      const userRole = info[0].role;
+
+      const authResponse = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+
+      await addUserToFirestore(authResponse.user.uid, authResponse.user.email);
+
+      if (userRole === "student") {
+        navigation("HomepageStudent", email);
+      } else {
+        navigation("HomepageTeacher", email);
+      }
+    } else {
       throw new Error("Network response was not ok");
     }
-    const convertedInfo = await info.json();
-    const userRole = convertedInfo[0].role;
-
-    await addUserToFirestore(response.user.uid, response.user.email);
-
-    if (userRole === "student") {
-      navigation("HomepageStudent", email);
-    } else {
-      navigation("HomepageTeacher", email);
-    }
   } catch (error) {
+    console.error(error);
     Alert.alert("Error", "Register failed, try again", [{ text: "Ok" }]);
   } finally {
     loadState(false);

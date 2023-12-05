@@ -14,7 +14,7 @@ const deletePlan = async (
 ) => {
   setIsLoading(true);
   try {
-    const response = await axios.delete(`${ipv4.golf}deletePlanner`, {
+    const response = await axios.delete(`${ipv4.kong}deletePlanner`, {
       data: deleteData,
     });
     // Check the response status code to determine if it was successful
