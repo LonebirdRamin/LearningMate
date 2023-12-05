@@ -6,7 +6,7 @@ import LearningZoneTeacherClass from "../screens/LearningZoneTeacherClass";
 
 const Stack = createNativeStackNavigator();
 /*
-    This route is for LearningZone (Teacher).
+  This route is for LearningZone (Teacher).
 */
 const LearningZoneTeacherRoute = () => {
   return (

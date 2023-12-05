@@ -7,7 +7,7 @@ import Notification from "../screens/Notification";
 
 const Stack = createNativeStackNavigator();
 /*
-    This route is navigating between Homepage(Teacher) and notification.
+  This route is navigating between Homepage(Teacher) and notification.
 */
 const HomeNotiTeacher = () => {
   return (

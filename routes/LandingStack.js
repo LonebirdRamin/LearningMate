@@ -9,8 +9,8 @@ import NavigationBarStudent from "./NavigationBarStudent";
 import NavigationBarTeacher from "./NavigationBarTeacher";
 const Stack = createNativeStackNavigator();
 /*
-    This route is navigating between Landing page (including Login and Register also)
-    and respective Homepage.
+  This route is navigating between Landing page (including Login and Register also)
+  and respective Homepage.
 */
 const LandingStack = () => {
   return (

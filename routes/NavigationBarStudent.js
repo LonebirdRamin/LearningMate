@@ -31,7 +31,7 @@ const screenOptions = {
   },
 };
 /*
-    This route is for Navigation bar (Student).
+  This route is for Navigation bar (Student).
 */
 const NavigationBarStudent = () => {
   const email = useRoute();

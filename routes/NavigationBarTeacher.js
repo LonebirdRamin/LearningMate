@@ -32,7 +32,7 @@ const screenOptions = {
   },
 };
 /*
-    This route is for Navigation bar (Teacher).
+  This route is for Navigation bar (Teacher).
 */
 const NavigationBar = () => {
   const email = useRoute();

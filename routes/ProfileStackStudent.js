@@ -12,7 +12,7 @@ import GradeResult from "../screens/Student/GradeResult";
 import Activity from "../screens/Student/Activity";
 const Stack = createNativeStackNavigator();
 /*
-    This route is for Profile screen (Student).
+  This route is for Profile screen (Student).
 */
 const ProfileStackStudent = () => {
   return (
