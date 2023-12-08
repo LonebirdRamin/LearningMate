@@ -1,15 +1,47 @@
-//Use for popup the when click AddAssignment button
-
-import React, { useState } from "react";
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Button,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import Modal from "react-native-modal";
 import modalStyles from "../../styles/modalStyles";
 import DropdownAddAssignment from "./DropdownAddAssignment";
 import FormAssignment from "./FormAssignment";
 import modalFillAssignmentStyles from "../../styles/modalFillAssignmentStyles";
+import customStyles from "../../styles/customStyles";
+import globleStyles from "../../styles/globleStyles";
+import queryClassTeacher from "../../backend/hooks/queryClassTeacher";
 
-const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
+/* 
+  Use for popup the when the AddAssignment button is clicked
+*/
+
+const FillAssignmentModal = ({
+  isVisible,
+  setModalVisible,
+  email,
+  setIsPosting,
+}) => {
   const [selected, setSelected] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [className, setClassName] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await queryClassTeacher(email, setIsLoading);
+      setClassName(data);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setSelected(null);
+  }, [isVisible]);
 
   return (
     <Modal
@@ -26,12 +58,31 @@ const FillAssignmentModal = ({ isVisible, setModalVisible }) => {
         <View style={modalFillAssignmentStyles.center}>
           <View style={modalFillAssignmentStyles.barIcon} />
           <View style={modalFillAssignmentStyles.wrapper}>
-            <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
-            <DropdownAddAssignment setSelected={setSelected} />
-            <FormAssignment
-              selected={selected}
-              setModalVisible={setModalVisible}
-            />
+            {isLoading ? (
+              <View style={modalFillAssignmentStyles.loadingWidget}>
+                <View style={globleStyles.loading}>
+                  <ActivityIndicator
+                    size={100}
+                    color="#F04E22"
+                  ></ActivityIndicator>
+                </View>
+              </View>
+            ) : (
+              <View>
+                <Text style={modalFillAssignmentStyles.text}>Assignment</Text>
+                <DropdownAddAssignment
+                  setSelected={setSelected}
+                  className={className}
+                />
+                <FormAssignment
+                  selected={selected}
+                  setModalVisible={setModalVisible}
+                  email={email}
+                  setIsLoading={setIsLoading}
+                  setIsPosting={setIsPosting}
+                />
+              </View>
+            )}
           </View>
         </View>
       </View>

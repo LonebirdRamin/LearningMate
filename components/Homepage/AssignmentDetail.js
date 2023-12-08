@@ -1,11 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 import assignmentStyles from "../../styles/assignmentStyles";
-
-const AssignmentDetail = ({
-  subject,
-  task
-}) => {
+/*
+  A component contains the assignment details inside.
+*/
+const AssignmentDetail = ({ subject, task }) => {
   return (
     <View style={assignmentStyles.detailContainer}>
       <Text style={{ color: "white", fontWeight: "bold" }}>{subject}</Text>

@@ -16,7 +16,9 @@ import { TouchableOpacity } from "react-native";
 import { StackActions } from "@react-navigation/routers";
 import AppButton from "../components/AppButton";
 import signIn from "../backend/hooks/signIn";
-
+/*
+  A screen for user to login to the system.
+*/
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +34,7 @@ const Login = ({ navigation }) => {
     setPassword(value);
   };
 
+  // Change page with passing value across routes
   const changePage = (value, email) => {
     navigation.reset({
       index: 0,
@@ -50,48 +53,6 @@ const Login = ({ navigation }) => {
         },
       ],
     });
-
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [
-    //     {name: value,
-    //       state:{
-    //       index: 0,
-    //       routes: [
-    //         {
-    //           name: "Home",
-    //           params: {email: email}
-    //         }
-    //       ]
-    //     }}
-    //   ]
-    // });
-
-    // navigation.reset({
-    //   index: 0,
-    //   actions: [
-    //     navigation.navigate("HomepageStudent", {
-    //       screen: "Home",
-    //       initial: true,
-    //       params: { test: "HEllo" },
-    //     }),
-    //   ],
-    // });
-
-    // navigation.reset({
-    //   index: 0,
-    //   actions: [navigation.navigate({routeName: 'HomepageStudent'})]
-    // })
-
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: value, params: {passing: passEmail} }],
-    // });
-
-    // navigation.navigate({
-    //   routeName: "HomepageStudent",
-    //   params: "kong"
-    // })
   };
 
   return (
@@ -121,11 +82,6 @@ const Login = ({ navigation }) => {
             </View>
 
             <View style={loginStyles.lowerForm}>
-              <TouchableOpacity style={{ alignSelf: "flex-end" }}>
-                <Text style={{ color: "#666680", textAlign: "right" }}>
-                  Forget Password
-                </Text>
-              </TouchableOpacity>
 
               <AppButton
                 text="Login"
@@ -136,7 +92,7 @@ const Login = ({ navigation }) => {
                     Alert.alert(
                       "Login",
                       "Please fill in your email and password",
-                      [{ text: "Ok" }]
+                      [{ text: "Ok" }],
                     );
                   } else if (password === "") {
                     Alert.alert("Login", "Please fill in your password", [

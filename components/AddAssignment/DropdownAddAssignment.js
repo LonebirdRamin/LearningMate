@@ -1,30 +1,20 @@
 import { Text, View, Image } from "react-native";
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 import { FontAwesome } from "@expo/vector-icons";
 import dropDownStyles from "../../styles/dropDownStyle";
 
-const DropdownAddAssignment = ({ setSelected }) => {
-  const mockupData = [
-    //If want to return from dropdown as key
-    { key: "1", value: "CPE101" },
-    { key: "2", value: "CPE223" },
-    { key: "3", value: "CPE333" },
-    { key: "4", value: "CPE371" },
-    { key: "5", value: "CPE355" },
-    { key: "6", value: "CPE342" },
-    { key: "7", value: "CPE366" },
-  ];
-  const data = [
-    //To return from dropdown as "string"
-    "CPE101",
-    "CPE223",
-    "CPE333",
-    "CPE371",
-    "CPE355",
-    "CPE342",
-    "CPE366",
-  ];
+/* 
+  This component used to show the classID in dropdown menu.
+*/
+
+const DropdownAddAssignment = ({ setSelected, className }) => {
+  const dataClass = [];
+  //Convert object to array
+  for (let i = 0; i < className.length; i++) {
+    dataClass[i] = className[i].class_id;
+  }
+
   return (
     <View
       style={{
@@ -33,7 +23,7 @@ const DropdownAddAssignment = ({ setSelected }) => {
       }}
     >
       <SelectList
-        data={data}
+        data={dataClass}
         setSelected={setSelected}
         boxStyles={dropDownStyles.boxStyles}
         inputStyles={dropDownStyles.inputStyle}

@@ -1,30 +1,24 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { AddAssignmentButton } from "../components/AddAssignment/AddAssignmentButton";
-import { SafeAreaView } from "react-native-safe-area-context";
-
+import { SafeAreaView, Text } from "react-native";
+import customStyles from "../styles/customStyles";
+/*
+  A screen for showing the chats.
+*/
 const ChatScreen = () => {
   return (
-    <SafeAreaView style={styles.mainView}>
-      <Text
-        style={{
-          color: "white",
-        }}
-      >
-        Test add AddAssignmentButton
-      </Text>
-      <AddAssignmentButton />
+    <SafeAreaView
+      style={[
+        customStyles.pageBackground,
+        {
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        },
+      ]}
+    >
+      <Text style={customStyles.h4}>Work in progress.</Text>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  mainView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#1C1C23",
-  },
-});
-
 export default ChatScreen;

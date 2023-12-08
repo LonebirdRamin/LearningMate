@@ -7,12 +7,12 @@ import { Ionicons } from "@expo/vector-icons";
 //Screen
 import Homepage from "../screens/Homepage";
 import ChatScreen from "../screens/ChatScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import LearningZoneStudent from "../screens/LearningZoneStudent";
+import ProfileScreen from "../screens/Student/ProfileScreen";
+import LearningZoneTeacherRoute from "./LearningZoneTeacherRoute";
 import PlannerScreen from "../screens/PlannerScreen";
 import HomeNotiTeacher from "./HomeNotiTeacher";
 import DataContext from "./DataContext";
-
+import ProfileStackTeacher from "./ProfileStackTeacher";
 const height = Dimensions.get("screen").height;
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +31,9 @@ const screenOptions = {
     height: "8%",
   },
 };
-
+/*
+  This route is for Navigation bar (Teacher).
+*/
 const NavigationBar = () => {
   const email = useRoute();
   const handleImage = () => {};
@@ -39,7 +41,7 @@ const NavigationBar = () => {
     <DataContext.Provider value={email.params.email}>
       <Tab.Navigator
         screenOptions={screenOptions}
-        initialRouteName="Home"
+        initialRouteName="HomeNoti"
         backBehavior="initialRoute"
       >
         <Tab.Screen
@@ -67,8 +69,8 @@ const NavigationBar = () => {
           }}
         />
         <Tab.Screen
-          name="Learningzone"
-          component={LearningZoneStudent}
+          name="LearningZoneTeacherRoute"
+          component={LearningZoneTeacherRoute}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
@@ -139,8 +141,8 @@ const NavigationBar = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileStackTeacher"
+          component={ProfileStackTeacher}
           options={{
             tabBarIcon: ({ focused }) => (
               <View

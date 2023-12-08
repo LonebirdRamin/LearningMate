@@ -2,7 +2,10 @@ import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../database/firebaseDB";
 import { Alert } from "react-native";
-
+import ipv4 from "../apiserver/ipv4";
+/*
+  This function will be called to create the new user to the Firebase authentication.
+*/
 const addUserToFirestore = async (uid, email) => {
   const db = getFirestore();
   const userData = {
@@ -13,31 +16,39 @@ const addUserToFirestore = async (uid, email) => {
     const userRef = doc(db, "react-native-crud", uid);
 
     await setDoc(userRef, userData);
-    console.log("User added to Firestore!");
-  } catch (error) {
-    console.log(error + "User not added to Firestore!");
-  }
+  } catch (error) { }
 };
 
 const signUp = async (email, password, navigation, loadState, setModal) => {
   loadState(true);
   setModal(false);
   try {
-    const response = await createUserWithEmailAndPassword(
-      firebaseAuth,
-      email,
-      password
-    );
+    const response = await fetch(`${ipv4.user}checkRole?email=${email}`);
+    const info = await response.json();
 
-    const userData = {
-      email: response.user.email,
-    };
+    if (info.length > 0 && info[0].role) {
+      console.log("info.role =", info[0].role);
 
-    await addUserToFirestore(response.user.uid, response.user.email);
+      const userRole = info[0].role;
 
-    navigation();
+      const authResponse = await createUserWithEmailAndPassword(
+        firebaseAuth,
+        email,
+        password
+      );
+
+      await addUserToFirestore(authResponse.user.uid, authResponse.user.email);
+
+      if (userRole === "student") {
+        navigation("HomepageStudent", email);
+      } else {
+        navigation("HomepageTeacher", email);
+      }
+    } else {
+      throw new Error("Network response was not ok");
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     Alert.alert("Error", "Register failed, try again", [{ text: "Ok" }]);
   } finally {
     loadState(false);

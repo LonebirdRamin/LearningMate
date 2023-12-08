@@ -6,29 +6,30 @@ import HomepageTeacher from "../screens/HomepageTeacher";
 import Notification from "../screens/Notification";
 
 const Stack = createNativeStackNavigator();
-
-const HomeNotiTeacher = () => { //For navigatiing between Homepage(Teacher) and notification
+/*
+  This route is navigating between Homepage(Teacher) and notification.
+*/
+const HomeNotiTeacher = () => {
   return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomepageTeacher}
-          options={{
-            headerShown: false,
-            animation: "slide_from_bottom",
-          }}
-        />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomepageTeacher}
+        options={{
+          headerShown: false,
+          animation: "slide_from_bottom",
+        }}
+      />
 
-        <Stack.Screen
-          name="Notification"
-          component={Notification}
-          options={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        />
-
-      </Stack.Navigator>
+      <Stack.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 

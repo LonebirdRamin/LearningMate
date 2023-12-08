@@ -7,7 +7,7 @@ const modalFillAssignmentStyles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    height: "66%",
+    height: "70%",
     backgroundColor: "#353542",
     paddingTop: 12,
     paddingHorizontal: 12,
@@ -34,6 +34,17 @@ const modalFillAssignmentStyles = StyleSheet.create({
     color: "white",
     fontSize: 30,
     textAlign: "center",
+  },
+  loadingWidget: {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "#353542",
+    width: "100%",
+    height: "100%",
+  },
+  textLearning: {
+    fontSize: 23,
+    color: "#C1C1CD",
   },
 });
 

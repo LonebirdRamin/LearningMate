@@ -8,7 +8,10 @@ import Register from "../screens/Register";
 import NavigationBarStudent from "./NavigationBarStudent";
 import NavigationBarTeacher from "./NavigationBarTeacher";
 const Stack = createNativeStackNavigator();
-
+/*
+  This route is navigating between Landing page (including Login and Register also)
+  and respective Homepage.
+*/
 const LandingStack = () => {
   return (
     <NavigationContainer>
@@ -23,24 +26,25 @@ const LandingStack = () => {
           component={Register}
           options={{
             headerShown: false,
-            // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
         />
+
         <Stack.Screen
           name="Login"
           component={Login}
           options={{
             headerShown: false,
-            // animationTypeForReplace: 'push',
             animation: "slide_from_bottom",
           }}
         />
+
         <Stack.Screen
           name="HomepageStudent"
           component={NavigationBarStudent}
           options={{ headerShown: false, gestureEnabled: false }}
         />
+
         <Stack.Screen
           name="HomepageTeacher"
           component={NavigationBarTeacher}

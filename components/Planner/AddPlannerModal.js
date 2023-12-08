@@ -21,7 +21,10 @@ import DataContext from "../../routes/DataContext";
 import insertPlan from "../../backend/hooks/insertPlan";
 const plannerType = ["Work", "Read", "Chill"];
 
-const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
+/*
+  The component responsible for show the detail of adding planner detail.
+*/
+const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged }) => {
   // Start - Information for plan
   const email = useContext(DataContext);
   const [title, setTitle] = useState("");
@@ -33,7 +36,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
       "-" +
       date.toLocaleString("default", { month: "2-digit" }) +
       "-" +
-      date.toLocaleString("default", { day: "2-digit" })
+      date.toLocaleString("default", { day: "2-digit" }),
   );
   // End - Information for plan
 
@@ -52,7 +55,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
         "-" +
         date.toLocaleString("default", { month: "2-digit" }) +
         "-" +
-        date.toLocaleString("default", { day: "2-digit" })
+        date.toLocaleString("default", { day: "2-digit" }),
     );
   }, [date]);
 
@@ -73,7 +76,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
     showMode("time");
   };
   // End - Datetime zone
- 
+
   // Start - Start adding plan if the newPlan is add
   useEffect(() => {
     if (newPlan != undefined) {
@@ -86,13 +89,12 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
         setSelectedType,
         setDate,
         setModalVisible,
-        setIsChanged 
+        setIsChanged,
       );
     }
   }, [newPlan]);
   // End - Start adding plan if the newPlan is add
 
-  
   const [isLoading, setIsLoading] = useState(false);
   return (
     <Modal
@@ -121,13 +123,13 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
           </View>
         ) : (
           <View style={addPlannerModalStyles.formContainer}>
-            {/* Start - Type */}
+            {/* Start - - Type */}
             <View>
-              {/* Start - Header type */}
+              {/* Start - - Header type */}
               <Text style={addPlannerModalStyles.subHeaderText}>Type</Text>
-              {/* End - Header type */}
+              {/* End - - Header type */}
 
-              {/* Start - All type display */}
+              {/* Start - - All type display */}
               <View style={addPlannerModalStyles.typeContainer}>
                 <FlatList
                   keyExtractor={(item) => item}
@@ -148,11 +150,11 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                   }}
                 />
               </View>
-              {/* End - All type display */}
+              {/* End - - All type display */}
             </View>
-            {/* End - Type */}
+            {/* End - - Type */}
 
-            {/* Start - Title */}
+            {/* Start - - Title */}
             <View>
               <Text style={addPlannerModalStyles.subHeaderText}>Title</Text>
               <TextInput
@@ -162,9 +164,9 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                 }}
               />
             </View>
-            {/* End - Title */}
+            {/* End - - Title */}
 
-            {/* Start - Detail */}
+            {/* Start - - Detail */}
             <View>
               <Text style={addPlannerModalStyles.subHeaderText}>Detail</Text>
               <TextInput
@@ -182,9 +184,9 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                 }}
               />
             </View>
-            {/* End - Detail*/}
+            {/* End - - Detail*/}
 
-            {/* Start - date zone */}
+            {/* Start - - date zone */}
             <View style={addPlannerModalStyles.dateTimeContainer}>
               <TouchableOpacity
                 onPress={showDatepicker}
@@ -201,9 +203,9 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* End - date zone */}
+            {/* End - - date zone */}
 
-            {/* Start - Time */}
+            {/* Start - - Time */}
             <View style={addPlannerModalStyles.dateTimeContainer}>
               <TouchableOpacity
                 onPress={showTimepicker}
@@ -231,7 +233,7 @@ const AddPlannerModal = ({ isModalVisible, setModalVisible, setIsChanged}) => {
                     Alert.alert(
                       "Planner",
                       "Please type in title and detail of this plan",
-                      [{ text: "OK" }]
+                      [{ text: "OK" }],
                     );
                   } else {
                     setNewPlan({

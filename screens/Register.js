@@ -17,7 +17,9 @@ import AppButton from "../components/AppButton";
 import { StackActions } from "@react-navigation/routers";
 import ConfirmModal from "../components/Register/ConfirmModal";
 import signUp from "../backend/hooks/signUp";
-
+/*
+  A screen for user to register for the application.
+*/
 const Register = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -43,11 +45,24 @@ const Register = ({ navigation }) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  const changePage = () => {
+  // Change page with passing value across routes
+  const changePage = (value, email) => {
     navigation.reset({
       index: 0,
-      routes: [{ name: "Homepage" }],
+      routes: [
+        {
+          name: value,
+          params: { email: email },
+          state: {
+            index: 0,
+            routes: [
+              {
+                name: "HomeNoti",
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 
@@ -104,7 +119,7 @@ const Register = ({ navigation }) => {
                     Alert.alert(
                       "Register",
                       "Password should contain at least 6 letters",
-                      [{ text: "Ok" }]
+                      [{ text: "Ok" }],
                     );
                   } else if (password !== conPass) {
                     Alert.alert("Register", "Password is not the same", [

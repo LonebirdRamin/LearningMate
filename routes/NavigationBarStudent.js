@@ -6,10 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 //Screen
 import HomeNotiStudent from "./HomeNotiStudent";
 import ChatScreen from "../screens/ChatScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/Student/ProfileScreen";
 import PlannerScreen from "../screens/PlannerScreen";
 import DataContext from "./DataContext";
 import LearningZoneStudentRoute from "./LearningZoneStudentRoute";
+import ProfileStackStudent from "./ProfileStackStudent";
 
 const height = Dimensions.get("screen").height;
 
@@ -29,11 +30,11 @@ const screenOptions = {
     height: "8%",
   },
 };
-
+/*
+  This route is for Navigation bar (Student).
+*/
 const NavigationBarStudent = () => {
   const email = useRoute();
-  // console.log("Homepage " + email.params.email)
-  // console.log("HOMESTUDENT " + user.params.test); ได้ data มาแล้ว
   const handleImage = () => {};
   return (
     <DataContext.Provider value={email.params.email}>
@@ -139,8 +140,8 @@ const NavigationBarStudent = () => {
           }}
         />
         <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
+          name="ProfileStackStudent"
+          component={ProfileStackStudent}
           options={{
             tabBarIcon: ({ focused }) => (
               <View
