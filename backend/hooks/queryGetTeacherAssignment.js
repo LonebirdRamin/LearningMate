@@ -17,7 +17,7 @@ const queryGetTeacherAssignment = async (
 
   try {
     const response = await fetch(
-      `${ipv4.kong}getTeacherAssignment?email=${email}`,
+      `${ipv4.user}getTeacherAssignment?email=${email}`,
     );
     console.log("query response: " + response);
     if (!response.ok) {

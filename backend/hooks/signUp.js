@@ -23,7 +23,7 @@ const signUp = async (email, password, navigation, loadState, setModal) => {
   loadState(true);
   setModal(false);
   try {
-    const response = await fetch(`${ipv4.kong}checkRole?email=${email}`);
+    const response = await fetch(`${ipv4.user}checkRole?email=${email}`);
     const info = await response.json();
 
     if (info.length > 0 && info[0].role) {

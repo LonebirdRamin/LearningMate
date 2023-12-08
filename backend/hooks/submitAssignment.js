@@ -17,7 +17,7 @@ const SubmitAssignment = async (
   setIsLoading(true);
   try {
     const response = await axios.post(
-      `${ipv4.kong}submitAssignment`,
+      `${ipv4.user}submitAssignment`,
       insertData,
     );
     // Check the response status code to determine if it was successful

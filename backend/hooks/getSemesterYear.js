@@ -6,7 +6,7 @@ import ipv4 from "../apiserver/ipv4";
 const getSemesterYear = async (email, setSemYear, setIsLoading) => {
   setIsLoading(true);
   try {
-    const response = await fetch(`${ipv4.kong}getSemesterYear?email=${email}`);
+    const response = await fetch(`${ipv4.user}getSemesterYear?email=${email}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }

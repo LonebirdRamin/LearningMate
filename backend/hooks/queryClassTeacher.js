@@ -9,7 +9,7 @@ const queryClassTeacher = async (email, setIsLoading) => {
 
   try {
     const response = await axios.get(
-      `${ipv4.kong}getClassTeacher?email=${email}`,
+      `${ipv4.user}getClassTeacher?email=${email}`,
     );
     // console.log("ClassName response: " + response);
 

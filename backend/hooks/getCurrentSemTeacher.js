@@ -6,7 +6,7 @@ const getCurrentSemTeacher = async (email, setCurrentSem, setIsLoading) => {
   setIsLoading(true);
   try {
     const response = await fetch(
-      `${ipv4.kong}getCurrentSemesterForTeacher?email=${email}`,
+      `${ipv4.user}getCurrentSemesterForTeacher?email=${email}`,
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
