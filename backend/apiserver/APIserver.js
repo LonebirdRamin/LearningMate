@@ -14,10 +14,10 @@ const mysql = require("mysql2");
   Create a connection to the database.
 */
 const connection = mysql.createConnection({
-  host: "learningmate.cwfmrnlx2tvp.ap-southeast-1.rds.amazonaws.com",
-  user: "admin",
-  password: "0909914229za",
-  database: "learningmate",
+  host: "hosturi",
+  user: "username",
+  password: "password",
+  database: "databasename",
 });
 
 /*
